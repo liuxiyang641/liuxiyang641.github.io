@@ -1,0 +1,85 @@
+// CSS Style Guide: http://codeguide.co/#css
+
+
+$scheme    = hexo-config('scheme') ? hexo-config('scheme') : 'Muse';
+
+$variables = base $scheme;
+
+
+// Variables Layer
+// --------------------------------------------------
+for $variable in $variables
+  @import "_variables/" + $variable;
+for $inject_variable in hexo-config('injects.variable')
+  @import $inject_variable;
+
+// Mixins Layer
+// --------------------------------------------------
+@import "_mixins.styl";
+for $inject_mixin in hexo-config('injects.mixin')
+  @import $inject_mixin;
+
+// Dark mode colors
+// --------------------------------------------------
+@import "_colors.styl";
+
+// Common Layer
+// --------------------------------------------------
+
+// Scaffolding
+@import "_common/scaffolding";
+
+// Layout
+@import "_common/outline";
+
+// Components
+@import "_common/components";
+
+
+// Schemes Layer
+// --------------------------------------------------
+@import "_schemes/" + $scheme;
+
+
+// Custom Layer
+// --------------------------------------------------
+for $inject_style in hexo-config('injects.style')
+  @import $inject_style;
+
+// blockquote 引用块
+article .post-body blockquote {
+    margin-bottom: 20px;
+    border-left: 4px solid rgb(56, 132, 255);
+    border-radius: 0.3rem;
+    padding: 0.5rem;
+}
+article .post-body blockquote p {
+    margin: 0;
+}
+article .post-body img {
+    box-shadow: 1px 1px 3px 1px #aaa;
+    border: none;
+}
+// a 链接（不处理'目录'和'阅读全文按钮'的链接）
+article .post-body>*:not(.post-body-toc):not(.post-button) a {
+    color: #3884FF;
+    border: none;
+    margin: 0 5px;
+}
+article .post-body>*:not(.post-body-toc):not(.post-button) a:hover {
+    color: #2d6cd2;
+}
+// 行内代码
+article .post-body code {
+    border-radius: 3px;
+    margin: 0px 2px;
+    font-size: 0.9em;
+    color: #e96900;
+}
+
+// em 斜体字
+article .post-body em {
+    font-size: 1em;
+    border-bottom: 1px dashed #666;
+    margin: 0 2px;
+}
