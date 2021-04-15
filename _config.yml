@@ -61,5 +61,7 @@ exclude: null
 ignore: null
 theme: next
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/liuxiyang641/liuxiyang641.github.io
+  branch: main
 
