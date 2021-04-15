@@ -1,0 +1,35 @@
+language: node_js # 编译语言、环境
+
+sudo: required # 需要管理员权限
+
+dist: xenial # 指定 CI 系统版本为 Ubuntu16.04 LTS
+
+node_js: stable #Node.js 版本
+
+branches:
+  only:
+    - hexo # 只有 hexo 分支检出更改才触发 CI
+
+before_install: 
+  - export TZ='Asia/Shanghai' #配置时区为东八区 UTC+8
+  - npm install hexo-cli # 安装 hexo
+#  - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
+
+install:
+  - npm install # 安装依赖
+
+script: # 执行脚本，清除缓存，生成静态文件
+  - hexo clean
+  - hexo generate
+
+deploy:
+  provider: pages
+  skip_cleanup: true # 跳过清理
+  local_dir: public # 需要推送到 GitHub 的静态文件目录 
+  name: $GIT_NAME # 用户名变量
+  email: $GIT_EMAIL # 用户邮箱变量
+  github_token: $GITHUB_TOKEN # GitHub Token 变量
+  keep-history: true # 保持推送记录，以增量提交的方式
+  target-branch: main # 推送的目标分支 local_dir->>main 分支
+  on:
+    branch: hexo # 工作分支
