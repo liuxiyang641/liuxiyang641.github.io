@@ -1196,7 +1196,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff2b6e;
+  background: #28f28c;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2296,11 +2296,11 @@ mjx-container + br {
   padding: 0;
   position: absolute;
   top: 0;
-  width: 240px;
+  width: 320px;
 }
 @media (min-width: 1200px) {
   .header-inner {
-    width: 240px;
+    width: 320px;
   }
 }
 @media (max-width: 991px) {
@@ -2327,7 +2327,7 @@ mjx-container + br {
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12);
   box-sizing: border-box;
   padding: 40px;
-  width: calc(100% - 252px);
+  width: calc(100% - 332px);
 }
 @media (max-width: 991px) {
   .content-wrap {
@@ -2469,7 +2469,7 @@ mjx-container + br {
   box-shadow: none;
   margin-top: 100%;
   position: static;
-  width: 240px;
+  width: 320px;
 }
 @media (max-width: 991px) {
   .sidebar {
@@ -2485,7 +2485,7 @@ mjx-container + br {
   box-shadow: 0 2px 2px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.06), 0 1px 5px 0 rgba(0,0,0,0.12), 0 -1px 0.5px 0 rgba(0,0,0,0.09);
   box-sizing: border-box;
   color: var(--text-color);
-  width: 240px;
+  width: 320px;
   opacity: 0;
 }
 .sidebar-inner.affix {

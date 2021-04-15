@@ -17,33 +17,29 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Heterogeneous Graph Transformer 本文的贡献主要有三点：  针对异质图设计了Heterogeneous Graph Transformer，HGT，用于处理Web-scale的异质网络。 为了能够训练大规模图，提出了HGSampling采样方法，在Open Academic Graph (OAG)上进行了验证。 针对动态异质图，引入relative temporal">
+  <meta name="description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
 <meta property="og:type" content="article">
-<meta property="og:title" content="GNN HGT">
-<meta property="og:url" content="http://example.com/2021/04/14/GNN-HGT/index.html">
+<meta property="og:title" content="HAKE">
+<meta property="og:url" content="http://example.com/2021/04/15/HAKE/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="Heterogeneous Graph Transformer 本文的贡献主要有三点：  针对异质图设计了Heterogeneous Graph Transformer，HGT，用于处理Web-scale的异质网络。 为了能够训练大规模图，提出了HGSampling采样方法，在Open Academic Graph (OAG)上进行了验证。 针对动态异质图，引入relative temporal">
+<meta property="og:description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414152012151.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414163111880.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414163415151.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414163541401.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414163722393.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414170116901.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414170312971.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414170336206.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414180544283.png">
-<meta property="og:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414180603410.png">
-<meta property="article:published_time" content="2021-04-14T13:34:26.000Z">
-<meta property="article:modified_time" content="2021-04-15T03:52:31.945Z">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/HAKE/image-20200614173832367.png">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614173938559.png">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/HAKE/image-20200614174230314.png">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/HAKE/image-20200614175049088.png">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/HAKE/image-20200614180811928.png">
+<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614181125392.png">
+<meta property="article:published_time" content="2021-04-15T08:35:28.000Z">
+<meta property="article:modified_time" content="2021-04-15T09:23:27.801Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/14/GNN-HGT/image-20210414152012151.png">
+<meta name="twitter:image" content="http://example.com/2021/04/15/HAKE/HAKE/image-20200614173832367.png">
 
-<link rel="canonical" href="http://example.com/2021/04/14/GNN-HGT/">
+<link rel="canonical" href="http://example.com/2021/04/15/HAKE/">
 
 
 <script id="page-configurations">
@@ -56,7 +52,7 @@
   };
 </script>
 
-  <title>GNN HGT | Liu Xiyang</title>
+  <title>HAKE | Liu Xiyang</title>
   
 
 
@@ -196,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/14/GNN-HGT/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/HAKE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -209,7 +205,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          GNN HGT
+          HAKE
         </h1>
 
         <div class="post-meta">
@@ -218,16 +214,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-04-14 21:34:26" itemprop="dateCreated datePublished" datetime="2021-04-14T21:34:26+08:00">2021-04-14</time>
+              <time title="Created: 2021-04-15 16:35:28 / Modified: 17:23:27" itemprop="dateCreated datePublished" datetime="2021-04-15T16:35:28+08:00">2021-04-15</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-15 11:52:31" itemprop="dateModified" datetime="2021-04-15T11:52:31+08:00">2021-04-15</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -238,7 +228,7 @@
                 </span>
                   , 
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+                  <a href="/categories/Paper/KGE/" itemprop="url" rel="index"><span itemprop="name">KGE</span></a>
                 </span>
             </span>
 
@@ -255,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.8k</span>
+              <span>3k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
+              <span>3 mins.</span>
             </span>
 
         </div>
@@ -274,127 +264,106 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="heterogeneous-graph-transformer">Heterogeneous Graph Transformer</h1>
-<p>本文的贡献主要有三点：</p>
-<ol type="1">
-<li>针对异质图设计了Heterogeneous Graph Transformer，HGT，用于处理Web-scale的异质网络。</li>
-<li>为了能够训练大规模图，提出了HGSampling采样方法，在Open Academic Graph (OAG)上进行了验证。</li>
-<li>针对动态异质图，引入relative temporal encoding，能够处理任意的动态信息</li>
-</ol>
+        <h1 id="learning-hierarchy-aware-knowledge-graph-embeddings-for-link-prediction">Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction</h1>
+<p>2019-12-15 AAAI 2020</p>
+<p>Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。</p>
+<p>HAKE为了区分所有的实体，将实体嵌入分为两部分：</p>
+<ul>
+<li>不同的语义层级下的实体，使用极坐标的模长/极径（modulus）表示</li>
+<li>同一语义层级下的不同实体，使用极坐标的相位/极角（phase）表示</li>
+</ul>
 <span id="more"></span>
-<p>WWW 2020</p>
-<h2 id="introduction">Introduction</h2>
-<p><strong>Motivation</strong> ：对于heterogeneous graph已有的处理方法有基于meta-path的方法，以及最近出现的GNN方法。但是这些方法都面临问题。</p>
+<h2 id="introduction">1 Introduction</h2>
+<p>问题：目前的模型大多没有对于语义层级关系（semantic hierarchy）进行建模</p>
+<p>解决方案：引入极坐标系（polar coordinate system），</p>
+<ul>
+<li>具有更高语义层级的实体具有更小的半径</li>
+<li>同一语义层级的实体具有不同的角度</li>
+</ul>
+<p>知识图谱在是一系列的事实的集合，是语义网络的拓展。</p>
+<p>现在的知识图谱可以包含数以亿计的事实（fact），但是知识图谱不可能包含所有实际中存在的事实。因此，链路预测（link prediction）/知识图谱补全（knowledge base completion）成为了研究的一个方向。即如何根据已有的事实，预测可能存在的事实。</p>
+<p>受到词嵌入的启发，知识图谱嵌入（knowgraph graph embedding）——将知识图谱映射到离散的表示形式，就成为了研究热点。</p>
+<blockquote>
+<ul>
+<li>知识图谱嵌入的应用方向很多，不只是链路预测，还包括实体分类等等。</li>
+<li>知识图谱嵌入也只是图嵌入的一个方向</li>
+<li>链路预测对于其它的图（社交网络等），同样成立</li>
+</ul>
+</blockquote>
+<p>之前的知识图嵌入的工作主要集中在建模关系的特性：</p>
+<ul>
+<li>对称/不对称</li>
+<li>可逆/不可逆</li>
+<li>组合</li>
+</ul>
+<p>在知识图谱当中存在语义的层级，比如在wordnet知识图谱里，[arbor/cassia/palm, hypernym, tree]，tree的语义层级要高于[hypernym, tree]。对于如何利用知识图谱的语义特性的工作较少，并且很多要求要增加额外的信息，例如额外的文本描述，来建模知识图谱的层级关系。</p>
+<p>Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。</p>
+<p>HAKE为了区分所有的实体，将实体嵌入分为两部分：</p>
+<ul>
+<li>不同的语义层级下的实体，使用极坐标的模长/极径（modulus）表示</li>
+<li>同一语义层级下的不同实体，使用极坐标的相位/极角（phase）表示</li>
+</ul>
+<h2 id="the-proposed-hake">2 The Proposed HAKE</h2>
+<p>HAKE的模型图：</p>
+<p><img src="HAKE/image-20200614173832367.png" alt="image-20200614173832367" style="zoom:25%;" /></p>
+<h3 id="the-modulus-part">2.1 The modulus part</h3>
+<p>极坐标的极径建模实体的语义层级。</p>
+<p>知识图谱中的实体可以组成一棵树，越往上的实体语义层级越高，越往下的语义层级越低。使用模量/极径表示实体在语义树中的深度，具有越高的语义层级的实体有更小的深度，更小的模量。</p>
+<p>使用<span class="math inline">\(e_m\)</span>表示嵌入的模量部分modulus part，则有： <span class="math display">\[
+h_m\circ r_m=t_m,\  where\ h_m,\ t_m\in R^k,\ r_m \in R^k_{+}
+\]</span> 距离函数为： <span class="math display">\[
+d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2
+\]</span> 要注意这里限制了<span class="math inline">\(r_m\)</span>必须在正数域下，这是因为正数的<span class="math inline">\(r_m\)</span>不会改变<span class="math inline">\(h_m\)</span>的符号，这是因为对于正样本<span class="math inline">\((h,r,t)\)</span>，<span class="math inline">\(h_m\)</span>与<span class="math inline">\(t_m\)</span>倾向于有相同的符号，<span class="math display">\[d_{r,m}(h_m,t_m)\]</span>更小，而负样本<span class="math inline">\((h,r,t^{&#39;})\)</span>更难保证同一纬度下的<span class="math inline">\(h_m\)</span>与<span class="math inline">\(t_m\)</span>倾向有相同的符号，导致<span class="math inline">\(d_{r,m}(h_m,t_m^{&#39;})\)</span>更大。</p>
+<p>这样的<span class="math inline">\(r_m\)</span>成为了一个缩放操作，对于<span class="math inline">\((h,r,t)\)</span>，</p>
 <ol type="1">
-<li>大多数的方法为不同的heterogeneous graph设计meta path，要求specific domain knowledge</li>
-<li>很多方法要么忽略不同type的差异，直接使用共通的weight，要么直接认为不同type之间是完全独立的，为不同的方法定义各自独立的weight</li>
-<li>它们大多数忽略了heterogeneous graph中存在的动态特性dynamic nature</li>
-<li>它们intrinsic design无法modeling Web-scale heterogeneous graph</li>
+<li>如果h的层级比t更大，r倾向于&gt;1</li>
+<li>如果h的层级与t一样，r倾向于=1</li>
+<li>如果h的层级比t更小，r倾向于&lt;1</li>
 </ol>
-<blockquote>
-<p>First, most of them involve the design of meta paths for each type of heterogeneous graphs, requiring specific domain knowledge;</p>
-<p>Second, they either simply assume that different types of nodes/edges share the same feature and representation space or keep distinct non-sharing weights for either node type or edge type alone, making them insufficient to capture heterogeneous graphs’ properties;</p>
-<p>Third, most of them ignore the dynamic nature of every (heterogeneous) graph;</p>
-<p>Finally, their intrinsic design and implementation make them incapable of modeling Web-scale heterogeneous graphs.</p>
-</blockquote>
-<p><strong>Method</strong>：作者提出了HGT期望能够解决上面的四个问题。</p>
-<ol type="1">
-<li>To handle graph heterogeneity，引入node- and edge-type dependent attention mechanism. 在计算边<span class="math inline">\(&lt;s, t&gt;\)</span>的attention时，使用meta relation <span class="math inline">\(⟨node\ type\ of\ s,\ edge\ type\ of\ e\ between\ s\ \&amp;\ t,\ node\ type\ of\ t⟩\)</span>。给不同的type定义不同的weight matrix，然后组合起来成为这条边的weight matrix。这样子的话不同type的weight matrix就可以互相交互，互相影响。weight matrix被用来计算attention。另外，由于GNN的天性，聚合多阶邻居实际就是在被认为学习“soft” meta paths。另外根据attention，又能够更好的区分学习到的这些soft meta path。</li>
-<li>To handle graph dynamics，类似于Transformer position encoding，定义了relative temporal encoding (RTE)。不是把不同timestamp的graph看做不同的图，而是直接把带有不同RTE的node一起聚合。</li>
-<li>To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有和global graph相似的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。</li>
-</ol>
-<p>先来看几个定义：</p>
-<p>Heterogeneous Graph（a.k.a. heterogeneous information networks）</p>
-<blockquote>
-<p>Definition 1. Heterogeneous Graph: A heterogeneous graph is defined as a directed graph G = (V, E, A, R) where each node v ∈ V and each edge e ∈ E are associated with their type mapping functions τ(v) : V → A and ϕ(e) : E → R, respectively.</p>
-</blockquote>
-<p>“异质”的本质就是来源各不相同，type不同。</p>
-<p>Meta Relation</p>
-<blockquote>
-<p>For an edge <span class="math inline">\(e = (s,t)\)</span> linked from source node s to target node t, its meta relation is denoted as <span class="math inline">\(⟨\tau (s),\phi (e),\tau (t)⟩\)</span>。</p>
-</blockquote>
-<p>常用的meta path可以看做是一系列这样的meta relation的组合</p>
-<p>Dynamic Heterogeneous Graph.</p>
-<blockquote>
-<p>To model the dynamic nature of real-world (heterogeneous) graphs, we assign an edge <span class="math inline">\(e = (s,t)\)</span> a timestamp <span class="math inline">\(T\)</span>, when node <span class="math inline">\(s\)</span> connects to node <span class="math inline">\(t\)</span> at <span class="math inline">\(T\)</span>.</p>
-</blockquote>
-<p>当一个node <span class="math inline">\(s\)</span>在时间<span class="math inline">\(T\)</span>链接到<span class="math inline">\(t\)</span>的时候，认为这条边的timestamp就是<span class="math inline">\(T\)</span>，并且在以后不再更改。</p>
-<h2 id="method">Method</h2>
-<p><img src="image-20210414152012151.png" /></p>
-<p>整体结构：</p>
-<p><img src="image-20210414163111880.png" /></p>
-<p>注意这里，A-Linear是根据node <span class="math inline">\(t\)</span>的type决定的。同时使用了残差结构。</p>
-<p>聚合函数就是直接相加。</p>
-<p><img src="image-20210414163415151.png" /></p>
-<p>核心是两部分，产生消息，然后产生注意力。</p>
-<p>产生消息：</p>
-<p><img src="image-20210414163541401.png" /></p>
-<p>邻居node的type和邻居relation的type的weight相乘。</p>
-<p>产生attention：</p>
-<p><img src="image-20210414163722393.png" /></p>
-<p>这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。</p>
-<p>除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个<span class="math inline">\(\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}\)</span>。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。</p>
-<h2 id="rte">RTE</h2>
-<p>前面提到了RTE，它的核心思想是为不同timestamp的edge学习不同的表示，然后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
-<p>首先计算时间差，<img src="image-20210414170116901.png" alt="image-20210414170116901" style="zoom:25%;" />，然后编码，使用一个scalar生成一个embedding</p>
-<p><span class="math inline">\(2i,\ 2i+1\)</span>应该是dim</p>
-<p><img src="image-20210414170312971.png" /></p>
-<p>最后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
-<p><img src="image-20210414170336206.png" /></p>
-<h2 id="hgsampling">HGSampling</h2>
-<p>为了训练大规模的graph，必须进行采样，每次只训练一部分的graph，即采样subgraph。这一操作在graphSAGE中已经有相应的算法。但是问题在于，这样随机的采样导致后果是sub-graph在不同type下采样的数量非常imbalance。</p>
-<blockquote>
-<p>To address this issue, different sampling-based methods [1, 2, 7, 29] have been proposed to train GNNs on a subset of nodes. However, directly using them for heterogeneous graphs is prone to get sub-graphs that are extremely imbalanced regarding different node types, due to that the degree distribution and the total number of nodes for each type can vary dramatically.</p>
-</blockquote>
-<p>HGSampling算法能够保证两点：</p>
-<ol type="1">
-<li>不同类型的node和edge具有相近的数量</li>
-<li>每次采样得到的sub-graph足够密集能够用于降低loss，同时减少sample variance</li>
-</ol>
-<p>核心思想是为不同的node type，根据重要程度，采样相同数量的node。</p>
-<p><img src="image-20210414180544283.png" alt="算法1" style="zoom: 33%;" /></p>
-<p><img src="image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" /></p>
-<h2 id="experiment">Experiment</h2>
-<p>核心数据集，Open Academic Graph (OAG)</p>
-<blockquote>
-<p>OAG consists of more than 178 million nodes and 2.236 billion edges—the largest publicly available heterogeneous academic dataset. In addition, all papers in OAG are associated with their publication dates, spanning from 1900 to 2019.</p>
-</blockquote>
-<p>为了验证模型的泛化性，同时从OAG中抽离出来两个不同的子集，Computer Science (CS) and Medicine (Med) academic graphs。</p>
-<p>对于所有的edge，增加self和reverse relation。</p>
-<p>prediction task有四个：</p>
+<h3 id="the-phase-part">2.2 The phase part</h3>
+<p>进一步区分同一层级下的不同实体。</p>
+<p>使用<span class="math inline">\(e_p\)</span>表示相位部分， <span class="math display">\[
+(h_p+r_p)\ mod\ 2\pi = t_p,\ where\ h_p,t_p,r_p\in [0, 2\pi)^k
+\]</span> 距离函数： <span class="math display">\[
+d_{r,p}(h_p,t_p)=|| \sin{((h_p + r_p - t_p)/2)} ||_1
+\]</span> 除以2是保证<span class="math inline">\((h_p + r_p - t_p)/2\in [0, 2\pi)^k\)</span>，上面的式子和pRotatE中的一样。</p>
+<h3 id="loss-function">2.3 Loss Function</h3>
+<p>经过上面的两部分，获得总的嵌入： <span class="math display">\[
+e=[e_m;e_p]
+\]</span> 之后计算<span class="math inline">\((h,r,t)\)</span>存在概率的得分： <span class="math display">\[
+f_r(h,t)=-(d_{r,m}(h,t)+\lambda d_{r,p}(h,t))
+\]</span> 使用负采样的损失函数： <span class="math display">\[
+L=-log\sigma(\gamma-f_r(h,t))-\sum_{i=1}^n p(h^{&#39;}_i, r, t^{&#39;}_i) log\sigma(f_r(h^{&#39;}_i,t^{&#39;}_i)-\gamma) \\
+p(h^{&#39;}_j, r, t^{&#39;}_j) =\frac{exp\alpha f_r(h^{&#39;}_j, t^{&#39;}_j)}{\sum_i f_r(h^{&#39;}_i, t^{&#39;}_i)}
+\]</span></p>
+<h2 id="experiments-and-analysis">3 Experiments and Analysis</h2>
+<h3 id="main-results">3.1 Main Results</h3>
+<img src="/2021/04/15/HAKE/image-20200614173938559.png" class="" title="image-20200614173938559">
+<p>三个数据集：WN18RR, FB15k-237, YAGO3-10</p>
+<p>为了说明phase part部分的作用，只保留modulus part，作为模型<strong>ModE</strong>： <span class="math display">\[
+d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
+\]</span></p>
+<h3 id="analysis-on-relation-embeddings">3.2 Analysis on Relation Embeddings</h3>
+<p>首先，说明HAKE能否捕获不同语义层级的信息。</p>
+<p>只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度</p>
+<p><img src="HAKE/image-20200614174230314.png" alt="image-20200614174230314" style="zoom: 25%;" /></p>
+<p>其中，</p>
 <ul>
-<li>the prediction of Paper–Field (L1)</li>
-<li>Paper–Field (L2)</li>
-<li>Paper–Venue</li>
-<li>Author Disambiguation</li>
+<li>a和b是尾实体比头实体的关系语义层级高，结果显示关系embedding大部分元素&lt;1</li>
+<li>c和d是尾实体比头实体的关系语义层级一样，结果显示关系embedding大部分元素=1</li>
+<li>e和f是尾实体比头实体的关系语义层级低，结果显示关系embedding大部分元素&gt;1</li>
 </ul>
-<p>前三个实际是分类任务，最后一个是link prediction，使用了NTN。</p>
-<blockquote>
-<p>For author disambiguation, we select all the authors with the same name and their associated papers. The task is to conduct link prediction between these papers and candidate authors. After getting the paper and author node representations from GNNs, we use a Neural Tensor Network to get the probability of each author-paper pair to be linked.</p>
-</blockquote>
-<p>指标：</p>
-<ul>
-<li>NDCG</li>
-<li>MRR</li>
-</ul>
-<p>使用2015年以前的数据作为训练集，2015-2016年的数据作为验证集，2016-2019年的数据作为测试集。</p>
-<p>初始化的特征：</p>
-<ul>
-<li>paper：使用提前训练好的XLNet，然后根据title的word，使用attention平均，捕获语义特征</li>
-<li>author：所有发表论文的特征，然后平均</li>
-<li>field，venue和institute：使用metapath2vec，捕获结构特征</li>
-</ul>
-<p>为了公平比较，对于其它的baseline，在输入之前增加一层adaptation layer，把不同type的feature投影到同一分布下。</p>
-<p>实现细节：</p>
-<ul>
-<li>256 dim</li>
-<li>8 multi-head number</li>
-<li>3 layer</li>
-<li>All baselines are optimized via the AdamW optimizer</li>
-<li>Cosine Annealing Learning Rate Scheduler</li>
-<li>200 epoch</li>
-<li>select the one with the lowest validation loss</li>
-</ul>
+<p>同样可以看出HAKE比ModE的方差更小，说明HAKE的建模更准确。</p>
+<p>之后，说明phase part的作用，比较c和d的关系embedding的phase part</p>
+<p><img src="HAKE/image-20200614175049088.png" alt="image-20200614175049088" style="zoom: 25%;" /></p>
+<p>上述结果说明有很多关系嵌入的phase part元素分布在<span class="math inline">\(\pi\)</span>，导致<span class="math inline">\(h_p\)</span>和<span class="math inline">\(t_p\)</span>不一样，可以区分同一语义层级的不同实体。</p>
+<h3 id="analysis-on-entity-embeddings">3.3 Analysis on Entity Embeddings</h3>
+<p>因为是使用极坐标来表示语义层级，可以把实体embedding在极坐标中可视化。</p>
+<p>实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。</p>
+<p><img src="HAKE/image-20200614180811928.png" alt="image-20200614180811928" style="zoom:25%;" /></p>
+<p>图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。</p>
+<h3 id="ablation-studies">3.4 Ablation Studies</h3>
+<img src="/2021/04/15/HAKE/image-20200614181125392.png" class="" title="image-20200614181125392">
 
     </div>
 
@@ -417,6 +386,16 @@
 
 
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/15/R-GCN/" rel="prev" title="R-GCN">
+      <i class="fa fa-chevron-left"></i> R-GCN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/15/InteractE/" rel="next" title="InteratE">
+      InteratE <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -474,7 +453,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#heterogeneous-graph-transformer"><span class="nav-number">1.</span> <span class="nav-text">Heterogeneous Graph Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">1.2.</span> <span class="nav-text">Method</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rte"><span class="nav-number">1.3.</span> <span class="nav-text">RTE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgsampling"><span class="nav-number">1.4.</span> <span class="nav-text">HGSampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiment"><span class="nav-number">1.5.</span> <span class="nav-text">Experiment</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#learning-hierarchy-aware-knowledge-graph-embeddings-for-link-prediction"><span class="nav-number">1.</span> <span class="nav-text">Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-proposed-hake"><span class="nav-number">1.2.</span> <span class="nav-text">2 The Proposed HAKE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-modulus-part"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 The modulus part</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-phase-part"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 The phase part</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loss-function"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Loss Function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-and-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">3 Experiments and Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-results"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Main Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-on-relation-embeddings"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Analysis on Relation Embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-on-entity-embeddings"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Analysis on Entity Embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ablation-studies"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Ablation Studies</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -490,15 +469,21 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
@@ -538,13 +523,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">5k</span>
+    <span title="Symbols count total">59k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">4 mins.</span>
+    <span title="Reading time total">54 mins.</span>
 </div>
 
         
