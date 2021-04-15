@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>GNN HGT</title>
+    <url>/2021/04/14/GNN-HGT/</url>
+    <content><![CDATA[<h1 id="heterogeneous-graph-transformer">Heterogeneous Graph Transformer</h1>
+<p>本文的贡献主要有三点：</p>
+<ol type="1">
+<li>针对异质图设计了Heterogeneous Graph Transformer，HGT，用于处理Web-scale的异质网络。</li>
+<li>为了能够训练大规模图，提出了HGSampling采样方法，在Open Academic Graph (OAG)上进行了验证。</li>
+<li>针对动态异质图，引入relative temporal encoding，能够处理任意的动态信息</li>
+</ol>
+<span id="more"></span>
+<p>WWW 2020</p>
+<h2 id="introduction">Introduction</h2>
+<p><strong>Motivation</strong> ：对于heterogeneous graph已有的处理方法有基于meta-path的方法，以及最近出现的GNN方法。但是这些方法都面临问题。</p>
+<ol type="1">
+<li>大多数的方法为不同的heterogeneous graph设计meta path，要求specific domain knowledge</li>
+<li>很多方法要么忽略不同type的差异，直接使用共通的weight，要么直接认为不同type之间是完全独立的，为不同的方法定义各自独立的weight</li>
+<li>它们大多数忽略了heterogeneous graph中存在的动态特性dynamic nature</li>
+<li>它们intrinsic design无法modeling Web-scale heterogeneous graph</li>
+</ol>
+<blockquote>
+<p>First, most of them involve the design of meta paths for each type of heterogeneous graphs, requiring specific domain knowledge;</p>
+<p>Second, they either simply assume that different types of nodes/edges share the same feature and representation space or keep distinct non-sharing weights for either node type or edge type alone, making them insufficient to capture heterogeneous graphs’ properties;</p>
+<p>Third, most of them ignore the dynamic nature of every (heterogeneous) graph;</p>
+<p>Finally, their intrinsic design and implementation make them incapable of modeling Web-scale heterogeneous graphs.</p>
+</blockquote>
+<p><strong>Method</strong>：作者提出了HGT期望能够解决上面的四个问题。</p>
+<ol type="1">
+<li>To handle graph heterogeneity，引入node- and edge-type dependent attention mechanism. 在计算边<span class="math inline">\(&lt;s, t&gt;\)</span>的attention时，使用meta relation <span class="math inline">\(⟨node\ type\ of\ s,\ edge\ type\ of\ e\ between\ s\ \&amp;\ t,\ node\ type\ of\ t⟩\)</span>。给不同的type定义不同的weight matrix，然后组合起来成为这条边的weight matrix。这样子的话不同type的weight matrix就可以互相交互，互相影响。weight matrix被用来计算attention。另外，由于GNN的天性，聚合多阶邻居实际就是在被认为学习“soft” meta paths。另外根据attention，又能够更好的区分学习到的这些soft meta path。</li>
+<li>To handle graph dynamics，类似于Transformer position encoding，定义了relative temporal encoding (RTE)。不是把不同timestamp的graph看做不同的图，而是直接把带有不同RTE的node一起聚合。</li>
+<li>To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有和global graph相似的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。</li>
+</ol>
+<p>先来看几个定义：</p>
+<p>Heterogeneous Graph（a.k.a. heterogeneous information networks）</p>
+<blockquote>
+<p>Definition 1. Heterogeneous Graph: A heterogeneous graph is defined as a directed graph G = (V, E, A, R) where each node v ∈ V and each edge e ∈ E are associated with their type mapping functions τ(v) : V → A and ϕ(e) : E → R, respectively.</p>
+</blockquote>
+<p>“异质”的本质就是来源各不相同，type不同。</p>
+<p>Meta Relation</p>
+<blockquote>
+<p>For an edge <span class="math inline">\(e = (s,t)\)</span> linked from source node s to target node t, its meta relation is denoted as <span class="math inline">\(⟨\tau (s),\phi (e),\tau (t)⟩\)</span>。</p>
+</blockquote>
+<p>常用的meta path可以看做是一系列这样的meta relation的组合</p>
+<p>Dynamic Heterogeneous Graph.</p>
+<blockquote>
+<p>To model the dynamic nature of real-world (heterogeneous) graphs, we assign an edge <span class="math inline">\(e = (s,t)\)</span> a timestamp <span class="math inline">\(T\)</span>, when node <span class="math inline">\(s\)</span> connects to node <span class="math inline">\(t\)</span> at <span class="math inline">\(T\)</span>.</p>
+</blockquote>
+<p>当一个node <span class="math inline">\(s\)</span>在时间<span class="math inline">\(T\)</span>链接到<span class="math inline">\(t\)</span>的时候，认为这条边的timestamp就是<span class="math inline">\(T\)</span>，并且在以后不再更改。</p>
+<h2 id="method">Method</h2>
+<figure>
+<img src="image-20210414152012151.png" alt="image-20210414152012151" /><figcaption>image-20210414152012151</figcaption>
+</figure>
+<p>整体结构：</p>
+<figure>
+<img src="image-20210414163111880.png" alt="image-20210414163111880" /><figcaption>image-20210414163111880</figcaption>
+</figure>
+<p>注意这里，A-Linear是根据node <span class="math inline">\(t\)</span>的type决定的。同时使用了残差结构。</p>
+<p>聚合函数就是直接相加。</p>
+<figure>
+<img src="image-20210414163415151.png" alt="image-20210414163415151" /><figcaption>image-20210414163415151</figcaption>
+</figure>
+<p>核心是两部分，产生消息，然后产生注意力。</p>
+<p>产生消息：</p>
+<figure>
+<img src="image-20210414163541401.png" alt="image-20210414163541401" /><figcaption>image-20210414163541401</figcaption>
+</figure>
+<p>邻居node的type和邻居relation的type的weight相乘。</p>
+<p>产生attention：</p>
+<figure>
+<img src="image-20210414163722393.png" alt="image-20210414163722393" /><figcaption>image-20210414163722393</figcaption>
+</figure>
+<p>这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。</p>
+<p>除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个<span class="math inline">\(\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}\)</span>。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。</p>
+<h2 id="rte">RTE</h2>
+<p>前面提到了RTE，它的核心思想是为不同timestamp的edge学习不同的表示，然后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
+<p>首先计算时间差，<img src="image-20210414170116901.png" alt="image-20210414170116901" style="zoom:25%;" />，然后编码，使用一个scalar生成一个embedding</p>
+<p><span class="math inline">\(2i,\ 2i+1\)</span>应该是dim</p>
+<figure>
+<img src="image-20210414170312971.png" alt="image-20210414170312971" /><figcaption>image-20210414170312971</figcaption>
+</figure>
+<p>最后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
+<figure>
+<img src="image-20210414170336206.png" alt="image-20210414170336206" /><figcaption>image-20210414170336206</figcaption>
+</figure>
+<h2 id="hgsampling">HGSampling</h2>
+<p>为了训练大规模的graph，必须进行采样，每次只训练一部分的graph，即采样subgraph。这一操作在graphSAGE中已经有相应的算法。但是问题在于，这样随机的采样导致后果是sub-graph在不同type下采样的数量非常imbalance。</p>
+<blockquote>
+<p>To address this issue, different sampling-based methods [1, 2, 7, 29] have been proposed to train GNNs on a subset of nodes. However, directly using them for heterogeneous graphs is prone to get sub-graphs that are extremely imbalanced regarding different node types, due to that the degree distribution and the total number of nodes for each type can vary dramatically.</p>
+</blockquote>
+<p>HGSampling算法能够保证两点：</p>
+<ol type="1">
+<li>不同类型的node和edge具有相近的数量</li>
+<li>每次采样得到的sub-graph足够密集能够用于降低loss，同时减少sample variance</li>
+</ol>
+<p>核心思想是为不同的node type，根据重要程度，采样相同数量的node。</p>
+<p><img src="image-20210414180544283.png" alt="image-20210414180544283" style="zoom: 33%;" /></p>
+<p><img src="image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" /></p>
+<h2 id="experiment">Experiment</h2>
+<p>核心数据集，Open Academic Graph (OAG)</p>
+<blockquote>
+<p>OAG consists of more than 178 million nodes and 2.236 billion edges—the largest publicly available heterogeneous academic dataset. In addition, all papers in OAG are associated with their publication dates, spanning from 1900 to 2019.</p>
+</blockquote>
+<p>为了验证模型的泛化性，同时从OAG中抽离出来两个不同的子集，Computer Science (CS) and Medicine (Med) academic graphs。</p>
+<p>对于所有的edge，增加self和reverse relation。</p>
+<p>prediction task有四个：</p>
+<ul>
+<li>the prediction of Paper–Field (L1)</li>
+<li>Paper–Field (L2)</li>
+<li>Paper–Venue</li>
+<li>Author Disambiguation</li>
+</ul>
+<p>前三个实际是分类任务，最后一个是link prediction，使用了NTN。</p>
+<blockquote>
+<p>For author disambiguation, we select all the authors with the same name and their associated papers. The task is to conduct link prediction between these papers and candidate authors. After getting the paper and author node representations from GNNs, we use a Neural Tensor Network to get the probability of each author-paper pair to be linked.</p>
+</blockquote>
+<p>指标：</p>
+<ul>
+<li>NDCG</li>
+<li>MRR</li>
+</ul>
+<p>使用2015年以前的数据作为训练集，2015-2016年的数据作为验证集，2016-2019年的数据作为测试集。</p>
+<p>初始化的特征：</p>
+<ul>
+<li>paper：使用提前训练好的XLNet，然后根据title的word，使用attention平均，捕获语义特征</li>
+<li>author：所有发表论文的特征，然后平均</li>
+<li>field，venue和institute：使用metapath2vec，捕获结构特征</li>
+</ul>
+<p>为了公平比较，对于其它的baseline，在输入之前增加一层adaptation layer，把不同type的feature投影到同一分布下。</p>
+<p>实现细节：</p>
+<ul>
+<li>256 dim</li>
+<li>8 multi-head number</li>
+<li>3 layer</li>
+<li>All baselines are optimized via the AdamW optimizer</li>
+<li>Cosine Annealing Learning Rate Scheduler</li>
+<li>200 epoch</li>
+<li>select the one with the lowest validation loss</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+  </entry>
+</search>
