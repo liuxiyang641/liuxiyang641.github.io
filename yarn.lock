@@ -2009,6 +2009,11 @@
   dependencies:
     "sprintf-js" "^1.0.3"
 
+"hexo-image-link@^0.0.3":
+  "integrity" "sha1-vq3NCntEpfwpsKPcVWcihPZLu3M="
+  "resolved" "https://registry.npm.taobao.org/hexo-image-link/download/hexo-image-link-0.0.3.tgz"
+  "version" "0.0.3"
+
 "hexo-log@^2.0.0":
   "integrity" "sha1-HcyOlgApsIshmU/ixWxOPWNG6JM="
   "resolved" "https://registry.npm.taobao.org/hexo-log/download/hexo-log-2.0.0.tgz"

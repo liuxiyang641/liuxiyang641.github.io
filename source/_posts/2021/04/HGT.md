@@ -1,5 +1,5 @@
 ---
-title: GNN HGT
+title: HGT
 date: 2021-04-14 21:34:26
 categories:
 - Paper
@@ -63,29 +63,27 @@ Dynamic Heterogeneous Graph.
 
 ## Method
 
-![](image-20210414152012151.png)
-
 整体结构：
 
-![](image-20210414163111880.png)
+![image-20210414152012151](GNN-HGT/image-20210414152012151.png)
 
 注意这里，A-Linear是根据node $t$的type决定的。同时使用了残差结构。
 
 聚合函数就是直接相加。
 
-![](image-20210414163415151.png)
+![image-20210414163415151](GNN-HGT/image-20210414163415151.png)
 
 核心是两部分，产生消息，然后产生注意力。
 
 产生消息：
 
-![](image-20210414163541401.png)
+![image-20210414163541401](GNN-HGT/image-20210414163541401.png)
 
 邻居node的type和邻居relation的type的weight相乘。
 
 产生attention：
 
-![](image-20210414163722393.png)
+![image-20210414163722393](GNN-HGT/image-20210414163722393.png)
 
 这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。
 
@@ -99,11 +97,11 @@ Dynamic Heterogeneous Graph.
 
 $2i,\ 2i+1$应该是dim
 
-![](image-20210414170312971.png)
+![](GNN-HGT/image-20210414170312971.png)
 
 最后加到邻居node $s$的表表示$H[s]$上。
 
-![](image-20210414170336206.png)
+![](GNN-HGT/image-20210414170336206.png)
 
 ## HGSampling
 
@@ -119,8 +117,6 @@ HGSampling算法能够保证两点：
 核心思想是为不同的node type，根据重要程度，采样相同数量的node。
 
 <img src="image-20210414180544283.png" alt="算法1" style="zoom: 33%;" />
-
-
 
 <img src="image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" />
 

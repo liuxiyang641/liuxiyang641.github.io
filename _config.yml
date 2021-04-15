@@ -19,7 +19,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: ':lang'
 skip_render: null
-new_post_name: ':title.md'
+new_post_name: ':year/:month/:title.md'
 default_layout: post
 titlecase: false
 external_link:
@@ -29,6 +29,7 @@ external_link:
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
+hexo-asset-folder: true
 relative_link: false
 future: true
 highlight:
