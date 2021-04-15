@@ -131,6 +131,19 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
       </categories>
   </entry>
   <entry>
+    <title>Beyond-Homo</title>
+    <url>/2021/04/15/Beyond-Homo/</url>
+    <content><![CDATA[<h1 id="beyond-homophily-in-graph-neural-networks-current-limitations-and-effective-designs">Beyond Homophily in Graph Neural Networks: Current Limitations and Effective Designs</h1>
+<p>本文讨论了graph的heterophily</p>
+<span id="more"></span>
+<div class="pdfobject-container" data-target="Beyond-Homophily-in-Graph-Neural-Networks.pdf" data-height="500px"></div>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
     <title>CapsE</title>
     <url>/2021/04/15/CapsE/</url>
     <content><![CDATA[<h1 id="a-capsule-network-based-embedding-model-for-knowledge-graph-completion-and-search-personalization">A Capsule Network-based Embedding Model for Knowledge Graph Completion and Search Personalization</h1>
@@ -187,31 +200,19 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
     <url>/2021/04/15/CoPER/</url>
     <content><![CDATA[<h1 id="coper">CoPER</h1>
 <p>认为之前的KGE方法将entity embedding和relation embedding之间的交互都局限在additive上。 这篇文章使用relation embedding产生参数，转化entity embedding。</p>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.16.00%20PM.png" alt="Screen Shot 2020-09-25 at 4.16.00 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.16.00 PM</figcaption>
-</figure>
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.16.00-PM.png" class="" title="Screen-Shot-2020-09-25-at-4.16.00-PM">
 <span id="more"></span>
 <p>首先它指出了之前很多方法对于entity embedding和relation embedding的学习是受限的，比如<span class="math inline">\(w[h;r]\)</span>，这样的方式，无法建模下面的例子。</p>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.21.05%20PM.png" alt="Screen Shot 2020-09-25 at 4.21.05 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.21.05 PM</figcaption>
-</figure>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.21.33%20PM.png" alt="Screen Shot 2020-09-25 at 4.21.33 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.21.33 PM</figcaption>
-</figure>
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.21.05-PM.png" class="" title="Screen-Shot-2020-09-25-at-4.21.05-PM">
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.21.33-PM.png" class="" title="Screen-Shot-2020-09-25-at-4.21.33-PM">
 <p>属于additive的方式，无法很好的区分<span class="math inline">\(e_0\)</span>，<span class="math inline">\(e_1\)</span>，<span class="math inline">\(e_2\)</span>，<span class="math inline">\(e_3\)</span></p>
 <p>在实现的方法中，它设计了三个不同的产生参数的module，contextual parameter generator (CPG).</p>
 <p>Parameter Lookup Table：</p>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.22.09%20PM.png" alt="Screen Shot 2020-09-25 at 4.22.09 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.22.09 PM</figcaption>
-</figure>
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.22.09-PM.png" class="" title="Screen-Shot-2020-09-25-at-4.22.09-PM">
 <p>Linear Projection.：</p>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.22.16%20PM.png" alt="Screen Shot 2020-09-25 at 4.22.16 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.22.16 PM</figcaption>
-</figure>
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.22.16-PM.png" class="" title="Screen Shot 2020-09-25 at 4.22.16 PM">
 <p>Multi-Layer Perceptron. ：</p>
-<figure>
-<img src="CoPER/Screen%20Shot%202020-09-25%20at%204.22.25%20PM.png" alt="Screen Shot 2020-09-25 at 4.22.25 PM" /><figcaption aria-hidden="true">Screen Shot 2020-09-25 at 4.22.25 PM</figcaption>
-</figure>
+<img src="/2021/04/15/CoPER/Screen-Shot-2020-09-25-at-4.22.25-PM.png" class="" title="Screen-Shot-2020-09-25-at-4.22.25-PM">
 <p>实验中发现，第一种方法效果s都不太好，容易过拟合，而且relation之间没有information sharing。第二中方法和第三种方法更合适，第二中方法适合于更大size的dataset，第三种更适合小一点的dataset。 在ConvE和MINERVA方法的基础上加入了CPG模块，具体看图</p>
 <p>需要注意的一点是它使用了新的训练方式，导致ConvE和DISTMULT这些方法的效果远远好于原来的效果，以后可以详细看一下。 优点：和ParamE类似，都是将relation embedding转换到了parameter space中，但是ParamE是完全将模型参数都作为relation embedding，而CoPER是使用某种结构转换relation embedding到参数中，还需要选择在什么地方使用由relation embedding转换过来的parameter。 可以利用或改进的点：可以利用这样的思想，将relation embedding转换为参数，然后和entity embedding进行交互。</p>
 ]]></content>
@@ -1931,6 +1932,18 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
       <categories>
         <category>Paper</category>
         <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>node2vec</title>
+    <url>/2021/04/15/node2vec/</url>
+    <content><![CDATA[<p>本文就提出了一种无监督的方法。核心思想：通过特定的游走方式进行采样，对于每个点都会生成 对应的序列。再将这些序列视为文本导入skip-gram模型，即可得 到每个节点的向量</p>
+<span id="more"></span>
+<div class="pdfobject-container" data-target="node2vec-Scalable-Feature-Learning-for-Networks.pdf" data-height="500px"></div>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>Graph Embedding</category>
       </categories>
   </entry>
 </search>
