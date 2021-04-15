@@ -49,41 +49,27 @@
 </blockquote>
 <p>当一个node <span class="math inline">\(s\)</span>在时间<span class="math inline">\(T\)</span>链接到<span class="math inline">\(t\)</span>的时候，认为这条边的timestamp就是<span class="math inline">\(T\)</span>，并且在以后不再更改。</p>
 <h2 id="method">Method</h2>
-<figure>
-<img src="image-20210414152012151.png" alt="image-20210414152012151" /><figcaption>image-20210414152012151</figcaption>
-</figure>
+<p><img src="image-20210414152012151.png" /></p>
 <p>整体结构：</p>
-<figure>
-<img src="image-20210414163111880.png" alt="image-20210414163111880" /><figcaption>image-20210414163111880</figcaption>
-</figure>
+<p><img src="image-20210414163111880.png" /></p>
 <p>注意这里，A-Linear是根据node <span class="math inline">\(t\)</span>的type决定的。同时使用了残差结构。</p>
 <p>聚合函数就是直接相加。</p>
-<figure>
-<img src="image-20210414163415151.png" alt="image-20210414163415151" /><figcaption>image-20210414163415151</figcaption>
-</figure>
+<p><img src="image-20210414163415151.png" /></p>
 <p>核心是两部分，产生消息，然后产生注意力。</p>
 <p>产生消息：</p>
-<figure>
-<img src="image-20210414163541401.png" alt="image-20210414163541401" /><figcaption>image-20210414163541401</figcaption>
-</figure>
+<p><img src="image-20210414163541401.png" /></p>
 <p>邻居node的type和邻居relation的type的weight相乘。</p>
 <p>产生attention：</p>
-<figure>
-<img src="image-20210414163722393.png" alt="image-20210414163722393" /><figcaption>image-20210414163722393</figcaption>
-</figure>
+<p><img src="image-20210414163722393.png" /></p>
 <p>这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。</p>
 <p>除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个<span class="math inline">\(\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}\)</span>。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。</p>
 <h2 id="rte">RTE</h2>
 <p>前面提到了RTE，它的核心思想是为不同timestamp的edge学习不同的表示，然后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
 <p>首先计算时间差，<img src="image-20210414170116901.png" alt="image-20210414170116901" style="zoom:25%;" />，然后编码，使用一个scalar生成一个embedding</p>
 <p><span class="math inline">\(2i,\ 2i+1\)</span>应该是dim</p>
-<figure>
-<img src="image-20210414170312971.png" alt="image-20210414170312971" /><figcaption>image-20210414170312971</figcaption>
-</figure>
+<p><img src="image-20210414170312971.png" /></p>
 <p>最后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
-<figure>
-<img src="image-20210414170336206.png" alt="image-20210414170336206" /><figcaption>image-20210414170336206</figcaption>
-</figure>
+<p><img src="image-20210414170336206.png" /></p>
 <h2 id="hgsampling">HGSampling</h2>
 <p>为了训练大规模的graph，必须进行采样，每次只训练一部分的graph，即采样subgraph。这一操作在graphSAGE中已经有相应的算法。但是问题在于，这样随机的采样导致后果是sub-graph在不同type下采样的数量非常imbalance。</p>
 <blockquote>
@@ -95,7 +81,7 @@
 <li>每次采样得到的sub-graph足够密集能够用于降低loss，同时减少sample variance</li>
 </ol>
 <p>核心思想是为不同的node type，根据重要程度，采样相同数量的node。</p>
-<p><img src="image-20210414180544283.png" alt="image-20210414180544283" style="zoom: 33%;" /></p>
+<p><img src="image-20210414180544283.png" alt="算法1" style="zoom: 33%;" /></p>
 <p><img src="image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" /></p>
 <h2 id="experiment">Experiment</h2>
 <p>核心数据集，Open Academic Graph (OAG)</p>
