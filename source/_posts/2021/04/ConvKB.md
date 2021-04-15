@@ -11,7 +11,7 @@ tags:
 
 2018-3-13 ConvKB
 
-<img src="ConvKB/image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" />
+<img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" />
 
 <!--more-->
 
@@ -38,7 +38,7 @@ CNN的意义：
 
 ## 2 Proposed ConvKB model
 
-<img src="ConvKB/image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" />
+<img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" />
 
 首先三元组组成矩阵
 $$

@@ -64,4 +64,4 @@ ConvR使用三个dropout防过拟合：
 
 实现的超参：
 
-<img src="ConvR/image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" />
+<img src="image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" />

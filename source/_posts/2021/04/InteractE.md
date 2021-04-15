@@ -56,13 +56,13 @@ $$
 $$
 $\phi$函数有以下几种类型：$\phi_{stk},\ \phi_{alt},\ \phi_{chk}$
 
-<img src="InteractE/image-20200405164138063.png" alt="image-20200405164138063" style="zoom:40%;" />
+<img src="image-20200405164138063.png" alt="image-20200405164138063" style="zoom:40%;" />
 
 ## 4 InteractE Details
 
 总体结构
 
-<img src="InteractE/image-20200405171149898.png" alt="image-20200405171149898" style="zoom:50%;" />
+<img src="image-20200405171149898.png" alt="image-20200405171149898" style="zoom:50%;" />
 
 ### 4.1 Feature Permutation
 
@@ -81,7 +81,7 @@ $$
 
 ### 4.3 Circular Convolution
 
-<img src="InteractE/image-20200405171009766.png" alt="image-20200405171009766" style="zoom:40%;" />
+<img src="image-20200405171009766.png" alt="image-20200405171009766" style="zoom:40%;" />
 
 循环卷积，
 $$
@@ -98,7 +98,7 @@ $$
 
 数据集
 
-<img src="InteractE/image-20200405191734032.png" alt="image-20200405191734032" style="zoom:50%;" />
+<img src="image-20200405191734032.png" alt="image-20200405191734032" style="zoom:50%;" />
 
 ### 5.1 Performance Comparison
 
