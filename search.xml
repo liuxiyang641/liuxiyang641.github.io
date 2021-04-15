@@ -353,7 +353,7 @@ relu(vec(relu([\bar{e_s}; \bar{r_r}] \star \cal{w}))W)
     <url>/2021/04/15/ConvKB/</url>
     <content><![CDATA[<h1 id="a-novel-embedding-model-for-knowledge-base-completion-based-on-convolutional-neural-network">A Novel Embedding Model for Knowledge Base Completion Based on Convolutional Neural Network</h1>
 <p>2018-3-13 ConvKB</p>
-<p><img src="ConvKB/image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
+<p><img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
 <span id="more"></span>
 <h2 id="introduction">1 Introduction</h2>
 <p>知识图谱可以为knowledge base/knowledge graph</p>
@@ -371,7 +371,7 @@ relu(vec(relu([\bar{e_s}; \bar{r_r}] \star \cal{w}))W)
 <li>能够捕获复杂的，非线性的关系</li>
 </ul>
 <h2 id="proposed-convkb-model">2 Proposed ConvKB model</h2>
-<p><img src="ConvKB/image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
+<p><img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
 <p>首先三元组组成矩阵 <span class="math display">\[
 A=[v_h,v_r,v_t]\in R^{k\times 3}
 \]</span> 之后经过一个简单的CNN层， <span class="math display">\[
@@ -438,7 +438,7 @@ R^{l}\in R^{h,\ w}
 <li>WN18RR</li>
 </ul>
 <p>实现的超参：</p>
-<p><img src="ConvR/image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" /></p>
+<p><img src="image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" /></p>
 ]]></content>
   </entry>
   <entry>
@@ -1057,10 +1057,10 @@ e_r=(b_1,\dots,b_d)
 \]</span> Reshaping Function： <span class="math display">\[
 \phi: R^d\times R^d=R^{m\times n}
 \]</span> <span class="math inline">\(\phi\)</span>函数有以下几种类型：<span class="math inline">\(\phi_{stk},\ \phi_{alt},\ \phi_{chk}\)</span></p>
-<p><img src="InteractE/image-20200405164138063.png" alt="image-20200405164138063" style="zoom:40%;" /></p>
+<p><img src="image-20200405164138063.png" alt="image-20200405164138063" style="zoom:40%;" /></p>
 <h2 id="interacte-details">4 InteractE Details</h2>
 <p>总体结构</p>
-<p><img src="InteractE/image-20200405171149898.png" alt="image-20200405171149898" style="zoom:50%;" /></p>
+<p><img src="image-20200405171149898.png" alt="image-20200405171149898" style="zoom:50%;" /></p>
 <h3 id="feature-permutation">4.1 Feature Permutation</h3>
 <p>拿到向量<span class="math inline">\(e_s,\ e_r\)</span>先进行特征随机排列，也就是对于<span class="math inline">\(e_s=(a_1,\dots,a_d)\  e_r=(b_1,\dots,b_d)\)</span>进行随机排序。一共可以进行<span class="math inline">\(t\)</span>次。得到， <span class="math display">\[
 P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
@@ -1070,7 +1070,7 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \phi_{chk}(P_t)=[\phi(e_s^1,e_r^1),\cdots,\phi(e_s^t,e_r^t)]
 \]</span></p>
 <h3 id="circular-convolution">4.3 Circular Convolution</h3>
-<p><img src="InteractE/image-20200405171009766.png" alt="image-20200405171009766" style="zoom:40%;" /></p>
+<p><img src="image-20200405171009766.png" alt="image-20200405171009766" style="zoom:40%;" /></p>
 <p>循环卷积， <span class="math display">\[
 [x\star \omega]_{p,q}=\sum_{i=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} \sum_{j=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} x_{[p-i]_m,\ [q-j]_n} \omega_{i,j}
 \]</span></p>
@@ -1080,7 +1080,7 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \]</span></p>
 <h2 id="experimental-setup">5 Experimental Setup</h2>
 <p>数据集</p>
-<p><img src="InteractE/image-20200405191734032.png" alt="image-20200405191734032" style="zoom:50%;" /></p>
+<p><img src="image-20200405191734032.png" alt="image-20200405191734032" style="zoom:50%;" /></p>
 <h3 id="performance-comparison">5.1 Performance Comparison</h3>
 <img src="/2021/04/15/InteractE/image-20200405191900132.png" class="" title="image-20200405191900132">
 <p>在整体性能的比较上来看，对于ConvE是有较明显的提升。同时在WN18RR数据集上的效果不显著。这一点和在ConvE里面发现的现象一致，因为这个数据集可能更适合于浅层的模型因为它的平均关联度就很低。</p>
@@ -1835,7 +1835,7 @@ L=-\frac{1}{(1+w)|\varepsilon|}\sum_{(s,r,o,y)\in \Gamma}{ylog(f(s,r,o)) + (1-y)
 </blockquote>
 <h2 id="modelling-and-notation">2 Modelling and Notation</h2>
 <p>看一下对于relational data如何表示：</p>
-<p><img src="RESCAL/image-20200223224511662.png" alt="image-20200223224511662" style="zoom:50%;" /></p>
+<p><img src="wimage-20200223224511662.png" alt="image-20200223224511662" style="zoom:50%;" /></p>
 <p>整体的数据被表示为张量<span class="math inline">\(\cal{X}\)</span>，<span class="math inline">\(\cal{X}_{ijk}=1\)</span>，表示fact存在。</p>
 <h2 id="methods-and-theoretical-aspects">4 Methods and Theoretical Aspects</h2>
 <p>文中定义了collective learning，大概含义是通过利用相关node的信息perform task。</p>
