@@ -136,7 +136,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
     <content><![CDATA[<h1 id="beyond-homophily-in-graph-neural-networks-current-limitations-and-effective-designs">Beyond Homophily in Graph Neural Networks: Current Limitations and Effective Designs</h1>
 <p>本文讨论了graph的heterophily</p>
 <span id="more"></span>
-<div class="pdfobject-container" data-target="Beyond-Homophily-in-Graph-Neural-Networks.pdf" data-height="500px"></div>
+<div class="pdfobject-container" data-target="Beyond-Homophily-in-Graph-Neural-Networks.pdf" data-height="1000px"></div>
 ]]></content>
       <categories>
         <category>Paper</category>
@@ -1026,6 +1026,25 @@ Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
       </categories>
   </entry>
   <entry>
+    <title>How-Powerful-of-GNN</title>
+    <url>/2021/04/16/How-Powerful-of-GNN/</url>
+    <content><![CDATA[<h1 id="how-powerful-are-graph-neural-networks">HOW POWERFUL ARE GRAPH NEURAL NETWORKS?</h1>
+<p>This paper:</p>
+<ol type="1">
+<li>characterize how expressive different GNN variants are in learning to represent and distinguish between different graph structures</li>
+<li>show that GNNs are at most as powerful as the WL test in distinguishing graph structures.</li>
+<li>identify graph structures that cannot be distinguished by popular GNN variants, such as GCN (Kipf &amp; Welling, 2017) and GraphSAGE (Hamilton et al., 2017a)</li>
+<li>develop a simple neural architecture, Graph Isomorphism Network (GIN)</li>
+</ol>
+<span id="more"></span>
+<div class="pdfobject-container" data-target="HOW-POWERFUL-ARE-GRAPH-NEURAL-NETWORKS.pdf" data-height="1000px"></div>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
     <title>InteratE</title>
     <url>/2021/04/15/InteractE/</url>
     <content><![CDATA[<h1 id="interacte-improving-convolution-based-knowledge-graph-embeddings-by-increasing-feature-interactions">InteractE: Improving Convolution-based Knowledge Graph Embeddings by Increasing Feature Interactions</h1>
@@ -1325,6 +1344,105 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
       <categories>
         <category>Paper</category>
         <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>KGAT</title>
+    <url>/2021/04/16/KGAT/</url>
+    <content><![CDATA[<h1 id="kgat-knowledge-graph-attention-network-for-recommendation">KGAT: Knowledge Graph Attention Network for Recommendation</h1>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<span id="more"></span>
+<h2 id="现在结合知识图谱的推荐存在的问题">1. 现在结合知识图谱的推荐存在的问题</h2>
+<h3 id="知识图谱出现解决的问题">1.1 知识图谱出现解决的问题</h3>
+<p>推荐算法中的协同过滤考虑的根据某个用户的历史数据，寻找可能兴趣相投的群体，来推荐物品。比如在下图中，要给用户推荐物品，那么但从交互的物品来看，都与有交互，那么就可以认为是兴趣相投的用户，根据他们的历史数据来给推荐物品。但如果表示某部电影，的导演也是这部电影的演员，与之间是存在属性上的联系的，这种联系是单纯协同过滤无法解决的。</p>
+<img data-src="/2021/04/16/KGAT/image-20191214102753089-8557739.png" class="" title="image-20191214102753089">
+<p>为了解决这个问题，加入知识图谱(knowledge graph)，形成了下面的结构。</p>
+<img data-src="/2021/04/16/KGAT/image-20191214103645598-8557739.png" class="" title="image-20191214103645598">
+<p>在这样的图中，与就关联起来了。同样给推荐物品，就能够找到更多的相似用户来进行推荐。</p>
+<p>考虑之前的用户和物品交互矩阵，矩阵当中只存在一种关系，就是用户和物品的交互，并且物品和物品之间是没有直接交互的，如果结合了知识图谱，物品和物品之间就出现了直接的关系，增加了新的实体，矩阵中的关系也就由一个变为了多个。</p>
+<p>在这样的条件下，就可以继续利用GNN来进行propagation。</p>
+<h3 id="使用gnn的思路">1.2 使用GNN的思路</h3>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<h2 id="模型结构">2 模型结构</h2>
+<img data-src="/2021/04/16/KGAT/image-20191214110411611-8557739.png" class="" title="image-20191214110411611">
+<p>主要包括三层：</p>
+<ol type="1">
+<li>Embedding layer</li>
+<li>Attentive embedding propaggation layer</li>
+<li>Prediction layer</li>
+</ol>
+<h3 id="embedding-layer">2.1 Embedding layer</h3>
+<p>对于用户-物品可以表示为， <span class="math display">\[
+G_1 = \{(u, y_{ui}, i)|u\in U, i\in I, y_{ui}=1\}
+\]</span> 知识图谱使用下面的三元组来表示， <span class="math display">\[
+G_2 = \{(h, r, t)|h,t\in \epsilon , r\in R\}
+\]</span> 这样整个结构也就都成为了一个三元组， <span class="math display">\[
+G = \{(h, r, t)|h,t\in \epsilon^{&#39;} , r\in R^{&#39;}\}
+\]</span> 在新的结构当中，由于每一个物品都对应到了知识图谱中的实体。所以现在的矩阵变为了<span class="math inline">\(N用户\times\ M^{&#39;}实体\)</span>。</p>
+<p>在embeding layer这一层，存在一个loss，知识图谱embeding表示的loss。论文里使用了TransR，来获得知识图谱的embeding。</p>
+<p>TransR的原理是实体使用d维embeding，关系表示使用k为embeding，一个连接<span class="math inline">\(&lt;h, r, t&gt;\)</span>在数学上的含义可以是h投影到关系r的k维空间上，加上r的k维表示，得到t的k维投影： <span class="math display">\[
+W_re_h+e_r\approx W_re_t,\\ e_h, e_t\in R^d, e_r\in R^k, W_r\in R^{k\times d}
+\]</span> <span class="math inline">\(W_r\)</span>是关系r的转换矩阵。这个等式两边越接近越好，这样可以定义一个相似性得分的函数： <span class="math display">\[
+g(h,r,t)={\lVert W_re_h+e_r-W_re_t \rVert}^2_2
+\]</span> 在整个的矩阵上，对于有关系的<span class="math inline">\(&lt;h, t&gt;\)</span>score越小越好，对于没有关系的<span class="math inline">\(&lt;h, t^{&#39;}&gt;\)</span>score越大越好。</p>
+<p>因此可以得到一个损失函数： <span class="math display">\[
+L_{KG}=\sum_{(h,r,t,t^{&#39;})}{-ln\sigma (g(h,r,t^{&#39;})-g(h,r,t)) }
+\]</span> 在论文的代码实现当中，对于每一个head，取了1个positive，1个negative来计算loss。</p>
+<h3 id="attentive-embeding-propagation-layers">2.2 Attentive Embeding Propagation Layers</h3>
+<p>实质是在ngcf上加上了attention机制。</p>
+<p>对于一个实体<span class="math inline">\(h\)</span>，对于和 <span class="math inline">\(h\)</span> 有关系 <span class="math inline">\(r\)</span> 的集合 <span class="math inline">\(N_h=\{ (h,r,t)|(h,r,t)\in G \}\)</span> 使用propagation： <span class="math display">\[
+e_{N_h}=\sum_{(h,r,t)\in N_h} \pi (h,r,t)e_t
+\]</span> Attention: <span class="math display">\[
+\pi (h,r,t)=(W_re_t)^Ttanh(W_re_h+e_r) \\
+\pi (h,r,t)=\frac{exp(\pi (h,r,t))}{\sum_{(h,r^{&#39;},t^{&#39;})\in N_h} \pi (h,r,t)e_t}
+\]</span> 理解：</p>
+<p><span class="math inline">\(W_re_t\)</span>是实体<span class="math inline">\(e_t\)</span>在关系<span class="math inline">\(r\)</span>空间内的投影，<span class="math inline">\(W_re_h+e_r\)</span>是<span class="math inline">\(e_h\)</span>投影到关系<span class="math inline">\(r\)</span>的k维空间上，加上r的k维表示。如果这两个embeding点积越大，表示这两个向量越相似，对应的权重应该更大。</p>
+<p>之后的propagation和aggregation具体方式参考ngcf。</p>
+<h3 id="训练方式">2.3 训练方式</h3>
+<p>具体的，在训练之前，因为加入知识图谱相当于增加了新的物品，增加了大量的待训练参数，为了加快训练过程，首先利用BPR-MF的方式预训练好用户、物品的embeding，之后再进行kgat的训练。</p>
+<p>在训练的时候，在一个epoch里，</p>
+<ol type="1">
+<li>分batch(1024)训练完embeding propagation，更新所有实体的embeding</li>
+<li>分batch‘(2048)训练TransR，更新关系的转换矩阵<br />
+</li>
+<li>更新attentive embeding</li>
+</ol>
+<h2 id="experiments">3 Experiments</h2>
+<p>研究问题：</p>
+<ol type="1">
+<li>KGAT和其它模型的比较</li>
+<li>KGAT不同模型设置对结果的影响</li>
+<li>KGAT对于用户偏好解释性的影响</li>
+</ol>
+<p>可以发现，这三个问题与NGCF中探究的问题一致。</p>
+<p>数据集：</p>
+<img data-src="/2021/04/16/KGAT/image-20191229105855957-8557739.png" class="" title="image-20191229105855957">
+<p>可以发现，如果加入知识图谱，物品的数量就会极大的增加，这也是为什么建议预训练好用户和物品的embeding。</p>
+<p>评估指标： <span class="math display">\[
+recall@K,\ ndcg@K,\ K=20
+\]</span> 超参数设置：</p>
+<ul>
+<li>embeding size：64</li>
+<li>batch size：1024</li>
+<li>early stopping</li>
+<li>KGAT layer size：[64, 32, 16]</li>
+</ul>
+<p>比较结果：</p>
+<p>效果比较：</p>
+<img data-src="/2021/04/16/KGAT/image-20191229110432499-8557739.png" class="" title="image-20191229110432499">
+<p>不同模型结构设置的影响：</p>
+<img data-src="/2021/04/16/KGAT/image-20191229110623067-8557739.png" class="" title="image-20191229110623067">
+<p>对于用户偏好的解释：</p>
+<img data-src="/2021/04/16/KGAT/image-20191229111040431-8557739.png" class="" title="image-20191229111040431">
+<p>从这张图上可以看出来通过加入知识图谱，获得了更多的额外信息。</p>
+<h2 id="总结">4 总结</h2>
+<p>加入知识图谱导致了更加丰富的物品信息</p>
+<p>缺点：</p>
+<p>在知识图谱中，存在一些常见的属性，例如图4中的English，这些属性有很多物品都具备，但是在attention的计算中，attention的计算仅在当前用户的交互实体下进行，没有考虑全局的情况。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>RS</category>
       </categories>
   </entry>
   <entry>
@@ -1677,6 +1795,254 @@ y^\prime=R(\{ h_v^T | v\in G \})
       </categories>
   </entry>
   <entry>
+    <title>NGCF</title>
+    <url>/2021/04/16/NGCF/</url>
+    <content><![CDATA[<h1 id="neural-graph-collaborative-filtering">Neural Graph Collaborative Filtering</h1>
+<blockquote>
+<p><a href="https://arxiv.org/abs/1905.08108">Wang X, He X, Wang M, et al. Neural Graph Collaborative Filtering[J]. arXiv preprint arXiv:1905.08108, 2019.</a></p>
+</blockquote>
+<p>论文的主要贡献是提出了一种embeding propagation的方式，能够利用high order范围内的实体，训练得到用户和物品的embeding。结合知识图谱做推荐。</p>
+<span id="more"></span>
+<h2 id="介绍">1 介绍</h2>
+<p>协同过滤(CF)有两个关键的点:</p>
+<p>一个是如何表示用户和物品(embeding)，embeding的表示在各种方法里都不相同，可以直接使用用户/物品ID表示embeding，也可以利用各种特征，经过神经网络MLP，获得embeding表示。 另一个是如何表示两者的交互(interaction)，在MF中，直接使用用户与物品vector的点积表示交互（即一个鼠标点击广告的动作，或者购买该物品的历史）。</p>
+<p>但是多数模型都没有通过利用user-item的交互来训练得到embeding，只使用了用户属性等基本描述性的特征。</p>
+<p>如果要利用交互来获得embeding，存在的问题在于若使用user-item矩阵的形式表示交互，这样矩阵规模就非常的大，常常达到几百万量级，而且非常稀疏。</p>
+<p>为了解决这个问题，论文中将交互转换为graph的形式，集中注意力在有过交互的物品上，例子如下图：</p>
+<img data-src="/2021/04/16/NGCF/image-20191203155628521.png" class="" title="image-20191203155628521">
+<p>图中的用户u1是推荐的目标用户。右边的图看成是以<span class="math inline">\(u_1\)</span>为根结点形成的一个树，这样对于<span class="math inline">\(u_1\)</span>的预测，就由原来的<span class="math inline">\(i_1, i_2, i_3\)</span>(first order)拓展到<span class="math inline">\(i_4, i_5\)</span>(third order)这样的high order范围。</p>
+<p>论文的主要贡献是提出了一种embeding propagation的方式，能够利用high order范围内的实体，训练得到用户和物品的embeding。</p>
+<h2 id="model结构">2 Model结构</h2>
+<p>NGCF一共包括三层，</p>
+<ol type="1">
+<li>Embeding layer：表示user-item的look-up table</li>
+</ol>
+<p><span class="math display">\[
+E=[\underbrace{e_{u_1}, e_{u_2}, \dots}_{N\ users},\underbrace{e_{i_1}, e_{i_1}}_{M\ items} ]^T
+\]</span></p>
+<ol start="2" type="1">
+<li>Embedding Propagation Layers: 利用embeding进行多层的propagation</li>
+<li>Prediction layer：预测<span class="math inline">\(&lt;u, i&gt;\)</span>的概率</li>
+</ol>
+<p>整个网络的结构如图：</p>
+<img data-src="/2021/04/16/NGCF/image-20191203225032817.png" class="" title="image-20191203225032817">
+<h3 id="embedding-layer">2.1 Embedding layer</h3>
+<p>这一层与主流的推荐模型的embeding layer一样，对于N个用户u，M个物品i，使用d维的向量来表示，形成下面的矩阵(<span class="math inline">\((N+M)\times d\)</span>)： <span class="math display">\[
+E = [e_{u_1}, \dots, e_{u_N},e_{i_1}, \dots, e_{u_M},]^T, e_u, e_i\ \in R^d
+\]</span> 在实现中首次训练使用xavier initializer初始化。</p>
+<h3 id="embedding-propagation-layers">2.2 Embedding Propagation Layers</h3>
+<h4 id="first-order-propagation">2.2.1 First-order Propagation</h4>
+<h5 id="message-construction">2.2.1.1 Message Construction</h5>
+<p>对于一个用户u，我们首先可以直接使用那些与用户有直接交互的物品计算用户的embeding，表示为 <span class="math display">\[
+m_{u\leftarrow i} = f(e_i, e_u, p_{ui})
+\]</span> <span class="math inline">\(m_{u\leftarrow i}\)</span>称为物品i对于用户u的message embeding，<span class="math inline">\(f\)</span>称为message encoding function，<span class="math inline">\(p_{ui}\)</span>是系数，控制<span class="math inline">\(&lt;u, i&gt;\)</span>这条path的权重。</p>
+<p>具体的，<span class="math inline">\(m_{u\leftarrow i}\)</span>表现为： <span class="math display">\[
+m_{u\leftarrow i} = \frac{1}{\sqrt{|N_{u}||N_{i}|}} \big( W_1 e_i + W_2 (e_i\odot e_u)\big),\ \ W_1, W_2 \in R^{d^{&#39;}\times d}
+\]</span> <span class="math inline">\(\odot\)</span>表示element wise乘法，<span class="math inline">\(N_{u},\ N_{i}\)</span>分别表示与用户u和物品i直接有交互的物品或者用户数量。</p>
+<p><span class="math inline">\(\frac{1}{\sqrt{|N_{u}||N_{i}|}}\)</span>就是 <span class="math inline">\(p_{ui}\)</span>， 被称作graph Laplacian norm，它表示物品传递给用户的message的weight，可以这样理解，如果某个物品的<span class="math inline">\(N_i\)</span>越小，表示这个物品越”独特“，越能够体现用户的个性偏好， <span class="math inline">\(p_{ui}\)</span>增大；用户的<span class="math inline">\(N_u\)</span>越小表示该用户的兴趣越”集中“，那么他的历史数据中的每个物品的 <span class="math inline">\(p_{ui}\)</span>都应该增大，表示每个物品都能够较大的反映该用户偏好。</p>
+<h5 id="message-aggregation">2.2.1.2 Message Aggregation</h5>
+<p>对于一个用户u的多个物品i，得到了多个传递过来的message embeding，需要使用一种聚合起来形成最终的用户embeding的方式， <span class="math display">\[
+e_u^{(1)} = LeakRelu\big( m_{u\leftarrow u} + \sum_{i \in N_u} m_{u\leftarrow i} \big),\\
+m_{u\leftarrow u}=W_1 e_u
+\]</span> <span class="math inline">\(e_u^{(1)}\)</span>是用户u经过第一次embeding propagation之后的embeding，可以看到最终聚合的方式是直接对所有的message embeding相加，最后联合原来的表示<span class="math inline">\(e_u\)</span>，经过一个leak-relu就得到了最后的表示。</p>
+<p>上面过程以单个用户u为例，介绍了一次embeding propagation的过程。这个过程对于物品i也是一样的。</p>
+<p>单个用户进行一次propagation，与用户u直接相连的所有物品的”信息“传递到了用户u上。但这个过程是同时在所有的用户u和物品i都进行的。一次propagation，让每个用户和物品都得到了从与它们直接相连的实体的信息。如果在进行一次propagation，用户和物品目前包含了自己下层直连的信息，就又会传递给上级。也就实现了获取high order连接信息的目的。</p>
+<h4 id="high-order-propagation">2.2.2 High-order Propagation</h4>
+<p>在first order propagation的基础上，得到多次propagation的表示， <span class="math display">\[
+\begin{cases}
+e_u^{(l)} = LeakRelu\big( m_{u\leftarrow u}^{l} + \sum_{i \in N_u} m_{u\leftarrow i}^{l} \big),\\
+m_{u\leftarrow u}^{l}=W_1^{l} e_u^{(l-1)},\\
+m_{u\leftarrow i}^{l} = \frac{1}{\sqrt{|N_{u}||N_{i}|}} \big( W_1^{l} e_i^{(l-1)} + W_2^{l} (e_i^{(l-1)} \odot e_u^{(l-1)})^{(l-1)} \big)
+\end{cases}
+\]</span></p>
+<h4 id="propagation-rule-in-matrix-form">2.2.3 Propagation Rule in Matrix Form</h4>
+<p>之前的例子作用于所有的用户和物品，就得到了矩阵形式的表达， <span class="math display">\[
+E^{(l)} = LeakRelu \big( (L+I)E^{(l-1)} W_1^{l} + LE^{(l-1)} \odot E^{(l-1)} W_2^{l}\big)
+\]</span> 其中<span class="math inline">\(L \in R^{(N+M)\times(N+M)}\)</span>，<span class="math inline">\(L_{ui}=\frac{1}{\sqrt{|N_{u}||N_{i}|}}\)</span>。</p>
+<h3 id="model-prediction">2.3 Model Prediction</h3>
+<p>经过l次propagation，一个用户u，得到<span class="math inline">\(\{e_u^{1}, \dots ,e_u^{l}\}\)</span>，在本论文里，直接将l个d维的embeding concat到一起。 <span class="math display">\[
+e^*_u =e_u^{0}|| \dots ||e_u^{l},\qquad e^*_i =e_i^{0}|| \dots ||e_i^{l}
+\]</span> 那么最后对于用户u，物品i的得分通过求内积得到， <span class="math display">\[
+\hat{y}_{NGCF}(u,i) = (e^*_u)^T e^*_i
+\]</span></p>
+<h3 id="optimization">2.4 Optimization</h3>
+<p>损失函数为BPR(Bayesian Personalized Ranking) loss， <span class="math display">\[
+Loss = \sum_{(u, i, j)\in O}-ln\sigma(\hat{y}_{ui}-\hat{y}_{uj}) + \lambda {\lVert \theta \rVert}_2^2 \\
+O = \{ (u, i, j)|(u, i)\in R^+,\ (u, j)\in R^- \}
+\]</span> 使用Adam，early stoping。</p>
+<p>为了防止过拟合，类似dropout方法，使用了两种dropout：</p>
+<ol type="1">
+<li>Message dropout：以一定的概率<span class="math inline">\(p_1^{l}\)</span>，在进行第l次embeding propagation时，丢弃一些用户或物品message embeding 。message dropou作用于<span class="math inline">\(E^{(l)}\)</span>。</li>
+<li>Node dropout：以一定的概率<span class="math inline">\(p_2^{l}\)</span>，在进行第l次embeding propagation之前，丢弃上次产生的一些用户或物品的embeding 。实际是都使用了0.1概率。node dropout作用于<span class="math inline">\(L\)</span>.</li>
+</ol>
+<h2 id="eexperiments">3 Eexperiments</h2>
+<p>在3个数据集上讨论了3个问题：</p>
+<ol type="1">
+<li>本文提出的NGCF和其它CF模型的比较</li>
+<li>NGCF不同超参数的影响</li>
+<li>能够利用high order connectivity信息，对于用户和物品的表示的影响</li>
+</ol>
+<h3 id="dataset">3.1 Dataset</h3>
+<figure>
+<img data-src="../../../../../../../Zotero/storage/GMZ4A2I8/resource/image-20191214230017160.png" alt="image-20191214230017160" /><figcaption aria-hidden="true">image-20191214230017160</figcaption>
+</figure>
+<p>使用10-core形式，每个用户至少有10个历史交互数据。</p>
+<p>80%的interaction为训练集，20%为测试集。</p>
+<h3 id="experimental-settings">3.2 Experimental Settings</h3>
+<p>评估指标针对每个用户推荐K个物品，然后计算 <span class="math inline">\(recall@K,\ ndcg@K\)</span>，默认情况下K设置为了20。</p>
+<p>一些实验的超参数如下：</p>
+<ul>
+<li>batch size：1024</li>
+<li>embeding size：64</li>
+<li>ndcf layer：3，[64, 64, 64]</li>
+<li>dropout: 0.1</li>
+<li>message out: 0.1</li>
+</ul>
+<h3 id="rq1-comparison">3.3 RQ1: comparison</h3>
+<h4 id="overall-comparison">3.3.1 Overall Comparison</h4>
+<p>对比了几个不同的CF算法如下</p>
+<img data-src="/2021/04/16/NGCF/image-20191215094628886.png" class="" title="image-20191215094628886">
+<h4 id="comparison-w.r.t.-interaction-sparsity-levels.">3.3.2 Comparison w.r.t. Interaction Sparsity Levels.</h4>
+<p>一个用户的推荐效果和这个用户的历史数据数量有很大的关系，如果交互的数量越少，越难推荐合适的物品，针对不同交互量用户分组进行了下图的研究。</p>
+<img data-src="/2021/04/16/NGCF/image-20191215095100798.png" class="" title="image-20191215095100798">
+<p>图上能够看到在不同的分组下，NGCF都有最好的ndcg@20结果。</p>
+<h3 id="rq1-study-of-ngcf">3.4 RQ1: Study of NGCF</h3>
+<h4 id="effect-of-layer-numbers">3.4.1 Effect of Layer Numbers</h4>
+<p>针对NGCF不同层数产生的效果的研究，NGCF-4虽然在两个数据集上得到了较好的结果，但是提升并不大，而且参数数量增多，训练成本增加，也容易过拟合。</p>
+<img data-src="/2021/04/16/NGCF/image-20191215095752801.png" class="" title="image-20191215095752801">
+<h4 id="effect-of-embedding-propagation-layer-and-layeraggregation-mechanism">3.4.2 Effect of Embedding Propagation Layer and LayerAggregation Mechanism</h4>
+<p>对于embeding propagation的方式，进行了研究，</p>
+<img data-src="/2021/04/16/NGCF/image-20191215100237965.png" class="" title="image-20191215100237965">
+<h4 id="effect-of-dropout">3.4.3 Effect of Dropout</h4>
+<p>研究在不同数据集下，node和message dropout不同数值对于结果的影响</p>
+<img data-src="/2021/04/16/NGCF/image-20191215100632501.png" class="" title="image-20191215100632501">
+<p>结果显示多数情况下，相同概率的node dropout方式好于message dropout，而且node dropout方式得到的最好效果要优于message dropout。</p>
+<p>一个可能的原因是node dropout会直接丢弃原来的node，这些node不会产生任何的效果，具有更强的鲁棒性。</p>
+<h3 id="rq3-effect-of-high-order-connectivity">3.5 RQ3: Effect of High-order Connectivity</h3>
+<p>为了研究利用high-order connectivity是否有效果，在Gowalla测试数据集中，截取6个用户和它们的物品在NGCF-1和NGCF-3下的embeding，利用t-SNE进行探究。</p>
+<img data-src="/2021/04/16/NGCF/image-20191215102635413.png" class="" title="image-20191215102635413">
+<p>从图上可以看出来，在3-order下，一个用户和它的物品更加倾向形成一聚类，即通过它的物品，能够更好的反映用户的实际情况。这表示利用high-order起到了作用，能够更好的捕获协同信息。</p>
+<h2 id="conclusion">4 Conclusion</h2>
+<p>论文的主要成果</p>
+<ul>
+<li>一种新的embeding propagation方式</li>
+<li>在三个数据集上进行的不同的研究</li>
+</ul>
+<p>下一步方向</p>
+<ul>
+<li>现在每层的neighbor的权重都是一样的，可以考虑加入attention(在作者的下一篇论文KGAT中实现了)</li>
+<li>结合知识图谱（KGAT）</li>
+<li>结合social network，cross-feature等</li>
+</ul>
+<p>不足</p>
+<ul>
+<li>单纯的使用了用户的历史交互信息，用户和物品的其它特征并没有利用，能否结合FM, NFM，得到更加丰富的embeding？</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>RS</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>ONN</title>
+    <url>/2021/04/16/ONN/</url>
+    <content><![CDATA[<h2 id="背景">1 背景</h2>
+<p><a href="https://www.sciencedirect.com/science/article/pii/S0893608019302850?via%3Dihub">ONN(Operation-aware Neural Networks for user response)</a>是2018年腾讯广告算法比赛最优的推荐算法。主要任务是预测用户点击推荐广告的概率(click-through rate, CTR)或者进行其它期望的行为(conversion rate, CVR)。在基本的通用的Base model上，<strong>将PNN与FFM结合起来</strong>，实现了在embedding层的每一个feature对于不同operation（内积或者外积）有不同的表示，之后进入MLP，得到更好的预测结果</p>
+<span id="more"></span>
+<h2 id="创新点">2 创新点</h2>
+<h3 id="针对的问题">2.1 针对的问题</h3>
+<p>目前的大多数的模型对于一个feature上的embedding vector进行不同的operation都是使用相同的表示。但是<strong>对于不同的操作，一个feature的最好表示不总是相同的</strong>(<a href="https://dl.acm.org/citation.cfm?doid=2959100.2959134">Juan et al., 2016</a>; <a href="https://dl.acm.org/citation.cfm?doid=1718487.1718498">Rendle &amp; Schmidt-Thieme, 2010</a>)</p>
+<h3 id="解决思路">2.2 解决思路</h3>
+<p>在基本的通用的Base model上，<strong>将PNN与FFM结合起来</strong>，实现了在embedding层的每一个feature对于不同operation（内积或者外积）有不同的表示，之后进入MLP，得到更好的预测结果</p>
+<h2 id="相关的模型">3. 相关的模型</h2>
+<h3 id="ffm">3.1 FFM</h3>
+<img data-src="/2021/04/16/ONN/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg" class="">
+<center>
+The architecture of the FFM model.
+</center>
+<h3 id="base-model">3.2 Base Model</h3>
+<p>深度学习引入推荐系统之后，深度学习的优势在于可以获取到特征的高维信息，一般的过程可以概括成以下三步：</p>
+<ol type="1">
+<li>一个embedding layer，负责将离散的feature映射到更低维的表示形式。
+<ul>
+<li>对于一个样本的特征表示为<span class="math inline">\(f=[x_0, x_1, \ldots x_m]\)</span></li>
+<li>embedding矩阵表示为<span class="math inline">\(M = [V^0, V^1, \ldots V^m]\)</span></li>
+<li>两者作积得到的这一步的输出概括为： <span class="math display">\[ e = [V^0x_0, V^1x_1, \ldots V^mx_m] \]</span><br />
+其中的<span class="math inline">\(V^i\)</span>是中对应<span class="math inline">\(i\)</span>th feature的那一列，<span class="math inline">\(x_i\)</span>是<span class="math inline">\(i\)</span>th feature的one hot表示。</li>
+</ul></li>
+<li>对于上一步得到的结果进行operation，这一步可以表示为<span class="math inline">\(f = [o_1(e), o_2(e), \ldots o_l(e)]\)</span>，<span class="math inline">\(o_i\)</span>是表示<span class="math inline">\(i\)</span>th operation，这个operation可以是两个向量内积或者外积，在多数的结构中，这个操作只是一个copy操作，暨不进行任何的操作。这种在embedding向量上进行的操作可以看成是一种初期的特种工程。</li>
+<li>第二步得到的结果输入MLP(multi-layer perceptron)，最终输出<span class="math inline">\(\hat{y} = \sigma(\Phi(f))\)</span>，<span class="math inline">\(\sigma\)</span>是sigmoid函数，<span class="math inline">\(\Phi\)</span>是MLP的非线性转换</li>
+</ol>
+<h3 id="pnn">3.3 PNN</h3>
+<img data-src="/2021/04/16/ONN/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg" class="">
+<center>
+The architecture of the PNN model.
+</center>
+<h2 id="onn结构">4 ONN结构</h2>
+<img data-src="/2021/04/16/ONN/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg" class="">
+<center>
+The architecture of the ONN model.
+</center>
+<p>可以看到最大的特点在于对于<span class="math inline">\(i\)</span>th feature的one-hot表示转换为embedding后拥有多个表示，在进行不同的operation时，采取了不同的表示形式。</p>
+<h3 id="operation-aware-embedding">4.1 Operation-aware embedding</h3>
+<p>下面说一下对于<span class="math inline">\(i\)</span>th feature的具体转换过程。 <img data-src="/2021/04/16/ONN/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg" class=""></p>
+<center>
+The structures of the normal embedding layer and the operation-aware embedding layer.
+</center>
+<p>在上图的左边部分中，<span class="math inline">\(e_i\)</span>是feature的转换后的embedding，<span class="math inline">\(V^i\)</span>代表对应<span class="math inline">\(i\)</span>th feature的embedding matrix，这样得到的<span class="math inline">\(e_i\)</span>就只会有一种表示。<br />
+而在ONN改进后的右边部分中，设置了<span class="math inline">\([V^{i,l}, V^{i,l}, \ldots V^{i,l}]\)</span>，其中的<span class="math inline">\(V^{i,l}\)</span>表示对于<span class="math inline">\(i\)</span>th feature的<span class="math inline">\(l\)</span>项操作。这里要注意的是同一种操作比如求内积，<span class="math inline">\(i\)</span>和<span class="math inline">\(j\)</span> 求内积与 <span class="math inline">\(i\)</span>和<span class="math inline">\(p\)</span> 求内积是不一样的操作。 最终的到的<span class="math inline">\(e_i\)</span>就是一个矩阵，<span class="math inline">\([e^1_i, e^2_i, \dots, e^l_i]=[V^{i,l}x_i, V^{i,l}x_i, \ldots V^{i,l}x_i]\)</span>，在进行<span class="math inline">\(k\)</span>项操作时，取出<span class="math inline">\(e^k_i\)</span>表示进行操作。 为了表示在<span class="math inline">\(i\)</span>th feature上进行操作<span class="math inline">\(o\)</span>时要使用的<span class="math inline">\(k\)</span>表示定义为：<span class="math inline">\(\Gamma(o, i)=k\)</span><br />
+在实现当中，实际求内积只在用户特征和推荐广告的特征之间进行，</p>
+<h3 id="incipient-feature-extraction-layer">4.2 Incipient feature extraction layer</h3>
+<p>在上一个的基础上，来看一下对于一个样例 <span class="math inline">\(f\)</span>的最终输出形式是什么。 <span class="math display">\[ f = [e_f, i_f] \]</span> 其中第一项<span class="math inline">\(e_f\)</span>是<span class="math inline">\(f\)</span>的所有特征的embedding vector，表示为: <span class="math display">\[ e_f=[e_1^{\Gamma(o(c, 1), 1)}, e_2^{\Gamma(o(c, 2), 2)}, \dots, e_m^{\Gamma(o(c, m), m)}] \]</span><br />
+公式中的<span class="math inline">\(o(c, i)\)</span>是指对<span class="math inline">\(i\)</span>th feature进行copy操作 第二项<span class="math inline">\(i_f\)</span>是表示feature interactions，具体的说是两个feature embedding vector的内积。只求两个向量间的内积是再多的就过于复杂，求内积是在之前的实验中证明了内积效果比外积要好<a href="https://ieeexplore.ieee.org/document/7837964">(Qu et al., 2016）</a>。公式为： <span class="math display">\[ i_f=[p_{1, 2}, p_{1, 3}, \dots, p_{m-1, m}] \]</span> <span class="math inline">\(p_{i, j}\)</span>是指在<span class="math inline">\(i\)</span>th feature和<span class="math inline">\(j\)</span>th feature之间求内积，<span class="math inline">\(p_{i, j}=\big \langle e_i^{\Gamma(o(p, i, j), i)}, e_j^{\Gamma(o(p, i, j), j)} \big \rangle\)</span></p>
+<h3 id="mlp">4.3 MLP</h3>
+<p>两个hidden layer，最后一个sigmoid输出 两个hidden layer的输出表示为： <span class="math display">\[ l_1=BN(relu(W_1\hat{f}+b_1)) \]</span> loss函数是交叉熵</p>
+<h2 id="与其它模型pnn-ffm的关系">5 与其它模型(PNN, FFM)的关系</h2>
+<ul>
+<li>回顾一下PNN模型的结构，和ONN的主要区别在于embedding layer，ONN实现了operation aware，即一个feature有了多种embedding vector，这样对于不同操作可以选择不同的feature表示。这样在训练时就得到了更好的特征表示。</li>
+<li>和FFM模型最大的区别在于ONN加入了MLP，加入了深层网络后，深度网络能够更好的挖掘特征深层次的依赖，能够学习到复杂的特征依赖关系</li>
+</ul>
+<h2 id="实验">6 实验</h2>
+<h3 id="数据集">6.1 数据集</h3>
+<ol type="1">
+<li>Criteo: 包含45million条用户点击广告的记录，使用了最后5million作为测试集(8:1)，数据集中包括13个连续特征和26个分类特征。通过<span class="math inline">\(discrete(x)=\lfloor 2 \times log(x) \rfloor\)</span>将连续量离散化</li>
+<li>腾讯广告数据集: 包含了14天内app推荐广告的记录，用户信息，广告信息以及安装的app的记录。论文使用了39个分类特征，去掉了最后2天噪声过大的数据，使用前11天数据作为训练，第12天的数据作为数据。最终22million训练集，2million测试集(11:1)</li>
+</ol>
+<h3 id="对比的方面">6.2 对比的方面</h3>
+<p>分别从AUC，cross entropy，pearson‘s R以及root mean squared error在线下，线上以及采用不同的operation来进行试验</p>
+<h4 id="offline-training-performance-comparison">6.2.1 Offline-training performance comparison</h4>
+<img data-src="/2021/04/16/ONN/AF76B24C-D512-4773-9889-07101C1075D9.png" class="">
+<p>从上面这两张表格可以看出来的有：</p>
+<ul>
+<li>PNN这些加入了深度网络的模型效果要优于FM, FFM，说明了深层的模型效果是要优于浅层的网络</li>
+<li>FFM优于FM，ONN优于PNN，说明采用了operation aware embedding是优于一般的embedding层的</li>
+<li>PNN，DeepFM，ONN优于了DNN，说明了进行求积的操作是有效的。</li>
+</ul>
+<h4 id="online-training-performance-comparison">6.2.2 Online-training performance comparison</h4>
+<img data-src="/2021/04/16/ONN/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png" class="">
+<p>在线上的测试中，每一个测试样例只能够被训练一次，对于FM, PNN这些只有一种表示形式的模型来说，一次epoch就学到比较好的表示是比较难的。ONN依旧取得了最好的效果。</p>
+<img data-src="/2021/04/16/ONN/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg" class="">
+<center>
+Model convergence curves on the Criteo dataset.
+</center>
+<p>从上面的收敛趋势可以看到FFM，ONN这样使用了aware的模型，logloss收敛速度是由于其它模型的。</p>
+<h4 id="analysis-of-different-operations">6.2.3 Analysis of different operations</h4>
+<p>默认情况下ONN是使用内积作为operation，论文中就inner-product, outer-product, sub-network, inner+outer-product四种operation进行了比较。</p>
+<img data-src="/2021/04/16/ONN/75087804-9474-4E93-AA7E-755B4C585275.png" class="">
+<p>可以看到inner+outer-product获得了最好的结果，但是优势并不明显，考虑到时间和空间复杂性，它并不是一个很好的选择。所以依旧是使用了inner product。 但需要注意的是，sub-network取得的效果也是非常有竞争性的。而且它在Criteo数据集上的AUC指标上取得了很好的效果，这个可以考虑为下一步的研究方向。</p>
+<h2 id="总结">7 总结</h2>
+<ul>
+<li>线上测试的结果表明ONN比较适合于线上的环境。</li>
+<li>operation aware这种想法可以考虑应用在其它地方</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>RS</category>
+      </categories>
+  </entry>
+  <entry>
     <title>ParamE</title>
     <url>/2021/04/15/ParamE/</url>
     <content><![CDATA[<h1 id="parame">ParamE</h1>
@@ -1911,6 +2277,39 @@ h^\prime = \frac{1}{2} ( \sigma(W_3(h+\hat{h})) + \sigma(W_3(h \odot \hat{h})))
       </categories>
   </entry>
   <entry>
+    <title>Re-eval-KGC</title>
+    <url>/2021/04/16/Re-eval-KGC/</url>
+    <content><![CDATA[<h1 id="a-re-evaluation-of-knowledge-graph-completion-methods">A Re-evaluation of Knowledge Graph Completion Methods</h1>
+<p>2019-11-10 ACL 2020</p>
+<p>重新发现目前的KGC方法中存在的问题，提出了一个RANDOM的评估策略。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>最近出现的nn的model for Knowledge Graph Completion(KGC)，的效果存在问题：</p>
+<blockquote>
+<p>in ConvKB, there is a 21.8% improvement over ConvE on FB15k-237, but a degradation of 42.3% on WN18RR, which is surprising given the method is claimed to be better than ConvE.</p>
+</blockquote>
+<p>它们在一个数据集(FB15K-237)上取得很好的结果，但是在另外的数据集(WRR18)上的效果反而下降了。本论文就针对这个问题进行了调查。发现是由于它们的评估策略的问题。</p>
+<h2 id="observations">3 Observations</h2>
+<p>经过调查发现，在最后进行评估的时候，部分受到影响的模型如ConvKB，KBAT等，它们会对于很多的negative sample产生和valid triple一样的score。</p>
+<blockquote>
+<p>On average, ConvKB and CapsE have 125 and 278 entities with exactly same score as the valid triplet over the entire evaluation dataset of FB15k-237, whereas ConvE has around 0.002,</p>
+</blockquote>
+<p>在这样的情况下，如果一开始的valid triple是作为评估triple的开头的话，效果就会虚假的高。</p>
+<h2 id="evaluation-method">4 Evaluation Method</h2>
+<p>因此，论文就提出了一个评估的策略：<em>RANDOM</em></p>
+<blockquote>
+<p>RANDOM:</p>
+<p>In this, the correct triplet is placed randomly in <span class="math inline">\(\cal{T^{&#39;}}\)</span> .</p>
+</blockquote>
+<p>其中， <span class="math display">\[
+\cal{T^{&#39;}} = \{ (h, r, t^{&#39;})\ |\ t^{&#39;} \in \cal{E} \}
+\]</span></p>
+<blockquote>
+<p>RANDOM is the best evaluation technique which is both rigorous and fair to the model.</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title>SACN</title>
     <url>/2021/04/15/SACN/</url>
     <content><![CDATA[<h1 id="end-to-end-structure-aware-convolutional-networks-for-knowledge-base-completion">End-to-End Structure-Aware Convolutional Networks for Knowledge Base Completion</h1>
@@ -1936,11 +2335,228 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
       </categories>
   </entry>
   <entry>
+    <title>SEEK</title>
+    <url>/2021/04/16/SEEK/</url>
+    <content><![CDATA[<h1 id="seek-segmented-embedding-of-knowledge-graphs">SEEK: Segmented Embedding of Knowledge Graphs</h1>
+<p>ACL 2020</p>
+<p>虽然目前对于KGE的研究已经很多了，但是目前的方法都存在一个问题，简单的方法模型的表达能力不够；复杂的方法参数多，复杂性高，难以应用与实际的大规模的知识图谱。</p>
+<p>本文就考虑如何在不增加复杂度的情况下增加模型的表达能力：</p>
+<ul>
+<li>增加特征之间的交互</li>
+<li>保存关系的属性——对称性与不对称性</li>
+<li>设计有效的得分函数</li>
+</ul>
+<p>核心方法是将实体和关系的embedding拆分为k个segment。</p>
+<span id="more"></span>
+<p>模型方法：</p>
+<p>首先将实体和关系的embedding拆分为k个segment。</p>
+<p>直接看最后的得分函数 $$ f_4(h,r,t)=<em>{0x,y&lt; k} s</em>{x,y} r_x, h_y, t_{w_{x,y}} \</p>
+w_{x,y} =
+<span class="math display">\[\begin{cases}
+y,  &amp; \mbox{if }x\mbox{ is even}, \\
+(x+y)\%k, &amp; \mbox{if }x\mbox{ is odd}
+\end{cases}\]</span>
+<p>\</p>
+s_{x,y} =
+<span class="math display">\[\begin{cases}
+-1,  &amp; \mbox{if }x\mbox{ is odd and } x+y\geq k, \\
+1, &amp; otherwise
+\end{cases}\]</span>
+<p>\ $$ 分析上面的方法，引入<span class="math inline">\(s_{x,y}\)</span>可以建模关系的对称和不对称性，将<span class="math inline">\(h\)</span>和<span class="math inline">\(t\)</span>互换的情况下，<span class="math inline">\(f_4(h,r,t)\)</span>不一样。</p>
+<p>引入<span class="math inline">\(w_{x,y}\)</span>限制了<span class="math inline">\(t_{w_{x,y}}\)</span>，不再是所有分段的全体组合。</p>
+<p><img data-src="../../../../../../../Zotero/storage/YCES768S/image-20200929220716325.png" alt="image-20200929220716325" style="zoom:30%;" /></p>
+<p>最终实验在FB15K，DB100K，YAGO37三个数据集下进行了实验。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>TPE</title>
+    <url>/2021/04/16/TPE/</url>
+    <content><![CDATA[<h1 id="the-intuitions-behind-tree-structured-parzen-estimator">The intuitions behind Tree-structured Parzen estimator</h1>
+<p>TPE：一种基于贝叶斯推断的超参数调优方法。</p>
+<span id="more"></span>
+<h2 id="reference">Reference</h2>
+<p>[1] Frazier P I. A tutorial on bayesian optimization[J]. arXiv preprint arXiv:1807.02811, 2018.</p>
+<p>[2] Bergstra J S, Bardenet R, Bengio Y, et al. Algorithms for hyper-parameter optimization[C]//Advances in neural information processing systems. 2011: 2546-2554.</p>
+<p>[3] Xia Y, Liu C, Li Y Y, et al. A boosted decision tree approach using Bayesian hyper-parameter optimization for credit scoring[J]. Expert Systems with Applications, 2017, 78: 225-241.</p>
+<p>[4] <a href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">A Conceptual Explanation of Bayesian Hyperparameter Optimization for Machine Learning</a></p>
+<h2 id="bayesian-hyper-parameter-optimization">1. Bayesian hyper-parameter optimization</h2>
+<p>贝叶斯超参数优化是一种为序列模式的模型提供的求全局优化的方法。</p>
+<p>针对的问题：求解object function：</p>
+<p><span class="math display">\[ min_{x\in A} f(x) \]</span></p>
+<p>主要适用的情景：</p>
+<ul>
+<li>x的维度不是太大，一般会限制在<span class="math inline">\(d\lt20\)</span>，x可以理解为一个超参数序列</li>
+<li><span class="math inline">\(f(x)\)</span>是一个计算起来很消耗时间的函数，例如损失函数</li>
+<li>对<span class="math inline">\(f(x)\)</span>很难求导</li>
+<li>......</li>
+</ul>
+<p>举例：</p>
+<img data-src="/2021/04/16/TPE/image-20191110144728090.png" class="" title="image-20191110144728090">
+<p>纵坐标是<span class="math inline">\(f(x)\)</span>，很明显如果是我们人工去选择下一组超参数的话，会在左下角score=20的这几个点中间去搜索，而不会还是进行一个全局的抽样。这实际就是一个贝叶斯优化过程。</p>
+<p>但是对于Random search，grid search这些方法，并不会利用到历史的信息来进行选择。</p>
+<h2 id="sequential-model-based-global-optimization-smbo">2. Sequential model-based global optimization (SMBO)</h2>
+<h3 id="伪代码">2.1 伪代码</h3>
+<p>序列化模型全局优化(SMBO)是把贝叶斯优化的一个形式化的定义。具体的伪代码如下：</p>
+<img data-src="/2021/04/16/TPE/image-20191110145710920.png" class="" title="image-20191110145710920">
+<p>伪代码中出现的符号含义：</p>
+<ul>
+<li><p><span class="math inline">\(\lambda\)</span>：超参数</p></li>
+<li><p><span class="math inline">\(L\)</span>：object function，通常是损失函数</p></li>
+<li><p><span class="math inline">\(H\)</span>：记录了所有(超参数<span class="math inline">\(\lambda\)</span>, <span class="math inline">\(L\)</span>)的历史集合</p></li>
+<li><p>$ S_{t} <span class="math inline">\(：一个从超参数\)</span>L $的映射概率模型</p></li>
+</ul>
+<p>循环一共进行T次：</p>
+<ol type="1">
+<li>每次先根据已有的历史试验集合找出一个更可能拥有更小objective function的超参数集合<span class="math inline">\(\lambda\)</span></li>
+<li>之后计算实际的object function的值</li>
+<li>加入历史集合</li>
+<li>更新<span class="math inline">\(S\)</span></li>
+</ol>
+<h3 id="一些粗浅的理解">2.2 一些粗浅的理解</h3>
+<ol type="1">
+<li><p>不断的利用历史试验(trial)记录，构建出了一个下面的概率模型：</p>
+<p><span class="math display">\[ P(objective\ function\ score\quad |\quad hyperparameters) \]</span></p></li>
+<li><p>叫做贝叶斯的原因是出现了先验概率的思想</p></li>
+<li><p>核心想法是<strong>在更有可能得到更好结果的超参数范围内选择新的超参数</strong></p></li>
+</ol>
+<h3 id="核心要素">2.4 核心要素</h3>
+<h4 id="domain">2.4.1 Domain</h4>
+<p>不同的超参数有自己的取值范围，以及先验分布，例如均匀分布，log均匀分布等</p>
+<h4 id="objective-function">2.4.2 Objective Function</h4>
+<p>Objective Function是我们想要优化的目标。接受超参数作为输入，输出的值可以是超参数实例化后拟合了训练集的经验风险函数，如均方误差。</p>
+<p>我们不会直接拿这个作为优化目标，而是使用下面的替代函数Surrogate Function。</p>
+<h4 id="surrogate-function">2.4.3 Surrogate Function</h4>
+<p>替代函数，也叫做响应面(response surface)，是基于之前的历史记录的一种关于objective function的概率表示。</p>
+<p>叫做响应面是因为它是在高维层次的objective function score的关于超参数的概率。如下图：</p>
+<img data-src="/2021/04/16/TPE/image-20191110161036552.png" class="" title="image-20191110161036552">
+<p>存在几种不同的替代函数，如：</p>
+<ul>
+<li>Gaussian Processes</li>
+<li>Random Forest regression</li>
+<li><strong>Tree-structured Parzen Estimator</strong></li>
+</ul>
+<h4 id="selection-function">2.4.4 Selection Function</h4>
+<p>选择函数是如何根据前面的Surrogate Function，来选择新的超参数集合进行试验。</p>
+<p>关于选择函数也有不同的表示，例如：</p>
+<ul>
+<li><strong>Expected Improvement (EI)</strong></li>
+<li>Probability of Improvement</li>
+</ul>
+<h2 id="tree-structured-parzen-estimatortpe">3 Tree-structured Parzen estimator(TPE)</h2>
+<h3 id="基础认识">3.1 基础认识</h3>
+<ol type="1">
+<li><p>Tree：超参数优化问题可以理解为在图结构的参数空间上不断寻找objective function最优解的问题。所谓tree，是提出TPE的作者将该优化问题限制在了树状结构上，例如：</p>
+<img data-src="/2021/04/16/TPE/image-20191110163042989.png" class="" title="image-20191110163042989">
+<p>一些超参数只有在其它的超参数确定后才能够进行确认，例如网络的层数与每一层的节点数量，当然这不意味着这两个超参数是相关的。<strong>实际上在TPE中，要求所估计的超参数必须是相互独立的</strong>。</p></li>
+<li><p>Parzen：<a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Parzen–Rosenblatt window</a>是在核密度估计问题中，由 <a href="https://en.wikipedia.org/wiki/Emanuel_Parzen">Emanuel Parzen</a> 和 <a href="https://en.wikipedia.org/wiki/Murray_Rosenblatt">Murray Rosenblatt</a>提出的能够根据当前的观察值和先验分布类型，估计估计值的概率密度。一般的函数如下：</p>
+<img data-src="/2021/04/16/TPE/image-20191110163827025.png" class="" title="image-20191110163827025">
+<img data-src="/2021/04/16/TPE/image-20191110163935502.png" class="" title="image-20191110163935502">
+<p><strong>在TPE中，假设了核函数都是高斯核函数</strong></p></li>
+</ol>
+<h3 id="具体过程推演">3.2 具体过程推演</h3>
+<h4 id="expected-improvement-ei">3.2.1 Expected Improvement (EI)</h4>
+<p>对于选择一组新的超参数后的objective function的提升可以表示为：</p>
+<p><span class="math display">\[ I(\lambda) = max(c^{*}-c(\lambda), 0) \tag{1}\]</span></p>
+<p><span class="math inline">\(c^{*}\)</span>是当前记录的H中所有c的一个分割点，我们这里直接认为c表示的就是风险函数。</p>
+<p>通过这样的转换，我们就把原来的objective function最优问题转换成了一个新的问题。</p>
+<p>如果新的<span class="math inline">\(\lambda\)</span>对应的<span class="math inline">\(c(\lambda)\)</span>更小，则它是更好的超参数设置，但是这需要训练，然后求出风险函数，并不是我们想要的。</p>
+<p>那么如果一个新的<span class="math inline">\(\lambda\)</span>对应的提升的期望是大于0的，那么可认为这个<span class="math inline">\(\lambda\)</span>是有较大可能使得风险减小的。故有：</p>
+<p><span class="math display">\[ \begin{split}EI(\lambda) &amp;= \int\limits_{-\infty}^{c^{*}}(c^{*}-c)P_{S_{t-1}}(c|\lambda)dc \\ &amp;= \int\limits_{-\infty}^{c^{*}}(c^{*}-c)\frac{p(\lambda|c)p(c)}{p(\lambda)}dc \end{split} \tag{2} \]</span></p>
+<p>式子中的<span class="math inline">\(p(\lambda|c)\)</span>定义为：</p>
+<p><span class="math display">\[ p(\lambda|c) = \left\{ \begin{aligned} &amp;l(\lambda) \quad c \lt c^{*} \\ &amp;g(\lambda) \quad c \ge c^{*} \end{aligned} \right. \tag{3} \]</span></p>
+<p><span class="math inline">\(c^{*}\)</span>是一个阈值，通常是在H所有的c中，满足<span class="math inline">\(p(c&lt;c^{*})=\gamma\)</span>，<span class="math inline">\(\gamma\)</span>默认可设置为0.15。这样所有的历史记录就分成了两部分，即风险较小的那部分和风险相对较大的那部分，<span class="math inline">\(l(\lambda)\)</span>是由所有的风险较小的那部分的超参数集合形成的分布，<span class="math inline">\(g(\lambda)\)</span>是由所有的风险较大的那部分的超参数集合形成的分布。如下图：</p>
+<img data-src="/2021/04/16/TPE/image-20191110191535439.png" class="" title="image-20191110191535439">
+<img data-src="/2021/04/16/TPE/image-20191110191405221.png" class="" title="image-20191110191405221">
+<p>直觉上我们从风险较小的分布中抽样新的超参数，应该是比较合理的，下面的数学推理也证明了这一点。</p>
+<p>继续推导公式2：</p>
+<p><span class="math display">\[\begin{split} p(\lambda) &amp;= \int_{R}p(\lambda|c)p(c)dc \\ &amp;= \int_{-\infty}^{c^{*}}p(\lambda|c)p(c)dc + \int_{c^{*}}^{+\infty}p(\lambda|c)p(c)dc \\ &amp;= \gamma l(\lambda)+(1-\gamma) g(\lambda) \end{split}\]</span></p>
+<p><span class="math display">\[\begin{split} \int_{-\infty}^{c*} (c^{*}-c)p(\lambda|c)p(c)dc &amp;= l(\lambda)\int_{-\infty}^{c*}(c^{*}-c)p(\lambda|c)p(c)dc \\ &amp;=\gamma c^{*}l(\lambda) -l(\lambda) \int_{-\infty}^{c*} cp(c)dc \end{split}\]</span></p>
+<p>最终得到：</p>
+<p><span class="math display">\[\begin{split} EI(\lambda) &amp;= \frac{\gamma c^{*}l(\lambda) -l(\lambda) \int_{-\infty}^{c*} cp(c)dc}{\gamma l(\lambda)+(1-\gamma) g(\lambda)} \\ &amp; \propto \big( \gamma+\frac{g(\lambda)}{l(\lambda)}(1-\gamma) \big)^{-1} \end{split}\]</span></p>
+<p>这说明在<span class="math inline">\(l(\lambda)\)</span>的分布下取样得到的参数更有可能让<span class="math inline">\(EI(\lambda)\)</span>有更大的值。</p>
+<h4 id="估计超参数的分布">3.2.2 估计超参数的分布</h4>
+<p>由 <span class="math inline">\(c^{*}\)</span>将历史记录分为了两部分，以 $ c c^{*} $ 的那部分超参数集合为例。</p>
+<p>假设存在n个取值 $ (x_1,x_2, , x_n) $ ，那么概率密度的估计是</p>
+<p><span class="math display">\[ \hat{p}(x) = \frac{1}{nh}\sum\limits_{i=1}^{n}K\big( \frac{x-x_i}{h} \big) \]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ K\big( \frac{x-x_i}{h} \big) = \frac{1}{\sqrt{2\pi}} exp\big( -\frac{1}{2}(\frac{x-x_i}{h})^2 \big) \]</span></p>
+<h4 id="求解的过程">3.2.3 求解的过程</h4>
+<p>利用TPE，首先对于所有的超参数形成的那棵树进行设置，因为TPE要求所有的超参数要相互独立，即一种正交的概念，即效果不能相互影响，例如学习率，提升树方法的迭代次数，和树的最大深度就存在一个权衡，所以需要先固定一些不能一起用于优化的超参数，如固定学习率和迭代次数。</p>
+<p>由树从根结点从上而下的利用Parzen estimator，对某一个节点，在 <span class="math inline">\(l(\lambda)\)</span>分布下采样，比如采样100次。</p>
+<p>每一次的采样得到的超参数集合可以分别得到它们的概率，然后相乘得到联合概率，算出 $ l()$和 <span class="math inline">\(g(\lambda)\)</span>。选取其中 <span class="math inline">\(l(\lambda)/g(\lambda)\)</span> 的最大值，作为这一次迭代选取的超参数。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>ML</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Transformer</title>
+    <url>/2021/04/16/Transformer/</url>
+    <content><![CDATA[<h1 id="attention-is-all-you-need">Attention Is All You Need</h1>
+<p>NIPS 2017</p>
+<p>本文提出了一个新的简单的网络结构，Transformer，只依赖于注意力机制。</p>
+<p><a href="http://jalammar.github.io/illustrated-transformer/">可参考的博客</a></p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>RNN等模型已经取得了很大的成功，但是计算循环网络的代价通常会与输入输出序列的符号位置紧密相关。序列的符号位置决定了循环网络中输入的步数，导致很难并行化，就在时间和计算资源（内存）上限制了模型的训练。</p>
+<p>注意力机制在sequence modeling 和 transduction models任务上已经取得了很大的成就，但是很少有模型会将注意力机制与RNN联系在一起。</p>
+<p>本文就提出了一个新的方法Transformer，避免了循环，相反的是基于注意力机制完全依赖于输入和输出的整体。</p>
+<blockquote>
+<p>Transformer is the ﬁrst transduction model relying entirely on self-attention to compute representations of its input and output without using sequencealigned RNNs or convolution.</p>
+</blockquote>
+<h2 id="model-architecture">2 Model Architecture</h2>
+<p>整个Transformer的结构是encoder和decoder的结构，如下图所示。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/image-20201011202918546.png" alt="image-20201011202918546" style="zoom: 30%;" /></p>
+<p>整体堆叠6层encoder，然后经过6层的decoder。6层encoder的最终输入会输入到每一层的decoder中。</p>
+<p>每一层encoder包括两个sublayer，一个接受input的输入，然后经过<span class="math inline">\(h\)</span>个多头注意力，加上原来的输入，之后norm，第二层经过一个前馈网络，还是加上原来的输入，经过norm。encoder的初始输入是全部的原始输入。</p>
+<p>每一层的decoder包括三个sublayer，有两个与encoder一样，但是多了一层会接受encoder的输出作为keys和values。decoder的初始输入是<span class="math inline">\(t-1\)</span>时刻的预测结果以及encoder的输出。</p>
+<p>下面详细解析：</p>
+<h3 id="multi-head-attention">2.1 Multi-head attention</h3>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/image-20201011204804340.png" alt="image-20201011204804340" style="zoom:30%;" /></p>
+<p>首先计算单个attention，使用query，keys和values来计算。使用query和其它所有embedding的keys计算出权值，然后不同的权值与values相乘求和。querys和keys的维度是<span class="math inline">\(d_k\)</span>，values的维度是<span class="math inline">\(d_v\)</span>。 <span class="math display">\[
+Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
+\]</span> 需要注意的是其中多了一个常量<span class="math inline">\(\sqrt{d_k}\)</span>，这是因为作者在实验中发现加入除数常量的效果很好，原因可能是因为softmax的输入在值较大的时候梯度会变小，因此加入了一个除数常量减小值。</p>
+<blockquote>
+<p>4 To illustrate why the dot products get large, assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, <span class="math inline">\(q\cdot k=\sum^{d_k}_{i=1}q_ik_i\)</span> , has mean 0 and variance<span class="math inline">\(d_k\)</span> .</p>
+</blockquote>
+<p>计算完成单个attention之后，再计算多头注意力，拼接起来之后再乘以一个权值矩阵。 <span class="math display">\[
+MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
+\]</span> 在实践中，使用了8个头，每个维度64，一共维度512。</p>
+<p>decoder的结构与encoder类似，但是它多了一层encoder和decoder。</p>
+<h3 id="self-attention">2.2 self-attention</h3>
+<p>第一步：对于输入的每一个vector创建3个新的vector， a Query vector, a Key vector, and a Value vector。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_vectors.png" alt="transformer_self_attention_vectors" style="zoom: 50%;" /></p>
+<p>第二步：计算单个的score，比如说计算第一个词Thinking，需要计算整个序列当中所有的vector对于Thinking的vector的重要程度，使用Thinking的query vector和其它所有的key vector做dot product。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_score.png" alt="transformer_self_attention_score" style="zoom:50%;" /></p>
+<p>第三步与第四步：实际是归一化socre，相当于产生relative score。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention_softmax.png" alt="self-attention_softmax" style="zoom:50%;" /></p>
+<p>第五步：各个word vector与relative score相乘，求和。这样编码后的某个位置的新的embedding是由前一步所有输入的embedding共同决定的。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-output.png" alt="self-attention-output" style="zoom:50%;" /></p>
+<p>第六步：矩阵形式的实际计算情况</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation.png" alt="self-attention-matrix-calculation" style="zoom:50%;" /></p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation-2.png" alt="self-attention-matrix-calculation-2" style="zoom:50%;" /></p>
+<h3 id="encoder-and-decoder">Encoder and Decoder</h3>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/Screen Shot 2020-10-13 at 8.46.23 PM.png" alt="Screen Shot 2020-10-13 at 8.46.23 PM" style="zoom:50%;" /></p>
+<h3 id="the-final-linear-and-softmax-layer">The Final Linear and Softmax Layer</h3>
+<p>decoder的输出，经过一个全连接层，然后得到logits vector，其中每一维度对应一个word；再经过softmax，取出score最大的word。</p>
+<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_decoder_output_softmax.png" alt="transformer_decoder_output_softmax" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>nlp</category>
+      </categories>
+  </entry>
+  <entry>
     <title>node2vec</title>
     <url>/2021/04/15/node2vec/</url>
     <content><![CDATA[<p>本文就提出了一种无监督的方法。核心思想：通过特定的游走方式进行采样，对于每个点都会生成 对应的序列。再将这些序列视为文本导入skip-gram模型，即可得 到每个节点的向量</p>
 <span id="more"></span>
-<div class="pdfobject-container" data-target="node2vec-Scalable-Feature-Learning-for-Networks.pdf" data-height="500px"></div>
+<div class="pdfobject-container" data-target="node2vec-Scalable-Feature-Learning-for-Networks.pdf" data-height="1000px"></div>
 ]]></content>
       <categories>
         <category>Paper</category>
