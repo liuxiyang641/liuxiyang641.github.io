@@ -37,7 +37,7 @@
 <meta property="og:image" content="http://example.com/2021/04/16/TPE/image-20191110191535439.png">
 <meta property="og:image" content="http://example.com/2021/04/16/TPE/image-20191110191405221.png">
 <meta property="article:published_time" content="2021-04-16T07:10:05.000Z">
-<meta property="article:modified_time" content="2021-04-16T08:11:21.956Z">
+<meta property="article:modified_time" content="2021-04-16T08:33:02.289Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/16/TPE/image-20191110144728090.png">
@@ -219,7 +219,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-04-16 15:10:05 / Modified: 16:11:21" itemprop="dateCreated datePublished" datetime="2021-04-16T15:10:05+08:00">2021-04-16</time>
+              <time title="Created: 2021-04-16 15:10:05 / Modified: 16:33:02" itemprop="dateCreated datePublished" datetime="2021-04-16T15:10:05+08:00">2021-04-16</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,13 +287,13 @@
 <li>......</li>
 </ul>
 <p>举例：</p>
-<img data-src="/2021/04/16/TPE/image-20191110144728090.png" class="" title="image-20191110144728090">
+<img data-src="/2021/04/16/TPE/image-20191110144728090.png" class="">
 <p>纵坐标是<span class="math inline">\(f(x)\)</span>，很明显如果是我们人工去选择下一组超参数的话，会在左下角score=20的这几个点中间去搜索，而不会还是进行一个全局的抽样。这实际就是一个贝叶斯优化过程。</p>
 <p>但是对于Random search，grid search这些方法，并不会利用到历史的信息来进行选择。</p>
 <h2 id="sequential-model-based-global-optimization-smbo">2. Sequential model-based global optimization (SMBO)</h2>
 <h3 id="伪代码">2.1 伪代码</h3>
 <p>序列化模型全局优化(SMBO)是把贝叶斯优化的一个形式化的定义。具体的伪代码如下：</p>
-<img data-src="/2021/04/16/TPE/image-20191110145710920.png" class="" title="image-20191110145710920">
+<img data-src="/2021/04/16/TPE/image-20191110145710920.png" class="">
 <p>伪代码中出现的符号含义：</p>
 <ul>
 <li><p><span class="math inline">\(\lambda\)</span>：超参数</p></li>
@@ -324,7 +324,7 @@
 <h4 id="surrogate-function">2.4.3 Surrogate Function</h4>
 <p>替代函数，也叫做响应面(response surface)，是基于之前的历史记录的一种关于objective function的概率表示。</p>
 <p>叫做响应面是因为它是在高维层次的objective function score的关于超参数的概率。如下图：</p>
-<img data-src="/2021/04/16/TPE/image-20191110161036552.png" class="" title="image-20191110161036552">
+<img data-src="/2021/04/16/TPE/image-20191110161036552.png" class="">
 <p>存在几种不同的替代函数，如：</p>
 <ul>
 <li>Gaussian Processes</li>
@@ -342,11 +342,11 @@
 <h3 id="基础认识">3.1 基础认识</h3>
 <ol type="1">
 <li><p>Tree：超参数优化问题可以理解为在图结构的参数空间上不断寻找objective function最优解的问题。所谓tree，是提出TPE的作者将该优化问题限制在了树状结构上，例如：</p>
-<img data-src="/2021/04/16/TPE/image-20191110163042989.png" class="" title="image-20191110163042989">
+<img data-src="/2021/04/16/TPE/image-20191110163042989.png" class="">
 <p>一些超参数只有在其它的超参数确定后才能够进行确认，例如网络的层数与每一层的节点数量，当然这不意味着这两个超参数是相关的。<strong>实际上在TPE中，要求所估计的超参数必须是相互独立的</strong>。</p></li>
 <li><p>Parzen：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Parzen–Rosenblatt window</a>是在核密度估计问题中，由 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Emanuel_Parzen">Emanuel Parzen</a> 和 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Murray_Rosenblatt">Murray Rosenblatt</a>提出的能够根据当前的观察值和先验分布类型，估计估计值的概率密度。一般的函数如下：</p>
-<img data-src="/2021/04/16/TPE/image-20191110163827025.png" class="" title="image-20191110163827025">
-<img data-src="/2021/04/16/TPE/image-20191110163935502.png" class="" title="image-20191110163935502">
+<img data-src="/2021/04/16/TPE/image-20191110163827025.png" class="">
+<img data-src="/2021/04/16/TPE/image-20191110163935502.png" class="">
 <p><strong>在TPE中，假设了核函数都是高斯核函数</strong></p></li>
 </ol>
 <h3 id="具体过程推演">3.2 具体过程推演</h3>
@@ -361,8 +361,8 @@
 <p>式子中的<span class="math inline">\(p(\lambda|c)\)</span>定义为：</p>
 <p><span class="math display">\[ p(\lambda|c) = \left\{ \begin{aligned} &amp;l(\lambda) \quad c \lt c^{*} \\ &amp;g(\lambda) \quad c \ge c^{*} \end{aligned} \right. \tag{3} \]</span></p>
 <p><span class="math inline">\(c^{*}\)</span>是一个阈值，通常是在H所有的c中，满足<span class="math inline">\(p(c&lt;c^{*})=\gamma\)</span>，<span class="math inline">\(\gamma\)</span>默认可设置为0.15。这样所有的历史记录就分成了两部分，即风险较小的那部分和风险相对较大的那部分，<span class="math inline">\(l(\lambda)\)</span>是由所有的风险较小的那部分的超参数集合形成的分布，<span class="math inline">\(g(\lambda)\)</span>是由所有的风险较大的那部分的超参数集合形成的分布。如下图：</p>
-<img data-src="/2021/04/16/TPE/image-20191110191535439.png" class="" title="image-20191110191535439">
-<img data-src="/2021/04/16/TPE/image-20191110191405221.png" class="" title="image-20191110191405221">
+<img data-src="/2021/04/16/TPE/image-20191110191535439.png" class="">
+<img data-src="/2021/04/16/TPE/image-20191110191405221.png" class="">
 <p>直觉上我们从风险较小的分布中抽样新的超参数，应该是比较合理的，下面的数学推理也证明了这一点。</p>
 <p>继续推导公式2：</p>
 <p><span class="math display">\[\begin{split} p(\lambda) &amp;= \int_{R}p(\lambda|c)p(c)dc \\ &amp;= \int_{-\infty}^{c^{*}}p(\lambda|c)p(c)dc + \int_{c^{*}}^{+\infty}p(\lambda|c)p(c)dc \\ &amp;= \gamma l(\lambda)+(1-\gamma) g(\lambda) \end{split}\]</span></p>
