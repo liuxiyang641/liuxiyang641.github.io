@@ -28,15 +28,20 @@ ACL 2020
 首先将实体和关系的embedding拆分为k个segment。
 
 直接看最后的得分函数
-$$
-f_4(h,r,t)=\sum_{0\leq x,y< k} s_{x,y} \cdot \left \langle r_x, h_y, t_{w_{x,y}} \right \rangle \\
 
-w_{x,y} =
-\begin{cases}
+
+$$
+f_4(h,r,t)= \sum_{0\leq x,y< k} s_{x,y} \cdot \left \langle r_x, h_y, t_{w_{x,y}} \right \rangle \\
+$$
+
+$$
+w_{x,y} = \begin{cases}
 y,  & \mbox{if }x\mbox{ is even}, \\
 (x+y)\%k, & \mbox{if }x\mbox{ is odd}
-\end{cases} \\
+\end{cases} 
+$$
 
+$$
 s_{x,y} =
 \begin{cases}
 -1,  & \mbox{if }x\mbox{ is odd and } x+y\geq k, \\
@@ -47,7 +52,7 @@ $$
 
 引入$w_{x,y}$限制了$t_{w_{x,y}}$，不再是所有分段的全体组合。
 
-<img src="../../../../../../../Zotero/storage/YCES768S/image-20200929220716325.png" alt="image-20200929220716325" style="zoom:30%;" />
+![](SEEK/image-20200929220716325.png)
 
 最终实验在FB15K，DB100K，YAGO37三个数据集下进行了实验。
 
