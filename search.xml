@@ -58,7 +58,7 @@
 \mathbf{S}_{i,j}=\frac{\mathbf{x}_i\cdot \mathbf{x}_j}{|\mathbf{x}_i| |\mathbf{x}_j|}
 \]</span> 然后对于节点<span class="math inline">\(i\)</span>，在<span class="math inline">\(\mathbf{S}\)</span>中选择前<span class="math inline">\(k\)</span>个相似度最大的节点作为feature node，得到<span class="math inline">\(\mathbf{A}_f\)</span>。</p>
 <p>AM-GCN的整体模型图：</p>
-<p><img src="AM-GCN/image-20210110165439556.png" alt="image-20210110165439556" style="zoom:50%;" /></p>
+<img src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="" title="image-20210110165439556">
 <p>可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。</p>
 <h3 id="specific-convolution-module">3.1 Specific Convolution Module</h3>
 <p>在Topology Graph上的卷积： <span class="math display">\[
@@ -104,7 +104,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <h2 id="experiments">4 EXPERIMENTS</h2>
 <h3 id="node-classification">4.1 Node Classification</h3>
 <p>在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络</p>
-<p><img src="AM-GCN/image-20210110175132041.png" alt="image-20210110175132041" style="zoom:40%;" /></p>
+<img src="/2021/04/15/AM-GCN/image-20210110175132041.png" class="">
 <p>注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。</p>
 <img src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="" title="image-20210110175336414">
 <p>其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。</p>
@@ -122,7 +122,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <img src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="" title="image-20210110180203704">
 <h3 id="analysis-of-attention-mechanism">4.4 Analysis of Attention Mechanism</h3>
 <p>分析不同数据集下，三个不同embedding的注意力值的分布</p>
-<p><img src="AM-GCN/image-20210110180340350.png" alt="image-20210110180340350" style="zoom: 35%;" /></p>
+<img src="/2021/04/15/AM-GCN/image-20210110180340350.png" class="">
 <p>可以看到，不同数据集下，三个不同方面的embedding对应的注意力值不同，说明哪个方面包含了更加丰富的信息是依赖于具体数据的。</p>
 ]]></content>
       <categories>
@@ -232,6 +232,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <p>there is a need for a framework which can utilize KG embedding techniques for learning task-speciﬁc node and relation embeddings.</p>
 <p>COMPGCN addresses the shortcomings of previously proposed GCN models by jointly learning vector representations for both nodes and relations in the graph</p>
 </blockquote>
+<span id="more"></span>
 <h2 id="related-work">2 RELATED WORK</h2>
 <p>两个方面叙述</p>
 <ul>
@@ -318,12 +319,12 @@ Z_r = \sum_b^B \alpha_{br}\bold{v}_b \\
 <p>2018-7-4</p>
 <h2 id="introduction">1 Introduction</h2>
 <p>第一个利用CNN学习KGE的方法。</p>
-<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="" title="image-20200314161529853">
+<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="">
 <span id="more"></span>
 <p>现在的knowledge graph会存在很多missing links，比如在Freebase和DBpedia中，超过66%的person实体没有到出生地的link。由于在知识图谱当中存在上百万的facts，所以模型的效率和计算代价就需要特别的考虑。</p>
 <p>CNN具有能够快速计算的特性，因此可以应用与knowledge graph embedding。</p>
 <h2 id="convolutional-2d-knowledge-graphs-embeddings">2 Convolutional 2D Knowledge Graphs Embeddings</h2>
-<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="" title="image-20200314161529853">
+<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="">
 <p>首先对<span class="math inline">\(e_1\in R^k\)</span>和<span class="math inline">\(r_r\in R^k\)</span>的一维的embedding进行转换为2维的形式： <span class="math display">\[
 [\bar{e_s}; \bar{r_r}] \\
 \bar{e_s},\ \bar{r_r}\in R^{k_w\times k_h} \\
@@ -347,13 +348,17 @@ relu(vec(relu([\bar{e_s}; \bar{r_r}] \star \cal{w}))W)
 \]</span> 训练loss $$</p>
 <p>$$</p>
 ]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
   </entry>
   <entry>
     <title>ConvKB</title>
     <url>/2021/04/15/ConvKB/</url>
     <content><![CDATA[<h1 id="a-novel-embedding-model-for-knowledge-base-completion-based-on-convolutional-neural-network">A Novel Embedding Model for Knowledge Base Completion Based on Convolutional Neural Network</h1>
 <p>2018-3-13 ConvKB</p>
-<p><img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
+<img src="/2021/04/15/ConvKB/image-20200219181643488.png" class="">
 <span id="more"></span>
 <h2 id="introduction">1 Introduction</h2>
 <p>知识图谱可以为knowledge base/knowledge graph</p>
@@ -371,7 +376,7 @@ relu(vec(relu([\bar{e_s}; \bar{r_r}] \star \cal{w}))W)
 <li>能够捕获复杂的，非线性的关系</li>
 </ul>
 <h2 id="proposed-convkb-model">2 Proposed ConvKB model</h2>
-<p><img src="image-20200219181643488.png" alt="image-20200219181643488" style="zoom: 33%;" /></p>
+<img src="/2021/04/15/ConvKB/image-20200219181643488.png" class="">
 <p>首先三元组组成矩阵 <span class="math display">\[
 A=[v_h,v_r,v_t]\in R^{k\times 3}
 \]</span> 之后经过一个简单的CNN层， <span class="math display">\[
@@ -410,7 +415,7 @@ w\in R^{1\times k}
 <p>这样的做法就导致了ConvR的另一个优势，减少了参数的数量。</p>
 <span id="more"></span>
 <h2 id="adaptive-convolution-on-multi-relational-data">3 Adaptive Convolution on Multi-relational Data</h2>
-<img src="/2021/04/15/ConvR/image-20200330213550962.png" class="" title="image-20200330213550962">
+<img src="/2021/04/15/ConvR/image-20200330213550962.png" class="">
 <p>对于三元组<span class="math inline">\((s, r, o)\)</span>，首先将<span class="math inline">\(e_s\)</span> reshape为2D矩阵， <span class="math display">\[
 e_s\in R^{d_e}\Rightarrow S\in R^{d_e^h,\ d_e^w}
 \]</span> 对于关系<span class="math inline">\(r\)</span>，先分割为<span class="math inline">\(c\)</span>段： <span class="math display">\[
@@ -438,7 +443,7 @@ R^{l}\in R^{h,\ w}
 <li>WN18RR</li>
 </ul>
 <p>实现的超参：</p>
-<p><img src="image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" /></p>
+<img src="/2021/04/15/ConvR/image-20200330213445418.png" class="">
 ]]></content>
   </entry>
   <entry>
@@ -492,9 +497,7 @@ R^{l}\in R^{h,\ w}
 </ul>
 <h2 id="crosse-model-description">3. CrossE: MODEL DESCRIPTION</h2>
 <p>CrossE最大的创新就在于考虑了新的embedding内容，同时没有增加过多的参数。</p>
-<figure>
-<img src="image-20200213173128411.png" alt="image-20200213173128411" /><figcaption aria-hidden="true">image-20200213173128411</figcaption>
-</figure>
+<img src="/2021/04/15/CrossE/image-20200213173128411.png" class="" title="image-20200213173128411">
 <p>初始定义：</p>
 <ul>
 <li><span class="math inline">\(E \in R^{n_e \times d}, R \in R^{n_r \times d}, C \in R^{n_r \times d}\)</span>分别表示所有实体，关系和interaction matrix</li>
@@ -638,7 +641,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 \tilde{D}_{ii}=\sum_j{\tilde{A}_{ij}}
 \]</span> 原因是在实验中发现，如果使用原来的形式会导致训练的不稳定性以及梯度消失/爆炸的问题，因此重新归一化。</p>
 <p>GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。</p>
-<p><img src="GCN/image-20201129220200051.png" alt="image-20201129220200051" style="zoom:50%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129220200051.png" class="" title="image-20201129220200051">
 <h2 id="experiments">3 EXPERIMENTS</h2>
 <p>使用以下四方面的实验：</p>
 <ul>
@@ -651,12 +654,12 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <img src="/2021/04/15/GCN/image-20201129220829777.png" class="" title="image-20201129220829777">
 <p>需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。</p>
 <h3 id="semi-supervised-node-classification">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</h3>
-<p><img src="GCN/image-20201129222635232.png" alt="image-20201129222635232" style="zoom:25%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129222635232.png" class="" title="image-20201129222635232">
 <h3 id="evaluation-of-propagation-model">3.2 EVALUATION OF PROPAGATION MODEL</h3>
 <p>对于GCN机制的一个探究。</p>
-<p><img src="GCN/image-20201129223143658.png" alt="image-20201129223143658" style="zoom: 25%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129223143658.png" class="" title="image-20201129223143658">
 <h3 id="training-timeper-epoch">3.3 TRAINING TIMEPER EPOCH</h3>
-<p><img src="GCN/image-20201129223242035.png" alt="image-20201129223242035" style="zoom: 40%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129223242035.png" class="" title="image-20201129223242035">
 <h2 id="discussion">4 DISCUSSION</h2>
 <p>切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量<span class="math inline">\(U\)</span>；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。</p>
 <p>优点：</p>
@@ -690,10 +693,8 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <p>从transductive到inductive 在GCN中训练需要训练整个图，所有节点的embedding，之后基于这些训练过的embedding进行测试，这叫做transductive； GraphSAGE计划设计一个inductive的方法，不训练所有的节点。在测试集中的节点在训练时是不可见的，使用节点的特征作为原始输入，然后使用训练好的网络在测试集中评估。</p>
 <p>提出了GraphSAGE（SAmple and aggreGAte）</p>
 <h2 id="method">2 Method</h2>
-<p><img src="image-20201220104337756.png" alt="image-20201220104337756" style="zoom:30%;" /></p>
-<figure>
-<img src="image-20201220093929039.png" alt="image-20201220093929039" /><figcaption aria-hidden="true">image-20201220093929039</figcaption>
-</figure>
+<img src="/2021/04/15/GraphSAGE/image-20201220104337756.png" class="" title="image-20201220104337756">
+<img src="/2021/04/15/GraphSAGE/image-20201220093929039.png" class="" title="image-20201220093929039">
 <p>核心在于如何聚合邻居节点的信息：</p>
 <ol type="1">
 <li>首先使用节点特征（文本等）作为初始输入</li>
@@ -727,10 +728,10 @@ J(\mathbf{z}_u) = -log(\sigma(\mathbf{z}_u^T \mathbf{z}_v))-Q\mathbb{E}_{v_n\sim
 </ul>
 <p>在验证集上寻找各个模型最好的参数，然后在测试集上评估。</p>
 <p>实验时，还对比了监督学习（直接与标签进行cross-entropy）和无监督学习</p>
-<p><img src="image-20201220103317625.png" alt="image-20201220103317625" style="zoom: 30%;" /></p>
-<p>最终，作者发现K=2相对是比较好的选择，同时，采样邻居数量<span class="math inline">\(S_1\cdot S_2 &lt; 500\)</span>较好，实验时使用的GraphSAGE都是K=2，<span class="math inline">\(S_1=25\)</span>，<span class="math inline">\(S_2=10\)</span>。</p>
+<img src="/2021/04/15/GraphSAGE/image-20201220103317625.png" class="" title="image-20201220103317625">
+<p>最终，作者发现K=2相对是比较好的选择，同时，采样s邻居数量<span class="math inline">\(S_1\cdot S_2 &lt; 500\)</span>较好，实验时使用的GraphSAGE都是K=2，<span class="math inline">\(S_1=25\)</span>，<span class="math inline">\(S_2=10\)</span>。</p>
 <h2 id="minibatch-pseudocode">4 Minibatch pseudocode</h2>
-<p><img src="image-20201221090604439.png" alt="image-20201221090604439" style="zoom: 40%;" /></p>
+<img src="/2021/04/15/GraphSAGE/image-20201221090604439.png" class="" title="mage-20201221090604439">
 <p>首先采样在对batch <span class="math inline">\(B\)</span>进行K阶训练，需要用到的所有节点。<span class="math inline">\(B^k\)</span>包括了所有在训练<span class="math inline">\(k+1\)</span>时需要用到的节点的<span class="math inline">\(k\)</span>阶表示。</p>
 ]]></content>
       <categories>
@@ -782,7 +783,7 @@ J(\mathbf{z}_u) = -log(\sigma(\mathbf{z}_u^T \mathbf{z}_v))-Q\mathbb{E}_{v_n\sim
 </ul>
 <h2 id="the-proposed-hake">2 The Proposed HAKE</h2>
 <p>HAKE的模型图：</p>
-<p><img src="HAKE/image-20200614173832367.png" alt="image-20200614173832367" style="zoom:25%;" /></p>
+<img src="/2021/04/15/HAKE/image-20200614173832367.png" class="" title="image-20200614173832367">
 <h3 id="the-modulus-part">2.1 The modulus part</h3>
 <p>极坐标的极径建模实体的语义层级。</p>
 <p>知识图谱中的实体可以组成一棵树，越往上的实体语义层级越高，越往下的语义层级越低。使用模量/极径表示实体在语义树中的深度，具有越高的语义层级的实体有更小的深度，更小的模量。</p>
@@ -823,7 +824,7 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 <h3 id="analysis-on-relation-embeddings">3.2 Analysis on Relation Embeddings</h3>
 <p>首先，说明HAKE能否捕获不同语义层级的信息。</p>
 <p>只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度</p>
-<p><img src="HAKE/image-20200614174230314.png" alt="image-20200614174230314" style="zoom: 25%;" /></p>
+<img src="/2021/04/15/HAKE/image-20200614174230314.png" class="">
 <p>其中，</p>
 <ul>
 <li>a和b是尾实体比头实体的关系语义层级高，结果显示关系embedding大部分元素&lt;1</li>
@@ -832,12 +833,12 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 </ul>
 <p>同样可以看出HAKE比ModE的方差更小，说明HAKE的建模更准确。</p>
 <p>之后，说明phase part的作用，比较c和d的关系embedding的phase part</p>
-<p><img src="HAKE/image-20200614175049088.png" alt="image-20200614175049088" style="zoom: 25%;" /></p>
+<img src="/2021/04/15/HAKE/image-20200614175049088.png" class="">
 <p>上述结果说明有很多关系嵌入的phase part元素分布在<span class="math inline">\(\pi\)</span>，导致<span class="math inline">\(h_p\)</span>和<span class="math inline">\(t_p\)</span>不一样，可以区分同一语义层级的不同实体。</p>
 <h3 id="analysis-on-entity-embeddings">3.3 Analysis on Entity Embeddings</h3>
 <p>因为是使用极坐标来表示语义层级，可以把实体embedding在极坐标中可视化。</p>
 <p>实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。</p>
-<p><img src="HAKE/image-20200614180811928.png" alt="image-20200614180811928" style="zoom:25%;" /></p>
+<img src="/2021/04/15/HAKE/image-20200614180811928.png" class="">
 <p>图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。</p>
 <h3 id="ablation-studies">3.4 Ablation Studies</h3>
 <img src="/2021/04/15/HAKE/image-20200614181125392.png" class="" title="image-20200614181125392">
@@ -957,7 +958,9 @@ Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
 <p>除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个<span class="math inline">\(\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}\)</span>。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。</p>
 <h2 id="rte">RTE</h2>
 <p>前面提到了RTE，它的核心思想是为不同timestamp的edge学习不同的表示，然后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
-<p>首先计算时间差，<img src="image-20210414170116901.png" alt="image-20210414170116901" style="zoom:25%;" />，然后编码，使用一个scalar生成一个embedding</p>
+<p>首先计算时间差，</p>
+<img src="/2021/04/14/HGT/image-20210414170116901.png" class="">
+<p>，然后编码，使用一个scalar生成一个embedding</p>
 <p><span class="math inline">\(2i,\ 2i+1\)</span>应该是dim</p>
 <img src="/2021/04/14/HGT/image-20210414170312971.png" class="">
 <p>最后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
@@ -973,8 +976,8 @@ Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
 <li>每次采样得到的sub-graph足够密集能够用于降低loss，同时减少sample variance</li>
 </ol>
 <p>核心思想是为不同的node type，根据重要程度，采样相同数量的node。</p>
-<p><img src="image-20210414180544283.png" alt="算法1" style="zoom: 33%;" /></p>
-<p><img src="image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" /></p>
+<img src="/2021/04/14/HGT/image-20210414180544283.png" class="">
+<p><img src="HGT/image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" /></p>
 <h2 id="experiment">Experiment</h2>
 <p>核心数据集，Open Academic Graph (OAG)</p>
 <blockquote>
@@ -1057,10 +1060,10 @@ e_r=(b_1,\dots,b_d)
 \]</span> Reshaping Function： <span class="math display">\[
 \phi: R^d\times R^d=R^{m\times n}
 \]</span> <span class="math inline">\(\phi\)</span>函数有以下几种类型：<span class="math inline">\(\phi_{stk},\ \phi_{alt},\ \phi_{chk}\)</span></p>
-<p><img src="image-20200405164138063.png" alt="image-20200405164138063" style="zoom:40%;" /></p>
+<img src="/2021/04/15/InteractE/image-20200405164138063.png" class="">
 <h2 id="interacte-details">4 InteractE Details</h2>
 <p>总体结构</p>
-<p><img src="image-20200405171149898.png" alt="image-20200405171149898" style="zoom:50%;" /></p>
+<img src="/2021/04/15/InteractE/image-20200405171149898.png" class="" title="image-20200405171149898">
 <h3 id="feature-permutation">4.1 Feature Permutation</h3>
 <p>拿到向量<span class="math inline">\(e_s,\ e_r\)</span>先进行特征随机排列，也就是对于<span class="math inline">\(e_s=(a_1,\dots,a_d)\  e_r=(b_1,\dots,b_d)\)</span>进行随机排序。一共可以进行<span class="math inline">\(t\)</span>次。得到， <span class="math display">\[
 P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
@@ -1070,7 +1073,7 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \phi_{chk}(P_t)=[\phi(e_s^1,e_r^1),\cdots,\phi(e_s^t,e_r^t)]
 \]</span></p>
 <h3 id="circular-convolution">4.3 Circular Convolution</h3>
-<p><img src="image-20200405171009766.png" alt="image-20200405171009766" style="zoom:40%;" /></p>
+<img src="/2021/04/15/InteractE/image-20200405171009766.png" class="">
 <p>循环卷积， <span class="math display">\[
 [x\star \omega]_{p,q}=\sum_{i=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} \sum_{j=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} x_{[p-i]_m,\ [q-j]_n} \omega_{i,j}
 \]</span></p>
@@ -1080,13 +1083,13 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \]</span></p>
 <h2 id="experimental-setup">5 Experimental Setup</h2>
 <p>数据集</p>
-<p><img src="image-20200405191734032.png" alt="image-20200405191734032" style="zoom:50%;" /></p>
+<img src="/2021/04/15/InteractE/image-20200405191734032.png" class="">
 <h3 id="performance-comparison">5.1 Performance Comparison</h3>
-<img src="/2021/04/15/InteractE/image-20200405191900132.png" class="" title="image-20200405191900132">
+<img src="/2021/04/15/InteractE/image-20200405191900132.png" class="">
 <p>在整体性能的比较上来看，对于ConvE是有较明显的提升。同时在WN18RR数据集上的效果不显著。这一点和在ConvE里面发现的现象一致，因为这个数据集可能更适合于浅层的模型因为它的平均关联度就很低。</p>
 <h3 id="effect-of-feature-reshaping-and-circular-convolution">5.2 Effect of Feature Reshaping and Circular Convolution</h3>
 <p>探究重组方法以及循环卷积对于效果的影响。</p>
-<img src="/2021/04/15/InteractE/image-20200405192616146.png" class="" title="image-20200405192616146">
+<img src="/2021/04/15/InteractE/image-20200405192616146.png" class="">
 <p>可以看出来：</p>
 <ul>
 <li>多数情况下，采用同样的reshape方式，循环卷积要优于标准卷积</li>
@@ -1094,11 +1097,11 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 </ul>
 <h3 id="effect-of-feature-permutations">5.3 Effect of Feature Permutations</h3>
 <p>探究特征随机排列的次数对于模型结果的影响</p>
-<img src="/2021/04/15/InteractE/image-20200405193118638.png" class="" title="image-20200405193118638">
+<img src="/2021/04/15/InteractE/image-20200405193118638.png" class="">
 <p>可以观察到，实际上较小的组合数量就能够取得较优的结果，1/2次随机的排列组合就能够取得不错的结果。再增加组合次数会造成过度参数化。</p>
 <h3 id="evaluation-on-different-relation-types">5.4 Evaluation on different Relation Types</h3>
 <p>对于不同类型的关系进行预测的结果。</p>
-<img src="/2021/04/15/InteractE/image-20200405193453990.png" class="" title="image-20200405193453990">
+<img src="/2021/04/15/InteractE/image-20200405193453990.png" class="">
 <p>可以看出来首先InteractE是全面优于ConvE的；另外，它更善于建模N-1和N-N的关系，而RotatE更擅长建模1-1的关系。</p>
 ]]></content>
       <categories>
@@ -1278,7 +1281,7 @@ H^{&#39;}\in N_e\times T^{&#39;} \\
 G^{&#39;}\in N_r\times P^{&#39;}
 \]</span></p>
 <h3 id="attention">3.1 Attention</h3>
-<p><img src="image-20200220112116226.png" alt="image-20200220112116226 " style="zoom:50%;" /></p>
+<img src="/2021/04/15/KBGAT/image-20200220112116226.png" class="">
 <p>对于一个以<span class="math inline">\(e_i\)</span>为顶点的edge (i, j, k)，应该能够传播给<span class="math inline">\(e_i\)</span>一个embedding： <span class="math display">\[
 c_{ijk}=W_1[h_i][h_k][g_j]
 \]</span> 接下来计算对应的attention value。 <span class="math display">\[
@@ -1417,10 +1420,10 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
 <h3 id="graph-dataset">2.2 Graph dataset</h3>
 <p>A graph dataset then consists of a set of named graphs and a default graph.</p>
 <p>即多个知识图的集合。</p>
-<p><img src="Knowledge-Graphs/image-20200826152742454.png" alt="image-20200826152742454" style="zoom:20%;" /></p>
+<img src="/2021/04/15/Knowledge-Graphs/image-20200826152742454.png" class="">
 <h3 id="property-graphs">2.3 Property graphs</h3>
 <p>属性图谱是在一般的知识图谱基础上改进的，A property graph allows a set of property–value pairs and a label to be associated with both nodes and edges.在边上添加了属性和标签。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="" title="image-20200826153137057">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="">
 <h3 id="other-graph-data-models">2.4 Other graph data models</h3>
 <p>例如hypergraph：complex edges that connect sets rather than pairs of nodes</p>
 <h2 id="deductive-knowledge">3 DEDUCTIVE KNOWLEDGE</h2>
@@ -1505,7 +1508,7 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
 <p>在这里，我们主要关心方法本身，根据模型进行分类。</p>
 <h4 id="基于翻译的模型">4.2.1 基于翻译的模型</h4>
 <p>起始于TransE，</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="" title="image-20200829195712010">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="">
 <p>TransE的不足：</p>
 <ul>
 <li>首先，TransE严格要求有效的三元组满足头实体加关系在向量空间中与尾实体足够靠近，可以很好地处理一对一关系，但在处理多映射属性关系时，存在多个实体竞争一个点的现象．例如在一对多关系中，同一个头实体<span class="math inline">\(h\)</span>与多个尾实体<span class="math inline">\(\{t_1,t_2\cdots\}\)</span>存在关系<span class="math inline">\(r\)</span>，由于<span class="math inline">\(h+r=t_i,f=\{1,2,\cdots\}\)</span>的约束，这些尾实体将竞争空间中的同一个点，即使它们语义差别很大，因而会造成向量空间的拥挤和误差；</li>
@@ -1522,7 +1525,7 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
 <p>A tensor is a multidimensional numeric field that generalises scalars (0-order tensors), vectors (1-order tensors) and matrices (2-order tensors) towards arbitrary dimension/order.</p>
 </blockquote>
 <p>下图是关于CP d-rank分解的实例，图中的<span class="math inline">\(x_i,y_i, z_i\)</span>表示的是在<span class="math inline">\(x,y,z\)</span>三个方面的第<span class="math inline">\(i\)</span>种latent factor。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="" title="image-20200829204546266">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="">
 <p>这一类型的方法有LFM， RESCAL，DistMult，ComplEx，ANALOGY，HolE。</p>
 <h4 id="神经网络模型">4.2.3 神经网络模型</h4>
 <p>上面的这些方法都是linear或者billear的scoring function，之后就有人使用non-linear的神经网络方法学习embedding。</p>
@@ -1835,7 +1838,7 @@ L=-\frac{1}{(1+w)|\varepsilon|}\sum_{(s,r,o,y)\in \Gamma}{ylog(f(s,r,o)) + (1-y)
 </blockquote>
 <h2 id="modelling-and-notation">2 Modelling and Notation</h2>
 <p>看一下对于relational data如何表示：</p>
-<p><img src="wimage-20200223224511662.png" alt="image-20200223224511662" style="zoom:50%;" /></p>
+<img src="/2021/04/15/RESCAL/image-20200223224511662.png" class="">
 <p>整体的数据被表示为张量<span class="math inline">\(\cal{X}\)</span>，<span class="math inline">\(\cal{X}_{ijk}=1\)</span>，表示fact存在。</p>
 <h2 id="methods-and-theoretical-aspects">4 Methods and Theoretical Aspects</h2>
 <p>文中定义了collective learning，大概含义是通过利用相关node的信息perform task。</p>
@@ -1874,9 +1877,7 @@ g(A,R_k)=\frac{1}{2}\lambda({\lVert A \rVert}^2_F + \sum_k{\lVert R_k \rVert}^2_
 <p>使用了两层注意力，相同关系下的实体的注意力+不同关系的注意力</p>
 <span id="more"></span>
 <p><strong>无开源代码</strong></p>
-<figure>
-<img src="image-20200906193934782.png" alt="image-20200906193934782" /><figcaption aria-hidden="true">image-20200906193934782</figcaption>
-</figure>
+
 <p>使用了两层的attention，</p>
 <p>Relation-level attention <span class="math display">\[
 \mathcal{a}_{h,r}=W_1[h||v_r] \\
@@ -1902,9 +1903,7 @@ h^\prime = \frac{1}{2} ( \sigma(W_3(h+\hat{h})) + \sigma(W_3(h \odot \hat{h})))
 </ul>
 </blockquote>
 <p>实验效果看起来很漂亮，但是无法复现就无法确定代码是否有正误，特别是在KBGAT存在test data leakage的情况下。</p>
-<figure>
-<img src="image-20200906194013652.png" alt="image-20200906194013652" /><figcaption aria-hidden="true">image-20200906194013652</figcaption>
-</figure>
+<img src="/2021/04/15/RGHAT/image-20200906194013652.png" class="" title="image-20200906194013652">
 ]]></content>
       <categories>
         <category>Paper</category>
@@ -1917,17 +1916,19 @@ h^\prime = \frac{1}{2} ( \sigma(W_3(h+\hat{h})) + \sigma(W_3(h \odot \hat{h})))
     <content><![CDATA[<h1 id="end-to-end-structure-aware-convolutional-networks-for-knowledge-base-completion">End-to-End Structure-Aware Convolutional Networks for Knowledge Base Completion</h1>
 <p>AAAI 2019</p>
 <p>W-GCN+Conv-TransE</p>
-<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。 <span class="math display">\[
+<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。</p>
+<span id="more"></span>
+<p><span class="math display">\[
 h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
 \]</span> Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head entity embedding和relation embedding stack成<span class="math inline">\(2\times d\)</span>的矩阵，之后使用<span class="math inline">\(2\times k\)</span>的卷积核进行卷积操作，这样仍然能够保持TransE中的transformation property。</p>
-<img src="/2021/04/15/SACN/image-20200906104552852.png" class="" title="image-20200906104552852">
+<img src="/2021/04/15/SACN/image-20200906104552852.png" class="">
 <p>需要注意的是，它构建了一个新的数据集，FB15k-237-Attr，从FB24k中导出属性，增加到FB15k-237数据集中。</p>
 <blockquote>
 <p>We extract the attribute triples of entities in FB15k-237 from FB24k. During the mapping, there are 7,589 nodes from the original 14,541 entities which have the node attributes. Finally, we extract 78,334 attribute triples from FB24k. These triples include 203 attributes and 247 relations. Based on these triples, we create the “FB15k-237-Attr” dataset, which includes 14,541 entity nodes, 203 attribute nodes, 484 relation types. All the 78,334 attribute triples are combined with the training set of FB15k-237.</p>
 </blockquote>
 <p>对于W-GCN如何处理attribute没有看懂。</p>
 <p>实验结果</p>
-<img src="/2021/04/15/SACN/image-20200906104625946.png" class="" title="image-20200906104625946">
+<img src="/2021/04/15/SACN/image-20200906104625946.png" class="">
 ]]></content>
       <categories>
         <category>Paper</category>

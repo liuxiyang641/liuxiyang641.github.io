@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="SEMI-SUPERVISED CLASSIFICATION WITH G RAPH CONVOLUTIONAL NETWORKS ICLR 2017 贡献：提出了一种模拟卷积神经网络的变种，直接在图结构上进行类似的卷积操作的神经网络。通过对谱卷积神经网络（Spectral GNN）进行一阶估计简化（ﬁrst-order approximation），提出了一阶图卷积神经网络——GCN。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/GCN/GCN/image-20201129220200051.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129220200051.png">
 <meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129220829777.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GCN/GCN/image-20201129222635232.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GCN/GCN/image-20201129223143658.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GCN/GCN/image-20201129223242035.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129222635232.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223143658.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223242035.png">
 <meta property="article:published_time" content="2021-04-15T08:11:34.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:12:35.841Z">
+<meta property="article:modified_time" content="2021-04-16T02:16:13.025Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/GCN/GCN/image-20201129220200051.png">
+<meta name="twitter:image" content="http://example.com/2021/04/15/GCN/image-20201129220200051.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/GCN/">
 
@@ -213,10 +213,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:11:34 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:11:34+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:11:34" itemprop="dateCreated datePublished" datetime="2021-04-15T16:11:34+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -358,7 +364,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 \tilde{D}_{ii}=\sum_j{\tilde{A}_{ij}}
 \]</span> 原因是在实验中发现，如果使用原来的形式会导致训练的不稳定性以及梯度消失/爆炸的问题，因此重新归一化。</p>
 <p>GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。</p>
-<p><img src="GCN/image-20201129220200051.png" alt="image-20201129220200051" style="zoom:50%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129220200051.png" class="" title="image-20201129220200051">
 <h2 id="experiments">3 EXPERIMENTS</h2>
 <p>使用以下四方面的实验：</p>
 <ul>
@@ -371,12 +377,12 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <img src="/2021/04/15/GCN/image-20201129220829777.png" class="" title="image-20201129220829777">
 <p>需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。</p>
 <h3 id="semi-supervised-node-classification">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</h3>
-<p><img src="GCN/image-20201129222635232.png" alt="image-20201129222635232" style="zoom:25%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129222635232.png" class="" title="image-20201129222635232">
 <h3 id="evaluation-of-propagation-model">3.2 EVALUATION OF PROPAGATION MODEL</h3>
 <p>对于GCN机制的一个探究。</p>
-<p><img src="GCN/image-20201129223143658.png" alt="image-20201129223143658" style="zoom: 25%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129223143658.png" class="" title="image-20201129223143658">
 <h3 id="training-timeper-epoch">3.3 TRAINING TIMEPER EPOCH</h3>
-<p><img src="GCN/image-20201129223242035.png" alt="image-20201129223242035" style="zoom: 40%;" /></p>
+<img src="/2021/04/15/GCN/image-20201129223242035.png" class="" title="image-20201129223242035">
 <h2 id="discussion">4 DISCUSSION</h2>
 <p>切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量<span class="math inline">\(U\)</span>；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。</p>
 <p>优点：</p>

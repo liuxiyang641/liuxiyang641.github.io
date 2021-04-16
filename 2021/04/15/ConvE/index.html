@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/ConvE/image-20200314161529853.png">
 <meta property="og:image" content="http://example.com/2021/04/15/ConvE/image-20200314161529853.png">
 <meta property="article:published_time" content="2021-04-15T09:12:23.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:12:35.833Z">
+<meta property="article:modified_time" content="2021-04-16T02:16:13.017Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/ConvE/image-20200314161529853.png">
@@ -210,9 +210,28 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 17:12:23 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T17:12:23+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 17:12:23" itemprop="dateCreated datePublished" datetime="2021-04-15T17:12:23+08:00">2021-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/KGE/" itemprop="url" rel="index"><span itemprop="name">KGE</span></a>
+                </span>
             </span>
 
           
@@ -251,12 +270,12 @@
 <p>2018-7-4</p>
 <h2 id="introduction">1 Introduction</h2>
 <p>第一个利用CNN学习KGE的方法。</p>
-<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="" title="image-20200314161529853">
+<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="">
 <span id="more"></span>
 <p>现在的knowledge graph会存在很多missing links，比如在Freebase和DBpedia中，超过66%的person实体没有到出生地的link。由于在知识图谱当中存在上百万的facts，所以模型的效率和计算代价就需要特别的考虑。</p>
 <p>CNN具有能够快速计算的特性，因此可以应用与knowledge graph embedding。</p>
 <h2 id="convolutional-2d-knowledge-graphs-embeddings">2 Convolutional 2D Knowledge Graphs Embeddings</h2>
-<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="" title="image-20200314161529853">
+<img src="/2021/04/15/ConvE/image-20200314161529853.png" class="">
 <p>首先对<span class="math inline">\(e_1\in R^k\)</span>和<span class="math inline">\(r_r\in R^k\)</span>的一维的embedding进行转换为2维的形式： <span class="math display">\[
 [\bar{e_s}; \bar{r_r}] \\
 \bar{e_s},\ \bar{r_r}\in R^{k_w\times k_h} \\

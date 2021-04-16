@@ -30,12 +30,12 @@
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826100711774.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826105530023.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826105942543.png">
-<meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/Knowledge-Graphs/image-20200826152742454.png">
+<meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826152742454.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826153137057.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200829195712010.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200829204546266.png">
 <meta property="article:published_time" content="2021-04-15T08:22:43.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:12:35.885Z">
+<meta property="article:modified_time" content="2021-04-16T02:16:13.065Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826100711774.png">
@@ -215,10 +215,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:22:43 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:22:43+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:22:43" itemprop="dateCreated datePublished" datetime="2021-04-15T16:22:43+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -355,10 +361,10 @@
 <h3 id="graph-dataset">2.2 Graph dataset</h3>
 <p>A graph dataset then consists of a set of named graphs and a default graph.</p>
 <p>即多个知识图的集合。</p>
-<p><img src="Knowledge-Graphs/image-20200826152742454.png" alt="image-20200826152742454" style="zoom:20%;" /></p>
+<img src="/2021/04/15/Knowledge-Graphs/image-20200826152742454.png" class="">
 <h3 id="property-graphs">2.3 Property graphs</h3>
 <p>属性图谱是在一般的知识图谱基础上改进的，A property graph allows a set of property–value pairs and a label to be associated with both nodes and edges.在边上添加了属性和标签。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="" title="image-20200826153137057">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="">
 <h3 id="other-graph-data-models">2.4 Other graph data models</h3>
 <p>例如hypergraph：complex edges that connect sets rather than pairs of nodes</p>
 <h2 id="deductive-knowledge">3 DEDUCTIVE KNOWLEDGE</h2>
@@ -443,7 +449,7 @@
 <p>在这里，我们主要关心方法本身，根据模型进行分类。</p>
 <h4 id="基于翻译的模型">4.2.1 基于翻译的模型</h4>
 <p>起始于TransE，</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="" title="image-20200829195712010">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="">
 <p>TransE的不足：</p>
 <ul>
 <li>首先，TransE严格要求有效的三元组满足头实体加关系在向量空间中与尾实体足够靠近，可以很好地处理一对一关系，但在处理多映射属性关系时，存在多个实体竞争一个点的现象．例如在一对多关系中，同一个头实体<span class="math inline">\(h\)</span>与多个尾实体<span class="math inline">\(\{t_1,t_2\cdots\}\)</span>存在关系<span class="math inline">\(r\)</span>，由于<span class="math inline">\(h+r=t_i,f=\{1,2,\cdots\}\)</span>的约束，这些尾实体将竞争空间中的同一个点，即使它们语义差别很大，因而会造成向量空间的拥挤和误差；</li>
@@ -460,7 +466,7 @@
 <p>A tensor is a multidimensional numeric field that generalises scalars (0-order tensors), vectors (1-order tensors) and matrices (2-order tensors) towards arbitrary dimension/order.</p>
 </blockquote>
 <p>下图是关于CP d-rank分解的实例，图中的<span class="math inline">\(x_i,y_i, z_i\)</span>表示的是在<span class="math inline">\(x,y,z\)</span>三个方面的第<span class="math inline">\(i\)</span>种latent factor。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="" title="image-20200829204546266">
+<img src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="">
 <p>这一类型的方法有LFM， RESCAL，DistMult，ComplEx，ANALOGY，HolE。</p>
 <h4 id="神经网络模型">4.2.3 神经网络模型</h4>
 <p>上面的这些方法都是linear或者billear的scoring function，之后就有人使用non-linear的神经网络方法学习embedding。</p>

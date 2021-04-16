@@ -27,13 +27,12 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Relational Graph Neural Network with Hierarchical Attention for Knowledge Graph Completion AAAI 2020 使用了两层注意力，相同关系下的实体的注意力+不同关系的注意力">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/RGHAT/image-20200906193934782.png">
 <meta property="og:image" content="http://example.com/2021/04/15/RGHAT/image-20200906194013652.png">
 <meta property="article:published_time" content="2021-04-15T08:28:02.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:12:35.909Z">
+<meta property="article:modified_time" content="2021-04-16T02:16:13.093Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/RGHAT/image-20200906193934782.png">
+<meta name="twitter:image" content="http://example.com/2021/04/15/RGHAT/image-20200906194013652.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/RGHAT/">
 
@@ -210,10 +209,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:28:02 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:28:02+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:28:02" itemprop="dateCreated datePublished" datetime="2021-04-15T16:28:02+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -265,9 +270,7 @@
 <p>使用了两层注意力，相同关系下的实体的注意力+不同关系的注意力</p>
 <span id="more"></span>
 <p><strong>无开源代码</strong></p>
-<figure>
-<img src="image-20200906193934782.png" alt="image-20200906193934782" /><figcaption aria-hidden="true">image-20200906193934782</figcaption>
-</figure>
+
 <p>使用了两层的attention，</p>
 <p>Relation-level attention <span class="math display">\[
 \mathcal{a}_{h,r}=W_1[h||v_r] \\
@@ -293,9 +296,7 @@ h^\prime = \frac{1}{2} ( \sigma(W_3(h+\hat{h})) + \sigma(W_3(h \odot \hat{h})))
 </ul>
 </blockquote>
 <p>实验效果看起来很漂亮，但是无法复现就无法确定代码是否有正误，特别是在KBGAT存在test data leakage的情况下。</p>
-<figure>
-<img src="image-20200906194013652.png" alt="image-20200906194013652" /><figcaption aria-hidden="true">image-20200906194013652</figcaption>
-</figure>
+<img src="/2021/04/15/RGHAT/image-20200906194013652.png" class="" title="image-20200906194013652">
 
     </div>
 

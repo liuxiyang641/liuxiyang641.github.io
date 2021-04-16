@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/SACN/image-20200906104552852.png">
 <meta property="og:image" content="http://example.com/2021/04/15/SACN/image-20200906104625946.png">
 <meta property="article:published_time" content="2021-04-15T08:31:49.000Z">
-<meta property="article:modified_time" content="2021-04-15T11:12:35.913Z">
+<meta property="article:modified_time" content="2021-04-16T02:16:13.097Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/SACN/image-20200906104552852.png">
@@ -210,10 +210,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:31:49 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:31:49+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:31:49" itemprop="dateCreated datePublished" datetime="2021-04-15T16:31:49+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -263,17 +269,19 @@
         <h1 id="end-to-end-structure-aware-convolutional-networks-for-knowledge-base-completion">End-to-End Structure-Aware Convolutional Networks for Knowledge Base Completion</h1>
 <p>AAAI 2019</p>
 <p>W-GCN+Conv-TransE</p>
-<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。 <span class="math display">\[
+<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。</p>
+<span id="more"></span>
+<p><span class="math display">\[
 h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
 \]</span> Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head entity embedding和relation embedding stack成<span class="math inline">\(2\times d\)</span>的矩阵，之后使用<span class="math inline">\(2\times k\)</span>的卷积核进行卷积操作，这样仍然能够保持TransE中的transformation property。</p>
-<img src="/2021/04/15/SACN/image-20200906104552852.png" class="" title="image-20200906104552852">
+<img src="/2021/04/15/SACN/image-20200906104552852.png" class="">
 <p>需要注意的是，它构建了一个新的数据集，FB15k-237-Attr，从FB24k中导出属性，增加到FB15k-237数据集中。</p>
 <blockquote>
 <p>We extract the attribute triples of entities in FB15k-237 from FB24k. During the mapping, there are 7,589 nodes from the original 14,541 entities which have the node attributes. Finally, we extract 78,334 attribute triples from FB24k. These triples include 203 attributes and 247 relations. Based on these triples, we create the “FB15k-237-Attr” dataset, which includes 14,541 entity nodes, 203 attribute nodes, 484 relation types. All the 78,334 attribute triples are combined with the training set of FB15k-237.</p>
 </blockquote>
 <p>对于W-GCN如何处理attribute没有看懂。</p>
 <p>实验结果</p>
-<img src="/2021/04/15/SACN/image-20200906104625946.png" class="" title="image-20200906104625946">
+<img src="/2021/04/15/SACN/image-20200906104625946.png" class="">
 
     </div>
 

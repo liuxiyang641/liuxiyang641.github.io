@@ -205,10 +205,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:38:45 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:38:45+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:38:45" itemprop="dateCreated datePublished" datetime="2021-04-15T16:38:45+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -302,10 +308,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:35:28 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:35:28+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:35:28" itemprop="dateCreated datePublished" datetime="2021-04-15T16:35:28+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -404,10 +416,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:33:19 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:33:19+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:33:19" itemprop="dateCreated datePublished" datetime="2021-04-15T16:33:19+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -501,10 +519,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:31:49 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:31:49+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:31:49" itemprop="dateCreated datePublished" datetime="2021-04-15T16:31:49+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -547,18 +571,15 @@
           <h1 id="end-to-end-structure-aware-convolutional-networks-for-knowledge-base-completion">End-to-End Structure-Aware Convolutional Networks for Knowledge Base Completion</h1>
 <p>AAAI 2019</p>
 <p>W-GCN+Conv-TransE</p>
-<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。 <span class="math display">\[
-h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
-\]</span> Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head entity embedding和relation embedding stack成<span class="math inline">\(2\times d\)</span>的矩阵，之后使用<span class="math inline">\(2\times k\)</span>的卷积核进行卷积操作，这样仍然能够保持TransE中的transformation property。</p>
-<img src="/2021/04/15/SACN/image-20200906104552852.png" class="" title="image-20200906104552852">
-<p>需要注意的是，它构建了一个新的数据集，FB15k-237-Attr，从FB24k中导出属性，增加到FB15k-237数据集中。</p>
-<blockquote>
-<p>We extract the attribute triples of entities in FB15k-237 from FB24k. During the mapping, there are 7,589 nodes from the original 14,541 entities which have the node attributes. Finally, we extract 78,334 attribute triples from FB24k. These triples include 203 attributes and 247 relations. Based on these triples, we create the “FB15k-237-Attr” dataset, which includes 14,541 entity nodes, 203 attribute nodes, 484 relation types. All the 78,334 attribute triples are combined with the training set of FB15k-237.</p>
-</blockquote>
-<p>对于W-GCN如何处理attribute没有看懂。</p>
-<p>实验结果</p>
-<img src="/2021/04/15/SACN/image-20200906104625946.png" class="" title="image-20200906104625946">
-
+<p>W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/15/SACN/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -602,10 +623,16 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:29:45 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:29:45+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:29:45" itemprop="dateCreated datePublished" datetime="2021-04-15T16:29:45+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -699,10 +726,16 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:28:02 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:28:02+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:28:02" itemprop="dateCreated datePublished" datetime="2021-04-15T16:28:02+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -796,10 +829,16 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:27:01 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:27:01+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:27:01" itemprop="dateCreated datePublished" datetime="2021-04-15T16:27:01+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -847,80 +886,14 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
 <p>there is a need for a framework which can utilize KG embedding techniques for learning task-speciﬁc node and relation embeddings.</p>
 <p>COMPGCN addresses the shortcomings of previously proposed GCN models by jointly learning vector representations for both nodes and relations in the graph</p>
 </blockquote>
-<h2 id="related-work">2 RELATED WORK</h2>
-<p>两个方面叙述</p>
-<ul>
-<li>GCN: 原始的GCN，之后的各种拓展，都在MPNN框架下，本论文提出的也是这样，但是专门为relational data设计过</li>
-<li>KE: translational、semantic matching based、neural network based</li>
-</ul>
-<h2 id="background">3 BACKGROUND</h2>
-<h3 id="gcn-on-undirected-graph">GCN on undirected graph</h3>
-<p>图的表示形式： <span class="math display">\[
-G=(\cal{V},\cal{E},\cal{X})
-\]</span> 其中<span class="math inline">\(\cal{X}\)</span>表示所有entity的初始feature，<span class="math inline">\(\cal{X}\in \cal{R}^{ |\cal{V}|\times d_0 }\)</span>。</p>
-<p>获取归一化后的self-connection邻接矩阵： <span class="math display">\[
-\hat{A}=\tilde{D}^{-\frac{1}{2}}(A+I)\tilde{D}^{-\frac{1}{2}} \\
-\tilde{D}_{ii}=\sum_j{(A+I)_{ij}}
-\]</span> 某一层的GCN： <span class="math display">\[
-H^{k+1}=f(\hat{A}H^kW^k) \\
-H^0=\cal{X}
-\]</span></p>
-<h3 id="gcn-on-directed-graph">GCN on directed graph</h3>
-<p>图的表示形式： <span class="math display">\[
-G=(\cal{V},\cal{R},\cal{E},\cal{X})
-\]</span> <span class="math inline">\(\cal{R}\)</span>表示relation的集合。</p>
-<p>这种情况下对于关系数据的处理就存在区别了，基于Encoding sentences with graph convolutional networks for semantic role labeling 中提出的假设，</p>
-<blockquote>
-<p>information in a directed edge ﬂows along both directions</p>
-</blockquote>
-<p>因此构造出反向关系inverse relation: <span class="math display">\[
-(u,v,r)\in \cal{E}\ \ and\ \ (v,u,r^{-1})\in \cal{E^{-1}}
-\]</span> 此时的GCN： <span class="math display">\[
-H^{k+1}=f(\hat{A} H^k W^k_r) \\
-H^0=\cal{X}
-\]</span></p>
-<h2 id="compgcn-details">4 CompGCN DETAILS</h2>
-<p>图： <span class="math display">\[
-G=(\cal{V},\cal{R},\cal{E},\cal{X},\cal{Z}) \\
-\cal{X}\in \cal{R}^{ |\cal{V}|\times d_0 } \\
-\cal{Z}\in \cal{R}^{ |\cal{R}|\times d_0 }
-\]</span> 构造关系： <span class="math display">\[
-\cal{E^{&#39;}} = \cal{E}\ \cup\ \{ (v,u,r^{-1}) | (u,v,r)\in \cal{E}\ \}\ \cup\ \{ (u,u,T) | u\in \cal{V} \}
-\]</span> embedding更新方式： <span class="math display">\[
-h_v^{k+1}=f(\sum_{(u,r)\in \cal{N}_v} W_{\lambda(x)^k}\phi(x_u^k, z_r^k))
-\]</span> 其中<span class="math inline">\(\phi\)</span>函数，为了减少参数，可以为下面的三种方式，当然可以拓展为更多的方式： <span class="math display">\[
-Sub: \ \phi(x_u, z_r) = x_u - z_r \\
-Mult:\ \phi(x_u, z_r) = x_u * z_r \\
-Circular-correlation:\ \phi(x_u, z_r) = x_u \star z_r
-\]</span> 其中的关系权值矩阵： <span class="math display">\[
-W_{dir(r)}= \begin{cases} W_o,\ r\in \cal{R} \\ W_i,\ r\in \cal{R}_{inv} \\ W_S\ r\in \cal{T}(self-loop) \end{cases}
-\]</span> 对于关系relation的处理，与KBGAT一样： <span class="math display">\[
-z_r^{k+1} = W_{rel}z_r^k \\
-W_{rel}\in R^{d_1\times d_0}
-\]</span> 在第一层初始的时候，对于relation的定义是bias-vector。 <span class="math display">\[
-Z_r = \sum_b^B \alpha_{br}\bold{v}_b \\
-\{ \bold{v}_1, \bold{v}_2,\cdots \bold{v}_B \}
-\]</span></p>
-<h2 id="experimental-setup">5 EXPERIMENTAL SETUP</h2>
-<p>进行了下面三个任务：</p>
-<ul>
-<li>Link Prediction：FB15k-237，WN18RR</li>
-<li>Node Classiﬁcation：MUTAG (Node) ， AM</li>
-<li>Graph Classiﬁcation：bioinformatics dataset：MUTAG (Graph) ， PTC</li>
-</ul>
-<h2 id="results">6 RESULTS</h2>
-<p>研究了下面四个方面的问题：</p>
-<ol type="1">
-<li>在link prediction上的效果</li>
-<li>选择不同的composite operation效果</li>
-<li>模型对于不同数量的relation的数据集的效果</li>
-<li>在node和graph classiﬁcation的效果</li>
-</ol>
-<blockquote>
-<p>We ﬁnd that with DistMult score function, multiplication operator (Mult) gives the best performance while with ConvE, circular-correlation surpasses all other operators.</p>
-</blockquote>
-<p>具体结果略</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/15/CompGCN/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -964,10 +937,16 @@ Z_r = \sum_b^B \alpha_{br}\bold{v}_b \\
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:22:43 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:22:43+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:22:43" itemprop="dateCreated datePublished" datetime="2021-04-15T16:22:43+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1060,10 +1039,16 @@ Z_r = \sum_b^B \alpha_{br}\bold{v}_b \\
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:20:44 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:20:44+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:20:44" itemprop="dateCreated datePublished" datetime="2021-04-15T16:20:44+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -1156,10 +1141,16 @@ Z_r = \sum_b^B \alpha_{br}\bold{v}_b \\
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-04-15 16:11:34 / Modified: 19:12:35" itemprop="dateCreated datePublished" datetime="2021-04-15T16:11:34+08:00">2021-04-15</time>
+              <time title="Created: 2021-04-15 16:11:34" itemprop="dateCreated datePublished" datetime="2021-04-15T16:11:34+08:00">2021-04-15</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-16 10:16:13" itemprop="dateModified" datetime="2021-04-16T10:16:13+08:00">2021-04-16</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
