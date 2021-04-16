@@ -12,12 +12,13 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Times New Roman Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
@@ -34,7 +35,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614180811928.png">
 <meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614181125392.png">
 <meta property="article:published_time" content="2021-04-15T08:35:28.000Z">
-<meta property="article:modified_time" content="2021-04-16T02:26:43.426Z">
+<meta property="article:modified_time" content="2021-04-16T04:39:26.204Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/HAKE/image-20200614173832367.png">
@@ -222,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-16 10:26:43" itemprop="dateModified" datetime="2021-04-16T10:26:43+08:00">2021-04-16</time>
+                <time title="Modified: 2021-04-16 12:39:26" itemprop="dateModified" datetime="2021-04-16T12:39:26+08:00">2021-04-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,7 +312,7 @@
 </ul>
 <h2 id="the-proposed-hake">2 The Proposed HAKE</h2>
 <p>HAKE的模型图：</p>
-<img src="/2021/04/15/HAKE/image-20200614173832367.png" class="" title="image-20200614173832367">
+<img data-src="/2021/04/15/HAKE/image-20200614173832367.png" class="" title="image-20200614173832367">
 <h3 id="the-modulus-part">2.1 The modulus part</h3>
 <p>极坐标的极径建模实体的语义层级。</p>
 <p>知识图谱中的实体可以组成一棵树，越往上的实体语义层级越高，越往下的语义层级越低。使用模量/极径表示实体在语义树中的深度，具有越高的语义层级的实体有更小的深度，更小的模量。</p>
@@ -344,7 +345,7 @@ p(h^{&#39;}_j, r, t^{&#39;}_j) =\frac{exp\alpha f_r(h^{&#39;}_j, t^{&#39;}_j)}{\
 \]</span></p>
 <h2 id="experiments-and-analysis">3 Experiments and Analysis</h2>
 <h3 id="main-results">3.1 Main Results</h3>
-<img src="/2021/04/15/HAKE/image-20200614173938559.png" class="" title="image-20200614173938559">
+<img data-src="/2021/04/15/HAKE/image-20200614173938559.png" class="" title="image-20200614173938559">
 <p>三个数据集：WN18RR, FB15k-237, YAGO3-10</p>
 <p>为了说明phase part部分的作用，只保留modulus part，作为模型<strong>ModE</strong>： <span class="math display">\[
 d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
@@ -352,7 +353,7 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 <h3 id="analysis-on-relation-embeddings">3.2 Analysis on Relation Embeddings</h3>
 <p>首先，说明HAKE能否捕获不同语义层级的信息。</p>
 <p>只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度</p>
-<img src="/2021/04/15/HAKE/image-20200614174230314.png" class="">
+<img data-src="/2021/04/15/HAKE/image-20200614174230314.png" class="">
 <p>其中，</p>
 <ul>
 <li>a和b是尾实体比头实体的关系语义层级高，结果显示关系embedding大部分元素&lt;1</li>
@@ -361,15 +362,15 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 </ul>
 <p>同样可以看出HAKE比ModE的方差更小，说明HAKE的建模更准确。</p>
 <p>之后，说明phase part的作用，比较c和d的关系embedding的phase part</p>
-<img src="/2021/04/15/HAKE/image-20200614175049088.png" class="">
+<img data-src="/2021/04/15/HAKE/image-20200614175049088.png" class="">
 <p>上述结果说明有很多关系嵌入的phase part元素分布在<span class="math inline">\(\pi\)</span>，导致<span class="math inline">\(h_p\)</span>和<span class="math inline">\(t_p\)</span>不一样，可以区分同一语义层级的不同实体。</p>
 <h3 id="analysis-on-entity-embeddings">3.3 Analysis on Entity Embeddings</h3>
 <p>因为是使用极坐标来表示语义层级，可以把实体embedding在极坐标中可视化。</p>
 <p>实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。</p>
-<img src="/2021/04/15/HAKE/image-20200614180811928.png" class="">
+<img data-src="/2021/04/15/HAKE/image-20200614180811928.png" class="">
 <p>图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。</p>
 <h3 id="ablation-studies">3.4 Ablation Studies</h3>
-<img src="/2021/04/15/HAKE/image-20200614181125392.png" class="" title="image-20200614181125392">
+<img data-src="/2021/04/15/HAKE/image-20200614181125392.png" class="" title="image-20200614181125392">
 
     </div>
 
@@ -574,6 +575,9 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
   
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 

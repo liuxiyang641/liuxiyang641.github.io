@@ -12,12 +12,13 @@
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Times New Roman Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":320,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="Knowledge Graphs Introduction of Knowledge Graphs.">
@@ -35,7 +36,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200829195712010.png">
 <meta property="og:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200829204546266.png">
 <meta property="article:published_time" content="2021-04-15T08:22:43.000Z">
-<meta property="article:modified_time" content="2021-04-16T02:26:43.454Z">
+<meta property="article:modified_time" content="2021-04-16T04:39:26.232Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/Knowledge-Graphs/image-20200826100711774.png">
@@ -223,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-16 10:26:43" itemprop="dateModified" datetime="2021-04-16T10:26:43+08:00">2021-04-16</time>
+                <time title="Modified: 2021-04-16 12:39:26" itemprop="dateModified" datetime="2021-04-16T12:39:26+08:00">2021-04-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -342,13 +343,13 @@
 </ul>
 <p>实践当中，按照知识图谱的开放程度，分为open knowledge graph和enterprise knowledge graphs两类。前者对公众开放，比如：DBpedia, Freebase, Wikidata, YAGO。后者主要是公司内部使用，Bing, Google, Airbnb, Amazon, eBay</p>
 <p>实际上本质的，知识图谱获得成功要得益于它的特点——弱语义，多实例</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826100711774.png" class="" title="image-20200826100711774">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200826100711774.png" class="" title="image-20200826100711774">
 <p>不需要多强的语义，因为现实世界是如此的复杂，以至于我们不可能概括一个通用的、泛化性强的规则/语义去描述全部的现实世界。但语义又是必须的，没有语义的话，就没有知识，知识图谱的本身就不成立了。所以，知识图谱着眼于弱语义，同时看重实例的堆积，反而取得了成功，并且在快速的发展。</p>
 <p>知识图谱的研究热点逐渐出现重数量轻结构化的倾向，</p>
 <p>知识图谱怎么用？</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826105530023.png" class="" title="image-20200826105530023">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200826105530023.png" class="" title="image-20200826105530023">
 <p>宏观角度看知识图谱</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826105942543.png" class="" title="image-20200826105942543">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200826105942543.png" class="" title="image-20200826105942543">
 <p>知识图谱的缺点：</p>
 <p>知识图谱的缺点本质上都是“⼆元⼀阶谓词逻辑”作为知识表示本身的缺陷带来的。词逻辑”作为知识表示本身的缺陷带来的。⻓久以来，知识 表示是研究者孜孜不倦追寻探索的话题，完全依靠（头实体，关系，尾实体）这样的命题，尽管能表示⼤部分简单事件或实体属性，但对于复杂知识却束手无策。</p>
 <p>比如“克隆⽺的各项属性都与本体相同”，这个知识就无法被现有的知识图谱结构很好的记录。</p>
@@ -361,10 +362,10 @@
 <h3 id="graph-dataset">2.2 Graph dataset</h3>
 <p>A graph dataset then consists of a set of named graphs and a default graph.</p>
 <p>即多个知识图的集合。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826152742454.png" class="">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200826152742454.png" class="">
 <h3 id="property-graphs">2.3 Property graphs</h3>
 <p>属性图谱是在一般的知识图谱基础上改进的，A property graph allows a set of property–value pairs and a label to be associated with both nodes and edges.在边上添加了属性和标签。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200826153137057.png" class="">
 <h3 id="other-graph-data-models">2.4 Other graph data models</h3>
 <p>例如hypergraph：complex edges that connect sets rather than pairs of nodes</p>
 <h2 id="deductive-knowledge">3 DEDUCTIVE KNOWLEDGE</h2>
@@ -449,7 +450,7 @@
 <p>在这里，我们主要关心方法本身，根据模型进行分类。</p>
 <h4 id="基于翻译的模型">4.2.1 基于翻译的模型</h4>
 <p>起始于TransE，</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200829195712010.png" class="">
 <p>TransE的不足：</p>
 <ul>
 <li>首先，TransE严格要求有效的三元组满足头实体加关系在向量空间中与尾实体足够靠近，可以很好地处理一对一关系，但在处理多映射属性关系时，存在多个实体竞争一个点的现象．例如在一对多关系中，同一个头实体<span class="math inline">\(h\)</span>与多个尾实体<span class="math inline">\(\{t_1,t_2\cdots\}\)</span>存在关系<span class="math inline">\(r\)</span>，由于<span class="math inline">\(h+r=t_i,f=\{1,2,\cdots\}\)</span>的约束，这些尾实体将竞争空间中的同一个点，即使它们语义差别很大，因而会造成向量空间的拥挤和误差；</li>
@@ -466,7 +467,7 @@
 <p>A tensor is a multidimensional numeric field that generalises scalars (0-order tensors), vectors (1-order tensors) and matrices (2-order tensors) towards arbitrary dimension/order.</p>
 </blockquote>
 <p>下图是关于CP d-rank分解的实例，图中的<span class="math inline">\(x_i,y_i, z_i\)</span>表示的是在<span class="math inline">\(x,y,z\)</span>三个方面的第<span class="math inline">\(i\)</span>种latent factor。</p>
-<img src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="">
+<img data-src="/2021/04/15/Knowledge-Graphs/image-20200829204546266.png" class="">
 <p>这一类型的方法有LFM， RESCAL，DistMult，ComplEx，ANALOGY，HolE。</p>
 <h4 id="神经网络模型">4.2.3 神经网络模型</h4>
 <p>上面的这些方法都是linear或者billear的scoring function，之后就有人使用non-linear的神经网络方法学习embedding。</p>
@@ -775,6 +776,9 @@
   
   <script src="/lib/anime.min.js"></script>
   <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
 
