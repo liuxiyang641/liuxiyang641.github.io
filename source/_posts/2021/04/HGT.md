@@ -122,7 +122,7 @@ HGSampling算法能够保证两点：
 
 ![](HGT/image-20210414180544283.png)
 
-<img src="HGT/image-20210414180603410.png" alt="image-20210414180603410" style="zoom: 33%;" />
+![](HGT/image-20210414180603410.png)
 
 ## Experiment
 

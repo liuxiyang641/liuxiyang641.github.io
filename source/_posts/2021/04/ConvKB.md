@@ -17,7 +17,7 @@ tags:
 
 ## 1 Introduction
 
-知识图谱可以为knowledge base/knowledge graph
+知识图谱可以为knowledge base/knowledge graph  
 
 知识图谱在很多领域都有重要的作用，但是在open world assumion下，知识图谱本身是不完整的，不能包含所有实际存在的三元组。
 
