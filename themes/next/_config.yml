@@ -61,7 +61,7 @@ footer:
   # Icon between year and copyright info.
   icon:
     # Icon name in Font Awesome. See: https://fontawesome.com/icons
-    name: fa fa-heart
+    name: fa fa-flag
     # If you want to animate the icon, set it to true.
     animated: false
     # Change the color of icon, using Hex Code.
@@ -181,8 +181,8 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  #GitHub: https://github.com/yourname || fab fa-github
-  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+  GitHub: https://github.com/liuxiyang641.github.io || fab fa-github
+  E-Mail: mailto:liuxiyang@buaa.edu.cn || fa fa-envelope
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -426,7 +426,7 @@ font:
   global:
     external: true
     family: Lato
-    size:
+    size: 1
 
   # Font settings for site title (.site-title).
   title:
@@ -444,6 +444,7 @@ font:
   posts:
     external: true
     family: Roboto
+    size: 0.1
 
   # Font settings for <code> and code blocks.
   codes:

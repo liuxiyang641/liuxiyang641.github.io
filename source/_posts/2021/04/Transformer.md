@@ -31,9 +31,7 @@ RNN等模型已经取得了很大的成功，但是计算循环网络的代价�
 
 整个Transformer的结构是encoder和decoder的结构，如下图所示。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/image-20201011202918546.png" alt="image-20201011202918546" style="zoom: 30%;" />
-
-
+![](Transformer/image-20201011202918546.png)
 
 整体堆叠6层encoder，然后经过6层的decoder。6层encoder的最终输入会输入到每一层的decoder中。
 
@@ -45,7 +43,7 @@ RNN等模型已经取得了很大的成功，但是计算循环网络的代价�
 
 ### 2.1 Multi-head attention
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/image-20201011204804340.png" alt="image-20201011204804340" style="zoom:30%;" />
+![](Transformer/image-20201011204804340.png)
 
 首先计算单个attention，使用query，keys和values来计算。使用query和其它所有embedding的keys计算出权值，然后不同的权值与values相乘求和。querys和keys的维度是$d_k$，values的维度是$d_v$。
 $$
@@ -67,33 +65,31 @@ decoder的结构与encoder类似，但是它多了一层encoder和decoder。
 
 第一步：对于输入的每一个vector创建3个新的vector， a Query vector, a Key vector, and a Value vector。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_vectors.png" alt="transformer_self_attention_vectors" style="zoom: 50%;" />
+![](Transformer/transformer_self_attention_vectors.png)
 
 第二步：计算单个的score，比如说计算第一个词Thinking，需要计算整个序列当中所有的vector对于Thinking的vector的重要程度，使用Thinking的query vector和其它所有的key vector做dot product。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_score.png" alt="transformer_self_attention_score" style="zoom:50%;" />
+![](Transformer/transformer_self_attention_score.png)
 
 第三步与第四步：实际是归一化socre，相当于产生relative score。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/self-attention_softmax.png" alt="self-attention_softmax" style="zoom:50%;" />
+![](Transformer/self-attention_softmax.png)
 
 第五步：各个word vector与relative score相乘，求和。这样编码后的某个位置的新的embedding是由前一步所有输入的embedding共同决定的。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/self-attention-output.png" alt="self-attention-output" style="zoom:50%;" />
+![](Transformer/self-attention-output.png)
 
 第六步：矩阵形式的实际计算情况
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation.png" alt="self-attention-matrix-calculation" style="zoom:50%;" />
-
-<img src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation-2.png" alt="self-attention-matrix-calculation-2" style="zoom:50%;" />
+![](Transformer/self-attention-matrix-calculation.png)
 
 ### Encoder and Decoder
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/Screen Shot 2020-10-13 at 8.46.23 PM.png" alt="Screen Shot 2020-10-13 at 8.46.23 PM" style="zoom:50%;" />
+![](Transformer/Screen-Shot-2020-10-13-at-8-46-23-PM.png)
 
 ### The Final Linear and Softmax Layer
 
 decoder的输出，经过一个全连接层，然后得到logits vector，其中每一维度对应一个word；再经过softmax，取出score最大的word。
 
-<img src="../../../../../../../Zotero/storage/3DRV9644/transformer_decoder_output_softmax.png" alt="transformer_decoder_output_softmax" style="zoom:50%;" />
+![](Transformer/transformer_decoder_output_softmax.png)
 
