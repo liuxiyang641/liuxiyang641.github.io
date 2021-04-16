@@ -2511,13 +2511,13 @@ s_{x,y} =
 </blockquote>
 <h2 id="model-architecture">2 Model Architecture</h2>
 <p>整个Transformer的结构是encoder和decoder的结构，如下图所示。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/image-20201011202918546.png" alt="image-20201011202918546" style="zoom: 30%;" /></p>
+<img data-src="/2021/04/16/Transformer/image-20201011202918546.png" class="">
 <p>整体堆叠6层encoder，然后经过6层的decoder。6层encoder的最终输入会输入到每一层的decoder中。</p>
 <p>每一层encoder包括两个sublayer，一个接受input的输入，然后经过<span class="math inline">\(h\)</span>个多头注意力，加上原来的输入，之后norm，第二层经过一个前馈网络，还是加上原来的输入，经过norm。encoder的初始输入是全部的原始输入。</p>
 <p>每一层的decoder包括三个sublayer，有两个与encoder一样，但是多了一层会接受encoder的输出作为keys和values。decoder的初始输入是<span class="math inline">\(t-1\)</span>时刻的预测结果以及encoder的输出。</p>
 <p>下面详细解析：</p>
 <h3 id="multi-head-attention">2.1 Multi-head attention</h3>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/image-20201011204804340.png" alt="image-20201011204804340" style="zoom:30%;" /></p>
+<img data-src="/2021/04/16/Transformer/image-20201011204804340.png" class="">
 <p>首先计算单个attention，使用query，keys和values来计算。使用query和其它所有embedding的keys计算出权值，然后不同的权值与values相乘求和。querys和keys的维度是<span class="math inline">\(d_k\)</span>，values的维度是<span class="math inline">\(d_v\)</span>。 <span class="math display">\[
 Attention(Q,K,V)=softmax(\frac{QK^T}{\sqrt{d_k}})V
 \]</span> 需要注意的是其中多了一个常量<span class="math inline">\(\sqrt{d_k}\)</span>，这是因为作者在实验中发现加入除数常量的效果很好，原因可能是因为softmax的输入在值较大的时候梯度会变小，因此加入了一个除数常量减小值。</p>
@@ -2530,21 +2530,20 @@ MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
 <p>decoder的结构与encoder类似，但是它多了一层encoder和decoder。</p>
 <h3 id="self-attention">2.2 self-attention</h3>
 <p>第一步：对于输入的每一个vector创建3个新的vector， a Query vector, a Key vector, and a Value vector。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_vectors.png" alt="transformer_self_attention_vectors" style="zoom: 50%;" /></p>
+<img data-src="/2021/04/16/Transformer/transformer_self_attention_vectors.png" class="">
 <p>第二步：计算单个的score，比如说计算第一个词Thinking，需要计算整个序列当中所有的vector对于Thinking的vector的重要程度，使用Thinking的query vector和其它所有的key vector做dot product。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_self_attention_score.png" alt="transformer_self_attention_score" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/transformer_self_attention_score.png" class="">
 <p>第三步与第四步：实际是归一化socre，相当于产生relative score。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention_softmax.png" alt="self-attention_softmax" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/self-attention_softmax.png" class="">
 <p>第五步：各个word vector与relative score相乘，求和。这样编码后的某个位置的新的embedding是由前一步所有输入的embedding共同决定的。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-output.png" alt="self-attention-output" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/self-attention-output.png" class="">
 <p>第六步：矩阵形式的实际计算情况</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation.png" alt="self-attention-matrix-calculation" style="zoom:50%;" /></p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/self-attention-matrix-calculation-2.png" alt="self-attention-matrix-calculation-2" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/self-attention-matrix-calculation.png" class="">
 <h3 id="encoder-and-decoder">Encoder and Decoder</h3>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/Screen Shot 2020-10-13 at 8.46.23 PM.png" alt="Screen Shot 2020-10-13 at 8.46.23 PM" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/Screen-Shot-2020-10-13-at-8-46-23-PM.png" class="">
 <h3 id="the-final-linear-and-softmax-layer">The Final Linear and Softmax Layer</h3>
 <p>decoder的输出，经过一个全连接层，然后得到logits vector，其中每一维度对应一个word；再经过softmax，取出score最大的word。</p>
-<p><img data-src="../../../../../../../Zotero/storage/3DRV9644/transformer_decoder_output_softmax.png" alt="transformer_decoder_output_softmax" style="zoom:50%;" /></p>
+<img data-src="/2021/04/16/Transformer/transformer_decoder_output_softmax.png" class="">
 ]]></content>
       <categories>
         <category>Paper</category>
