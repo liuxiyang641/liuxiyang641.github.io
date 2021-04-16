@@ -74,7 +74,7 @@ Crossover interactions包括interaction from relations to entities和interaction
 
 CrossE最大的创新就在于考虑了新的embedding内容，同时没有增加过多的参数。
 
-![image-20200213173128411](image-20200213173128411.png)
+![image-20200213173128411](CrossE/image-20200213173128411.png)
 
 初始定义：
 

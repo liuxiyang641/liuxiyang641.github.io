@@ -2097,6 +2097,11 @@
   "resolved" "https://registry.npm.taobao.org/hexo-theme-landscape/download/hexo-theme-landscape-0.0.3.tgz"
   "version" "0.0.3"
 
+"hexo-typora-img@^1.1.0":
+  "integrity" "sha1-RAVa2R842AymxfZIlVctu9Cy/i4="
+  "resolved" "https://registry.npm.taobao.org/hexo-typora-img/download/hexo-typora-img-1.1.0.tgz"
+  "version" "1.1.0"
+
 "hexo-util@^2.0.0", "hexo-util@^2.1.0", "hexo-util@^2.2.0", "hexo-util@^2.4.0":
   "integrity" "sha1-9cAJmgoXGLOtJwYeXk0fuet/K0E="
   "resolved" "https://registry.npm.taobao.org/hexo-util/download/hexo-util-2.4.0.tgz"

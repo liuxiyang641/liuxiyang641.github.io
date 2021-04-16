@@ -42,7 +42,7 @@ $$
 
 ### 3.1 Attention
 
-<img src="image-20200220112116226.png" alt="image-20200220112116226 " style="zoom:50%;" />
+![](KBGAT/image-20200220112116226.png)
 
 对于一个以$e_i$为顶点的edge (i, j, k)，应该能够传播给$e_i$一个embedding：
 $$

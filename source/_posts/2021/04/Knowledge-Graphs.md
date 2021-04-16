@@ -129,13 +129,13 @@ A graph dataset then consists of a set of named graphs and a default graph.
 
 即多个知识图的集合。
 
-<img src="Knowledge-Graphs/image-20200826152742454.png" alt="image-20200826152742454" style="zoom:20%;" />
+![](Knowledge-Graphs/image-20200826152742454.png)
 
 ### 2.3 Property graphs
 
 属性图谱是在一般的知识图谱基础上改进的，A property graph allows a set of property–value pairs and a label to be associated with both nodes and edges.在边上添加了属性和标签。
 
-![image-20200826153137057](Knowledge-Graphs/image-20200826153137057.png)
+![](Knowledge-Graphs/image-20200826153137057.png)
 
 ### 2.4 Other graph data models
 
@@ -246,7 +246,7 @@ OWL是基于OWA，NUMA假设的。
 
 起始于TransE，
 
-![image-20200829195712010](Knowledge-Graphs/image-20200829195712010.png)
+![](Knowledge-Graphs/image-20200829195712010.png)
 
 TransE的不足：
 
@@ -267,7 +267,7 @@ TransE的不足：
 
 下图是关于CP d-rank分解的实例，图中的$x_i,y_i, z_i$表示的是在$x,y,z$三个方面的第$i$种latent factor。
 
-![image-20200829204546266](Knowledge-Graphs/image-20200829204546266.png)
+![](Knowledge-Graphs/image-20200829204546266.png)
 
 这一类型的方法有LFM， RESCAL，DistMult，ComplEx，ANALOGY，HolE。
 

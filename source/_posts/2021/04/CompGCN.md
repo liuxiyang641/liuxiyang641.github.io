@@ -19,6 +19,8 @@ tags:
 >
 > COMPGCN addresses the shortcomings of previously proposed GCN models by jointly learning vector representations for both nodes and relations in the graph
 
+<!--more-->
+
 ## 2 RELATED WORK
 
 两个方面叙述

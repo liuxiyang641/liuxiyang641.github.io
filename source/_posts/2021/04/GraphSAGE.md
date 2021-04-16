@@ -28,9 +28,9 @@ GraphSAGE计划设计一个inductive的方法，不训练所有的节点。在�
 
 ## 2 Method
 
-<img src="image-20201220104337756.png" alt="image-20201220104337756" style="zoom:30%;" />
+![image-20201220104337756](GraphSAGE/image-20201220104337756.png)
 
-![image-20201220093929039](image-20201220093929039.png)
+![image-20201220093929039](GraphSAGE/image-20201220093929039.png)
 
 核心在于如何聚合邻居节点的信息：
 
@@ -72,12 +72,12 @@ $v$是邻居节点；$v_n$是负样本；$P_n(v)$是负采样分布；$Q$是负�
 
 实验时，还对比了监督学习（直接与标签进行cross-entropy）和无监督学习
 
-<img src="image-20201220103317625.png" alt="image-20201220103317625" style="zoom: 30%;" />
+![image-20201220103317625](GraphSAGE/image-20201220103317625.png)
 
-最终，作者发现K=2相对是比较好的选择，同时，采样邻居数量$S_1\cdot S_2 < 500$较好，实验时使用的GraphSAGE都是K=2，$S_1=25$，$S_2=10$。
+最终，作者发现K=2相对是比较好的选择，同时，采样s邻居数量$S_1\cdot S_2 < 500$较好，实验时使用的GraphSAGE都是K=2，$S_1=25$，$S_2=10$。
 
 ## 4 Minibatch pseudocode
 
-<img src="image-20201221090604439.png" alt="image-20201221090604439" style="zoom: 40%;" />
+![mage-20201221090604439](GraphSAGE/image-20201221090604439.png)
 
 首先采样在对batch $B$进行K阶训练，需要用到的所有节点。$B^k$包括了所有在训练$k+1$时需要用到的节点的$k$阶表示。

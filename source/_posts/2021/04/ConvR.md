@@ -21,7 +21,7 @@ ConvR的思想是从relation中构造filter，然后卷积于subject embedding�
 
 ## 3 Adaptive Convolution on Multi-relational Data
 
-![image-20200330213550962](ConvR/image-20200330213550962.png)
+![](ConvR/image-20200330213550962.png)
 
 对于三元组$(s, r, o)$，首先将$e_s$ reshape为2D矩阵，
 $$
@@ -64,4 +64,4 @@ ConvR使用三个dropout防过拟合：
 
 实现的超参：
 
-<img src="image-20200330213445418.png" alt="image-20200330213445418" style="zoom:50%;" />
+![](ConvR/image-20200330213445418.png)

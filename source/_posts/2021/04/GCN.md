@@ -147,7 +147,7 @@ $$
 
 GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。
 
-<img src="GCN/image-20201129220200051.png" alt="image-20201129220200051" style="zoom:50%;" />
+![image-20201129220200051](GCN/image-20201129220200051.png)
 
 ## 3 EXPERIMENTS
 
@@ -166,17 +166,17 @@ GCN用来做半监督的节点分类任务，在实现的时候使用了两层GC
 
 ### 3.1 SEMI-SUPERVISED NODE CLASSIFICATION
 
-<img src="GCN/image-20201129222635232.png" alt="image-20201129222635232" style="zoom:25%;" />
+![image-20201129222635232](GCN/image-20201129222635232.png)
 
 ### 3.2 EVALUATION OF PROPAGATION MODEL
 
 对于GCN机制的一个探究。
 
-<img src="GCN/image-20201129223143658.png" alt="image-20201129223143658" style="zoom: 25%;" />
+![image-20201129223143658](GCN/image-20201129223143658.png)
 
 ### 3.3 TRAINING TIMEPER EPOCH
 
-<img src="GCN/image-20201129223242035.png" alt="image-20201129223242035" style="zoom: 40%;" />
+![image-20201129223242035](GCN/image-20201129223242035.png)
 
 ## 4 DISCUSSION
 

@@ -14,12 +14,14 @@ AAAI 2019
 W-GCN+Conv-TransE
 
 W-GCN把不同的关系类型看做是不同的sub graph，不同的sub graph包括不同的weight。请注意这里的weight不同于一般的self-attention，W-GCN的weight是只与relation type有关的，而且不包括self-loop。
+
+<!--more-->
 $$
 h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
 $$
 Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head entity embedding和relation embedding stack成$2\times d$的矩阵，之后使用$2\times k$的卷积核进行卷积操作，这样仍然能够保持TransE中的transformation property。
 
-![image-20200906104552852](SACN/image-20200906104552852.png)
+![](SACN/image-20200906104552852.png)
 
 需要注意的是，它构建了一个新的数据集，FB15k-237-Attr，从FB24k中导出属性，增加到FB15k-237数据集中。
 
@@ -31,4 +33,4 @@ Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head e
 
 实验结果
 
-![image-20200906104625946](SACN/image-20200906104625946.png)
+![](SACN/image-20200906104625946.png)

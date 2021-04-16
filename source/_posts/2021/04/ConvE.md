@@ -2,6 +2,8 @@
 title: ConvE
 date: 2021-04-15 17:12:23
 categories:
+- Paper
+- KGE
 tags:
 ---
 
@@ -13,7 +15,7 @@ tags:
 
 第一个利用CNN学习KGE的方法。
 
-![image-20200314161529853](ConvE/image-20200314161529853.png)
+![](ConvE/image-20200314161529853.png)
 
 <!--more-->
 
@@ -23,7 +25,7 @@ CNN具有能够快速计算的特性，因此可以应用与knowledge graph embe
 
 ## 2 Convolutional 2D Knowledge Graphs Embeddings
 
-![image-20200314161529853](ConvE/image-20200314161529853.png)
+![](ConvE/image-20200314161529853.png)
 
 首先对$e_1\in R^k$和$r_r\in R^k$的一维的embedding进行转换为2维的形式：
 $$
