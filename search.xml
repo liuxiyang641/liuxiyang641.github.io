@@ -2547,7 +2547,7 @@ MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
 ]]></content>
       <categories>
         <category>Paper</category>
-        <category>nlp</category>
+        <category>NLP</category>
       </categories>
   </entry>
   <entry>
