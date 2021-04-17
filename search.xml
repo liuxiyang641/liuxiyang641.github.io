@@ -1446,6 +1446,17 @@ recall@K,\ ndcg@K,\ K=20
       </categories>
   </entry>
   <entry>
+    <title>KGE-Collection</title>
+    <url>/2021/04/17/KGE-Collection/</url>
+    <content><![CDATA[<h1 id="collection-of-kge-papers-volume-1">Collection of KGE Papers Volume 1</h1>
+<h2 id="hole-holographic-embeddings-of-knowledge-graphs">1. HolE: Holographic Embeddings of Knowledge Graphs</h2>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Knowledge-Graphs</title>
     <url>/2021/04/15/Knowledge-Graphs/</url>
     <content><![CDATA[<h1 id="knowledge-graphs">Knowledge Graphs</h1>
