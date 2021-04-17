@@ -346,7 +346,7 @@ text_align:
   mobile: justify
 
 # Reduce padding / margin indents on devices with narrow width.
-mobile_layout_economy: false
+mobile_layout_economy: true
 
 # Android Chrome header panel color ($brand-bg / $headband-bg => $black-deep).
 android_chrome_color: "#222"
@@ -426,7 +426,7 @@ font:
   global:
     external: true
     family: Lato
-    size: 1
+    size: 1.1
 
   # Font settings for site title (.site-title).
   title:
@@ -443,8 +443,8 @@ font:
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: Roboto
-    size: 0.1
+    family: Roboto Slab, Noto Serif SC
+    size:
 
   # Font settings for <code> and code blocks.
   codes:
