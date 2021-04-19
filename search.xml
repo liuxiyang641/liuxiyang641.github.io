@@ -944,17 +944,27 @@ Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
 <p>当一个node <span class="math inline">\(s\)</span>在时间<span class="math inline">\(T\)</span>链接到<span class="math inline">\(t\)</span>的时候，认为这条边的timestamp就是<span class="math inline">\(T\)</span>，并且在以后不再更改。</p>
 <h2 id="method">Method</h2>
 <p>整体结构：</p>
-<img data-src="/2021/04/14/HGT/image-20210414152012151.png" class="" title="image-20210414152012151">
+<img data-src="/2021/04/14/HGT/image-20210414152012151.png" class="">
 <p>注意这里，A-Linear是根据node <span class="math inline">\(t\)</span>的type决定的。同时使用了残差结构。</p>
 <p>聚合函数就是直接相加。</p>
-<img data-src="/2021/04/14/HGT/image-20210414163415151.png" class="" title="image-20210414163415151">
+<img data-src="/2021/04/14/HGT/image-20210414163415151.png" class="">
 <p>核心是两部分，产生消息，然后产生注意力。</p>
 <p>产生消息：</p>
-<img data-src="/2021/04/14/HGT/image-20210414163541401.png" class="" title="image-20210414163541401">
+<img data-src="/2021/04/14/HGT/image-20210414163541401.png" class="">
 <p>邻居node的type和邻居relation的type的weight相乘。</p>
+<ul>
+<li><p>邻居节点的type矩阵：用于转换node type独有的特征分布</p></li>
+<li><p>邻居边的type矩阵：用于进行edge type的转换</p></li>
+</ul>
 <p>产生attention：</p>
-<img data-src="/2021/04/14/HGT/image-20210414163722393.png" class="" title="image-20210414163722393">
+<img data-src="/2021/04/14/HGT/image-20210414163722393.png" class="">
 <p>这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。</p>
+<p>与原始的transformer比较有三点不同：</p>
+<ol type="1">
+<li><p>考虑异质性，在计算Query和Key vector的时候使用不同类型的weight matrix。</p></li>
+<li><p>在Q和K相乘时，中间加入了<span class="math inline">\(W_ϕ(e)^{ATT}\)</span>，加入它可以建模edge的信息</p></li>
+<li><p>加入了μ∈R^{|A|×|R|×|A|} ，它是一个全局的meta relation weight，衡量全局意义上的元关系重要性</p></li>
+</ol>
 <p>除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个<span class="math inline">\(\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}\)</span>。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。</p>
 <h2 id="rte">RTE</h2>
 <p>前面提到了RTE，它的核心思想是为不同timestamp的edge学习不同的表示，然后加到邻居node <span class="math inline">\(s\)</span>的表表示<span class="math inline">\(H[s]\)</span>上。</p>
