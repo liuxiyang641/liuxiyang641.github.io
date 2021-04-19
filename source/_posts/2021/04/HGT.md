@@ -65,27 +65,39 @@ Dynamic Heterogeneous Graph.
 
 整体结构：
 
-![image-20210414152012151](HGT/image-20210414152012151.png)
+![](HGT/image-20210414152012151.png)
 
 注意这里，A-Linear是根据node $t$的type决定的。同时使用了残差结构。
 
 聚合函数就是直接相加。
 
-![image-20210414163415151](HGT/image-20210414163415151.png)
+![](HGT/image-20210414163415151.png)
 
 核心是两部分，产生消息，然后产生注意力。
 
 产生消息：
 
-![image-20210414163541401](HGT/image-20210414163541401.png)
+![](HGT/image-20210414163541401.png)
 
 邻居node的type和邻居relation的type的weight相乘。
 
+- 邻居节点的type矩阵：用于转换node type独有的特征分布
+
+- 邻居边的type矩阵：用于进行edge type的转换
+
 产生attention：
 
-![image-20210414163722393](HGT/image-20210414163722393.png)
+![](HGT/image-20210414163722393.png)
 
 这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。
+
+与原始的transformer比较有三点不同：
+
+1. 考虑异质性，在计算Query和Key vector的时候使用不同类型的weight matrix。
+
+2. 在Q和K相乘时，中间加入了$W_ϕ(e)^{ATT}$，加入它可以建模edge的信息
+
+3. 加入了μ∈R^{|A|×|R|×|A|} ，它是一个全局的meta relation weight，衡量全局意义上的元关系重要性
 
 除去vanilla Transformer中已经使用的K-Q计算注意力，值得注意的是加入了一个$\mu \in \mathbb{R}^{|\mathcal{A}|\times |\mathcal{R}|\times |\mathcal{A}|}$。为所有的meta relation组合定义了一个全局范围的权重。这样导致的后果是除去单纯局部的attention，加入了global attention，能够更adaptively的学习attention。
 
