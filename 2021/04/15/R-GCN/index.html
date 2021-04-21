@@ -28,11 +28,14 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Modeling Relational Data with Graph Convolutional Networks 2018 首个在KG上应用GNN的模型R-GCN">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222339835.png">
+<meta property="og:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222219414.png">
 <meta property="article:published_time" content="2021-04-15T08:33:19.000Z">
-<meta property="article:modified_time" content="2021-04-19T12:28:12.677Z">
+<meta property="article:modified_time" content="2021-04-21T14:25:30.409Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="KG">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222339835.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/R-GCN/">
 
@@ -217,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-19 20:28:12" itemprop="dateModified" datetime="2021-04-19T20:28:12+08:00">2021-04-19</time>
+                <time title="Modified: 2021-04-21 22:25:30" itemprop="dateModified" datetime="2021-04-21T22:25:30+08:00">2021-04-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -246,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.9k</span>
+              <span>2.6k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -286,11 +289,33 @@ h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{c_{i,r}} W_r^{l}h_j^{l}
 <p>为此，R-GCN使用了两种正则方式，都是针对<span class="math inline">\(W_r^l\)</span>进行改进。</p>
 <p>basis- and block-diagonal decomposition</p>
 <p><strong>1、basis decomposition</strong>： <span class="math display">\[
-W_r^l=\sum_b^B a_{r,b}^l V_b^l, \\ V_b^l \in R^{d^{(l+1)}\times (d^l)}
-\]</span> 这种情况下<span class="math inline">\(W_r^l\)</span>成为线性组合同一层的不同关系，能够共享<span class="math inline">\(V_b^l\)</span>，区别在于<span class="math inline">\(a_{r,b}^l\)</span>。</p>
+W_r^l=\sum_b^B a_{r,b}^l V_b^l
+\]</span> <span class="math display">\[
+V_b^l \in R^{d^{(l+1)}\times (d^l)}
+\]</span></p>
+<p>这种情况下<span class="math inline">\(W_r^l\)</span>成为线性组合同一层的不同关系，能够共享<span class="math inline">\(V_b^l\)</span>，区别在于<span class="math inline">\(a_{r,b}^l\)</span>。</p>
+<blockquote>
+<p>The basis function decomposition can be seen as a form of eﬀective weight sharing between different relation types</p>
+</blockquote>
+<p>这种方式可以看做是有<span class="math inline">\(B\)</span>个矩阵<span class="math inline">\(V\)</span>，然后与邻居实体embedding相乘，得到<span class="math inline">\(B\)</span>个message embedding，然后对于不同的关系使用权重<span class="math inline">\(a_{1,b}^l,\dots,a_{B,b}^l\)</span>去聚合。</p>
 <p><strong>2、block-diagonal decomposition</strong> <span class="math display">\[
 W_r^l=\oplus_b^B Q_{b,r}^l
 \]</span></p>
+<p><span class="math display">\[
+W_r = diag(Q_{1r}^{l},\cdots,Q_{Br}^{l})\ with\ Q_{br}^{l} \in \mathbb{R}^{(d^{l+1}/B)\times (d^{l}/B)}
+\]</span></p>
+<p>其中符号<span class="math inline">\(\oplus\)</span>是矩阵加法中的Direct Sum，不是普通的相加，而是下面的形式，</p>
+<img data-src="/2021/04/15/R-GCN/image-20210421222339835.png" class="">
+<p>这里说明下block-diagonal matrix，根据维基百科的解释</p>
+<blockquote>
+<p>A <strong>block diagonal matrix</strong> is a block matrix that is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Square_matrix">square matrix</a> such that the main-diagonal blocks are square matrices and all off-diagonal blocks are zero matrices.</p>
+</blockquote>
+<img data-src="/2021/04/15/R-GCN/image-20210421222219414.png" class="">
+<p>对于这种正则化方式的理解</p>
+<blockquote>
+<p>The block decomposition can be seen as a sparsity constraint on the weight matrices for each relation type.</p>
+</blockquote>
+<p>它与bias decomposition的区别是它没有设置共享参数的结构，而是直接使用更加系数的<span class="math inline">\(W_r\)</span>去拟合。</p>
 <h2 id="entity-classiﬁcation">3 Entity Classiﬁcation</h2>
 <p>对于实体分类，就是将entity 分类为K个class当中，那么在R-GNN的基础上，直接在最后一层的输出增加softmax就可以，训练时的loss为 <span class="math display">\[
 L=-\sum_{i\in Y}\sum_{k=1}^{K}t_{ik}lnh_{ik}^L
@@ -543,7 +568,7 @@ L=-\frac{1}{(1+w)|\varepsilon|}\sum_{(s,r,o,y)\in \Gamma}{ylog(f(s,r,o)) + (1-y)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">83k</span>
+    <span title="Symbols count total">84k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>

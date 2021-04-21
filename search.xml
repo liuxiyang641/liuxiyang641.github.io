@@ -924,7 +924,7 @@ Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
 <ol type="1">
 <li>To handle graph heterogeneity，引入node- and edge-type dependent attention mechanism. 在计算边<span class="math inline">\(&lt;s, t&gt;\)</span>的attention时，使用meta relation <span class="math inline">\(⟨node\ type\ of\ s,\ edge\ type\ of\ e\ between\ s\ \&amp;\ t,\ node\ type\ of\ t⟩\)</span>。给不同的type定义不同的weight matrix，然后组合起来成为这条边的weight matrix。这样子的话不同type的weight matrix就可以互相交互，互相影响。weight matrix被用来计算attention。另外，由于GNN的天性，聚合多阶邻居实际就是在被认为学习“soft” meta paths。另外根据attention，又能够更好的区分学习到的这些soft meta path。</li>
 <li>To handle graph dynamics，类似于Transformer position encoding，定义了relative temporal encoding (RTE)。不是把不同timestamp的graph看做不同的图，而是直接把带有不同RTE的node一起聚合。</li>
-<li>To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有和global graph相似的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。</li>
+<li>To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有较为均匀的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。</li>
 </ol>
 <p>先来看几个定义：</p>
 <p>Heterogeneous Graph（a.k.a. heterogeneous information networks）</p>
@@ -2180,11 +2180,33 @@ h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{c_{i,r}} W_r^{l}h_j^{l}
 <p>为此，R-GCN使用了两种正则方式，都是针对<span class="math inline">\(W_r^l\)</span>进行改进。</p>
 <p>basis- and block-diagonal decomposition</p>
 <p><strong>1、basis decomposition</strong>： <span class="math display">\[
-W_r^l=\sum_b^B a_{r,b}^l V_b^l, \\ V_b^l \in R^{d^{(l+1)}\times (d^l)}
-\]</span> 这种情况下<span class="math inline">\(W_r^l\)</span>成为线性组合同一层的不同关系，能够共享<span class="math inline">\(V_b^l\)</span>，区别在于<span class="math inline">\(a_{r,b}^l\)</span>。</p>
+W_r^l=\sum_b^B a_{r,b}^l V_b^l
+\]</span> <span class="math display">\[
+V_b^l \in R^{d^{(l+1)}\times (d^l)}
+\]</span></p>
+<p>这种情况下<span class="math inline">\(W_r^l\)</span>成为线性组合同一层的不同关系，能够共享<span class="math inline">\(V_b^l\)</span>，区别在于<span class="math inline">\(a_{r,b}^l\)</span>。</p>
+<blockquote>
+<p>The basis function decomposition can be seen as a form of eﬀective weight sharing between different relation types</p>
+</blockquote>
+<p>这种方式可以看做是有<span class="math inline">\(B\)</span>个矩阵<span class="math inline">\(V\)</span>，然后与邻居实体embedding相乘，得到<span class="math inline">\(B\)</span>个message embedding，然后对于不同的关系使用权重<span class="math inline">\(a_{1,b}^l,\dots,a_{B,b}^l\)</span>去聚合。</p>
 <p><strong>2、block-diagonal decomposition</strong> <span class="math display">\[
 W_r^l=\oplus_b^B Q_{b,r}^l
 \]</span></p>
+<p><span class="math display">\[
+W_r = diag(Q_{1r}^{l},\cdots,Q_{Br}^{l})\ with\ Q_{br}^{l} \in \mathbb{R}^{(d^{l+1}/B)\times (d^{l}/B)}
+\]</span></p>
+<p>其中符号<span class="math inline">\(\oplus\)</span>是矩阵加法中的Direct Sum，不是普通的相加，而是下面的形式，</p>
+<img data-src="/2021/04/15/R-GCN/image-20210421222339835.png" class="">
+<p>这里说明下block-diagonal matrix，根据维基百科的解释</p>
+<blockquote>
+<p>A <strong>block diagonal matrix</strong> is a block matrix that is a <a href="https://en.wikipedia.org/wiki/Square_matrix">square matrix</a> such that the main-diagonal blocks are square matrices and all off-diagonal blocks are zero matrices.</p>
+</blockquote>
+<img data-src="/2021/04/15/R-GCN/image-20210421222219414.png" class="">
+<p>对于这种正则化方式的理解</p>
+<blockquote>
+<p>The block decomposition can be seen as a sparsity constraint on the weight matrices for each relation type.</p>
+</blockquote>
+<p>它与bias decomposition的区别是它没有设置共享参数的结构，而是直接使用更加系数的<span class="math inline">\(W_r\)</span>去拟合。</p>
 <h2 id="entity-classiﬁcation">3 Entity Classiﬁcation</h2>
 <p>对于实体分类，就是将entity 分类为K个class当中，那么在R-GNN的基础上，直接在最后一层的输出增加softmax就可以，训练时的loss为 <span class="math display">\[
 L=-\sum_{i\in Y}\sum_{k=1}^{K}t_{ik}lnh_{ik}^L
