@@ -39,7 +39,7 @@ WWW 2020
 
 1. To handle graph heterogeneity，引入node- and edge-type dependent attention mechanism. 在计算边$<s, t>$的attention时，使用meta relation $⟨node\ type\ of\ s,\ edge\ type\ of\ e\ between\ s\ \&\ t,\ node\ type\ of\ t⟩$。给不同的type定义不同的weight matrix，然后组合起来成为这条边的weight matrix。这样子的话不同type的weight matrix就可以互相交互，互相影响。weight matrix被用来计算attention。另外，由于GNN的天性，聚合多阶邻居实际就是在被认为学习“soft” meta paths。另外根据attention，又能够更好的区分学习到的这些soft meta path。
 2. To handle graph dynamics，类似于Transformer position encoding，定义了relative temporal encoding (RTE)。不是把不同timestamp的graph看做不同的图，而是直接把带有不同RTE的node一起聚合。
-3. To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有和global graph相似的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。
+3. To handle Web-scale graph data，提出了HGSampling，采样的subgraph具有较为均匀的node type分布，同时还保证the sampled sub-graphs dense for minimizing the loss of information。
 
 先来看几个定义：
 

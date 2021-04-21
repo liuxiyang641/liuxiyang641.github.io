@@ -50,14 +50,42 @@ basis- and block-diagonal decomposition
 
 **1、basis decomposition**：
 $$
-W_r^l=\sum_b^B a_{r,b}^l V_b^l, \\ V_b^l \in R^{d^{(l+1)}\times (d^l)}
+W_r^l=\sum_b^B a_{r,b}^l V_b^l
 $$
+$$
+V_b^l \in R^{d^{(l+1)}\times (d^l)}
+$$
+
 这种情况下$W_r^l$成为线性组合同一层的不同关系，能够共享$V_b^l$，区别在于$a_{r,b}^l$。
+
+> The basis function decomposition can be seen as a form of eﬀective weight sharing between different relation types
+
+这种方式可以看做是有$B$个矩阵$V$，然后与邻居实体embedding相乘，得到$B$个message embedding，然后对于不同的关系使用权重$a_{1,b}^l,\dots,a_{B,b}^l$去聚合。
 
 **2、block-diagonal decomposition**
 $$
 W_r^l=\oplus_b^B Q_{b,r}^l
 $$
+
+$$
+W_r = diag(Q_{1r}^{l},\cdots,Q_{Br}^{l})\ with\ Q_{br}^{l} \in \mathbb{R}^{(d^{l+1}/B)\times (d^{l}/B)}
+$$
+
+其中符号$\oplus$是矩阵加法中的Direct Sum，不是普通的相加，而是下面的形式，
+
+![](R-GCN/image-20210421222339835.png)
+
+这里说明下block-diagonal matrix，根据维基百科的解释
+
+> A **block diagonal matrix** is a block matrix that is a [square matrix](https://en.wikipedia.org/wiki/Square_matrix) such that the main-diagonal blocks are square matrices and all off-diagonal blocks are zero matrices.
+
+![](R-GCN/image-20210421222219414.png)
+
+对于这种正则化方式的理解
+
+> The block decomposition can be seen as a sparsity constraint on the weight matrices for each relation type.
+
+它与bias decomposition的区别是它没有设置共享参数的结构，而是直接使用更加系数的$W_r$去拟合。
 
 ## 3 Entity Classiﬁcation
 
