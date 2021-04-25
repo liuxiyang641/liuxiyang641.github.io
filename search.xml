@@ -1854,6 +1854,7 @@ f(W[\mathbf{a};\mathbf{b}])
     <content><![CDATA[<h1 id="magnn-metapath-aggregated-graph-neural-network-for-heterogeneous-graph-embedding">MAGNN: Metapath Aggregated Graph Neural Network for Heterogeneous Graph Embedding</h1>
 <p>看一下整体结构：</p>
 <img data-src="/2021/04/25/MAGNN/image-20210425134123312.png" class="">
+<span id="more"></span>
 <p><strong>Motivation</strong>：</p>
 <p>对于GNN，大部分的GNN假设graph是同质图，但是很多实际的graph都是异质图。</p>
 <p>对于处理异质图的传统方法，是基于meta path的方法。但是这些基于meta path的方法存在几个缺点：</p>

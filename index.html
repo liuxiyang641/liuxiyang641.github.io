@@ -208,7 +208,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2021-04-25 12:16:09 / Modified: 17:46:31" itemprop="dateCreated datePublished" datetime="2021-04-25T12:16:09+08:00">2021-04-25</time>
+              <time title="Created: 2021-04-25 12:16:09 / Modified: 18:54:09" itemprop="dateCreated datePublished" datetime="2021-04-25T12:16:09+08:00">2021-04-25</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -252,43 +252,14 @@
           <h1 id="magnn-metapath-aggregated-graph-neural-network-for-heterogeneous-graph-embedding">MAGNN: Metapath Aggregated Graph Neural Network for Heterogeneous Graph Embedding</h1>
 <p>看一下整体结构：</p>
 <img data-src="/2021/04/25/MAGNN/image-20210425134123312.png" class="">
-<p><strong>Motivation</strong>：</p>
-<p>对于GNN，大部分的GNN假设graph是同质图，但是很多实际的graph都是异质图。</p>
-<p>对于处理异质图的传统方法，是基于meta path的方法。但是这些基于meta path的方法存在几个缺点：</p>
-<ul>
-<li>The model does not leverage node content features, so it rarely performs well on heterogeneous graphs with rich node content features</li>
-<li>The model discards all intermediate nodes along the metapath by only considering two end nodes，模型不考虑meta path中的中间节点</li>
-<li>模型只依赖于单个meta path，The model relies on a single metapath to embed the heterogeneous graph.</li>
-</ul>
-<p><strong>Method</strong>：</p>
-<p>提出MAGNN。对于不同type的node，先是linear projection到统一feature space中。之后，经过下面几个步骤：</p>
-<p>对于同一metapath下的节点，编码单个邻居信息：</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135447705.png" class="">
-<p>实验了三个具体的方法</p>
-<ul>
-<li>Mean：</li>
-</ul>
-<img data-src="/2021/04/25/MAGNN/image-20210425135012239.png" class="">
-<ul>
-<li>Linear Mean：</li>
-</ul>
-<img data-src="/2021/04/25/MAGNN/image-20210425135058447.png" class="">
-<ul>
-<li>Relational rotation encoder：</li>
-</ul>
-<p>模仿RotatE，可以建模metapath下的节点的序列信息，这一点区别于上面的方法。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135214910.png" class="">
-<h2 id="intra-metapath-aggregation">Intra-metapath Aggregation</h2>
-<p>对于同一metapath下的节点，基于注意力聚合。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135330772.png" class="">
-<p>这里需要注意的是就是在计算注意力加入了target node embedding。</p>
-<p>并且使用了多头注意力。</p>
-<h2 id="inter-metapath-aggregation">Inter-metapath Aggregation</h2>
-<p>计算在全局下，所有metapath的weight。首先对于不同type的node，相加相同mepath的embedding。需要注意的是，不是计算单个node的不同metapath。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425140032603.png" class="">
-<p>计算注意力：</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425140219668.png" class="">
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/04/25/MAGNN/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -340,7 +311,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -446,7 +417,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
 
           <br>
@@ -536,7 +507,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -646,7 +617,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -750,7 +721,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -852,7 +823,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -957,7 +928,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1059,7 +1030,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -1161,7 +1132,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
+                <time title="Modified: 2021-04-25 18:54:09" itemprop="dateModified" datetime="2021-04-25T18:54:09+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
