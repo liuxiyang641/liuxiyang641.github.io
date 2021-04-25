@@ -13,6 +13,8 @@ tags:
 
 ![](MAGNN/image-20210425134123312.png)
 
+<!--more-->
+
 **Motivation**：
 
 对于GNN，大部分的GNN假设graph是同质图，但是很多实际的graph都是异质图。
