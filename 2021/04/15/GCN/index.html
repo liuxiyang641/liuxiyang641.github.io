@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223143658.png">
 <meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223242035.png">
 <meta property="article:published_time" content="2021-04-15T08:11:34.000Z">
-<meta property="article:modified_time" content="2021-04-21T14:25:30.293Z">
+<meta property="article:modified_time" content="2021-04-25T09:46:31.488Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/GCN/image-20201129220200051.png">
@@ -137,7 +137,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">34</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">35</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-21 22:25:30" itemprop="dateModified" datetime="2021-04-21T22:25:30+08:00">2021-04-21</time>
+                <time title="Modified: 2021-04-25 17:46:31" itemprop="dateModified" datetime="2021-04-25T17:46:31+08:00">2021-04-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -365,7 +365,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 \tilde{D}_{ii}=\sum_j{\tilde{A}_{ij}}
 \]</span> 原因是在实验中发现，如果使用原来的形式会导致训练的不稳定性以及梯度消失/爆炸的问题，因此重新归一化。</p>
 <p>GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。</p>
-<img data-src="/2021/04/15/GCN/image-20201129220200051.png" class="" title="image-20201129220200051">
+<img data-src="/2021/04/15/GCN/image-20201129220200051.png" class="">
 <h2 id="experiments">3 EXPERIMENTS</h2>
 <p>使用以下四方面的实验：</p>
 <ul>
@@ -375,15 +375,15 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <li>a run-time analysis on random graphs</li>
 </ul>
 <p>使用的数据集：</p>
-<img data-src="/2021/04/15/GCN/image-20201129220829777.png" class="" title="image-20201129220829777">
+<img data-src="/2021/04/15/GCN/image-20201129220829777.png" class="">
 <p>需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。</p>
 <h3 id="semi-supervised-node-classification">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</h3>
-<img data-src="/2021/04/15/GCN/image-20201129222635232.png" class="" title="image-20201129222635232">
+<img data-src="/2021/04/15/GCN/image-20201129222635232.png" class="">
 <h3 id="evaluation-of-propagation-model">3.2 EVALUATION OF PROPAGATION MODEL</h3>
 <p>对于GCN机制的一个探究。</p>
-<img data-src="/2021/04/15/GCN/image-20201129223143658.png" class="" title="image-20201129223143658">
+<img data-src="/2021/04/15/GCN/image-20201129223143658.png" class="">
 <h3 id="training-timeper-epoch">3.3 TRAINING TIMEPER EPOCH</h3>
-<img data-src="/2021/04/15/GCN/image-20201129223242035.png" class="" title="image-20201129223242035">
+<img data-src="/2021/04/15/GCN/image-20201129223242035.png" class="">
 <h2 id="discussion">4 DISCUSSION</h2>
 <p>切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量<span class="math inline">\(U\)</span>；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。</p>
 <p>优点：</p>
@@ -394,7 +394,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <p>缺点：</p>
 <ul>
 <li>内存的限制，需要训练全图</li>
-<li>无法学习有向图以及边的特征s</li>
+<li>无法学习有向图以及边的特征</li>
 </ul>
 
     </div>
@@ -501,7 +501,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-count">35</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -563,13 +563,13 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">84k</span>
+    <span title="Symbols count total">85k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:16</span>
+    <span title="Reading time total">1:17</span>
 </div>
 
         

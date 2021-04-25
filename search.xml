@@ -641,7 +641,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 \tilde{D}_{ii}=\sum_j{\tilde{A}_{ij}}
 \]</span> 原因是在实验中发现，如果使用原来的形式会导致训练的不稳定性以及梯度消失/爆炸的问题，因此重新归一化。</p>
 <p>GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。</p>
-<img data-src="/2021/04/15/GCN/image-20201129220200051.png" class="" title="image-20201129220200051">
+<img data-src="/2021/04/15/GCN/image-20201129220200051.png" class="">
 <h2 id="experiments">3 EXPERIMENTS</h2>
 <p>使用以下四方面的实验：</p>
 <ul>
@@ -651,15 +651,15 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <li>a run-time analysis on random graphs</li>
 </ul>
 <p>使用的数据集：</p>
-<img data-src="/2021/04/15/GCN/image-20201129220829777.png" class="" title="image-20201129220829777">
+<img data-src="/2021/04/15/GCN/image-20201129220829777.png" class="">
 <p>需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。</p>
 <h3 id="semi-supervised-node-classification">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</h3>
-<img data-src="/2021/04/15/GCN/image-20201129222635232.png" class="" title="image-20201129222635232">
+<img data-src="/2021/04/15/GCN/image-20201129222635232.png" class="">
 <h3 id="evaluation-of-propagation-model">3.2 EVALUATION OF PROPAGATION MODEL</h3>
 <p>对于GCN机制的一个探究。</p>
-<img data-src="/2021/04/15/GCN/image-20201129223143658.png" class="" title="image-20201129223143658">
+<img data-src="/2021/04/15/GCN/image-20201129223143658.png" class="">
 <h3 id="training-timeper-epoch">3.3 TRAINING TIMEPER EPOCH</h3>
-<img data-src="/2021/04/15/GCN/image-20201129223242035.png" class="" title="image-20201129223242035">
+<img data-src="/2021/04/15/GCN/image-20201129223242035.png" class="">
 <h2 id="discussion">4 DISCUSSION</h2>
 <p>切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量<span class="math inline">\(U\)</span>；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。</p>
 <p>优点：</p>
@@ -670,7 +670,7 @@ H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l
 <p>缺点：</p>
 <ul>
 <li>内存的限制，需要训练全图</li>
-<li>无法学习有向图以及边的特征s</li>
+<li>无法学习有向图以及边的特征</li>
 </ul>
 ]]></content>
       <categories>
@@ -1846,6 +1846,54 @@ f(W[\mathbf{a};\mathbf{b}])
       <categories>
         <category>Paper</category>
         <category>KG</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>MAGNN</title>
+    <url>/2021/04/25/MAGNN/</url>
+    <content><![CDATA[<h1 id="magnn-metapath-aggregated-graph-neural-network-for-heterogeneous-graph-embedding">MAGNN: Metapath Aggregated Graph Neural Network for Heterogeneous Graph Embedding</h1>
+<p>看一下整体结构：</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425134123312.png" class="">
+<p><strong>Motivation</strong>：</p>
+<p>对于GNN，大部分的GNN假设graph是同质图，但是很多实际的graph都是异质图。</p>
+<p>对于处理异质图的传统方法，是基于meta path的方法。但是这些基于meta path的方法存在几个缺点：</p>
+<ul>
+<li>The model does not leverage node content features, so it rarely performs well on heterogeneous graphs with rich node content features</li>
+<li>The model discards all intermediate nodes along the metapath by only considering two end nodes，模型不考虑meta path中的中间节点</li>
+<li>模型只依赖于单个meta path，The model relies on a single metapath to embed the heterogeneous graph.</li>
+</ul>
+<p><strong>Method</strong>：</p>
+<p>提出MAGNN。对于不同type的node，先是linear projection到统一feature space中。之后，经过下面几个步骤：</p>
+<p>对于同一metapath下的节点，编码单个邻居信息：</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425135447705.png" class="">
+<p>实验了三个具体的方法</p>
+<ul>
+<li>Mean：</li>
+</ul>
+<img data-src="/2021/04/25/MAGNN/image-20210425135012239.png" class="">
+<ul>
+<li>Linear Mean：</li>
+</ul>
+<img data-src="/2021/04/25/MAGNN/image-20210425135058447.png" class="">
+<ul>
+<li>Relational rotation encoder：</li>
+</ul>
+<p>模仿RotatE，可以建模metapath下的节点的序列信息，这一点区别于上面的方法。</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425135214910.png" class="">
+<h2 id="intra-metapath-aggregation">Intra-metapath Aggregation</h2>
+<p>对于同一metapath下的节点，基于注意力聚合。</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425135330772.png" class="">
+<p>这里需要注意的是就是在计算注意力加入了target node embedding。</p>
+<p>并且使用了多头注意力。</p>
+<h2 id="inter-metapath-aggregation">Inter-metapath Aggregation</h2>
+<p>计算在全局下，所有metapath的weight。首先对于不同type的node，相加相同mepath的embedding。需要注意的是，不是计算单个node的不同metapath。</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425140032603.png" class="">
+<p>计算注意力：</p>
+<img data-src="/2021/04/25/MAGNN/image-20210425140219668.png" class="">
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
       </categories>
   </entry>
   <entry>
