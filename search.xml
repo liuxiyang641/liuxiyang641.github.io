@@ -1,6 +1,274 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>1-Interoduction-word-vectors</title>
+    <url>/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/</url>
+    <content><![CDATA[<h1 id="introduction-and-word-vectors">1 Introduction and Word Vectors</h1>
+<p><a href="https://www.youtube.com/watch?v=8rXD5-xhemo&amp;list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z&amp;index=2">video</a></p>
+<span id="more"></span>
+<h2 id="human-language-and-word-meaning">Human language and word meaning</h2>
+<p>human language的特征：</p>
+<ul>
+<li>不确定性。我们尝试使用语言来描述世界，表达自己的想法，但是自己表述的语言能否被其它的人接受实际是不确定的，可能是一种概率的问题。</li>
+<li>”human language is a pathetically slow network“，说话这种方式能够表达的能力是很有限的，因此在人类的交流中，实际语言是实现了一种对于信息的压缩，能够理解语言的背后是我们的大脑中已经拥有了很多先验知识。</li>
+</ul>
+<p>Represent the meaning of word</p>
+<p>Definition: <strong>meaning</strong></p>
+<ul>
+<li>the idea that is represented by a word</li>
+</ul>
+<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/meaning-of-words.png" class="">
+<p>在早期的NLP中，人们将不同的词word表示为独立的符号（discrete symbol），这叫做localist representation，例如one-hot编码。</p>
+<p>这样表示的问题：</p>
+<ul>
+<li>word的数量很大，甚至可以构造出无限多的word，导致one-hot编码的dim越来越大</li>
+<li>对于one hot编码来说，不同的编码之间是独立的，和正交的，无法保留word原本的含义，也无法衡量两个word之间的相似程度</li>
+</ul>
+<p>如何获取一个word的meaning？</p>
+<p>一个著名的观点是：</p>
+<blockquote>
+<p>”You shall know a word by the company it keeps“</p>
+<p>——J. R. Firth 1957: 11</p>
+<p>A word’s meaning is given by the words that frequently appear close-by.</p>
+</blockquote>
+<p>针对one hot的问题，我们尝试为每个word建立更dense vector，即使word的distributed representation，word vector。</p>
+<h2 id="word2vec">Word2vec</h2>
+<p>借助于前面的观点，word2vec出现了。</p>
+<blockquote>
+<p>Word2vec (Mikolov et al. 2013) is a framework for learning word vectors</p>
+</blockquote>
+<p>核心思想：</p>
+<ul>
+<li>一个大的语料库</li>
+<li>每个word都使用固定长度的vector表示</li>
+<li>选中center word，计算它周围的outside word/context word出现的概率，并且不断更新参数让这个概率最大</li>
+</ul>
+<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/idea-word2vec.png" class="">
+<p>核心问题在于如何计算<span class="math inline">\(P(w_{t+j}|w_t)\)</span>？</p>
+<p>在word2vec中，对于每个word建立两个vector：</p>
+<ul>
+<li><span class="math inline">\(v_w\)</span> when word <span class="math inline">\(w\)</span> is a center word</li>
+<li><span class="math inline">\(u_w\)</span> when word <span class="math inline">\(w\)</span> is a context word</li>
+</ul>
+<p>核心公式： <span class="math display">\[
+P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
+\]</span> 解释</p>
+<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/word2vec-prob.png" class="">
+<p>使用点积来衡量相似度，当我们得知了context的时候，中心词的meaning应该也能知悉，即context与center word的meaning此时应该接近。对于在语料中经常出现的word，赋予它们比较大的概率。</p>
+<p>上面的公示实际是softmax</p>
+<ul>
+<li>soft：指对于所有的预测目标都有一个估计概率，哪怕它可能很小</li>
+<li>max：指softmax的输出是概率最大的值</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224N</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>14-transformers</title>
+    <url>/2021/04/26/cs224n-2019-14-transformers/</url>
+    <content><![CDATA[<h1 id="transformers-and-self-attention">Transformers and Self-Attention</h1>
+<p>序列化的模型类似于RNN，存在几个问题：</p>
+<ul>
+<li>Sequential computation的计算限制了并行计算</li>
+<li>没有对于short和long dependencies的显式建模</li>
+<li>我们希望能够建模层级</li>
+</ul>
+<span id="more"></span>
+<p>对于迁移不变性的解释。</p>
+<img data-src="/2021/04/26/cs224n-2019-14-transformers/image-20210329210505679.png" class="">
+<h2 id="section"></h2>
+]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224N</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/04/26/cs224n-2019-resourse/</url>
+    <content><![CDATA[<h1 id="cs224n-natural-language-processing-with-deep-learning">CS224n: Natural Language Processing with Deep Learning</h1>
+<p><a href="https://web.stanford.edu/class/cs224n/index.html">Offical website</a></p>
+<p><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z">Youtube video</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>01-intro-graph</title>
+    <url>/2021/04/26/cs224w-2019-01-intro-graph/</url>
+    <content><![CDATA[<h1 id="introduction-of-graphs">Introduction of graphs</h1>
+<h2 id="introduction">Introduction</h2>
+<p>为什么network/graph很重要？</p>
+<blockquote>
+<p>Networks are a general language for describing complex systems of interacting entities</p>
+</blockquote>
+<p>当我们谈论network的时候，经常讨论两种图：</p>
+<ol type="1">
+<li>Natural graph：对于现实事物的直接描述，例如社交网络、大脑神经元的链接网络等</li>
+<li>Information graph：经过处理之后，带有信息的图，例如链接知识的图等</li>
+</ol>
+<span id="more"></span>
+<p>实际上在某些情况下上面两种network的分界线是很模糊的。</p>
+<p>很多事物都拥有图的结构，利用这些图的结构能够帮助我们更好的预测。</p>
+<p>Why networks?</p>
+<ul>
+<li>Universal language for describing complex data</li>
+<li>Shared vocabulary between fields</li>
+<li>Data availability &amp; computational challenges</li>
+</ul>
+<p>Ways to analyze networks:</p>
+<ul>
+<li>Predict the type/color of a given node
+<ul>
+<li>Node classification</li>
+</ul></li>
+<li>Predict whether two nodes are linked
+<ul>
+<li>Link prediction</li>
+</ul></li>
+<li>Identify densely linked clusters of nodes
+<ul>
+<li>Community detection</li>
+</ul></li>
+<li>Measure similarity of two nodes/networks
+<ul>
+<li>Network similarity</li>
+</ul></li>
+</ul>
+<h2 id="structure-of-graphs">Structure of Graphs</h2>
+<p>graph的component：</p>
+<ul>
+<li>Objects: nodes, edges <span class="math inline">\(N\)</span></li>
+<li>Interactions: links, edges <span class="math inline">\(E\)</span></li>
+<li>System: network, graph <span class="math inline">\(G(N, E)\)</span></li>
+</ul>
+<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309193044665.png" class="" title="image-20210309193044665">
+<blockquote>
+<p>We will try to make this distinction whenever it is appropriate, but in</p>
+<p>most cases we will use the two terms interchangeably</p>
+</blockquote>
+<p>graph的基本概念：</p>
+<ul>
+<li>无向图</li>
+<li>有向图</li>
+</ul>
+<p>node degree：对于无向图来说就是一个节点连接的边，因此一个无向图的平均度就是<span class="math inline">\(2E/N\)</span>。对于有向图来说度分为入度和出度，一个节点的in-degree就是有多少条箭头指向该节点；out-degree就是多少条边末端链接到该节点上。</p>
+<p>几种特殊的graph：</p>
+<ul>
+<li>complete graph：对于无向图，一个complete graph指所有节点之间都存在边：<span class="math inline">\(E=E_{max}=\frac{N(N-1)}{2}\)</span></li>
+<li>Bipartite graph：a graph whose nodes can be divided into two disjoint sets <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> such that every link connects a node in <span class="math inline">\(U\)</span> to one in <span class="math inline">\(V\)</span>; that is, <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are independent sets</li>
+<li>Weighted graph：在邻接矩阵中的非0值不再只是1，而是其它衡量重要程度的实值，比如道路图</li>
+<li>Self-edge graph：边的起始点都是同一个节点，比如蛋白质图protein graph</li>
+<li>Multigraph：在节点和节点当中存在多条边，比如Communication graph、Collaboration graph</li>
+</ul>
+<p>在数学上表示一个图可以使用adjacent matrix表示。</p>
+<ul>
+<li>对于无向图，行和列求和相等，并且是对应节点的degree</li>
+<li>对于有向图，行求和是out-degree，列求和是in-degree</li>
+</ul>
+<p>对于这种表示方式，需要在脑海里保持的一种直觉观点是，邻接矩阵是非常稀疏的。矩阵的稠密度计算：<span class="math inline">\(E/N^2\)</span>。</p>
+<p>还可以使用edge list和adjacent list表示：</p>
+<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309203007866.png" class="">
+<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309203034763.png" class="">
+<p>graph的连通性connectivity：</p>
+<ol type="1">
+<li>对于无向图，如果说一个graph是Connected graph，这意味着任意两个节点都可以通过某个路径连接起来</li>
+<li>对于有向图，分为强连接性图和弱连接性图</li>
+</ol>
+<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309204211861.png" class="">
+<p>在研究图的连通性当中，可能存在关键的边或者节点，如果把这些关键点或边删除整个图就不再连通。</p>
+<ul>
+<li>Bridge edge: If we erase the edge, the graph becomes disconnected</li>
+<li>Articulation node: If we erase the node, the graph becomes disconnected</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224W</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>02-prop-of-graph-and-rand-model</title>
+    <url>/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/</url>
+    <content><![CDATA[<h1 id="properities-of-networks-random-graph-model">Properities of networks, Random Graph Model</h1>
+<p>在下面所提到的图默认是无向图。介绍了graph的四种属性</p>
+<span id="more"></span>
+<h2 id="network-properties">Network Properties</h2>
+<p>4 key network properties</p>
+<ol type="1">
+<li>Degree distribution <span class="math inline">\(P(k)\)</span></li>
+</ol>
+<p>具有不同度的节点数量在所有graph node中的比例</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309220725684.png" class="">
+<ol start="2" type="1">
+<li>Paths in a graph</li>
+</ol>
+<p>在图中的路径path是指节点的序列。在有向图中的path需要遵循edge的direction。</p>
+<p>有了path就可以衡量距离distance，两个节点的distance是最短路径shortest path。</p>
+<p>定义了distance之后，可以定义graph的直径diameter。graph的diameter是所有节点对的distance中最长的值。</p>
+<ol start="3" type="1">
+<li>Clustering coefficient</li>
+</ol>
+<p>聚类系数clustering coefficient衡量了节点的邻居之间的连接性。clustering coefficient针对的是graph中的每一个node。具体算法是计算邻居之间的边/理想中最多的领居间边的数量。 <span class="math display">\[
+C_i= \frac{2e_i}{k_i(k_i-1)}
+\]</span> 其中，<span class="math inline">\(e_i\)</span>是邻居间的边的数量，<span class="math inline">\(k_i\)</span>是节点<span class="math inline">\(i\)</span>的度。<span class="math inline">\(k_i(k_i-1)\)</span>计算了所有邻居节点之间都存在一个边的上限情况。聚类系数在0-1区间。</p>
+<ol start="4" type="1">
+<li>Connectivity</li>
+</ol>
+<p>定义为最大连通单元中节点的数量。</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309222007993.png" class="">
+<h2 id="random-graph-model">Random Graph Model</h2>
+<p>我们可以设定一些条件，产生人造的随机graph，来促进我们对于现实graph的理解。</p>
+<p>可以有两种random graph</p>
+<ol type="1">
+<li><span class="math inline">\(G_{np}\)</span>：n个node，node之间产生edge的概率是<span class="math inline">\(p\)</span>。</li>
+<li><span class="math inline">\(G_{nm}\)</span>：n个节点，随机产生<span class="math inline">\(m\)</span>个边。</li>
+</ol>
+<p>研究这两种random graph的properties。</p>
+<p>对于<span class="math inline">\(G_{np}\)</span>：</p>
+<h3 id="degree-distribution">Degree Distribution</h3>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322214919097.png" class="">
+<h3 id="clustering-coefficient">Clustering Coefficient</h3>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322215556478.png" class="">
+<h3 id="path-length">Path Length</h3>
+<p>首先定义Expansion，核心思想是随机选一个node集合，有多少的边会离开这个集合。</p>
+<p>式子定义：</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163010845.png" class="">
+<p>式子下面的分母表示对于一个划分来说，如果划分的S越大，节点越多，如果离开集合S的edge数量不变，那么expansion应该小；如果划分的集合S的node数量不变，那么离开S的edge数量越多，expansion越大。随机的划分S，能得到V-S，对于S和V-S都可以计算出一个expansion，离开这两个集合的edge数量一样，但是如果拿较大的集合来算的话，计算出来的expansion就会偏小。因此，总是以数量较少的集合作为考虑的点。</p>
+<p>随机的划分集合，能得到很多的expansion，为了衡量整个graph的expansion，考虑expansion的下限，即最小的那个expansion。在这种情况下，如果graph的expansion比其它graph的expansion更大，可以理解为这个graph的expansion更大，locality更弱。</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163900359.png" class="">
+<p>一个random graph的path length是<span class="math inline">\(O(log\ n)\)</span>。diameter是:</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323170924449.png" class="">
+<p>也就是说对于random graph来说，随着node数量增加，diameter并不会增加很多。</p>
+<h3 id="lagest-connected-components">Lagest Connected Components</h3>
+<p>在random graph中，随着平均degree增加，node链接到giant component的概率增加。</p>
+<h2 id="the-smallest-world-model">The Smallest-World Model</h2>
+<p>仔细观察下network的properties会发现，聚类系数与graph的直径似乎是两个有点冲突的属性。如果聚类系数比较高，说明一个graph的locality强，那么node与较远的node之间就比较难有直接的链接，这会造成graph的路径很大。</p>
+<p>一个graph的diameter衡量了graph的“shortcut”，如果diameter比较小，意味着对于一个node，可以在较小的step内链接到其它node。但是直径变小的话，一个graph的locality似乎会被破坏，一个node的很多邻居之间不相连，而是有更多的edge链接到其它的node上。</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105306472.png" class="">
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105329615.png" class="">
+<p>那么，是否有办法让graph同时具有high clustering和small diameter？</p>
+<p>解决方案是the smallest-world model。1998。</p>
+<p>核心是对于一个已经具有high clustering的graph，引入randomness，新增/删减edge来创建更多的“shortcut”。</p>
+<p>示例图：</p>
+<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323110103346.png" class="">
+]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224W</category>
+      </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/04/26/cs224w-2019-resourse/</url>
+    <content><![CDATA[<h1 id="machine-learning-with-graphs">Machine Learning with Graphs</h1>
+<p><a href="http://snap.stanford.edu/class/cs224w-2019/">offical 2019</a></p>
+<p><a href="http://web.stanford.edu/class/cs224w/">offical 2020</a></p>
+<p><a href="http://networksciencebook.com/chapter/1#vulnerability">online book: network science</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>AM-GCN</title>
     <url>/2021/04/15/AM-GCN/</url>
     <content><![CDATA[<h1 id="am-gcn-adaptive-multi-channel-graph-convolutional-networks">AM-GCN: Adaptive Multi-channel Graph Convolutional Networks</h1>
@@ -2728,5 +2996,22 @@ MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
         <category>Paper</category>
         <category>Graph Embedding</category>
       </categories>
+  </entry>
+  <entry>
+    <title></title>
+    <url>/2021/04/26/cs224n-2019-14-transformers-transformers/</url>
+    <content><![CDATA[<h1 id="transformers-and-self-attention">Transformers and Self-Attention</h1>
+<p>序列化的模型类似于RNN，存在几个问题：</p>
+<ul>
+<li>Sequential computation的计算限制了并行计算</li>
+<li>没有对于short和long dependencies的显式建模</li>
+<li>我们希望能够建模层级</li>
+</ul>
+<p>对于迁移不变性的解释。</p>
+<figure>
+<img data-src="image-20210329210505679.png" alt="image-20210329210505679" /><figcaption aria-hidden="true">image-20210329210505679</figcaption>
+</figure>
+<h2 id="section"></h2>
+]]></content>
   </entry>
 </search>
