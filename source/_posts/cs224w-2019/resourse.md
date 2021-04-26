@@ -1,3 +1,12 @@
+---
+title: Basic-Info
+date: 2021-04-26 22:17:00
+categories:
+- Class
+- CS224W
+tags:
+---
+
 # Machine Learning with Graphs
 
 [offical 2019](http://snap.stanford.edu/class/cs224w-2019/)
