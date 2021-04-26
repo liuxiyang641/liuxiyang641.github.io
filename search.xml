@@ -2997,21 +2997,4 @@ MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
         <category>Graph Embedding</category>
       </categories>
   </entry>
-  <entry>
-    <title></title>
-    <url>/2021/04/26/cs224n-2019-14-transformers-transformers/</url>
-    <content><![CDATA[<h1 id="transformers-and-self-attention">Transformers and Self-Attention</h1>
-<p>序列化的模型类似于RNN，存在几个问题：</p>
-<ul>
-<li>Sequential computation的计算限制了并行计算</li>
-<li>没有对于short和long dependencies的显式建模</li>
-<li>我们希望能够建模层级</li>
-</ul>
-<p>对于迁移不变性的解释。</p>
-<figure>
-<img data-src="image-20210329210505679.png" alt="image-20210329210505679" /><figcaption aria-hidden="true">image-20210329210505679</figcaption>
-</figure>
-<h2 id="section"></h2>
-]]></content>
-  </entry>
 </search>
