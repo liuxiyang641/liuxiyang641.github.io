@@ -87,12 +87,16 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
       </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>Basic-Info</title>
     <url>/2021/04/26/cs224n-2019-resourse/</url>
     <content><![CDATA[<h1 id="cs224n-natural-language-processing-with-deep-learning">CS224n: Natural Language Processing with Deep Learning</h1>
 <p><a href="https://web.stanford.edu/class/cs224n/index.html">Offical website</a></p>
 <p><a href="https://www.youtube.com/playlist?list=PLoROMvodv4rOhcuXMZkNm7j3fVwBBY42z">Youtube video</a></p>
 ]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224N</category>
+      </categories>
   </entry>
   <entry>
     <title>01-intro-graph</title>
@@ -260,13 +264,17 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
       </categories>
   </entry>
   <entry>
-    <title></title>
+    <title>Basic-Info</title>
     <url>/2021/04/26/cs224w-2019-resourse/</url>
     <content><![CDATA[<h1 id="machine-learning-with-graphs">Machine Learning with Graphs</h1>
 <p><a href="http://snap.stanford.edu/class/cs224w-2019/">offical 2019</a></p>
 <p><a href="http://web.stanford.edu/class/cs224w/">offical 2020</a></p>
 <p><a href="http://networksciencebook.com/chapter/1#vulnerability">online book: network science</a></p>
 ]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224W</category>
+      </categories>
   </entry>
   <entry>
     <title>AM-GCN</title>
