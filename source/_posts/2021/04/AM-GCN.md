@@ -87,7 +87,7 @@ $$
 
 AM-GCN的整体模型图：
 
-![image-20210110165439556](AM-GCN/image-20210110165439556.png)
+![](AM-GCN/image-20210110165439556.png)
 
 可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。
 
@@ -176,7 +176,7 @@ $$
 
 注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。
 
-![image-20210110175336414](AM-GCN/image-20210110175336414.png)
+![](AM-GCN/image-20210110175336414.png)
 
 其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。
 
@@ -192,13 +192,13 @@ $$
 
 - AM-GCN-d: AM-GCN with the disparity constraint $L_d$
 
-![image-20210110175813097](AM-GCN/image-20210110175813097.png)
+![](AM-GCN/image-20210110175813097.png)
 
 可以看出来，一般情况下，consistency constraint比disparity constraint更加重要
 
 ### 4.3 Visualization
 
-![image-20210110180203704](AM-GCN/image-20210110180203704.png)
+![](AM-GCN/image-20210110180203704.png)
 
 ### 4.4 Analysis of Attention Mechanism
 
