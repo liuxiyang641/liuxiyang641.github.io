@@ -334,7 +334,7 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
 \mathbf{S}_{i,j}=\frac{\mathbf{x}_i\cdot \mathbf{x}_j}{|\mathbf{x}_i| |\mathbf{x}_j|}
 \]</span> 然后对于节点<span class="math inline">\(i\)</span>，在<span class="math inline">\(\mathbf{S}\)</span>中选择前<span class="math inline">\(k\)</span>个相似度最大的节点作为feature node，得到<span class="math inline">\(\mathbf{A}_f\)</span>。</p>
 <p>AM-GCN的整体模型图：</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="" title="image-20210110165439556">
+<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="">
 <p>可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。</p>
 <h3 id="specific-convolution-module">3.1 Specific Convolution Module</h3>
 <p>在Topology Graph上的卷积： <span class="math display">\[
@@ -382,7 +382,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <p>在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络</p>
 <img data-src="/2021/04/15/AM-GCN/image-20210110175132041.png" class="">
 <p>注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="" title="image-20210110175336414">
+<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="">
 <p>其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。</p>
 <p>对比GCN和kNN-GCN一个比较有意思的结果是不聚合邻居，有时候根据特征聚合相似的节点，也可能取得更好的结果。</p>
 <h3 id="analysis-of-variants">4.2 Analysis of Variants</h3>
@@ -392,10 +392,10 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <li><p>AM-GCN-c: AM-GCN with the consistency constraint <span class="math inline">\(L_c\)</span></p></li>
 <li><p>AM-GCN-d: AM-GCN with the disparity constraint <span class="math inline">\(L_d\)</span></p></li>
 </ul>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="" title="image-20210110175813097">
+<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="">
 <p>可以看出来，一般情况下，consistency constraint比disparity constraint更加重要</p>
 <h3 id="visualization">4.3 Visualization</h3>
-<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="" title="image-20210110180203704">
+<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="">
 <h3 id="analysis-of-attention-mechanism">4.4 Analysis of Attention Mechanism</h3>
 <p>分析不同数据集下，三个不同embedding的注意力值的分布</p>
 <img data-src="/2021/04/15/AM-GCN/image-20210110180340350.png" class="">
@@ -1814,6 +1814,54 @@ f(W[\mathbf{a};\mathbf{b}])
       <tags>
         <tag>Collection</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>KGIN</title>
+    <url>/2021/04/28/KGIN/</url>
+    <content><![CDATA[<h1 id="learning-intents-behind-interactions-with-knowledge-graph-for-recommendation">Learning Intents behind Interactions with Knowledge Graph for Recommendation</h1>
+<p>KGIN，WWW 2021</p>
+<p>结合知识图谱，结合图神经网络。在user-item中加入了intent，在KGIN中的intent表现为知识图谱中关系relation的基于自注意力的组合，同时加入差异性约束，使得不同intent的差异增大。Intent的想法很有趣，直观上看本质上还是多头的，类似于集成学习ensemble learning的思想。</p>
+<span id="more"></span>
+<blockquote>
+<p>Knowledge graph (KG) plays an increasingly important role in recommender systems. A recent technical trend is to develop end- to-end models founded on graph neural networks(GNNs). However, existing GNN-based models are coarse-grained in relational modeling, failing to (1) identify user-item relation at a fine-grained level of intents, and (2) exploit relation dependencies to preserve the semantics of long-range connectivity.</p>
+<p>In this study, we explore intents behind a user-item interaction by using auxiliary item knowledge, and propose a new model, Knowledge Graph-based Intent Network (KGIN). Technically, we model each intent as an attentive combination of KG , relations, Negative Items : Positive Items encouraging the independence of different intents for better model capability and interpretability. Furthermore, we devise a new information aggregation scheme for GNN, which recursively integrates the relation sequences of long-range connectivity (i.e., relational paths). This scheme allows us to distill useful information about user intents and encode them into the representations of users and items. Experimental results on three benchmark datasets show that, KGIN achieves significant improvements over the state-of-the-art methods like KGAT [41], KGNN-LS [38], and CKAN [47]. Further analyses show that KGIN offers interpretable explanations for predictions by identifying influential intents and relational paths. The implementations are available at <a href="https://github.com/huangtinglin/Knowledge_Graph_based_Intent_Network">https://github.com/huangtinglin/Knowledge_Graph_based_Intent_Network</a>.</p>
+</blockquote>
+<p>直接看方法：</p>
+<img data-src="/2021/04/28/KGIN/image-20210428152740113.png" class="">
+<p>整个模型的训练分成两个部分，一个是user-item上对于user embedding的训练，一个是在KG上对于entity/item的训练。</p>
+<h2 id="在user-item-graph上的训练">在user-item graph上的训练。</h2>
+<p>首先引入intent，定义一个集合<span class="math inline">\(\mathcal{P}\)</span>对于所有的用户是共享的，然后针对user-item pair <span class="math inline">\((u,i)\)</span>，插入intent，变为<span class="math inline">\(\{ (u,p,i)\ p \in \mathcal{P} \}\)</span>。</p>
+<p><strong>Representation Learning of Intents</strong>：</p>
+<p>每一个intent <span class="math inline">\(p\)</span>对应一个表示embedding，同时为了让intent能够与KG中的relation联系起来，考虑不同relation的组合作用，将intent表示为基于注意力的relation的组合：</p>
+<img data-src="/2021/04/28/KGIN/image-20210428152227995.png" class="">
+<img data-src="/2021/04/28/KGIN/image-20210428152321247.png" class="">
+<p>KGIN为每个relation针对不同的intent <span class="math inline">\(p\)</span>定义了一个weight，<span class="math inline">\(w_{rp}\)</span>。不是简单的直接weighted sum而是经过了一层softmax。</p>
+<p>另外，为了保证intent embedding之间存在差异性，对于不同的intent <span class="math inline">\(e_p\)</span>，使用了两种方法作为惩罚项加入loss function中。</p>
+<ol type="1">
+<li>Mutual information</li>
+</ol>
+<img data-src="/2021/04/28/KGIN/image-20210428153420725.png" class="">
+<ol start="2" type="1">
+<li>Distance correlation</li>
+</ol>
+<img data-src="/2021/04/28/KGIN/image-20210428153437851.png" class="">
+<img data-src="/2021/04/28/KGIN/image-20210428153453247.png" class="">
+<p>以上的思想是精髓，需要之后细看，并且类似的思想在<a href="/2021/04/15/AM-GCN/" title="AM-GCN">AM-GCN</a>中也有出现。</p>
+<p>在得到了intent <span class="math inline">\(p\)</span>之后，聚合item，得到user的表示：</p>
+<img data-src="/2021/04/28/KGIN/image-20210428153029551.png" class="">
+<img data-src="/2021/04/28/KGIN/image-20210428152948599.png" class="">
+<p>注意力的聚合，计算每个intent与目标用户embedding的相似程度。</p>
+<h2 id="在kg上的训练">在KG上的训练</h2>
+<p>不使用注意力，也没有intent，甚至也没有<span class="math inline">\(W\)</span>，直接聚合</p>
+<img data-src="/2021/04/28/KGIN/image-20210428153813909.png" class="">
+<p>需要注意：<span class="math inline">\(e_r\)</span>在intent embedding计算中出现，并且看公式的话，它不会随着layer的增加而改变。</p>
+<h2 id="model-prediction">Model Prediction</h2>
+<img data-src="/2021/04/28/KGIN/image-20210428153949318.png" class="">
+<img data-src="/2021/04/28/KGIN/image-20210428153959942.png" class="">
+<h2 id="model-optimization">Model Optimization</h2>
+<img data-src="/2021/04/28/KGIN/image-20210428154032654.png" class="">
+<img data-src="/2021/04/28/KGIN/image-20210428154045082.png" class="">
+]]></content>
   </entry>
   <entry>
     <title>Knowledge-Graphs</title>

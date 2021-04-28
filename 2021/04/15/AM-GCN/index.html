@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180203704.png">
 <meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180340350.png">
 <meta property="article:published_time" content="2021-04-15T07:55:24.000Z">
-<meta property="article:modified_time" content="2021-04-26T14:44:27.449Z">
+<meta property="article:modified_time" content="2021-04-28T07:47:35.821Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110165439556.png">
@@ -138,7 +138,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">41</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">42</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -223,7 +223,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-04-26 22:44:27" itemprop="dateModified" datetime="2021-04-26T22:44:27+08:00">2021-04-26</time>
+                <time title="Modified: 2021-04-28 15:47:35" itemprop="dateModified" datetime="2021-04-28T15:47:35+08:00">2021-04-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -326,7 +326,7 @@
 \mathbf{S}_{i,j}=\frac{\mathbf{x}_i\cdot \mathbf{x}_j}{|\mathbf{x}_i| |\mathbf{x}_j|}
 \]</span> 然后对于节点<span class="math inline">\(i\)</span>，在<span class="math inline">\(\mathbf{S}\)</span>中选择前<span class="math inline">\(k\)</span>个相似度最大的节点作为feature node，得到<span class="math inline">\(\mathbf{A}_f\)</span>。</p>
 <p>AM-GCN的整体模型图：</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="" title="image-20210110165439556">
+<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="">
 <p>可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。</p>
 <h3 id="specific-convolution-module">3.1 Specific Convolution Module</h3>
 <p>在Topology Graph上的卷积： <span class="math display">\[
@@ -374,7 +374,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <p>在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络</p>
 <img data-src="/2021/04/15/AM-GCN/image-20210110175132041.png" class="">
 <p>注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="" title="image-20210110175336414">
+<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="">
 <p>其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。</p>
 <p>对比GCN和kNN-GCN一个比较有意思的结果是不聚合邻居，有时候根据特征聚合相似的节点，也可能取得更好的结果。</p>
 <h3 id="analysis-of-variants">4.2 Analysis of Variants</h3>
@@ -384,10 +384,10 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <li><p>AM-GCN-c: AM-GCN with the consistency constraint <span class="math inline">\(L_c\)</span></p></li>
 <li><p>AM-GCN-d: AM-GCN with the disparity constraint <span class="math inline">\(L_d\)</span></p></li>
 </ul>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="" title="image-20210110175813097">
+<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="">
 <p>可以看出来，一般情况下，consistency constraint比disparity constraint更加重要</p>
 <h3 id="visualization">4.3 Visualization</h3>
-<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="" title="image-20210110180203704">
+<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="">
 <h3 id="analysis-of-attention-mechanism">4.4 Analysis of Attention Mechanism</h3>
 <p>分析不同数据集下，三个不同embedding的注意力值的分布</p>
 <img data-src="/2021/04/15/AM-GCN/image-20210110180340350.png" class="">
@@ -497,7 +497,7 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -559,13 +559,13 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">90k</span>
+    <span title="Symbols count total">92k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:22</span>
+    <span title="Reading time total">1:24</span>
 </div>
 
         
