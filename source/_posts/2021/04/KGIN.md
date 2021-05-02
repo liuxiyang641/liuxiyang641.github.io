@@ -3,6 +3,8 @@ title: KGIN
 notshow: false
 date: 2021-04-28 10:53:15
 categories:
+- Paper
+- RS
 tags:
 ---
 
