@@ -21,21 +21,21 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs 2019-6-4 将GAT应用到KG上。">
+  <meta name="description" content="Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning AAAI 2018，引用量578。 作者对GCN的机制进行了探讨，认为GCN是Laplacian smoothing的一种特殊形式。并且形式化证明了当GCN堆叠到很多层时，所有节点的表示会趋向于同一表示。发现GCN在带有label的data较">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KBGAT">
-<meta property="og:url" content="http://example.com/2021/04/15/KBGAT/index.html">
+<meta property="og:title" content="Deeper-insights-gcn">
+<meta property="og:url" content="http://example.com/2021/05/04/Deeper-insights-gcn/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs 2019-6-4 将GAT应用到KG上。">
+<meta property="og:description" content="Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning AAAI 2018，引用量578。 作者对GCN的机制进行了探讨，认为GCN是Laplacian smoothing的一种特殊形式。并且形式化证明了当GCN堆叠到很多层时，所有节点的表示会趋向于同一表示。发现GCN在带有label的data较">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/KBGAT/image-20200220112116226.png">
-<meta property="article:published_time" content="2021-04-15T08:29:45.000Z">
-<meta property="article:modified_time" content="2021-05-04T08:11:53.661Z">
+<meta property="og:image" content="http://example.com/2021/05/04/Deeper-insights-gcn/image-20210504154544997.png">
+<meta property="article:published_time" content="2021-05-04T07:28:24.000Z">
+<meta property="article:modified_time" content="2021-05-04T08:11:53.769Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/KBGAT/image-20200220112116226.png">
+<meta name="twitter:image" content="http://example.com/2021/05/04/Deeper-insights-gcn/image-20210504154544997.png">
 
-<link rel="canonical" href="http://example.com/2021/04/15/KBGAT/">
+<link rel="canonical" href="http://example.com/2021/05/04/Deeper-insights-gcn/">
 
 
 <script id="page-configurations">
@@ -48,7 +48,7 @@
   };
 </script>
 
-  <title>KBGAT | Liu Xiyang</title>
+  <title>Deeper-insights-gcn | Liu Xiyang</title>
   
 
 
@@ -188,7 +188,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/KBGAT/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/04/Deeper-insights-gcn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -201,7 +201,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          KBGAT<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/04/KBGAT.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          Deeper-insights-gcn<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/05/Deeper-insights-gcn.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -210,16 +210,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2021-04-15 16:29:45" itemprop="dateCreated datePublished" datetime="2021-04-15T16:29:45+08:00">2021-04-15</time>
+              <time title="Created: 2021-05-04 15:28:24 / Modified: 16:11:53" itemprop="dateCreated datePublished" datetime="2021-05-04T15:28:24+08:00">2021-05-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-04 16:11:53" itemprop="dateModified" datetime="2021-05-04T16:11:53+08:00">2021-05-04</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -247,7 +241,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.9k</span>
+              <span>2.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -266,69 +260,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="learning-attention-based-embeddings-for-relation-prediction-in-knowledge-graphs">Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs</h1>
-<p>2019-6-4</p>
-<p>将GAT应用到KG上。</p>
+        <h1 id="deeper-insights-into-graph-convolutional-networks-for-semi-supervised-learning">Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning</h1>
+<p>AAAI 2018，引用量578。</p>
+<p>作者对GCN的机制进行了探讨，认为GCN是Laplacian smoothing的一种特殊形式。并且形式化证明了当GCN堆叠到很多层时，所有节点的表示会趋向于同一表示。发现GCN在带有label的data较少的情况下，表现出的性能差，为了解决这一问题，提出了一种联合训练co-traning的方法，主要是使用随机游走和GCN两种方法，寻找不同label下的most confident vertices，然后使用这些most confident vertices继续训练。</p>
 <span id="more"></span>
-<h2 id="introduction">1 Introduction</h2>
 <blockquote>
-<p>Our architecture is an encoder-decoder model where our generalized graph attention model and ConvKB (Nguyen et al., 2018) play the roles of an encoder and decoder, respectively.</p>
+<p>Many interesting problems in machine learning are being revisited with new deep learning tools. For graph-based semisupervised learning, a recent important development is graph convolutional networks (GCNs), which nicely integrate local vertex features and graph topology in the convolutional layers. Although the GCN model compares favorably with other state-of-the-art methods, its mechanisms are not clear and it still requires considerable amount of labeled data for validation and model selection.</p>
+<p>In this paper, we develop deeper insights into the GCN model and address its fundamental limits. First, we show that the graph convolution of the GCN model is actually a special form of Laplacian smoothing, which is the key reason why GCNs work, but it also brings potential concerns of oversmoothing with many convolutional layers. Second, to overcome the limits of the GCN model with shallow architectures, we propose both co-training and self-training approaches to train GCNs. Our approaches signiﬁcantly improve GCNs in learning with very few labels, and exempt them from requiring additional labels for validation. Extensive experiments on benchmarks have veriﬁed our theory and proposals.</p>
 </blockquote>
-<p>CNN-based和translational-based的模型单独的处理triplet，没有考虑到KG当中某个entity附近的丰富的语义信息。</p>
-<p>本论文在GAT的基础上改进。</p>
-<blockquote>
-<p>To the best of our knowledge, we are the ﬁrst to learn new graph attention based embeddings that speciﬁcally target relation prediction on KGs.</p>
-</blockquote>
-<h2 id="our-approach">3 Our Approach</h2>
-<p>和之前的GAT模型比较起来，用于知识图谱的话需要考虑relation。</p>
-<p>假设每一层的输入包括两个矩阵，entity matrix和relation matrix <span class="math display">\[
-H\in N_e\times T \\
-G\in N_r\times P
-\]</span> 每一层的输出为： <span class="math display">\[
-H^{&#39;}\in N_e\times T^{&#39;} \\
-G^{&#39;}\in N_r\times P^{&#39;}
-\]</span></p>
-<h3 id="attention">3.1 Attention</h3>
-<img data-src="/2021/04/15/KBGAT/image-20200220112116226.png" class="">
-<p>对于一个以<span class="math inline">\(e_i\)</span>为顶点的edge (i, j, k)，应该能够传播给<span class="math inline">\(e_i\)</span>一个embedding： <span class="math display">\[
-c_{ijk}=W_1[h_i][h_k][g_j]
-\]</span> 接下来计算对应的attention value。 <span class="math display">\[
-b_{ijk}=LeakRelu(W_2c_{ijk}) \\
-\alpha_{ijk}=softmax(b_{ijk})
-\]</span> 之后进行weighted sum就可以了，neighbour指的是某个的状态 <span class="math display">\[
-h_i^{&#39;}=\sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}c_{ijk})
-\]</span></p>
-<p>但类似与GAT中，使用multihead attention机制，在实现的时候作者并不是使用了<span class="math inline">\(\sigma\)</span>，而是使用<span class="math inline">\(elu\)</span>函数。 <span class="math display">\[
-h_i^{&#39;}=\lVert_{m=1}^{M} \sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}^{m} c_{ijk}^{m})
-\]</span> 在这一层传入下一层的时候，作者实现中加了一个dropout层，防止过拟合。</p>
-<p>但是在最后一层，就不使用concate操作了， <span class="math display">\[
-h_i^{&#39;}=\sigma(\frac{1}{M} \sum_{m=1}^M \sum_{j\in N_i} \sum_{k\in R_{ij}} \alpha_{ijk}^{m} c_{ijk}^{m})
-\]</span> 最后一层的输出记作<span class="math inline">\(H^f \in N_e \times T^{f}\)</span></p>
-<h3 id="对于关系的处理">3.2 对于关系的处理</h3>
-<p>对于输入的<span class="math inline">\(G\)</span>，前面获得的<span class="math inline">\(h_i^{&#39;}\)</span>只是针对实体i的，所以关系<span class="math inline">\(G\)</span>的变换是直接进行线性转换。 <span class="math display">\[
-G^{&#39;}=GW^R \\
-W^R\in R^{P\times P^{&#39;}}
-\]</span></p>
-<h3 id="保留原来的entity-embedding">3.3 保留原来的entity embedding</h3>
-<p>在最后一层，加上原来的entity embedding。 <span class="math display">\[
-H^{&#39;&#39;}=W^EH + H^f
-\]</span></p>
-<h3 id="training-objective">3.4 Training Objective</h3>
-<p>hinge-loss： <span class="math display">\[
-L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}^{&#39;}+\gamma,\ 0)
-\]</span></p>
-<h3 id="decoder">3.5 Decoder</h3>
-<p>使用ConVKB作为decoder</p>
-<h2 id="experiments-and-results">4 Experiments and Results</h2>
-<p>数据集：</p>
+<p>作者认为的GCN的优点：</p>
 <ul>
-<li>WN18RR (Dettmers et al., 2018),</li>
-<li>FB15k-237 (Toutanova et al., 2015),</li>
-<li>NELL-995 (Xiong et al., 2017),</li>
-<li>Uniﬁed Medical Language Systems (UMLS) (Kok and Domingos, 2007)<br />
-</li>
-<li>Alyawarra Kinship (Lin et al., 2018).</li>
+<li>图卷积-即拉普拉斯平滑操作，让不同class的特征能够在图上传播</li>
+<li>MLP是一个强大的feature extractor</li>
 </ul>
+<p>缺点：</p>
+<ul>
+<li>图卷积是一个localized ﬁlter，当labeled data较少的时候，性能较差</li>
+<li>使用neural network要求具备较多的训练数据以及使用额外的验证集进行模型选择</li>
+</ul>
+<p>作者证明graph convolution是laplacian smoothing的过程：</p>
+<p>laplacian smoothing在1995年就被提出来，A signal processing approach to fair surface design.</p>
+<p>定义为：</p>
+<img data-src="/2021/05/04/Deeper-insights-gcn/image-20210504154544997.png" class="">
+<p>其中的<span class="math inline">\(\gamma\)</span>是参数，控制当前vertex和邻居vertex的特征的weight。<span class="math inline">\(\mathbf{x}_j\)</span>是邻居vertex。</p>
+<p>将上面的形式写为矩阵形式： <span class="math display">\[
+\begin{align}
+Y &amp;= (1-\gamma)X + \gamma \tilde{A} \tilde{D}^{-1} X \\
+&amp;= X - \gamma (X - \tilde{A} \tilde{D}^{-1} X ) \\
+&amp;= X - \gamma \tilde{D}^{-1} (\tilde{D} - \tilde{A}) X \\
+&amp;= X - \gamma \tilde{D}^{-1} \tilde{L} X
+\end{align}
+\]</span> 对上面的式子进行简化，令 <span class="math inline">\(\gamma = 1\)</span>，替换<span class="math inline">\(\tilde{D}^{-1} \tilde{L}\)</span>为<span class="math inline">\(\tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2}\)</span></p>
+<p>得到下面的式子： <span class="math display">\[
+\begin{align}
+Y &amp;= X - \tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2} X \\
+&amp;= (I - \tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2} ) X \\
+&amp;= (I - \tilde{D}^{-1/2} (\tilde{D} - \tilde{A}) \tilde{D}^{-1/2} ) X \\
+&amp;= \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} X
+\end{align}
+\]</span> 最后得到了GCN。</p>
+<p>这一操作背后的原理是属于同一类的vertex倾向于在一个cluster中，smoothing操作让它们具有了相近的表示，这使得之后的classiﬁcation更加容易。</p>
+<blockquote>
+<p>The Laplacian smoothing computes the new features of a vertex as the weighted average of itself and its neighbors’. Since vertices in the same cluster tend to be densely connected, the smoothing makes their features similar, which makes the subsequent classiﬁcation task much easier.</p>
+</blockquote>
+<p>另外，为了让GCN能够在data更受限制的情况下进行学习，作者结合ParWalks这种随机游走的方法，寻找各个class下most confident vertices——the nearest neighbors to the labeled vertices of each class。</p>
 
     </div>
 
@@ -353,13 +328,10 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/04/15/RGHAT/" rel="prev" title="RGHAT">
-      <i class="fa fa-chevron-left"></i> RGHAT
+    <a href="/2021/05/02/cs224w-2021-02-tradition-ml/" rel="prev" title="2021-02-tradition-ml">
+      <i class="fa fa-chevron-left"></i> 2021-02-tradition-ml
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/04/15/SACN/" rel="next" title="SACN">
-      SACN <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -418,7 +390,7 @@ L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#learning-attention-based-embeddings-for-relation-prediction-in-knowledge-graphs"><span class="nav-number">1.</span> <span class="nav-text">Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#our-approach"><span class="nav-number">1.2.</span> <span class="nav-text">3 Our Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#attention"><span class="nav-number">1.2.1.</span> <span class="nav-text">3.1 Attention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E5%85%B3%E7%B3%BB%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-number">1.2.2.</span> <span class="nav-text">3.2 对于关系的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%9D%E7%95%99%E5%8E%9F%E6%9D%A5%E7%9A%84entity-embedding"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.3 保留原来的entity embedding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training-objective"><span class="nav-number">1.2.4.</span> <span class="nav-text">3.4 Training Objective</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#decoder"><span class="nav-number">1.2.5.</span> <span class="nav-text">3.5 Decoder</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-and-results"><span class="nav-number">1.3.</span> <span class="nav-text">4 Experiments and Results</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#deeper-insights-into-graph-convolutional-networks-for-semi-supervised-learning"><span class="nav-number">1.</span> <span class="nav-text">Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -21,30 +21,24 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Properities of networks, Random Graph Model 在下面所提到的图默认是无向图。介绍了graph的四种属性">
+  <meta name="description" content="Introduction of graphs Introduction 为什么network&#x2F;graph很重要？  Networks are a general language for describing complex systems of interacting entities  当我们谈论network的时候，经常讨论两种图：  Natural graph：对于现实事物的直接描述，例如">
 <meta property="og:type" content="article">
-<meta property="og:title" content="02-prop-of-graph-and-rand-model">
-<meta property="og:url" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/index.html">
+<meta property="og:title" content="01-intro-graph">
+<meta property="og:url" content="http://example.com/2021/04/26/cs224w-01-intro-graph/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="Properities of networks, Random Graph Model 在下面所提到的图默认是无向图。介绍了graph的四种属性">
+<meta property="og:description" content="Introduction of graphs Introduction 为什么network&#x2F;graph很重要？  Networks are a general language for describing complex systems of interacting entities  当我们谈论network的时候，经常讨论两种图：  Natural graph：对于现实事物的直接描述，例如">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309220725684.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309222007993.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322214919097.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322215556478.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163010845.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163900359.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323170924449.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105306472.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105329615.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323110103346.png">
-<meta property="article:published_time" content="2021-04-26T14:02:00.000Z">
-<meta property="article:modified_time" content="2021-05-02T10:51:06.834Z">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309203007866.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309203034763.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309204211861.png">
+<meta property="article:published_time" content="2021-04-26T14:00:00.000Z">
+<meta property="article:modified_time" content="2021-05-04T08:11:53.825Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309220725684.png">
+<meta name="twitter:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png">
 
-<link rel="canonical" href="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/">
+<link rel="canonical" href="http://example.com/2021/04/26/cs224w-01-intro-graph/">
 
 
 <script id="page-configurations">
@@ -57,7 +51,7 @@
   };
 </script>
 
-  <title>02-prop-of-graph-and-rand-model | Liu Xiyang</title>
+  <title>01-intro-graph | Liu Xiyang</title>
   
 
 
@@ -142,7 +136,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">43</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">45</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -197,7 +191,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/26/cs224w-01-intro-graph/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -210,7 +204,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          02-prop-of-graph-and-rand-model<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/cs224w-2019/02-prop-of-graph-and-rand-model.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          01-intro-graph<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/cs224w/01-intro-graph.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -220,14 +214,14 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-04-26 22:02:00" itemprop="dateCreated datePublished" datetime="2021-04-26T22:02:00+08:00">2021-04-26</time>
+              <time title="Created: 2021-04-26 22:00:00" itemprop="dateCreated datePublished" datetime="2021-04-26T22:00:00+08:00">2021-04-26</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-02 18:51:06" itemprop="dateModified" datetime="2021-05-02T18:51:06+08:00">2021-05-02</time>
+                <time title="Modified: 2021-05-04 16:11:53" itemprop="dateModified" datetime="2021-05-04T16:11:53+08:00">2021-05-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -256,7 +250,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.9k</span>
+              <span>1.8k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -275,68 +269,91 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="properities-of-networks-random-graph-model">Properities of networks, Random Graph Model</h1>
-<p>在下面所提到的图默认是无向图。介绍了graph的四种属性</p>
+        <h1 id="introduction-of-graphs">Introduction of graphs</h1>
+<h2 id="introduction">Introduction</h2>
+<p>为什么network/graph很重要？</p>
+<blockquote>
+<p>Networks are a general language for describing complex systems of interacting entities</p>
+</blockquote>
+<p>当我们谈论network的时候，经常讨论两种图：</p>
+<ol type="1">
+<li>Natural graph：对于现实事物的直接描述，例如社交网络、大脑神经元的链接网络等</li>
+<li>Information graph：经过处理之后，带有信息的图，例如链接知识的图等</li>
+</ol>
 <span id="more"></span>
-<h2 id="network-properties">Network Properties</h2>
-<p>4 key network properties</p>
+<p>实际上在某些情况下上面两种network的分界线是很模糊的。</p>
+<p>很多事物都拥有图的结构，利用这些图的结构能够帮助我们更好的预测。</p>
+<p>Why networks?</p>
+<ul>
+<li>Universal language for describing complex data</li>
+<li>Shared vocabulary between fields</li>
+<li>Data availability &amp; computational challenges</li>
+</ul>
+<p>Ways to analyze networks:</p>
+<ul>
+<li>Predict the type/color of a given node
+<ul>
+<li>Node classification</li>
+</ul></li>
+<li>Predict whether two nodes are linked
+<ul>
+<li>Link prediction</li>
+</ul></li>
+<li>Identify densely linked clusters of nodes
+<ul>
+<li>Community detection</li>
+</ul></li>
+<li>Measure similarity of two nodes/networks
+<ul>
+<li>Network similarity</li>
+</ul></li>
+</ul>
+<h2 id="structure-of-graphs">Structure of Graphs</h2>
+<p>graph的component：</p>
+<ul>
+<li>Objects: nodes, edges <span class="math inline">\(N\)</span></li>
+<li>Interactions: links, edges <span class="math inline">\(E\)</span></li>
+<li>System: network, graph <span class="math inline">\(G(N, E)\)</span></li>
+</ul>
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png" class="" title="image-20210309193044665">
+<blockquote>
+<p>We will try to make this distinction whenever it is appropriate, but in</p>
+<p>most cases we will use the two terms interchangeably</p>
+</blockquote>
+<p>graph的基本概念：</p>
+<ul>
+<li>无向图</li>
+<li>有向图</li>
+</ul>
+<p>node degree：对于无向图来说就是一个节点连接的边，因此一个无向图的平均度就是<span class="math inline">\(2E/N\)</span>。对于有向图来说度分为入度和出度，一个节点的in-degree就是有多少条箭头指向该节点；out-degree就是多少条边末端链接到该节点上。</p>
+<p>几种特殊的graph：</p>
+<ul>
+<li>complete graph：对于无向图，一个complete graph指所有节点之间都存在边：<span class="math inline">\(E=E_{max}=\frac{N(N-1)}{2}\)</span></li>
+<li>Bipartite graph：a graph whose nodes can be divided into two disjoint sets <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> such that every link connects a node in <span class="math inline">\(U\)</span> to one in <span class="math inline">\(V\)</span>; that is, <span class="math inline">\(U\)</span> and <span class="math inline">\(V\)</span> are independent sets</li>
+<li>Weighted graph：在邻接矩阵中的非0值不再只是1，而是其它衡量重要程度的实值，比如道路图</li>
+<li>Self-edge graph：边的起始点都是同一个节点，比如蛋白质图protein graph</li>
+<li>Multigraph：在节点和节点当中存在多条边，比如Communication graph、Collaboration graph</li>
+</ul>
+<p>在数学上表示一个图可以使用adjacent matrix表示。</p>
+<ul>
+<li>对于无向图，行和列求和相等，并且是对应节点的degree</li>
+<li>对于有向图，行求和是out-degree，列求和是in-degree</li>
+</ul>
+<p>对于这种表示方式，需要在脑海里保持的一种直觉观点是，邻接矩阵是非常稀疏的。矩阵的稠密度计算：<span class="math inline">\(E/N^2\)</span>。</p>
+<p>还可以使用edge list和adjacent list表示：</p>
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203007866.png" class="">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203034763.png" class="">
+<p>graph的连通性connectivity：</p>
 <ol type="1">
-<li>Degree distribution <span class="math inline">\(P(k)\)</span></li>
+<li>对于无向图，如果说一个graph是Connected graph，这意味着任意两个节点都可以通过某个路径连接起来</li>
+<li>对于有向图，分为强连接性图和弱连接性图</li>
 </ol>
-<p>具有不同度的节点数量在所有graph node中的比例</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309220725684.png" class="">
-<ol start="2" type="1">
-<li>Paths in a graph</li>
-</ol>
-<p>在图中的路径path是指节点的序列。在有向图中的path需要遵循edge的direction。</p>
-<p>有了path就可以衡量距离distance，两个节点的distance是最短路径shortest path。</p>
-<p>定义了distance之后，可以定义graph的直径diameter。graph的diameter是所有节点对的distance中最长的值。</p>
-<ol start="3" type="1">
-<li>Clustering coefficient</li>
-</ol>
-<p>聚类系数clustering coefficient衡量了节点的邻居之间的连接性。clustering coefficient针对的是graph中的每一个node。具体算法是计算邻居之间的边/理想中最多的领居间边的数量。 <span class="math display">\[
-C_i= \frac{2e_i}{k_i(k_i-1)}
-\]</span> 其中，<span class="math inline">\(e_i\)</span>是邻居间的边的数量，<span class="math inline">\(k_i\)</span>是节点<span class="math inline">\(i\)</span>的度。<span class="math inline">\(k_i(k_i-1)\)</span>计算了所有邻居节点之间都存在一个边的上限情况。聚类系数在0-1区间。</p>
-<ol start="4" type="1">
-<li>Connectivity</li>
-</ol>
-<p>定义为最大连通单元中节点的数量。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309222007993.png" class="">
-<h2 id="random-graph-model">Random Graph Model</h2>
-<p>我们可以设定一些条件，产生人造的随机graph，来促进我们对于现实graph的理解。</p>
-<p>可以有两种random graph</p>
-<ol type="1">
-<li><span class="math inline">\(G_{np}\)</span>：n个node，node之间产生edge的概率是<span class="math inline">\(p\)</span>。</li>
-<li><span class="math inline">\(G_{nm}\)</span>：n个节点，随机产生<span class="math inline">\(m\)</span>个边。</li>
-</ol>
-<p>研究这两种random graph的properties。</p>
-<p>对于<span class="math inline">\(G_{np}\)</span>：</p>
-<h3 id="degree-distribution">Degree Distribution</h3>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322214919097.png" class="">
-<h3 id="clustering-coefficient">Clustering Coefficient</h3>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322215556478.png" class="">
-<h3 id="path-length">Path Length</h3>
-<p>首先定义Expansion，核心思想是随机选一个node集合，有多少的边会离开这个集合。</p>
-<p>式子定义：</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163010845.png" class="">
-<p>式子下面的分母表示对于一个划分来说，如果划分的S越大，节点越多，如果离开集合S的edge数量不变，那么expansion应该小；如果划分的集合S的node数量不变，那么离开S的edge数量越多，expansion越大。随机的划分S，能得到V-S，对于S和V-S都可以计算出一个expansion，离开这两个集合的edge数量一样，但是如果拿较大的集合来算的话，计算出来的expansion就会偏小。因此，总是以数量较少的集合作为考虑的点。</p>
-<p>随机的划分集合，能得到很多的expansion，为了衡量整个graph的expansion，考虑expansion的下限，即最小的那个expansion。在这种情况下，如果graph的expansion比其它graph的expansion更大，可以理解为这个graph的expansion更大，locality更弱。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163900359.png" class="">
-<p>一个random graph的path length是<span class="math inline">\(O(log\ n)\)</span>。diameter是:</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323170924449.png" class="">
-<p>也就是说对于random graph来说，随着node数量增加，diameter并不会增加很多。</p>
-<h3 id="lagest-connected-components">Lagest Connected Components</h3>
-<p>在random graph中，随着平均degree增加，node链接到giant component的概率增加。</p>
-<h2 id="the-smallest-world-model">The Smallest-World Model</h2>
-<p>仔细观察下network的properties会发现，聚类系数与graph的直径似乎是两个有点冲突的属性。如果聚类系数比较高，说明一个graph的locality强，那么node与较远的node之间就比较难有直接的链接，这会造成graph的路径很大。</p>
-<p>一个graph的diameter衡量了graph的“shortcut”，如果diameter比较小，意味着对于一个node，可以在较小的step内链接到其它node。但是直径变小的话，一个graph的locality似乎会被破坏，一个node的很多邻居之间不相连，而是有更多的edge链接到其它的node上。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105306472.png" class="">
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105329615.png" class="">
-<p>那么，是否有办法让graph同时具有high clustering和small diameter？</p>
-<p>解决方案是the smallest-world model。1998。</p>
-<p>核心是对于一个已经具有high clustering的graph，引入randomness，新增/删减edge来创建更多的“shortcut”。</p>
-<p>示例图：</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323110103346.png" class="">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309204211861.png" class="">
+<p>在研究图的连通性当中，可能存在关键的边或者节点，如果把这些关键点或边删除整个图就不再连通。</p>
+<ul>
+<li>Bridge edge: If we erase the edge, the graph becomes disconnected</li>
+<li>Articulation node: If we erase the node, the graph becomes disconnected</li>
+</ul>
 
     </div>
 
@@ -361,12 +378,12 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2021/04/26/cs224w-2019-01-intro-graph/" rel="prev" title="01-intro-graph">
-      <i class="fa fa-chevron-left"></i> 01-intro-graph
+    <a href="/2021/04/25/MAGNN/" rel="prev" title="MAGNN">
+      <i class="fa fa-chevron-left"></i> MAGNN
     </a></div>
       <div class="post-nav-item">
-    <a href="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/" rel="next" title="1-Interoduction-word-vectors">
-      1-Interoduction-word-vectors <i class="fa fa-chevron-right"></i>
+    <a href="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/" rel="next" title="02-prop-of-graph-and-rand-model">
+      02-prop-of-graph-and-rand-model <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -426,7 +443,7 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#properities-of-networks-random-graph-model"><span class="nav-number">1.</span> <span class="nav-text">Properities of networks, Random Graph Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#network-properties"><span class="nav-number">1.1.</span> <span class="nav-text">Network Properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#random-graph-model"><span class="nav-number">1.2.</span> <span class="nav-text">Random Graph Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#degree-distribution"><span class="nav-number">1.2.1.</span> <span class="nav-text">Degree Distribution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clustering-coefficient"><span class="nav-number">1.2.2.</span> <span class="nav-text">Clustering Coefficient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path-length"><span class="nav-number">1.2.3.</span> <span class="nav-text">Path Length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lagest-connected-components"><span class="nav-number">1.2.4.</span> <span class="nav-text">Lagest Connected Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-smallest-world-model"><span class="nav-number">1.3.</span> <span class="nav-text">The Smallest-World Model</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction-of-graphs"><span class="nav-number">1.</span> <span class="nav-text">Introduction of graphs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#structure-of-graphs"><span class="nav-number">1.2.</span> <span class="nav-text">Structure of Graphs</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -442,7 +459,7 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -504,13 +521,13 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">95k</span>
+    <span title="Symbols count total">98k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:26</span>
+    <span title="Reading time total">1:29</span>
 </div>
 
         

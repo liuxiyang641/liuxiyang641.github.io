@@ -100,7 +100,7 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
   </entry>
   <entry>
     <title>01-intro-graph</title>
-    <url>/2021/04/26/cs224w-2019-01-intro-graph/</url>
+    <url>/2021/04/26/cs224w-01-intro-graph/</url>
     <content><![CDATA[<h1 id="introduction-of-graphs">Introduction of graphs</h1>
 <h2 id="introduction">Introduction</h2>
 <p>为什么network/graph很重要？</p>
@@ -147,7 +147,7 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
 <li>Interactions: links, edges <span class="math inline">\(E\)</span></li>
 <li>System: network, graph <span class="math inline">\(G(N, E)\)</span></li>
 </ul>
-<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309193044665.png" class="" title="image-20210309193044665">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png" class="" title="image-20210309193044665">
 <blockquote>
 <p>We will try to make this distinction whenever it is appropriate, but in</p>
 <p>most cases we will use the two terms interchangeably</p>
@@ -173,14 +173,14 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
 </ul>
 <p>对于这种表示方式，需要在脑海里保持的一种直觉观点是，邻接矩阵是非常稀疏的。矩阵的稠密度计算：<span class="math inline">\(E/N^2\)</span>。</p>
 <p>还可以使用edge list和adjacent list表示：</p>
-<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309203007866.png" class="">
-<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309203034763.png" class="">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203007866.png" class="">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203034763.png" class="">
 <p>graph的连通性connectivity：</p>
 <ol type="1">
 <li>对于无向图，如果说一个graph是Connected graph，这意味着任意两个节点都可以通过某个路径连接起来</li>
 <li>对于有向图，分为强连接性图和弱连接性图</li>
 </ol>
-<img data-src="/2021/04/26/cs224w-2019-01-intro-graph/image-20210309204211861.png" class="">
+<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309204211861.png" class="">
 <p>在研究图的连通性当中，可能存在关键的边或者节点，如果把这些关键点或边删除整个图就不再连通。</p>
 <ul>
 <li>Bridge edge: If we erase the edge, the graph becomes disconnected</li>
@@ -194,7 +194,7 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
   </entry>
   <entry>
     <title>02-prop-of-graph-and-rand-model</title>
-    <url>/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/</url>
+    <url>/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/</url>
     <content><![CDATA[<h1 id="properities-of-networks-random-graph-model">Properities of networks, Random Graph Model</h1>
 <p>在下面所提到的图默认是无向图。介绍了graph的四种属性</p>
 <span id="more"></span>
@@ -204,7 +204,7 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
 <li>Degree distribution <span class="math inline">\(P(k)\)</span></li>
 </ol>
 <p>具有不同度的节点数量在所有graph node中的比例</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309220725684.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309220725684.png" class="">
 <ol start="2" type="1">
 <li>Paths in a graph</li>
 </ol>
@@ -221,7 +221,7 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
 <li>Connectivity</li>
 </ol>
 <p>定义为最大连通单元中节点的数量。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210309222007993.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309222007993.png" class="">
 <h2 id="random-graph-model">Random Graph Model</h2>
 <p>我们可以设定一些条件，产生人造的随机graph，来促进我们对于现实graph的理解。</p>
 <p>可以有两种random graph</p>
@@ -232,31 +232,41 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
 <p>研究这两种random graph的properties。</p>
 <p>对于<span class="math inline">\(G_{np}\)</span>：</p>
 <h3 id="degree-distribution">Degree Distribution</h3>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322214919097.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322214919097.png" class="">
 <h3 id="clustering-coefficient">Clustering Coefficient</h3>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210322215556478.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322215556478.png" class="">
 <h3 id="path-length">Path Length</h3>
 <p>首先定义Expansion，核心思想是随机选一个node集合，有多少的边会离开这个集合。</p>
 <p>式子定义：</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163010845.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163010845.png" class="">
 <p>式子下面的分母表示对于一个划分来说，如果划分的S越大，节点越多，如果离开集合S的edge数量不变，那么expansion应该小；如果划分的集合S的node数量不变，那么离开S的edge数量越多，expansion越大。随机的划分S，能得到V-S，对于S和V-S都可以计算出一个expansion，离开这两个集合的edge数量一样，但是如果拿较大的集合来算的话，计算出来的expansion就会偏小。因此，总是以数量较少的集合作为考虑的点。</p>
 <p>随机的划分集合，能得到很多的expansion，为了衡量整个graph的expansion，考虑expansion的下限，即最小的那个expansion。在这种情况下，如果graph的expansion比其它graph的expansion更大，可以理解为这个graph的expansion更大，locality更弱。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323163900359.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163900359.png" class="">
 <p>一个random graph的path length是<span class="math inline">\(O(log\ n)\)</span>。diameter是:</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323170924449.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323170924449.png" class="">
 <p>也就是说对于random graph来说，随着node数量增加，diameter并不会增加很多。</p>
 <h3 id="lagest-connected-components">Lagest Connected Components</h3>
 <p>在random graph中，随着平均degree增加，node链接到giant component的概率增加。</p>
 <h2 id="the-smallest-world-model">The Smallest-World Model</h2>
 <p>仔细观察下network的properties会发现，聚类系数与graph的直径似乎是两个有点冲突的属性。如果聚类系数比较高，说明一个graph的locality强，那么node与较远的node之间就比较难有直接的链接，这会造成graph的路径很大。</p>
 <p>一个graph的diameter衡量了graph的“shortcut”，如果diameter比较小，意味着对于一个node，可以在较小的step内链接到其它node。但是直径变小的话，一个graph的locality似乎会被破坏，一个node的很多邻居之间不相连，而是有更多的edge链接到其它的node上。</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105306472.png" class="">
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323105329615.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105306472.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105329615.png" class="">
 <p>那么，是否有办法让graph同时具有high clustering和small diameter？</p>
 <p>解决方案是the smallest-world model。1998。</p>
 <p>核心是对于一个已经具有high clustering的graph，引入randomness，新增/删减edge来创建更多的“shortcut”。</p>
 <p>示例图：</p>
-<img data-src="/2021/04/26/cs224w-2019-02-prop-of-graph-and-rand-model/image-20210323110103346.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323110103346.png" class="">
+]]></content>
+      <categories>
+        <category>Class</category>
+        <category>CS224W</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>2021-02-tradition-ml</title>
+    <url>/2021/05/02/cs224w-2021-02-tradition-ml/</url>
+    <content><![CDATA[<h1 id="traditional-mehods-for-machine-learning-in-graphs">Traditional Mehods for Machine Learning in Graphs</h1>
 ]]></content>
       <categories>
         <category>Class</category>
@@ -265,7 +275,7 @@ C_i= \frac{2e_i}{k_i(k_i-1)}
   </entry>
   <entry>
     <title>Basic-Info</title>
-    <url>/2021/04/26/cs224w-2019-resourse/</url>
+    <url>/2021/04/26/cs224w-resourse/</url>
     <content><![CDATA[<h1 id="machine-learning-with-graphs">Machine Learning with Graphs</h1>
 <p><a href="http://snap.stanford.edu/class/cs224w-2019/">offical 2019</a></p>
 <p><a href="http://web.stanford.edu/class/cs224w/">offical 2020</a></p>
@@ -3089,6 +3099,59 @@ MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
       <categories>
         <category>Paper</category>
         <category>Graph Embedding</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Deeper-insights-gcn</title>
+    <url>/2021/05/04/Deeper-insights-gcn/</url>
+    <content><![CDATA[<h1 id="deeper-insights-into-graph-convolutional-networks-for-semi-supervised-learning">Deeper Insights into Graph Convolutional Networks for Semi-Supervised Learning</h1>
+<p>AAAI 2018，引用量578。</p>
+<p>作者对GCN的机制进行了探讨，认为GCN是Laplacian smoothing的一种特殊形式。并且形式化证明了当GCN堆叠到很多层时，所有节点的表示会趋向于同一表示。发现GCN在带有label的data较少的情况下，表现出的性能差，为了解决这一问题，提出了一种联合训练co-traning的方法，主要是使用随机游走和GCN两种方法，寻找不同label下的most confident vertices，然后使用这些most confident vertices继续训练。</p>
+<span id="more"></span>
+<blockquote>
+<p>Many interesting problems in machine learning are being revisited with new deep learning tools. For graph-based semisupervised learning, a recent important development is graph convolutional networks (GCNs), which nicely integrate local vertex features and graph topology in the convolutional layers. Although the GCN model compares favorably with other state-of-the-art methods, its mechanisms are not clear and it still requires considerable amount of labeled data for validation and model selection.</p>
+<p>In this paper, we develop deeper insights into the GCN model and address its fundamental limits. First, we show that the graph convolution of the GCN model is actually a special form of Laplacian smoothing, which is the key reason why GCNs work, but it also brings potential concerns of oversmoothing with many convolutional layers. Second, to overcome the limits of the GCN model with shallow architectures, we propose both co-training and self-training approaches to train GCNs. Our approaches signiﬁcantly improve GCNs in learning with very few labels, and exempt them from requiring additional labels for validation. Extensive experiments on benchmarks have veriﬁed our theory and proposals.</p>
+</blockquote>
+<p>作者认为的GCN的优点：</p>
+<ul>
+<li>图卷积-即拉普拉斯平滑操作，让不同class的特征能够在图上传播</li>
+<li>MLP是一个强大的feature extractor</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>图卷积是一个localized ﬁlter，当labeled data较少的时候，性能较差</li>
+<li>使用neural network要求具备较多的训练数据以及使用额外的验证集进行模型选择</li>
+</ul>
+<p>作者证明graph convolution是laplacian smoothing的过程：</p>
+<p>laplacian smoothing在1995年就被提出来，A signal processing approach to fair surface design.</p>
+<p>定义为：</p>
+<img data-src="/2021/05/04/Deeper-insights-gcn/image-20210504154544997.png" class="">
+<p>其中的<span class="math inline">\(\gamma\)</span>是参数，控制当前vertex和邻居vertex的特征的weight。<span class="math inline">\(\mathbf{x}_j\)</span>是邻居vertex。</p>
+<p>将上面的形式写为矩阵形式： <span class="math display">\[
+\begin{align}
+Y &amp;= (1-\gamma)X + \gamma \tilde{A} \tilde{D}^{-1} X \\
+&amp;= X - \gamma (X - \tilde{A} \tilde{D}^{-1} X ) \\
+&amp;= X - \gamma \tilde{D}^{-1} (\tilde{D} - \tilde{A}) X \\
+&amp;= X - \gamma \tilde{D}^{-1} \tilde{L} X
+\end{align}
+\]</span> 对上面的式子进行简化，令 <span class="math inline">\(\gamma = 1\)</span>，替换<span class="math inline">\(\tilde{D}^{-1} \tilde{L}\)</span>为<span class="math inline">\(\tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2}\)</span></p>
+<p>得到下面的式子： <span class="math display">\[
+\begin{align}
+Y &amp;= X - \tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2} X \\
+&amp;= (I - \tilde{D}^{-1/2} \tilde{L} \tilde{D}^{-1/2} ) X \\
+&amp;= (I - \tilde{D}^{-1/2} (\tilde{D} - \tilde{A}) \tilde{D}^{-1/2} ) X \\
+&amp;= \tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} X
+\end{align}
+\]</span> 最后得到了GCN。</p>
+<p>这一操作背后的原理是属于同一类的vertex倾向于在一个cluster中，smoothing操作让它们具有了相近的表示，这使得之后的classiﬁcation更加容易。</p>
+<blockquote>
+<p>The Laplacian smoothing computes the new features of a vertex as the weighted average of itself and its neighbors’. Since vertices in the same cluster tend to be densely connected, the smoothing makes their features similar, which makes the subsequent classiﬁcation task much easier.</p>
+</blockquote>
+<p>另外，为了让GCN能够在data更受限制的情况下进行学习，作者结合ParWalks这种随机游走的方法，寻找各个class下most confident vertices——the nearest neighbors to the labeled vertices of each class。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
       </categories>
   </entry>
 </search>
