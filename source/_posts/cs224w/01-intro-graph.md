@@ -96,4 +96,3 @@ graph的连通性connectivity：
 
 - Bridge edge: If we erase the edge, the graph becomes disconnected
 - Articulation node: If we erase the node, the graph becomes disconnected
-
