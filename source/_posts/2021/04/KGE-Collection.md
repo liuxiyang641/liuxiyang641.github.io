@@ -15,10 +15,11 @@ Collection of KGE papers, volume 1.
 Now it contains models of:
 
 - HoLE (2016)
+- TACT(2021)
 
 <!--more-->
 
-## 1. HoLE: Holographic Embeddings of Knowledge Graphs
+## HoLE: Holographic Embeddings of Knowledge Graphs
 
 AAAI 2016
 
@@ -30,86 +31,19 @@ AAAI 2016
 
 ![](KGE-Collection/image-20210418184909978.png)
 
-**理解circular correlation**：
-
-它是一种捕获feature interaction的方法，首先我们来看以下几个不同的捕获特征交互的方法。
-
-1. Tensor Product
-
-$$
-[\mathbf{a}\ \otimes\ \mathbf{b}]_{ij} = \mathbf{a}_{i}\mathbf{b}_j \in \mathbb{R}^{d^2}
-$$
-
-形成了一个矩阵。这样捕获的feature的特点是获得了所有的pairwise multiplicative interactions between the features of $\mathbf{a}$ and $\mathbf{b}$。
-
-从直观上来看，如果是来自$\mathbf{a}$ 和$\mathbf{b}$的同时起作用时，这样的方法比较好。它能够用来捕获*通用，共有*的特征，例如a和b是自由人和自由党，*liberal persons are typically members of liberal parties*，这样的事实。
-
-> Intuitively, a feature in the tuple representation a ⊗ b is “on” (has a high absolute magnitude), if and only if the corresponding features of both entities are “on”
-
-这样的方法在RESCAL和NTN，DistMult中都得到了使用。
-
-缺点在于（1）计算量相对较大（2）无法捕获独立的特征
-
-2. Concatenation, Projection, and Non-Linearity
-
-这是最常见的方法，对于向量输入$\mathbf{a}$ 和$\mathbf{b}$，先拼接，然后linear projection，最后经过一层non-linearity function。
-$$
-f(W[\mathbf{a};\mathbf{b}])
-$$
-这种方法捕获的特征是如果有特征至少在$\mathbf{a}$ 和$\mathbf{b}$中起到作用。
-
-> Intuitively, a feature in the tuple representation W(a ⊕ b) is “on” if at least one of the corresponding features is “on”.
-
-缺点是对于$\mathbf{a}$ 和$\mathbf{b}$没有直接的交互。
-
-3. Circular Convolution
-
-$$
-[\mathbf{a}\ *\ \mathbf{b}]_{k} = \sum_{i=0}^{d-1} a_i b_{k-i\ mod\ d}
-$$
-
-将$\mathbf{b}$反转，然后与$\mathbf{a}$进行卷积。
-
-4. Circular Correlation
-
-$$
-[\mathbf{a}\ \star\ \mathbf{b}]_{k} = \sum_{i=0}^{d-1} a_i b_{k+i\ mod\ d}
-$$
-
-$\mathbf{b}$不需要反转，然后与$\mathbf{a}$进行卷积。
-
 一个图示：
 
 ![](KGE-Collection/image-20210418181121701.png)
 
 从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。
 
-它与Circular Convolution的区别：
+## Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs
 
-- Non Commutative：对于Circular Convolution，$\mathbf{a}\ *\ \mathbf{b} = \mathbf{b}\ *\ \mathbf{a}$，但是对于Circular Correlation，$\mathbf{a}\ \star\ \mathbf{b} \not= \mathbf{b}\ \star\ \mathbf{a}$。
-- Similiarity Component：在计算Circular Correlation的0维输出的时候，实际是在计算$\mathbf{a}$ 和$\mathbf{b}$的相似程度。
+AAAI 2021
 
-它与Circular Convolution的联系：
-$$
-\mathbf{a}\ \star\ \mathbf{b} = \tilde{\mathbf{a}}\ *\ \mathbf{b}
-$$
-其中，$\tilde{\mathbf{a}}$是$\mathbf{a}$的involution，$\tilde{\mathbf{a}}_i=\mathbf{a}_{-i\ mod\ d}$
+[TACT](https://github.com/MIRALab-USTC/KG-TACT)，作者主要考虑的是inductive link prediction，使用gnn，捕获relation之间的语义上的关联性，即semantic correlation。作者认为relation之间的关联性通过relation的拓扑结构得到体现，因此，作者将所有的relation之间相连的拓扑结构分为7种，在relation形成的graph中进行学习，提出了RCN。
 
-为什么会想到使用Circular Correlation？
+然后看一下整体结构：
 
-这个问题需要回归到题目 Holographic，作者受到基于Associative Memory的holographic models的启发。
-
-在holographic reduced representations方法中，使用circular convolution来store $\mathbf{a}$ 和$\mathbf{b}$的关联信息：
-$$
-\mathbf{m} = \mathbf{a}\ *\ \mathbf{b}
-$$
-$\mathbf{m}$保存了memory，然后，使用circular correlation来retrieve和 $\mathbf{a}$ 相关的信息：
-$$
-\mathbf{b}^\prime = \mathbf{a}\ \star\ \mathbf{m} = \mathbf{a}\ \star\  (\mathbf{a}\ *\ \mathbf{b} )= \mathbf{b} * (\mathbf{a}\ \star\ \mathbf{a})
-$$
-使用$\mathbf{b}^\prime$可以与所有的候选$\mathbf{b}$求相似度。
-
-因此，这个问题作者类比到了KGE，$\mathbf{m}$类比到$\mathbf{e}_o$，$\mathbf{a}$类比到$\mathbf{e}_s$，$\mathbf{b}$类比到$\mathbf{r}_p$。
-
-对于HoLE，Circular Correlation就是用来retrieve stored in $\mathbf{e}_o$，然后与所有的候选$\mathbf{r}_p$求相似度。
+![](KGE-Collection/image-20210510170730416.png)
 

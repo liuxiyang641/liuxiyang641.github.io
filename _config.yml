@@ -68,4 +68,9 @@ deploy:
   type: git
   repo: https://github.com/liuxiyang641/liuxiyang641.github.io
   branch: main
-
+search:
+  path: search.xml
+  field: post
+  content: false
+  format: html
+  limit: 10000
