@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Knowledge Embedding Based Graph Convolutional Network WWW 2021, KE-GCN，提出了一个泛化的框架，将GCN和KGE的传统方法结合起来，认为在GCN中的信息传播过程是传播计算edge是否存在的得分函数\(f(u,r,v)\)对\(v\)的梯度，并且提出了对于relation的传播过程，在knowledge graph alignmen">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KE-GCN">
+<meta property="og:url" content="http://example.com/2021/05/17/KE-GCN/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Knowledge Embedding Based Graph Convolutional Network WWW 2021, KE-GCN，提出了一个泛化的框架，将GCN和KGE的传统方法结合起来，认为在GCN中的信息传播过程是传播计算edge是否存在的得分函数\(f(u,r,v)\)对\(v\)的梯度，并且提出了对于relation的传播过程，在knowledge graph alignmen">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517190907479.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517191155431.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517192759415.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517192820729.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517195223629.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517190645145.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517195011713.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200018220.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200315774.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200444629.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200123514.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200151721.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200250204.png">
+<meta property="og:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517200606660.png">
+<meta property="article:published_time" content="2021-05-17T10:51:27.000Z">
+<meta property="article:modified_time" content="2021-05-18T03:02:18.945Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="KGE">
+<meta property="article:tag" content="GNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/05/17/KE-GCN/image-20210517190907479.png">
+
+<link rel="canonical" href="http://example.com/2021/05/17/KE-GCN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>KE-GCN | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">4</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">13</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/17/KE-GCN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KE-GCN<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/05/KE-GCN.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-05-17 18:51:27" itemprop="dateCreated datePublished" datetime="2021-05-17T18:51:27+08:00">2021-05-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-05-18 11:02:18" itemprop="dateModified" datetime="2021-05-18T11:02:18+08:00">2021-05-18</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/KGE/" itemprop="url" rel="index"><span itemprop="name">KGE</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>2.7k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="knowledge-embedding-based-graph-convolutional-network">Knowledge Embedding Based Graph Convolutional Network</h1>
+<p>WWW 2021, <a target="_blank" rel="noopener" href="https://github.com/PlusRoss/KE-GCN">KE-GCN</a>，提出了一个泛化的框架，将GCN和KGE的传统方法结合起来，认为在GCN中的信息传播过程是传播计算edge是否存在的得分函数<span class="math inline">\(f(u,r,v)\)</span>对<span class="math inline">\(v\)</span>的梯度，并且提出了对于relation的传播过程，在knowledge graph alignment和entity classification上进行了实验。</p>
+<span id="more"></span>
+<blockquote>
+<p>Recently, a considerable literature has grown up around the theme of Graph Convolutional Network (GCN). How to effectively leverage the rich structural information in complex graphs, such as knowledge graphs with heterogeneous types of entities and relations, is a primary open challenge in the field. Most GCN methods are either restricted to graphs with a homogeneous type of edges (e.g., citation links only), or focusing on representation learning for nodes only instead of jointly propagating and updating the embeddings of both nodes and edges for target-driven objectives. This paper addresses these limitations by proposing a novel framework, namely the Knowledge Embedding based Graph Convolutional Network (KE-GCN), which combines the power of GCNs in graphbased belief propagation and the strengths of advanced knowledge embedding (a.k.a. knowledge graph embedding) methods, and goes beyond. Our theoretical analysis shows that KE-GCN offers an elegant unification of several well-known GCN methods as specific cases, with a new perspective of graph convolution. Experimental results on benchmark datasets show the advantageous performance of KE-GCN over strong baseline methods in the tasks of knowledge graph alignment and entity classification .</p>
+</blockquote>
+<h2 id="introduction">1 Introduction</h2>
+<p><strong>motivation</strong>：</p>
+<ul>
+<li>传统的GCN方法主要假设在同质图上进行学习，忽略了KG中的relation蕴含的丰富的信息。</li>
+<li>传统的KGE方法没有考虑graph的结构信息</li>
+<li>将GCN和KGE结合的方法比如VR-GCN，COMPGCN等，在学习relation embedding的时候没有考虑entity embedding对relation embedding的影响</li>
+</ul>
+<p><strong>method</strong>：</p>
+<p>为了解决上面的问题，提出了KE-GCN（Knowledge Embedding based Graph Convolution Network），能够结合KGE的方法，基于图卷积操作同时学习entity和relation embedding。</p>
+<h2 id="method">2 Method</h2>
+<h3 id="reformulation-of-vanilla-gcn">2.1 Reformulation of Vanilla GCN</h3>
+<p>作者首先从新的角度看原始GCN的公式：</p>
+<p>原来GCN的公式：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517190907479.png" class="">
+<p>通过引入一个得分函数，重新定义GCN，假设引入得分函数<span class="math inline">\(f\)</span>，该得分函数计算edge存在的score，对于已经存在的edge输出较大的值；对于不存在的边输出较小的值。假设<span class="math inline">\(f\)</span>为求内积： <span class="math display">\[
+f(h_u,h_v)=h_u^T h_v
+\]</span> 那么计算的消息<span class="math inline">\(h_u\)</span>能够看做是<span class="math inline">\(f\)</span>对<span class="math inline">\(v\)</span>的梯度，那么所有的<span class="math inline">\(h_u\)</span>加起来就成为下面的形式</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517191155431.png" class="">
+<p>此时对于<span class="math inline">\(h_v+m_v\)</span>看做是learning rate为1，对<span class="math inline">\(h_v\)</span>的梯度提升；目的是使scoring function<span class="math inline">\(f\)</span>的值最大。</p>
+<p>通过修改为上面的形式，能够看到，它从新的角度说明了GCN做了什么，邻居信息是如何提供给中心节点的，是如何帮助中心节点获得更好的表示的。</p>
+<blockquote>
+<p>The above reformulation provides an explicit view about what the vanilla GCN is optimizing, instead of how the updates are executed procedurally.</p>
+</blockquote>
+<h3 id="the-new-framework">2.2 The New Framework</h3>
+<p>新的framework有两个核心部分，更新实体表示以及更新关系表示：</p>
+<p>更新实体表示：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517192759415.png" class="">
+<p>更新关系表示：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517192820729.png" class="">
+<p>更新的关系表示实际提供了一种global的view。</p>
+<p>整体结构：</p>
+<p>消息传递过程：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517195223629.png" class="">
+<p>消息聚合过程：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517190645145.png" class="">
+<p>它能够泛化COMPGCN、R-GCN以及W-GCN。实际上COMPGCN本身就已经泛化了R-GCN和W-GCN，这部分泛化参考论文原文。</p>
+<h2 id="experiments">3 EXPERIMENTS</h2>
+<p>在实验的时候，对于KE-GCN，主要是引入不同的得分函数<span class="math inline">\(f\)</span>，该得分函数使用不同的KGE方法，并且为了简化模型，对于in，out，self-loop都使用了相同的<span class="math inline">\(W\)</span>和相同的得分函数<span class="math inline">\(f\)</span>。</p>
+<p>使用了一系列的KGE方法：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517195011713.png" class="">
+<h3 id="knowledge-graph-alignment">3.1 Knowledge Graph Alignment</h3>
+<p>匹配不同KG中的实体和关系，在实验中直接计算embedding之间的L1-distance，</p>
+<p>在这种情况下的loss function</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200018220.png" class="">
+<p>数据集，</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200315774.png" class="">
+<p>结果，这里只贴了KE-GCN的比较：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200444629.png" class="">
+<h3 id="knowledge-graph-entity-classification">3.2 Knowledge Graph Entity Classification</h3>
+<p>在这种情况下的loss function</p>
+<p>multi-class classification</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200123514.png" class="">
+<p>multi-label classification</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200151721.png" class="">
+<p>数据集，AM和WN是multi-class，FB15K是multi-label</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200250204.png" class="">
+<p>结果：</p>
+<img data-src="/2021/05/17/KE-GCN/image-20210517200606660.png" class="">
+<div class="pdfobject-container" data-target="KE-GCN.pdf" data-height="1000px"></div>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/KGE/" rel="tag"><i class="fa fa-tag"></i> KGE</a>
+              <a href="/tags/GNN/" rel="tag"><i class="fa fa-tag"></i> GNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/05/10/HoLE/" rel="prev" title="HoLE">
+      <i class="fa fa-chevron-left"></i> HoLE
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#knowledge-embedding-based-graph-convolutional-network"><span class="nav-number">1.</span> <span class="nav-text">Knowledge Embedding Based Graph Convolutional Network</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">1.2.</span> <span class="nav-text">2 Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reformulation-of-vanilla-gcn"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Reformulation of Vanilla GCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-new-framework"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 The New Framework</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.3.</span> <span class="nav-text">3 EXPERIMENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-graph-alignment"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Knowledge Graph Alignment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#knowledge-graph-entity-classification"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Knowledge Graph Entity Classification</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">106k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">1:37</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
