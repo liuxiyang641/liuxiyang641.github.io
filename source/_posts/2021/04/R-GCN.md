@@ -36,9 +36,18 @@ $g_m$可以是neural network，也可以是简单的线性转换，$g_m(h_i, h_j
 
 基于以上的原理，设计了如下的传播层：
 $$
-h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{c_{i,r}} W_r^{l}h_j^{l} + W_o^l h_i^l )
+h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{c_{i,r}} W_r^{l}h_j^{l} + W_o^l h_i^l)
 $$
 公式中的$c_{i,r}$可以为$|N_i^r|$，某个关系r的邻居的数量。
+
+*以下公式非论文原本内容*
+$$
+h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{\sqrt{c_{i}} \sqrt{c_{j}}} W_r^{l}h_j^{l})
+$$
+
+$$
+h_i^{l+1}=\sigma(\sum_{r\in R}\sum_{j\in N_i^r} \frac{1}{\sqrt{c_{i}} \sqrt{c_{j}}} W_r^{l} [h_j^{l},e_r^{l}])
+$$
 
 ### 2.2 Regularization
 
