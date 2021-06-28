@@ -54,8 +54,10 @@
 <meta property="og:image" content="http://example.com/2021/04/17/KGE-Collection/image-20210526215137325.png">
 <meta property="og:image" content="http://example.com/2021/04/17/KGE-Collection/image-20210530213931363.png">
 <meta property="og:image" content="http://example.com/2021/04/17/KGE-Collection/image-20210530214019324.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png">
 <meta property="article:published_time" content="2021-04-17T11:32:13.000Z">
-<meta property="article:modified_time" content="2021-05-31T07:52:04.381Z">
+<meta property="article:modified_time" content="2021-06-28T14:28:51.344Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="Collection">
 <meta name="twitter:card" content="summary">
@@ -159,7 +161,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">49</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">51</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -244,7 +246,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-05-31 15:52:04" itemprop="dateModified" datetime="2021-05-31T15:52:04+08:00">2021-05-31</time>
+                <time title="Modified: 2021-06-28 22:28:51" itemprop="dateModified" datetime="2021-06-28T22:28:51+08:00">2021-06-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,14 +275,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>5.8k</span>
+              <span>6.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>5 mins.</span>
+              <span>6 mins.</span>
             </span>
 
         </div>
@@ -310,6 +312,7 @@
 <li>TransG(ACL 2016)</li>
 <li>CP for KGE(ICML 2018)</li>
 <li>SimplE(NIPS 2018)</li>
+<li>Complex(ICML 2016)</li>
 <li>HypER(ICANN 2019)</li>
 </ul>
 <span id="more"></span>
@@ -448,8 +451,16 @@
 <p><strong>SimplE Embedding for Link Prediction in Knowledge Graphs</strong> NIPS 2018</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/Mehran-k/SimplE">SimplE</a> 使用CP分解，改进了一般的CP分解，与一般的CP分解一样，每个entity有两种表示对于head和tail，每个relation有唯一的表示。在预测triple是否成立时，同时用原关系和逆关系是否成立进行平均打分。在论文中，作者证明了SimplE是fully expressivene的。</p>
 <img data-src="/2021/04/17/KGE-Collection/image-20210530213931363.png" class="">
-<p>其中的<span class="math inline">\(&lt;&gt;\)</span>函数定义为：</p>
+<p>其中的<span class="math inline">\(&lt;&gt;\)</span>函数是向量内积，定义为：</p>
 <img data-src="/2021/04/17/KGE-Collection/image-20210530214019324.png" class="">
+<h2 id="complex">Complex</h2>
+<p><strong>Complex Embeddings for Simple Link Prediction</strong> ICML 2016</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ttrouill/complex">Complex</a>应该是首个将KGE中的embedding从实数域扩展到复数域的方法，它的思想还是基于矩阵分解的思路，但是在RESCAL和DistMult这些方法的基础上，通过引入复数域，能够建模关系的对称/不对称关系，同时还能保证参数的有效性。因为在复数域的向量内积就变为了Hermitian (or sesquilinear) dot product，拥有了一个共轭的转置表示conjugate-transpose</p>
+<p>具体公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png" /></p>
+<p>其中的，<span class="math inline">\(Re\)</span>是实数部分，<span class="math inline">\(Im\)</span>是虚数部分。</p>
+<p>之后，预测概率</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png" /></p>
 <h2 id="hyper">HypER</h2>
 <p><strong>Hypernetwork Knowledge Graph Embeddings</strong> ICANN 2019</p>
 
@@ -545,7 +556,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.15.</span> <span class="nav-text">HypER</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.16.</span> <span class="nav-text">HypER</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -561,7 +572,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -623,13 +634,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">111k</span>
+    <span title="Symbols count total">114k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:40</span>
+    <span title="Reading time total">1:44</span>
 </div>
 
         
