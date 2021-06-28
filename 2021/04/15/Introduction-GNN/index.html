@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Introduction to Graph Neural Networks Note of book 《Introduction to Graph Neural Networks》">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Introduction-GNN">
+<meta property="og:url" content="http://example.com/2021/04/15/Introduction-GNN/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Introduction to Graph Neural Networks Note of book 《Introduction to Graph Neural Networks》">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-15T08:20:44.000Z">
+<meta property="article:modified_time" content="2021-04-15T08:21:53.871Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/04/15/Introduction-GNN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Introduction-GNN | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/Introduction-GNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Introduction-GNN<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/04/Introduction-GNN.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-15 16:20:44 / Modified: 16:21:53" itemprop="dateCreated datePublished" datetime="2021-04-15T16:20:44+08:00">2021-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>5.6k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>5 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="introduction-to-graph-neural-networks">Introduction to Graph Neural Networks</h1>
+<p>Note of book 《Introduction to Graph Neural Networks》</p>
+<span id="more"></span>
+<h2 id="introduction">Introduction</h2>
+<p>所谓的图graph就是一种数据结构，由节点集合与边集合组成。具有图结构的数据存在于众多的领域中，包括社交网络、化学分子、知识图谱等。最近图神经网络的出现使得在图上的深度学习成为了可能，图神经网络也受到了大量的研究关注。</p>
+<p>图神经网络起源于两大部分，卷积神经网络（Convolutional Neural Network）与图嵌入（Graph Embedding）。</p>
+<p>CNN在图像（image）上的成功在于它能够导出多尺度（multi-scale）局部化（localized）的空间特征。应用CNN的三个关键点在于局部连接（local connection）、共享参数（shared weight）以及多层结构（multi-layer）。这三个点对于图同样是很重要的，首先图中的绝大多数结构都是局部连接的；其次，共享参数能够帮助减少传统的基于谱图理论的图算法计算复杂度；最后，多层的结构能够用来捕获图中的层级结构信息。但是，由于图像是规则的欧几里得域（Euclidean domian）下的数据结构，而图是非欧几里得数据的（non-Euclidean），因此我们无法直接将传统的CNN应用到图上。我们需要一种新的模型，在保留CNN的三个关键特征的同时，能够处理非欧式空间下的图结构。</p>
+<blockquote>
+<p>简单辨析下欧几里得的数据以及非欧几里得下的数据：</p>
+<p>在机器学习中处理的数据可以分为欧几里得和非欧几里得两类。两者的核心区别在于是否“排列整齐”，前者对于数据，可以使用<span class="math inline">\(\mathbb{R}^n\)</span>的空间进行描述，不丢失任何的原始信息。这一类数据的代表是图像、文字、一般的数值数据等。非欧几里得的数据实际广泛存在，主要有图（graph）和流型（mainfold）两类。对于这一类的数据，比如graph中的每个节点的邻居节点、邻居边都各不相同，数量不一，无法使用一个<span class="math inline">\(n\)</span>维的空间来完全描述此类数据。</p>
+</blockquote>
+<p>图嵌入的发展收到词嵌入（word embedding），Deepwalk被认为是首个学习图嵌入的方法，它将图中的每个节点都表示为了<span class="math inline">\(n\)</span>维的嵌入向量。Deepwalk首先在图上进行随机游走采样，之后应用SkipGram方法学习到合适的嵌入表示。在Deepwalk后，node2Vec，LINE，TADW这些方法逐步发展。但是这些方法存在两方面的缺点，一个是由于需要随机游走，学习到的方法很难直接用到新数据上，泛化性较差；另一方面是没有参数共享，导致随着图节点增多，模型参数也不断增加。</p>
+<p>图神经网络在前两者的基础上，首先尝试将整个图都嵌入到欧式空间中，之后应用CNN的思想增强模型的表达能力，让嵌入能够表示更多的原始信息。</p>
+<p>在这本书中，对于GNN的分类为：</p>
+<ul>
+<li>循环图神经网络（recurrent graph neural networks）</li>
+<li>卷积图神经网络（convolutional graph neural networks）</li>
+<li>图自编码器（graph auto-encoders）</li>
+<li>时空图神经网络（spatial-temporal graph neural networks）</li>
+</ul>
+<h2 id="vanilla-graph-neural-networks">Vanilla Graph Neural Networks</h2>
+<p>关于图神经网络GNN的概念实际上在2005年前后就已经有对应概念的提出[The graph neural network model; Graphical-based learning environments for pattern recognition]。</p>
+<p>接下来介绍一个原始的模型vanilla GNN。它针对的是无向同质的图。</p>
+<p>核心包括两个函数，局部转移函数（local transition function）以及局部输出函数（local output function）。 <span class="math display">\[
+\mathbf{h}_v = f(\mathbf{x}_v,\mathbf{x}_{co[v]}, \mathbf{x}_{ne[v]}, \mathbf{h}_{ne[v]},) \\
+\mathbf{o}_v = g(\mathbf{h}_v, \mathbf{x}_v)
+\]</span> 其中，<span class="math inline">\(\mathbf{x}_{co[v]}\)</span>是邻居边的特征，<span class="math inline">\(\mathbf{x}_{ne[v]}\)</span>是邻居节点的特征，<span class="math inline">\(\mathbf{h}_{ne[v]}\)</span>是邻居节点的隐藏状态。</p>
+<p>vanilla GNN不断迭代更新函数<span class="math inline">\(h\)</span> <span class="math inline">\(T\)</span>步，直到到达固定点，使得<span class="math inline">\(\mathbf{h}_v^T\approx \mathbf{h}_v^{T-1}\)</span>。这一操作的原理是Banach’s ﬁxed point theorem[An Introduction to Metric Spaces and Fixed Point Theory]。到达不动点之后，再进行梯度下降。</p>
+<p>vanilla GNN的几个缺点：</p>
+<ul>
+<li>计算不够有效，每次都需要不断迭代T步之后才能进行梯度下降，实际上一般的神经网络是直接产生一个输出后就可进行梯度更新。</li>
+<li>在T步的迭代中，vanilla GNN一直使用的是一样的参数，这就导致图的层级结构信息没有能够被显式的学习。实际上我们可以让模型的每次迭代都学习不同的参数。</li>
+<li>vanilla GNN没有有效的建模边的信息。</li>
+<li>如果图中的节点数量很多，使用不动点这种原理，可能会导致各个节点过平滑，差异性不够</li>
+</ul>
+<h2 id="graph-convolutional-networks">Graph Convolutional Networks</h2>
+<p>主要有两类在图上进行卷积操作的GNN，一类是谱空间下卷积操作，一类是空间领域下的卷积操作。</p>
+<h3 id="spectral-methods">Spectral Methods</h3>
+<h4 id="spectral-gnn">Spectral GNN</h4>
+<p>2014年。Spectral networks and locally connected networks on graphs</p>
+<p>通过对图拉普拉斯矩阵进行特征分解，定义了在傅里叶域下的卷积操作。 <span class="math display">\[
+\mathbf{g}_\theta \star \mathbf{x} = \mathbf{U} \mathbf{g}_\theta \mathbf{U}^T \mathbf{x}
+\]</span> 详细的可以看之前的GCN笔记。</p>
+<h4 id="chebnet">ChebNet</h4>
+<p>2011年。Convolutional neural networks on graphs with fast localized spectral ﬁltering.</p>
+<p>对上面公式中的<span class="math inline">\(\mathbf{g}_\theta\)</span>使用切比雪夫多项式进行估计，从而无需计算特征向量<span class="math inline">\(\mathbf{U}\)</span>。</p>
+<h4 id="gcn">GCN</h4>
+<p>2017年。Semi-supervised classiﬁcation with graph convolutional networks.</p>
+<p>出现了著名的图卷积算子，它实际是在CheNet进一步的简化，约定了切比雪夫多项式只包括前两步。 <span class="math display">\[
+\mathbf{Z}=\tilde{D}^{-\frac{1}{2}} \tilde{A} \tilde{D}^{-\frac{1}{2}} \mathbf{X} \Theta
+\]</span></p>
+<h4 id="agcn">AGCN</h4>
+<p>2018年，Adaptive graph convolutional neural networks.</p>
+<p>AGCN假设除了图的结构能够表现图中节点的关系外，它们之间应该还存在某种隐式的联系。</p>
+<h3 id="spatial-methods">Spatial Methods</h3>
+<p>基于空间域的方法是直接在graph上进行操作，不需要计算特征向量。</p>
+<p>Spatial methods 和 Spectral methods的对比：</p>
+<p>由于效率、通用性和灵活性问题，空间模型优于光谱模型。首先，光谱模型的效率低于空间模型。谱模型要么需要进行特征向量计算，要么需要同时处理整个图。由于空间模型通过信息传播直接在图域中执行卷积，因此空间模型更适合于大图形。计算可以在一批节点中进行，而不是整个图。其次，依赖于图Fourier基的谱模型很难推广到新的图。它们假设一个固定的图。对图的任何扰动都会导致特征基的变化。另一方面，基于空间的模型在每个节点上执行局部的图形卷积，在这些节点上可以很容易地在不同的位置和结构之间共享权重。第三，基于谱的模型仅适用于无向图。基于空间的模型更灵活地处理多源图形输入</p>
+<h4 id="neural-fps">Neural FPS</h4>
+<p>2015年，Convolutional networks on graphs for learning molecular ﬁngerprints</p>
+<p>核心思想是对于具有不同度数的节点学习不同的权值矩阵。缺点是很难直接应用到大规模的图上。</p>
+<h4 id="patchy-san">PATCHY-SAN</h4>
+<p>2016年，Learning convolutional neural networks for graphs.</p>
+<p>核心思想是对于图中的每个节点，基于广度优先搜索选择固定<span class="math inline">\(k\)</span>个邻居作为接受域，这样就将图处理问题转化为了传统的欧几里得数据问题，最后输入到CNN中进行处理。</p>
+<h4 id="dcnn">DCNN</h4>
+<p>2016年，Diﬀusion-convolutional neural networks.</p>
+<p>扩散卷积神经网络</p>
+<h4 id="dgcn">DGCN</h4>
+<p>2018年，Dual graph convolutional networks for graph-based semisupervised classiﬁcation</p>
+<p>重点读：双向卷积神经网络，既考虑了局部一致性，也考虑了全局一致性</p>
+<h4 id="lgcn">LGCN</h4>
+<p>2018年，Large-scale learnable graph convolutional networks.</p>
+<h4 id="monet">MONET</h4>
+<p>2017年，Geometric deep learning on graphs and manifolds using mixture model CNNs.</p>
+<h4 id="graphsage">GraphSAGE</h4>
+<p>2017年</p>
+<h2 id="graph-attention-network">Graph Attention Network</h2>
+<h3 id="gat">GAT</h3>
+<p>2018年，Graph attention networks</p>
+<p>使用多头注意力机制。</p>
+<h3 id="gaan">GaAN</h3>
+<p>2018年，GaAN: Gated attention networks for learning on large and spatiotemporal graphs.</p>
+<p>同样使用多头注意力机制，但是使用了key-value的机制。</p>
+<h2 id="graph-recurrent-networks">Graph Recurrent Networks</h2>
+<p>融合了gate机制的模型，核心思想是提升图信息long term聚和的效果。</p>
+<h3 id="ggnn">GGNN</h3>
+<p>2016年，Gated graph sequence neural networks.</p>
+<p>利用GRU，每次聚合<span class="math inline">\(T-1\)</span>步下的邻居信息，输入GRU，得到最后的输出</p>
+<h3 id="tree-lstm">Tree-LSTM</h3>
+<p>2015年，Improved semantic representations from treestructured long short-term memory networks.</p>
+<p>利用LSTM</p>
+<h3 id="graph-lstm">Graph LSTM</h3>
+<p>2017年，Cross-sentence N-ary relation extraction with graph LSTMs.</p>
+<h3 id="sentence-lstm">Sentence-LSTM</h3>
+<p>2018年，Sentence-state LSTM for text representation.</p>
+<p>将文本直接转换为graph，然后使用GNN进行学习，在很多NLP任务上表现出了很好的性能。</p>
+<h2 id="graph-redidual-networks">Graph Redidual Networks</h2>
+<p>使用残差链接，为了缓解在GCN中聚合多层信息效果反而下降的情况。</p>
+<h3 id="highway-gcn">Highway GCN</h3>
+<p>2018年，Semi-supervised user geolocation via graph convolutional networks.</p>
+<p>在更新节点状态时，使用了门机制。</p>
+<h3 id="jump-knowledge-network">Jump Knowledge Network</h3>
+<p>2018年，Representation learning on graphs with jumping knowledge networks.</p>
+<p>每一层都会直接连接向最后一层。</p>
+<h3 id="deepgcns">DEEPGCNS</h3>
+<p>2019年，DeepGCNs: Can GCNs go as deep as CNNs?</p>
+<p>使用skip connection和dense connection解决两个问题：GNN中的梯度消失以及过度平滑。</p>
+<h2 id="heterogeneous-graph">Heterogeneous Graph</h2>
+<ul>
+<li>HAN：</li>
+<li>PP-GCN：Fine-grained event categorization with heterogeneous graph convolutional networks.</li>
+<li>ActiveHNE：Activehne: Active heterogeneous network embedding.</li>
+</ul>
+<h2 id="multi-dimensional-graph">Multi-Dimensional Graph</h2>
+<ul>
+<li>Multi-dimensional graph convolutional networks</li>
+</ul>
+<h2 id="sampling">Sampling</h2>
+<ul>
+<li>GraphSAGE（2017）: 邻居节点随机采样</li>
+<li>PinSage（2018）: 基于邻居节点重要性采样，Graph convolutional neural networks for web-scale recommender systems.</li>
+<li>FastGCN：FastGCN: Fast learning with graph convolutional networks via importance sampling</li>
+<li>Adaptive sampling towards fast graph representation learning：参数化，可训练的采样器</li>
+<li>SSE：Learning steady-states of iterative algorithms over graphs.</li>
+</ul>
+<h2 id="graph-auto-encoder">Graph Auto Encoder</h2>
+<ul>
+<li>GAE: Variational graph auto-encoders.</li>
+<li>ARGA: Adversarially regularized graph autoencoder for graph embedding.</li>
+<li>DGI: Deep graph infomax.</li>
+</ul>
+<h2 id="general-framework">General Framework</h2>
+<ul>
+<li>MPNN：</li>
+<li>NLNN：Non-local neural networks.</li>
+<li>GN：Relational inductive biases, deep learning, and graph networks.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/15/GCN/" rel="prev" title="GCN">
+      <i class="fa fa-chevron-left"></i> GCN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/15/Knowledge-Graphs/" rel="next" title="Knowledge-Graphs">
+      Knowledge-Graphs <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#introduction-to-graph-neural-networks"><span class="nav-number">1.</span> <span class="nav-text">Introduction to Graph Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vanilla-graph-neural-networks"><span class="nav-number">1.2.</span> <span class="nav-text">Vanilla Graph Neural Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-convolutional-networks"><span class="nav-number">1.3.</span> <span class="nav-text">Graph Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#spectral-methods"><span class="nav-number">1.3.1.</span> <span class="nav-text">Spectral Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#spectral-gnn"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Spectral GNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#chebnet"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">ChebNet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#gcn"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">GCN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#agcn"><span class="nav-number">1.3.1.4.</span> <span class="nav-text">AGCN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#spatial-methods"><span class="nav-number">1.3.2.</span> <span class="nav-text">Spatial Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#neural-fps"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">Neural FPS</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#patchy-san"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">PATCHY-SAN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dcnn"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">DCNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dgcn"><span class="nav-number">1.3.2.4.</span> <span class="nav-text">DGCN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#lgcn"><span class="nav-number">1.3.2.5.</span> <span class="nav-text">LGCN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#monet"><span class="nav-number">1.3.2.6.</span> <span class="nav-text">MONET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#graphsage"><span class="nav-number">1.3.2.7.</span> <span class="nav-text">GraphSAGE</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-attention-network"><span class="nav-number">1.4.</span> <span class="nav-text">Graph Attention Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gat"><span class="nav-number">1.4.1.</span> <span class="nav-text">GAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gaan"><span class="nav-number">1.4.2.</span> <span class="nav-text">GaAN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-recurrent-networks"><span class="nav-number">1.5.</span> <span class="nav-text">Graph Recurrent Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ggnn"><span class="nav-number">1.5.1.</span> <span class="nav-text">GGNN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tree-lstm"><span class="nav-number">1.5.2.</span> <span class="nav-text">Tree-LSTM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#graph-lstm"><span class="nav-number">1.5.3.</span> <span class="nav-text">Graph LSTM</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sentence-lstm"><span class="nav-number">1.5.4.</span> <span class="nav-text">Sentence-LSTM</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-redidual-networks"><span class="nav-number">1.6.</span> <span class="nav-text">Graph Redidual Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#highway-gcn"><span class="nav-number">1.6.1.</span> <span class="nav-text">Highway GCN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jump-knowledge-network"><span class="nav-number">1.6.2.</span> <span class="nav-text">Jump Knowledge Network</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#deepgcns"><span class="nav-number">1.6.3.</span> <span class="nav-text">DEEPGCNS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#heterogeneous-graph"><span class="nav-number">1.7.</span> <span class="nav-text">Heterogeneous Graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multi-dimensional-graph"><span class="nav-number">1.8.</span> <span class="nav-text">Multi-Dimensional Graph</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sampling"><span class="nav-number">1.9.</span> <span class="nav-text">Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-auto-encoder"><span class="nav-number">1.10.</span> <span class="nav-text">Graph Auto Encoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#general-framework"><span class="nav-number">1.11.</span> <span class="nav-text">General Framework</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">100k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">1:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

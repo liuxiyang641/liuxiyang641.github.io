@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Properities of networks, Random Graph Model 在下面所提到的图默认是无向图。介绍了graph的四种属性">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02-prop-of-graph-and-rand-model">
+<meta property="og:url" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Properities of networks, Random Graph Model 在下面所提到的图默认是无向图。介绍了graph的四种属性">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309220725684.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309222007993.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322214919097.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322215556478.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163010845.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163900359.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323170924449.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105306472.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105329615.png">
+<meta property="og:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323110103346.png">
+<meta property="article:published_time" content="2021-04-26T14:02:00.000Z">
+<meta property="article:modified_time" content="2021-04-26T14:18:11.512Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309220725684.png">
+
+<link rel="canonical" href="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>02-prop-of-graph-and-rand-model | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          02-prop-of-graph-and-rand-model<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/cs224w/02-prop-of-graph-and-rand-model.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-04-26 22:02:00 / Modified: 22:18:11" itemprop="dateCreated datePublished" datetime="2021-04-26T22:02:00+08:00">2021-04-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Class/" itemprop="url" rel="index"><span itemprop="name">Class</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Class/CS224W/" itemprop="url" rel="index"><span itemprop="name">CS224W</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>1.9k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>2 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="properities-of-networks-random-graph-model">Properities of networks, Random Graph Model</h1>
+<p>在下面所提到的图默认是无向图。介绍了graph的四种属性</p>
+<span id="more"></span>
+<h2 id="network-properties">Network Properties</h2>
+<p>4 key network properties</p>
+<ol type="1">
+<li>Degree distribution <span class="math inline">\(P(k)\)</span></li>
+</ol>
+<p>具有不同度的节点数量在所有graph node中的比例</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309220725684.png" class="">
+<ol start="2" type="1">
+<li>Paths in a graph</li>
+</ol>
+<p>在图中的路径path是指节点的序列。在有向图中的path需要遵循edge的direction。</p>
+<p>有了path就可以衡量距离distance，两个节点的distance是最短路径shortest path。</p>
+<p>定义了distance之后，可以定义graph的直径diameter。graph的diameter是所有节点对的distance中最长的值。</p>
+<ol start="3" type="1">
+<li>Clustering coefficient</li>
+</ol>
+<p>聚类系数clustering coefficient衡量了节点的邻居之间的连接性。clustering coefficient针对的是graph中的每一个node。具体算法是计算邻居之间的边/理想中最多的领居间边的数量。 <span class="math display">\[
+C_i= \frac{2e_i}{k_i(k_i-1)}
+\]</span> 其中，<span class="math inline">\(e_i\)</span>是邻居间的边的数量，<span class="math inline">\(k_i\)</span>是节点<span class="math inline">\(i\)</span>的度。<span class="math inline">\(k_i(k_i-1)\)</span>计算了所有邻居节点之间都存在一个边的上限情况。聚类系数在0-1区间。</p>
+<ol start="4" type="1">
+<li>Connectivity</li>
+</ol>
+<p>定义为最大连通单元中节点的数量。</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210309222007993.png" class="">
+<h2 id="random-graph-model">Random Graph Model</h2>
+<p>我们可以设定一些条件，产生人造的随机graph，来促进我们对于现实graph的理解。</p>
+<p>可以有两种random graph</p>
+<ol type="1">
+<li><span class="math inline">\(G_{np}\)</span>：n个node，node之间产生edge的概率是<span class="math inline">\(p\)</span>。</li>
+<li><span class="math inline">\(G_{nm}\)</span>：n个节点，随机产生<span class="math inline">\(m\)</span>个边。</li>
+</ol>
+<p>研究这两种random graph的properties。</p>
+<p>对于<span class="math inline">\(G_{np}\)</span>：</p>
+<h3 id="degree-distribution">Degree Distribution</h3>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322214919097.png" class="">
+<h3 id="clustering-coefficient">Clustering Coefficient</h3>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210322215556478.png" class="">
+<h3 id="path-length">Path Length</h3>
+<p>首先定义Expansion，核心思想是随机选一个node集合，有多少的边会离开这个集合。</p>
+<p>式子定义：</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163010845.png" class="">
+<p>式子下面的分母表示对于一个划分来说，如果划分的S越大，节点越多，如果离开集合S的edge数量不变，那么expansion应该小；如果划分的集合S的node数量不变，那么离开S的edge数量越多，expansion越大。随机的划分S，能得到V-S，对于S和V-S都可以计算出一个expansion，离开这两个集合的edge数量一样，但是如果拿较大的集合来算的话，计算出来的expansion就会偏小。因此，总是以数量较少的集合作为考虑的点。</p>
+<p>随机的划分集合，能得到很多的expansion，为了衡量整个graph的expansion，考虑expansion的下限，即最小的那个expansion。在这种情况下，如果graph的expansion比其它graph的expansion更大，可以理解为这个graph的expansion更大，locality更弱。</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323163900359.png" class="">
+<p>一个random graph的path length是<span class="math inline">\(O(log\ n)\)</span>。diameter是:</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323170924449.png" class="">
+<p>也就是说对于random graph来说，随着node数量增加，diameter并不会增加很多。</p>
+<h3 id="lagest-connected-components">Lagest Connected Components</h3>
+<p>在random graph中，随着平均degree增加，node链接到giant component的概率增加。</p>
+<h2 id="the-smallest-world-model">The Smallest-World Model</h2>
+<p>仔细观察下network的properties会发现，聚类系数与graph的直径似乎是两个有点冲突的属性。如果聚类系数比较高，说明一个graph的locality强，那么node与较远的node之间就比较难有直接的链接，这会造成graph的路径很大。</p>
+<p>一个graph的diameter衡量了graph的“shortcut”，如果diameter比较小，意味着对于一个node，可以在较小的step内链接到其它node。但是直径变小的话，一个graph的locality似乎会被破坏，一个node的很多邻居之间不相连，而是有更多的edge链接到其它的node上。</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105306472.png" class="">
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323105329615.png" class="">
+<p>那么，是否有办法让graph同时具有high clustering和small diameter？</p>
+<p>解决方案是the smallest-world model。1998。</p>
+<p>核心是对于一个已经具有high clustering的graph，引入randomness，新增/删减edge来创建更多的“shortcut”。</p>
+<p>示例图：</p>
+<img data-src="/2021/04/26/cs224w-02-prop-of-graph-and-rand-model/image-20210323110103346.png" class="">
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/26/cs224w-01-intro-graph/" rel="prev" title="01-intro-graph">
+      <i class="fa fa-chevron-left"></i> 01-intro-graph
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/" rel="next" title="1-Interoduction-word-vectors">
+      1-Interoduction-word-vectors <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#properities-of-networks-random-graph-model"><span class="nav-number">1.</span> <span class="nav-text">Properities of networks, Random Graph Model</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#network-properties"><span class="nav-number">1.1.</span> <span class="nav-text">Network Properties</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#random-graph-model"><span class="nav-number">1.2.</span> <span class="nav-text">Random Graph Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#degree-distribution"><span class="nav-number">1.2.1.</span> <span class="nav-text">Degree Distribution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#clustering-coefficient"><span class="nav-number">1.2.2.</span> <span class="nav-text">Clustering Coefficient</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#path-length"><span class="nav-number">1.2.3.</span> <span class="nav-text">Path Length</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lagest-connected-components"><span class="nav-number">1.2.4.</span> <span class="nav-text">Lagest Connected Components</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-smallest-world-model"><span class="nav-number">1.3.</span> <span class="nav-text">The Smallest-World Model</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">100k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">1:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

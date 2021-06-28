@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="SEMI-SUPERVISED CLASSIFICATION WITH G RAPH CONVOLUTIONAL NETWORKS ICLR 2017 贡献：提出了一种模拟卷积神经网络的变种，直接在图结构上进行类似的卷积操作的神经网络。通过对谱卷积神经网络（Spectral GNN）进行一阶估计简化（ﬁrst-order approximation），提出了一阶图卷积神经网络——GCN。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCN">
+<meta property="og:url" content="http://example.com/2021/04/15/GCN/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="SEMI-SUPERVISED CLASSIFICATION WITH G RAPH CONVOLUTIONAL NETWORKS ICLR 2017 贡献：提出了一种模拟卷积神经网络的变种，直接在图结构上进行类似的卷积操作的神经网络。通过对谱卷积神经网络（Spectral GNN）进行一阶估计简化（ﬁrst-order approximation），提出了一阶图卷积神经网络——GCN。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129220200051.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129220829777.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129222635232.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223143658.png">
+<meta property="og:image" content="http://example.com/2021/04/15/GCN/image-20201129223242035.png">
+<meta property="article:published_time" content="2021-04-15T08:11:34.000Z">
+<meta property="article:modified_time" content="2021-04-22T14:46:59.825Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/04/15/GCN/image-20201129220200051.png">
+
+<link rel="canonical" href="http://example.com/2021/04/15/GCN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>GCN | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/GCN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GCN<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/04/GCN.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-15 16:11:34" itemprop="dateCreated datePublished" datetime="2021-04-15T16:11:34+08:00">2021-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-22 22:46:59" itemprop="dateModified" datetime="2021-04-22T22:46:59+08:00">2021-04-22</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.5k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="semi-supervised-classification-with-g-raph-convolutional-networks">SEMI-SUPERVISED CLASSIFICATION WITH G RAPH CONVOLUTIONAL NETWORKS</h1>
+<p>ICLR 2017</p>
+<p>贡献：提出了一种模拟卷积神经网络的变种，直接在图结构上进行类似的卷积操作的神经网络。通过对谱卷积神经网络（Spectral GNN）进行一阶估计简化（ﬁrst-order approximation），提出了一阶图卷积神经网络——GCN。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>为了能够利用图结构进行学习，首先我们需要采取某种方式表示图。一个图的常用表达形式是<span class="math inline">\(G=(V,E)\)</span>，<span class="math inline">\(V\)</span>是节点（vertices）的集合，<span class="math inline">\(E\)</span>是边（edge）的集合。如果存在边<span class="math inline">\(e=u,v\)</span>，那么<span class="math inline">\(u\)</span>可以被称作<span class="math inline">\(v\)</span>的邻居，可以说节点<span class="math inline">\(u\)</span>和<span class="math inline">\(v\)</span>是邻接的（adjacent）。</p>
+<p>图有几种不同的代数表达形式：</p>
+<ul>
+<li>邻接矩阵（Adjacency matrix）：对于一个简单图<span class="math inline">\(G=(V,E)\)</span>，邻接矩阵<span class="math inline">\(A\in \mathcal{R}^{n\times n}\)</span>定义为：</li>
+</ul>
+<p><span class="math display">\[
+A_{ij} =
+\begin{cases}
+1,  &amp; \mbox{if }\{ v_i, v_j \}\in E \mbox{ and } i \not= j \\
+0, &amp; \mbox{if }\mbox{ otherwise}
+\end{cases}
+\]</span></p>
+<ul>
+<li>度矩阵（Degree matrix）：度矩阵<span class="math inline">\(D\in \mathcal{R}^{n\times n}\)</span>是一个对角矩阵s：</li>
+</ul>
+<p><span class="math display">\[
+D_{ii}=d(v_i)
+\]</span></p>
+<ul>
+<li>拉普拉斯矩阵（Laplacian matrix）：拉普拉斯矩阵定义为度矩阵减去邻接矩阵，<span class="math inline">\(L=D-A\)</span>：</li>
+</ul>
+<p><span class="math display">\[
+L_{ij} =
+\begin{cases}
+d(v_i),  &amp; \mbox{if } i = j \\
+-1, &amp; \mbox{if }\{ v_i, v_j \}\in E \mbox{ and } i\not=j \\
+0, &amp; \mbox{otherwise}
+\end{cases}
+\]</span></p>
+<ul>
+<li>对称归一化拉普拉斯矩阵（Symmetric normalized Laplacian）：将上面的拉普拉斯矩阵归一化： <span class="math display">\[
+\begin{align}
+L^{sym}&amp;=D^{-\frac{1}{2}}LD^{-\frac{1}{2}} \\
+&amp;=I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}
+\end{align}
+\]</span> 最终得到了归一化拉普拉斯矩阵，矩阵中的元素定义为： <span class="math display">\[
+L_{ij}^{sym} =
+\begin{cases}
+1,  &amp; \mbox{if } i = j \mbox{ and } d(v_i)\not=0 \\
+-\frac{1}{\sqrt{d(v_i)d(v_j)}}, &amp; \mbox{if }\{ v_i, v_j \}\in E \mbox{ and } i\not=j \\
+0, &amp; \mbox{otherwise}
+\end{cases}
+\]</span></li>
+</ul>
+<p>接下来我们讨论的图是无向图，那么拉普拉斯矩阵是对称矩阵，归一化之后的图拉普拉斯矩阵是半正定对称矩阵。</p>
+<p>基于归一化拉普拉斯矩阵，我们可以将它对角化，<span class="math inline">\(L^{sym}=U\Lambda U^T\)</span>，其中<span class="math inline">\(U=[\mathbf{u}_0,\mathbf{u}_1, \dots,\mathbf{u}_n]\in \mathcal{R}^{n\times n}\)</span>是特征向量矩阵，<span class="math inline">\(\Lambda_{ii}=\lambda_i\)</span>是特征值。这一对角化实对称矩阵的操作在线性代数中叫做谱分解，<span class="math inline">\(\Lambda\)</span>称作谱（spectrum）。实对称矩阵的特征向量一定是正交的（orthogonal），特征值一定是实数。特征向量构成了谱空间的基。在图的信号处理中，一个图信号（graph signal）定义为<span class="math inline">\(x\in \mathcal{R}^n\)</span>，每个节点都有一个对应的数值，这一图信号也叫做节点的特征，可以拥有多个特征，那么把多个图信号按列排序就得到了一个图的特征矩阵： <span class="math display">\[
+X\in \mathcal{R}^{n\times D}
+\]</span> <span class="math inline">\(X_i\)</span>表示第<span class="math inline">\(i\)</span>个节点的特征，<span class="math inline">\(X_{ij}\)</span>表示第<span class="math inline">\(i\)</span>个节点的第<span class="math inline">\(j\)</span>个特征。</p>
+<p>在介绍GCN之前，需要介绍首个定义在图上进行的卷积操作原理。</p>
+<p>在图信号处理中，模仿一般的傅里叶变换定义了图傅里叶变换（graph Fourier transform），就是将处于原来特征空间下的图信号投影转换到谱空间中， <span class="math display">\[
+\mathcal{F}(x)=U^Tx
+\]</span> 傅里叶逆变换定义为： <span class="math display">\[
+\mathcal{F}^{-1}(x)=U\hat{x}
+\]</span> 由于图不满足平移不变性，我们希望直接在特征空间下定义图的卷积算子<span class="math inline">\(f*g\)</span>比较困难，<span class="math inline">\(x\)</span>是输入的图信号（signal），<span class="math inline">\(g\)</span>是过滤器（filter）。但利用卷积定理，信号卷积的傅里叶变换等价于信号傅里叶变换的乘积。 <span class="math display">\[
+\mathcal{F}({x*g})=\mathcal{F}(x)\cdot \mathcal{F}(g)
+\]</span> 那么图卷积算子可以定义为： <span class="math display">\[
+{x*g}=\mathcal{F}^{-1}(\mathcal{F}(x)\cdot \mathcal{F}(g))
+\]</span> 这样我们无需考虑原特征空间中的卷积，只需要先将信号转换为谱空间中的信号，在谱空间中与谱空间中的过滤器做乘法，最后利用傅里叶逆变换转换到原来的空间中，就实现了图卷积。</p>
+<p>更具体的图卷积算子定义为： <span class="math display">\[
+\begin{align}
+{x*g}&amp;=\mathcal{F}^{-1}(\mathcal{F}(x)\cdot \mathcal{F}(g)) \\
+&amp;=U(U^Tx\cdot U^Tg) \\
+\end{align}
+\]</span> 其中，<span class="math inline">\(U^Tg\)</span>是一个向量，可以看做是对角矩阵<span class="math inline">\(g_{\theta}=diag(U^Tg)\)</span>，最后谱卷积算子定义为： <span class="math display">\[
+{x*g}=Ug_{\theta}U^Tx
+\]</span> 所有基于谱空间的图卷积方法都是在尝试寻找更合适的<span class="math inline">\(g_{\theta}\)</span>。</p>
+<h2 id="fast-approximate-convolutions-on-graphs">2 FAST APPROXIMATE CONVOLUTIONS ON GRAPHS</h2>
+<p>Spectral CNN（Spectral Convolutional Neural Network）直接将<span class="math inline">\(g_{\theta}\)</span>作为一系列可以学习的参数，得到了下面的卷积公式： <span class="math display">\[
+H^{(l+1)}_{:,j}=\sigma(\sum_{i=1}^{f_{l}} U\Theta^{l}_{i,j}H^{(l)}_{:,i}) \ (j=1,2,3\dots,f_l)
+\]</span> 这里任然需要计算特征向量，计算代价很大。</p>
+<p>之后切比雪夫网络（Chebyshev Spectral CNN，ChebNet）对Spectral CNN进行简化，使用切比雪夫多项式简化<span class="math inline">\(g_{\theta}\)</span>，令<span class="math inline">\(g_{\theta}=\sum_{i=0}^K\theta_i T_i(\tilde{\Lambda})\)</span>，其中<span class="math inline">\(\tilde{\Lambda}=2\Lambda/\lambda_{max}-I_n\)</span>得到了下面的卷积公式： <span class="math display">\[
+\begin{align}
+{x*g} &amp;\approx U\sum_{i=0}^K \theta_i T_i(\tilde{\Lambda}) U^T x \\
+&amp;= \sum_{i=0}^K \theta_i T_i(\tilde{L}) x
+\end{align}
+\]</span> 其中，<span class="math inline">\(\tilde{L}=2L/\lambda_{max}-I_n\)</span>。这样ChebNet不需要再计算特性向量<span class="math inline">\(U^T\)</span>。</p>
+<p>GCN在ChebNet的基础上，进一步将K阶多项式限制到了1阶，假设<span class="math inline">\(\lambda_{max}=2\)</span>得到了新的卷积算子： <span class="math display">\[
+{x*g} \approx \sum_{i=0}^K \theta_i T_i(\tilde{L}) \approx \theta_0x + \theta_1x(L-I_n)x=\theta_0x + \theta_1 D^{-\frac{1}{2}}AD^{-\frac{1}{2}} x
+\]</span> 由于半监督图节点分类学习的数据量少，令0阶系数和1阶系数相同，减小学习的参数量。 <span class="math display">\[
+\begin{align}
+{x*g} &amp;\approx \theta_0x + \theta_1 D^{-\frac{1}{2}}AD^{-\frac{1}{2}} x \\
+&amp;\approx \theta (I_n + D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x
+\end{align}
+\]</span> 最终提出了具有多层结构的图卷积神经网络（GCN），每一层使用的卷积函数定义如下： <span class="math display">\[
+H^{(l+1)}=\sigma (\tilde{D}^{-\frac{1}{2}}\tilde{A}\tilde{D}^{-\frac{1}{2}}H^{(l)}W^{(l)})
+\]</span> 其中<span class="math inline">\(\tilde{D}\)</span>和<span class="math inline">\(\tilde{A}\)</span>是区别于之前的度矩阵和邻接矩阵， <span class="math display">\[
+\tilde{A}=A+I_N\\
+\tilde{D}_{ii}=\sum_j{\tilde{A}_{ij}}
+\]</span> 原因是在实验中发现，如果使用原来的形式会导致训练的不稳定性以及梯度消失/爆炸的问题，因此重新归一化。</p>
+<p>GCN用来做半监督的节点分类任务，在实现的时候使用了两层GCN，最后经过Softmax输出预测值。损失函数使用交叉熵。</p>
+<img data-src="/2021/04/15/GCN/image-20201129220200051.png" class="">
+<h2 id="experiments">3 EXPERIMENTS</h2>
+<p>使用以下四方面的实验：</p>
+<ul>
+<li>semi-supervised document classiﬁcation in citation networks</li>
+<li>semi-supervised entity classiﬁcation in a bipartite graph extracted from a knowledge graph</li>
+<li>an evaluation of various graph propagation models</li>
+<li>a run-time analysis on random graphs</li>
+</ul>
+<p>使用的数据集：</p>
+<img data-src="/2021/04/15/GCN/image-20201129220829777.png" class="">
+<p>需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。</p>
+<h3 id="semi-supervised-node-classification">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</h3>
+<img data-src="/2021/04/15/GCN/image-20201129222635232.png" class="">
+<h3 id="evaluation-of-propagation-model">3.2 EVALUATION OF PROPAGATION MODEL</h3>
+<p>对于GCN机制的一个探究。</p>
+<img data-src="/2021/04/15/GCN/image-20201129223143658.png" class="">
+<h3 id="training-timeper-epoch">3.3 TRAINING TIMEPER EPOCH</h3>
+<img data-src="/2021/04/15/GCN/image-20201129223242035.png" class="">
+<h2 id="discussion">4 DISCUSSION</h2>
+<p>切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量<span class="math inline">\(U\)</span>；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。</p>
+<p>优点：</p>
+<ul>
+<li>直接将图卷积算子简化到了一步线性计算的程度</li>
+<li>形式上来看已经和一般的神经网络非常相似了，方便与已有的深度学习方法进行结合</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>内存的限制，需要训练全图</li>
+<li>无法学习有向图以及边的特征</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/15/MPNN/" rel="prev" title="MPNN">
+      <i class="fa fa-chevron-left"></i> MPNN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/15/Introduction-GNN/" rel="next" title="Introduction-GNN">
+      Introduction-GNN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#semi-supervised-classification-with-g-raph-convolutional-networks"><span class="nav-number">1.</span> <span class="nav-text">SEMI-SUPERVISED CLASSIFICATION WITH G RAPH CONVOLUTIONAL NETWORKS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fast-approximate-convolutions-on-graphs"><span class="nav-number">1.2.</span> <span class="nav-text">2 FAST APPROXIMATE CONVOLUTIONS ON GRAPHS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.3.</span> <span class="nav-text">3 EXPERIMENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#semi-supervised-node-classification"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 SEMI-SUPERVISED NODE CLASSIFICATION</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#evaluation-of-propagation-model"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 EVALUATION OF PROPAGATION MODEL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training-timeper-epoch"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 TRAINING TIMEPER EPOCH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#discussion"><span class="nav-number">1.4.</span> <span class="nav-text">4 DISCUSSION</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">100k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">1:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

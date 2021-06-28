@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="AM-GCN: Adaptive Multi-channel Graph Convolutional Networks 2020-8 KDD 2020 AM-GCN主要针对的是节点分类任务，主要贡献包括两点：  探究了之前的GCN方法是否能够较好的同时捕获topological structures和node features 设计了 a novel adaptive multi-channel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AM-GCN">
+<meta property="og:url" content="http://example.com/2021/04/15/AM-GCN/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="AM-GCN: Adaptive Multi-channel Graph Convolutional Networks 2020-8 KDD 2020 AM-GCN主要针对的是节点分类任务，主要贡献包括两点：  探究了之前的GCN方法是否能够较好的同时捕获topological structures和node features 设计了 a novel adaptive multi-channel">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110165439556.png">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175132041.png">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175336414.png">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175813097.png">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180203704.png">
+<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180340350.png">
+<meta property="article:published_time" content="2021-04-15T07:55:24.000Z">
+<meta property="article:modified_time" content="2021-04-28T07:36:15.543Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110165439556.png">
+
+<link rel="canonical" href="http://example.com/2021/04/15/AM-GCN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>AM-GCN | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">2</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">11</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">46</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/15/AM-GCN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AM-GCN<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/04/AM-GCN.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-04-15 15:55:24" itemprop="dateCreated datePublished" datetime="2021-04-15T15:55:24+08:00">2021-04-15</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-04-28 15:36:15" itemprop="dateModified" datetime="2021-04-28T15:36:15+08:00">2021-04-28</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="am-gcn-adaptive-multi-channel-graph-convolutional-networks">AM-GCN: Adaptive Multi-channel Graph Convolutional Networks</h1>
+<p>2020-8 KDD 2020</p>
+<p>AM-GCN主要针对的是节点分类任务，主要贡献包括两点：</p>
+<ol type="1">
+<li>探究了之前的GCN方法是否能够较好的同时捕获topological structures和node features</li>
+<li>设计了 a novel adaptive multi-channel GCN framework, 能够适应的同时捕获两种不同的信息</li>
+</ol>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>之前的图卷积神经网络方法使用节点特征（node features）作为初始输入，然后进行图卷积操作。</p>
+<p>作者提出的问题：</p>
+<blockquote>
+<p>What information do GCNs really learn and fuse from topological structures and node features?</p>
+</blockquote>
+<p>一般的GNN中涉及到两种信息：</p>
+<ul>
+<li><p>拓扑结构（主要指一个节点周围有哪些邻居节点）</p></li>
+<li><p>节点信息（主要指节点本身的特征信息，比如论文节点的标题、关键字等文本信息）</p></li>
+</ul>
+<p>这两个信息都可以用来进行图上的预测任务，但是哪个信息或者两个一起作用，对于最终的预测任务影响比较大？</p>
+<p>AM-GCN主要针对的是节点分类任务，主要贡献包括两点：</p>
+<ol type="1">
+<li><p>探究了之前的GCN方法是否能够较好的同时捕获topological structures和node features</p></li>
+<li><p>设计了 a novel adaptive multi-channel GCN framework, 能够适应的同时捕获两种不同的信息</p></li>
+</ol>
+<h2 id="fusion-capability-of-gcns">2 FUSION CAPABILITY OF GCNS</h2>
+<p>探究GCN学习结构信息和节点特征信息的能力，设计了两个实验：</p>
+<h3 id="case-1-random-topology-and-correlated-node-features">Case 1: Random Topology and Correlated Node Features</h3>
+<p>实验设置：</p>
+<ul>
+<li><p>900节点，3 class</p></li>
+<li><p>0.3的概率随机生成边</p></li>
+<li><p>对于3类节点，节点特征使用三个相同协方差，不同均值的高斯分布初始化</p></li>
+<li><p>GCN与基于节点特征的MLP对比</p></li>
+</ul>
+<p>结果：GCN分类准确率75.2%，MLP准确率100%</p>
+<h3 id="case-2-correlated-topology-and-random-node-features">Case 2: Correlated Topology and Random Node Features</h3>
+<p>实验设置：</p>
+<ul>
+<li><p>900节点，3 class</p></li>
+<li><p>设计3 community，community内部建立边的概率是0.03， community内部建立边的概率是0.0015</p></li>
+<li><p>随机生成节点特征</p></li>
+<li><p>GCN与Deepwalk（忽略节点特征）</p></li>
+</ul>
+<p>结果：GCN分类准确率87%，MLP准确率100%</p>
+<h2 id="am-gcn-the-proposed-model">3 AM-GCN: THE PROPOSED MODEL</h2>
+<p>对于一个原始图的输入<span class="math inline">\(G=(\mathbf{A},\mathbf{X})\)</span>，<span class="math inline">\(\mathbf{A}\)</span>是邻接矩阵，<span class="math inline">\(\mathbf{X}\)</span>是节点特征矩阵，构造两个图：</p>
+<ul>
+<li>Topology Graph：<span class="math inline">\(\mathbf{A}_t=\mathbf{A}\)</span>，图原始的结构，与GCN一致</li>
+<li>Feature Graph：<span class="math inline">\(\mathbf{A}_f\)</span>，该图中一个节点的相邻节点是k个特征相似的节点，不是原来的结构上的邻居节点</li>
+</ul>
+<p>构造Feature Graph，首先计算一个节点与其它所有节点的相似度，计算一个余弦相似度矩阵<span class="math inline">\(\mathbf{S}\in \mathbb{R}^{n\times n}\)</span> <span class="math display">\[
+\mathbf{S}_{i,j}=\frac{\mathbf{x}_i\cdot \mathbf{x}_j}{|\mathbf{x}_i| |\mathbf{x}_j|}
+\]</span> 然后对于节点<span class="math inline">\(i\)</span>，在<span class="math inline">\(\mathbf{S}\)</span>中选择前<span class="math inline">\(k\)</span>个相似度最大的节点作为feature node，得到<span class="math inline">\(\mathbf{A}_f\)</span>。</p>
+<p>AM-GCN的整体模型图：</p>
+<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="">
+<p>可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。</p>
+<h3 id="specific-convolution-module">3.1 Specific Convolution Module</h3>
+<p>在Topology Graph上的卷积： <span class="math display">\[
+\mathbf{Z}_t^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}_t \tilde{A}_t \tilde{D}^{-\frac{1}{2}}_t \mathbf{Z}_t^{(l-1)} \mathbf{W}_t^{(l)} )
+\]</span> 其中，<span class="math inline">\(\tilde{A}_t=A_t+I_t\)</span>，该卷积方法与GCN一模一样</p>
+<p>在Feature Graph上的卷积： <span class="math display">\[
+\mathbf{Z}_f^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}_f \tilde{A}_f \tilde{D}^{-\frac{1}{2}}_f \mathbf{Z}_f^{(l-1)} \mathbf{W}_f^{(l)} )
+\]</span> 其中，<span class="math inline">\(\tilde{A}_f=A_f+I_f\)</span></p>
+<h3 id="common-convolution-module">3.2 Common Convolution Module</h3>
+<p>实际上，feature space和topology space不是完全独立的，两者的信息可能互补然后一起可以用于预测任务。因此，AM-GCN设计了一个common module使用parameter sharing strategy捕获两者的通用特征。</p>
+<p>在topology space中导出embedding： <span class="math display">\[
+\mathbf{Z}_{ct}^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}_t \tilde{A}_t \tilde{D}^{-\frac{1}{2}}_t \mathbf{Z}_{ct}^{(l-1)} \mathbf{W}_c^{(l)} )
+\]</span> 在feature space中导出embedding： <span class="math display">\[
+\mathbf{Z}_{cf}^{(l)} = ReLU(\tilde{D}^{-\frac{1}{2}}_f \tilde{A}_f \tilde{D}^{-\frac{1}{2}}_f \mathbf{Z}_{cf}^{(l-1)} \mathbf{W}_c^{(l)} )
+\]</span> 最后，两个结合得到common embedding： <span class="math display">\[
+\mathbf{Z}_{c} = (\mathbf{Z}_{ct} + \mathbf{Z}_{cf})/2
+\]</span></p>
+<h3 id="two-constraints">3.3 Two Constraints</h3>
+<p>Consistency Constraint:</p>
+<p>用来控制两个common embedding的consistency，首先将<span class="math inline">\(\mathbf{Z}_{ct}\)</span>和<span class="math inline">\(\mathbf{Z}_{cf}\)</span>使用<span class="math inline">\(l_2\)</span>正则归一化，然后得到下面节点之间的相似度 <span class="math display">\[
+\mathbf{S}_T=\mathbf{Z}_{CTnor}\cdot \mathbf{Z}_{CTnor}^T \\
+\mathbf{S}_F=\mathbf{Z}_{CFnor}\cdot \mathbf{Z}_{CFnor}^T
+\]</span> 之后约束： <span class="math display">\[
+\mathcal{L}_c=|| \mathbf{S}_T - \mathbf{S}_F ||^2
+\]</span> Disparity Constraint:</p>
+<p>因为<span class="math inline">\(\mathbf{Z}_{ct}^{(l)}\)</span>和<span class="math inline">\(\mathbf{Z}_{t}^{(l)}\)</span>都是从topology space中学习得到的，为了保证它们都是反映了不同的信息，因此使用Hilbert-Schmidt Independence Criterion (HSIC)加强它们的disparity。 <span class="math display">\[
+HSIC(\mathbf{\mathbf{Z}_{T}},\ \mathbf{\mathbf{Z}_{CT}}) = (n-1)^{-2}tr(\mathbf{R} \mathbf{K}_T \mathbf{R} \mathbf{K}_{CT})
+\]</span> 同样的，对于<span class="math inline">\(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}\)</span>： <span class="math display">\[
+HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{R} \mathbf{K}_F \mathbf{R} \mathbf{K}_{CF})
+\]</span> 最终， <span class="math display">\[
+\mathcal{L}_d =HSIC(\mathbf{\mathbf{Z}_{T}},\ \mathbf{\mathbf{Z}_{CT}}) +HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}})
+\]</span></p>
+<h3 id="attention-mechanism">3.4 Attention Mechanism</h3>
+<p><span class="math display">\[
+(\alpha_t, \alpha_c, \alpha_f)=att(\mathbf{Z}_T, \mathbf{Z}_C, \mathbf{Z}_F) 
+\]</span></p>
+<p>以计算<span class="math inline">\(\alpha_t\)</span>为例： <span class="math display">\[
+\omega_T = \mathbf{q}^T \cdot tanh(\mathbf{W} \mathbf{z}_T + \mathbf{b}) \\
+\alpha_T = softmax(\omega_T)
+\]</span> 最终AM-GCN得到的节点embedding为： <span class="math display">\[
+\mathbf{Z} = \mathbf{\alpha}_T \cdot \mathbf{Z}_T + \mathbf{\alpha}_C \cdot \mathbf{Z}_C + \mathbf{\alpha}_F \cdot \mathbf{Z}_F
+\]</span></p>
+<h2 id="experiments">4 EXPERIMENTS</h2>
+<h3 id="node-classification">4.1 Node Classification</h3>
+<p>在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络</p>
+<img data-src="/2021/04/15/AM-GCN/image-20210110175132041.png" class="">
+<p>注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。</p>
+<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="">
+<p>其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。</p>
+<p>对比GCN和kNN-GCN一个比较有意思的结果是不聚合邻居，有时候根据特征聚合相似的节点，也可能取得更好的结果。</p>
+<h3 id="analysis-of-variants">4.2 Analysis of Variants</h3>
+<p>比较设计的约束的作用：</p>
+<ul>
+<li><p>AM-GCN-w/o: AM-GCN without constraints <span class="math inline">\(L_c\)</span> and <span class="math inline">\(L_d\)</span></p></li>
+<li><p>AM-GCN-c: AM-GCN with the consistency constraint <span class="math inline">\(L_c\)</span></p></li>
+<li><p>AM-GCN-d: AM-GCN with the disparity constraint <span class="math inline">\(L_d\)</span></p></li>
+</ul>
+<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="">
+<p>可以看出来，一般情况下，consistency constraint比disparity constraint更加重要</p>
+<h3 id="visualization">4.3 Visualization</h3>
+<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="">
+<h3 id="analysis-of-attention-mechanism">4.4 Analysis of Attention Mechanism</h3>
+<p>分析不同数据集下，三个不同embedding的注意力值的分布</p>
+<img data-src="/2021/04/15/AM-GCN/image-20210110180340350.png" class="">
+<p>可以看到，不同数据集下，三个不同方面的embedding对应的注意力值不同，说明哪个方面包含了更加丰富的信息是依赖于具体数据的。</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/04/14/HGT/" rel="prev" title="HGT">
+      <i class="fa fa-chevron-left"></i> HGT
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/04/15/HAN/" rel="next" title="HAN">
+      HAN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#am-gcn-adaptive-multi-channel-graph-convolutional-networks"><span class="nav-number">1.</span> <span class="nav-text">AM-GCN: Adaptive Multi-channel Graph Convolutional Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fusion-capability-of-gcns"><span class="nav-number">1.2.</span> <span class="nav-text">2 FUSION CAPABILITY OF GCNS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#case-1-random-topology-and-correlated-node-features"><span class="nav-number">1.2.1.</span> <span class="nav-text">Case 1: Random Topology and Correlated Node Features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-2-correlated-topology-and-random-node-features"><span class="nav-number">1.2.2.</span> <span class="nav-text">Case 2: Correlated Topology and Random Node Features</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#am-gcn-the-proposed-model"><span class="nav-number">1.3.</span> <span class="nav-text">3 AM-GCN: THE PROPOSED MODEL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#specific-convolution-module"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Specific Convolution Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#common-convolution-module"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Common Convolution Module</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#two-constraints"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Two Constraints</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attention-mechanism"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Attention Mechanism</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.4.</span> <span class="nav-text">4 EXPERIMENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#node-classification"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Node Classification</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-of-variants"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Analysis of Variants</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#visualization"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 Visualization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-of-attention-mechanism"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 Analysis of Attention Mechanism</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">100k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">1:31</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
