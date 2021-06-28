@@ -28,6 +28,7 @@ Now it contains models of:
 - TransG(ACL 2016)
 - CP for KGE(ICML 2018)
 - SimplE(NIPS 2018)
+- Complex(ICML 2016)
 - HypER(ICANN 2019)
 
 <!--more-->
@@ -262,9 +263,25 @@ CP分解：
 
 ![](KGE-Collection/image-20210530213931363.png)
 
-其中的$<>$函数定义为：
+其中的$<>$函数是向量内积，定义为：
 
 ![](KGE-Collection/image-20210530214019324.png)
+
+## Complex
+
+**Complex Embeddings for Simple Link Prediction**  ICML 2016
+
+[Complex](https://github.com/ttrouill/complex)应该是首个将KGE中的embedding从实数域扩展到复数域的方法，它的思想还是基于矩阵分解的思路，但是在RESCAL和DistMult这些方法的基础上，通过引入复数域，能够建模关系的对称/不对称关系，同时还能保证参数的有效性。因为在复数域的向量内积就变为了Hermitian (or sesquilinear) dot product，拥有了一个共轭的转置表示conjugate-transpose
+
+具体公式：
+
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png)
+
+其中的，$Re$是实数部分，$Im$是虚数部分。
+
+之后，预测概率
+
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png)
 
 ## HypER
 

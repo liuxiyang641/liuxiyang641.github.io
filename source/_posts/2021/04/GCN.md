@@ -17,6 +17,30 @@ ICLR 2017
 
 ## 1 Introduction
 
+**motivation**：一般情景下，对图节点进行半监督的分类任务依赖于假设：
+
+> connected nodes in the graph are likely to share the same label.
+
+相邻节点倾向于拥有相似的信息，传统的做法是设计基于图的正则项（graph-based regularization）加入到损失函数中，例如下面的图拉普拉斯正则项（a graph Laplacian regularization term）
+
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628103015253.png)
+
+$L_0$是有监督的损失，针对graph中有标签的节点；$L_{reg}$是图拉普拉斯正则项，它假设邻居拥有与中心节点相似的信息。通过设计上面的损失函数，实际上标签的信息就实现了平滑的传播（label information is smoothed over the graph）。
+
+但是作者认为这种做法可能会限制模型的性能，因为一个graph的edge不一定总是描述节点之间的相似性，它可能包含其它的信息。比如可能是不相似的节点。
+
+**method**：作者没有继续使用上面的正则化方法，而是直接在graph上建立神经网络，在具体点就是直接基于邻接矩阵或者其它能够描述graph的形式作为输入，输出编码后的信息。
+
+> we encode the graph structure directly using a neural network model $f(X, A)$ and train on a supervised target $L_0$ for all nodes with labels, thereby avoiding explicit graph-based regularization in the loss function.
+
+这样定义的$f(X, A)$ 在根据损失$L_0$进行梯度计算时，就能够依赖邻接矩阵$A$进行梯度的分发(distribute)，即实现了对于图结构的学习，无论是有label还是没有label的节点都能够学习到合适的representations。
+
+> Conditioning $f(\cdot)$ on the adjacency matrix of the graph will allow the model to distribute gradient information from the supervised loss $L_0$ and will enable it to learn representations of nodes both with and without labels.
+
+## 2 Preliminaries
+
+### Graph definition
+
 为了能够利用图结构进行学习，首先我们需要采取某种方式表示图。一个图的常用表达形式是$G=(V,E)$，$V$是节点（vertices）的集合，$E$是边（edge）的集合。如果存在边$e=u,v$，那么$u$可以被称作$v$的邻居，可以说节点$u$和$v$是邻接的（adjacent）。
 
 图有几种不同的代数表达形式：
@@ -106,7 +130,7 @@ $$
 $$
 所有基于谱空间的图卷积方法都是在尝试寻找更合适的$g_{\theta}$。
 
-## 2 FAST APPROXIMATE CONVOLUTIONS ON GRAPHS
+### FAST APPROXIMATE CONVOLUTIONS ON GRAPHS
 
 Spectral CNN（Spectral Convolutional Neural Network）直接将$g_{\theta}$作为一系列可以学习的参数，得到了下面的卷积公式：
 $$
@@ -122,6 +146,8 @@ $$
 \end{align}
 $$
 其中，$\tilde{L}=2L/\lambda_{max}-I_n$。这样ChebNet不需要再计算特性向量$U^T$。
+
+## 3 GCN
 
 GCN在ChebNet的基础上，进一步将K阶多项式限制到了1阶，假设$\lambda_{max}=2$得到了新的卷积算子：
 $$
@@ -149,7 +175,7 @@ GCN用来做半监督的节点分类任务，在实现的时候使用了两层GC
 
 ![](GCN/image-20201129220200051.png)
 
-## 3 EXPERIMENTS
+## 4 EXPERIMENTS
 
 使用以下四方面的实验：
 
@@ -164,21 +190,21 @@ GCN用来做半监督的节点分类任务，在实现的时候使用了两层GC
 
 需要注意的一点是对于知识图谱这种有向图，GCN将关系拆出来作为一个联通两个节点的新节点，这样知识图谱就转换为了无向图。
 
-### 3.1 SEMI-SUPERVISED NODE CLASSIFICATION
+### 4.1 SEMI-SUPERVISED NODE CLASSIFICATION
 
 ![](GCN/image-20201129222635232.png)
 
-### 3.2 EVALUATION OF PROPAGATION MODEL
+### 4.2 EVALUATION OF PROPAGATION MODEL
 
 对于GCN机制的一个探究。
 
 ![](GCN/image-20201129223143658.png)
 
-### 3.3 TRAINING TIMEPER EPOCH
+### 4.3 TRAINING TIMEPER EPOCH
 
 ![](GCN/image-20201129223242035.png)
 
-## 4 DISCUSSION
+## 5 DISCUSSION
 
 切比雪夫网络是利用切比雪夫多项式对Spectra CNN进行的简化估计，无需再计算特征向量$U$；GCN是对切比雪夫网络进一步的简化，将K阶多项式限制到了1阶，同时令0阶系数和1阶系数相同，得到了更简洁的图卷积形式。
 

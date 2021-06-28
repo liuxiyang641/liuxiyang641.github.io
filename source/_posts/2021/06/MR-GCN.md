@@ -15,6 +15,10 @@ IJCAI 2020
 
 2020-7
 
+作者在定义了在multi-relational graph中的卷积操作，命名为MR-GCO（multirelational graph convolution operators），提出了一个可以用来做node classification的网络MR-GCN。
+
+<!--more-->
+
 **motivation**：现在的几个解决multi relation的GCN模型，倾向于在不同relation的graph中执行GCN卷积操作，然后混合（blending）结果。作者认为这种做法忽略了relation之间的correlation。
 
 现有的处理multi-relational graph的方法主要有两种思路：
@@ -55,8 +59,5 @@ MR-GCO的定义，对于图信号 $x\in \mathbb{R}^{N\times R}$和过滤器$g\in
 直接看作者结果
 
 ![](MR-GCN/image-20210626164015015.png)
-
-
-
 
 
