@@ -32,7 +32,6 @@ post_asset_folder: true
 marked:
   prependRoot: true
   postAsset: true
-# hexo-asset-folder: true
 relative_link: false
 future: true
 highlight:

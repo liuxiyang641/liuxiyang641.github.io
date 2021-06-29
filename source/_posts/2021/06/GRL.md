@@ -32,7 +32,7 @@ AAAI 2021
 
 ## Method
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163143120.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163143120-20210629200856777.png)
 
 首先，通过一个base model获取embedding，比如利用ConvE或者DistMult。
 
@@ -56,17 +56,17 @@ GRL详细的说有三个module，
 
 在Fusion module中，为了确定如何自适应的混合$\mathbf{j}$和$\mathbf{rk}$，使用了一个类似GRU的方法，计算一个weight scalar。
 
-![、](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164658959.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164658959.png)
 
 ![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164715132.png)
 
 最后，在classifier module，预测真实的relation：
 
-![](../../../../../../../Library/Application Support/typora-user-images/image-20210629165004731.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165004731.png)
 
 其中，$W_c\in \mathbb{R}^{dim\times K}$，计算loss
 
-![、](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165133409.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165133409.png)
 
 最终，这个loss和base model的loss混合到一起
 
