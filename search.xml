@@ -486,4 +486,57 @@
         <tag>GNN</tag>
       </tags>
   </entry>
+  <entry>
+    <title>GNN-Collection</title>
+    <url>/2021/07/08/GNN-Collection/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Ppaer</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HGSL</title>
+    <url>/2021/07/06/HGSL/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Independence Survey</title>
+    <url>/2021/07/07/Independence-Survey/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Note</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>RelGNN</title>
+    <url>/2021/07/02/RelGNN/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>GNN</tag>
+        <tag>KRL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>batchnorm</title>
+    <url>/2021/07/08/batchnorm/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+  </entry>
 </search>
