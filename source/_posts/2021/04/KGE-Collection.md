@@ -29,6 +29,7 @@ Now it contains models of:
 - CP for KGE(ICML 2018)
 - SimplE(NIPS 2018)
 - Complex(ICML 2016)
+- REInceptionE(AAAI 2020)
 - HypER(ICANN 2019)
 
 <!--more-->
@@ -282,6 +283,22 @@ CP分解：
 之后，预测概率
 
 ![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png)
+
+## REInceptionE
+
+[**ReInceptionE: Relation-Aware Inception Network with Joint Local-Global Structural Information for Knowledge Graph Embedding**](https://github.com/JuneTse/ReInceptionE.) AAAI 2020
+
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png)
+
+使用Inception网络学习对所有的$(h,r,?)$都可以编码为一个embedding。
+
+如果要查询$(h,r,?)$，$h,r$可以通过inception网络变为为一个查询embedding。
+
+对于头实体$h$的邻居，都可以通过inception网络变为邻居embedding，之后使用查询embedding去计算邻居embedding注意力，然后进行聚合。
+
+对于要查询的关系$r$，对于图中所有属于$r$的头尾实体应该可以提供某种特定的特征，因此，利用查询embedding，计算所有属于$r$的头实体的注意力然后聚合；同样，聚合特定的尾实体的信息。
+
+最后，融合三方面的信息，通过一个MLP，进行预测。
 
 ## HypER
 
