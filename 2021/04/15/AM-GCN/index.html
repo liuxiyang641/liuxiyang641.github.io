@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="AM-GCN: Adaptive Multi-channel Graph Convolutional Networks 2020-8 KDD 2020 AM-GCN主要针对的是节点分类任务，主要贡献包括两点：  探究了之前的GCN方法是否能够较好的同时捕获topological structures和node features 设计了 a novel adaptive multi-channel">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110165439556.png">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175132041.png">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175336414.png">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110175813097.png">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180203704.png">
-<meta property="og:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110180340350.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175132041.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175336414.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180203704.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180340350.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175813097.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110165439556.png">
 <meta property="article:published_time" content="2021-04-15T07:55:24.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.205Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.674Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/AM-GCN/image-20210110165439556.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175132041.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/AM-GCN/">
 
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -325,7 +325,7 @@
 \mathbf{S}_{i,j}=\frac{\mathbf{x}_i\cdot \mathbf{x}_j}{|\mathbf{x}_i| |\mathbf{x}_j|}
 \]</span> 然后对于节点<span class="math inline">\(i\)</span>，在<span class="math inline">\(\mathbf{S}\)</span>中选择前<span class="math inline">\(k\)</span>个相似度最大的节点作为feature node，得到<span class="math inline">\(\mathbf{A}_f\)</span>。</p>
 <p>AM-GCN的整体模型图：</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110165439556.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175132041.png" style="zoom:50%;" /></p>
 <p>可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。</p>
 <h3 id="specific-convolution-module">3.1 Specific Convolution Module</h3>
 <p>在Topology Graph上的卷积： <span class="math display">\[
@@ -371,9 +371,9 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <h2 id="experiments">4 EXPERIMENTS</h2>
 <h3 id="node-classification">4.1 Node Classification</h3>
 <p>在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175132041.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175336414.png" style="zoom:50%;" /></p>
 <p>注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175336414.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180203704.png" style="zoom:50%;" /></p>
 <p>其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。</p>
 <p>对比GCN和kNN-GCN一个比较有意思的结果是不聚合邻居，有时候根据特征聚合相似的节点，也可能取得更好的结果。</p>
 <h3 id="analysis-of-variants">4.2 Analysis of Variants</h3>
@@ -383,13 +383,13 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
 <li><p>AM-GCN-c: AM-GCN with the consistency constraint <span class="math inline">\(L_c\)</span></p></li>
 <li><p>AM-GCN-d: AM-GCN with the disparity constraint <span class="math inline">\(L_d\)</span></p></li>
 </ul>
-<img data-src="/2021/04/15/AM-GCN/image-20210110175813097.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180340350.png" style="zoom:50%;" /></p>
 <p>可以看出来，一般情况下，consistency constraint比disparity constraint更加重要</p>
 <h3 id="visualization">4.3 Visualization</h3>
-<img data-src="/2021/04/15/AM-GCN/image-20210110180203704.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175813097.png" style="zoom:50%;" /></p>
 <h3 id="analysis-of-attention-mechanism">4.4 Analysis of Attention Mechanism</h3>
 <p>分析不同数据集下，三个不同embedding的注意力值的分布</p>
-<img data-src="/2021/04/15/AM-GCN/image-20210110180340350.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110165439556.png" style="zoom:50%;" /></p>
 <p>可以看到，不同数据集下，三个不同方面的embedding对应的注意力值不同，说明哪个方面包含了更加丰富的信息是依赖于具体数据的。</p>
 
     </div>
@@ -558,13 +558,13 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

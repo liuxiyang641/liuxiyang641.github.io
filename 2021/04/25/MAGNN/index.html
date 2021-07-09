@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="MAGNN: Metapath Aggregated Graph Neural Network for Heterogeneous Graph Embedding 看一下整体结构：">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425134123312.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425135447705.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425135012239.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425135058447.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425135214910.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425135330772.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425140032603.png">
-<meta property="og:image" content="http://example.com/2021/04/25/MAGNN/image-20210425140219668.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135447705.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135058447.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135012239.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135330772.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135214910.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140032603.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140219668.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425134123312.png">
 <meta property="article:published_time" content="2021-04-25T04:16:09.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.341Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/25/MAGNN/image-20210425134123312.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135447705.png">
 
 <link rel="canonical" href="http://example.com/2021/04/25/MAGNN/">
 
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,7 +274,7 @@
       
         <h1 id="magnn-metapath-aggregated-graph-neural-network-for-heterogeneous-graph-embedding">MAGNN: Metapath Aggregated Graph Neural Network for Heterogeneous Graph Embedding</h1>
 <p>看一下整体结构：</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425134123312.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135447705.png" style="zoom:50%;" /></p>
 <span id="more"></span>
 <p><strong>Motivation</strong>：</p>
 <p>对于GNN，大部分的GNN假设graph是同质图，但是很多实际的graph都是异质图。</p>
@@ -287,31 +287,31 @@
 <p><strong>Method</strong>：</p>
 <p>提出MAGNN。对于不同type的node，先是linear projection到统一feature space中。之后，经过下面几个步骤：</p>
 <p>对于同一metapath下的节点，编码单个邻居信息：</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135447705.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135058447.png" style="zoom:67%;" /></p>
 <p>实验了三个具体的方法</p>
 <ul>
 <li>Mean：</li>
 </ul>
-<img data-src="/2021/04/25/MAGNN/image-20210425135012239.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135012239.png" style="zoom:67%;" /></p>
 <ul>
 <li>Linear Mean：</li>
 </ul>
-<img data-src="/2021/04/25/MAGNN/image-20210425135058447.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135330772.png" style="zoom: 67%;" /></p>
 <ul>
 <li>Relational rotation encoder：</li>
 </ul>
 <p>模仿RotatE，可以建模metapath下的节点的序列信息，这一点区别于上面的方法。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135214910.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135214910.png" style="zoom: 67%;" /></p>
 <h2 id="intra-metapath-aggregation">Intra-metapath Aggregation</h2>
 <p>对于同一metapath下的节点，基于注意力聚合。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425135330772.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140032603.png" style="zoom:50%;" /></p>
 <p>这里需要注意的是就是在计算注意力加入了target node embedding。</p>
 <p>并且使用了多头注意力。</p>
 <h2 id="inter-metapath-aggregation">Inter-metapath Aggregation</h2>
 <p>计算在全局下，所有metapath的weight。首先对于不同type的node，相加相同mepath的embedding。需要注意的是，不是计算单个node的不同metapath。</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425140032603.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140219668.png" style="zoom:50%;" /></p>
 <p>计算注意力：</p>
-<img data-src="/2021/04/25/MAGNN/image-20210425140219668.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425134123312.png" style="zoom:50%;" /></p>
 
     </div>
 
@@ -479,13 +479,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

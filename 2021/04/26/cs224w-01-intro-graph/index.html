@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Introduction of graphs Introduction 为什么network&#x2F;graph很重要？  Networks are a general language for describing complex systems of interacting entities  当我们谈论network的时候，经常讨论两种图：  Natural graph：对于现实事物的直接描述，例如">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309203007866.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309203034763.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309204211861.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309193044665.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203007866.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203034763.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309204211861.png">
 <meta property="article:published_time" content="2021-04-26T14:00:00.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.481Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.766Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309193044665.png">
 
 <link rel="canonical" href="http://example.com/2021/04/26/cs224w-01-intro-graph/">
 
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -249,7 +249,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.8k</span>
+              <span>1.9k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -314,7 +314,9 @@
 <li>Interactions: links, edges <span class="math inline">\(E\)</span></li>
 <li>System: network, graph <span class="math inline">\(G(N, E)\)</span></li>
 </ul>
-<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309193044665.png" class="" title="image-20210309193044665">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309193044665.png" alt="image-20210309193044665" /><figcaption aria-hidden="true">image-20210309193044665</figcaption>
+</figure>
 <blockquote>
 <p>We will try to make this distinction whenever it is appropriate, but in</p>
 <p>most cases we will use the two terms interchangeably</p>
@@ -340,14 +342,14 @@
 </ul>
 <p>对于这种表示方式，需要在脑海里保持的一种直觉观点是，邻接矩阵是非常稀疏的。矩阵的稠密度计算：<span class="math inline">\(E/N^2\)</span>。</p>
 <p>还可以使用edge list和adjacent list表示：</p>
-<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203007866.png" class="">
-<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309203034763.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203007866.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203034763.png" /></p>
 <p>graph的连通性connectivity：</p>
 <ol type="1">
 <li>对于无向图，如果说一个graph是Connected graph，这意味着任意两个节点都可以通过某个路径连接起来</li>
 <li>对于有向图，分为强连接性图和弱连接性图</li>
 </ol>
-<img data-src="/2021/04/26/cs224w-01-intro-graph/image-20210309204211861.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309204211861.png" /></p>
 <p>在研究图的连通性当中，可能存在关键的边或者节点，如果把这些关键点或边删除整个图就不再连通。</p>
 <ul>
 <li>Bridge edge: If we erase the edge, the graph becomes disconnected</li>
@@ -520,13 +522,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

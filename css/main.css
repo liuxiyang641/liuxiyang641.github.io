@@ -17,7 +17,6 @@ article .post-body blockquote p {
 }
 article .post-body img {
   box-shadow: 1px 1px 3px 1px #aaa;
-  max-height: 350px;
   margin-bottom: 10px;
   border: none;
 }
@@ -1221,7 +1220,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ddfff2;
+  background: #786796;
   border-radius: 50%;
   content: ' ';
   display: inline-block;

@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="1 Introduction and Word Vectors video">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/meaning-of-words.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/idea-word2vec.png">
-<meta property="og:image" content="http://example.com/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/word2vec-prob.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/word2vec-prob.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/idea-word2vec.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/meaning-of-words.png">
 <meta property="article:published_time" content="2021-04-26T14:15:00.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.429Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.718Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/meaning-of-words.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/word2vec-prob.png">
 
 <link rel="canonical" href="http://example.com/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/">
 
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,7 @@
 <ul>
 <li>the idea that is represented by a word</li>
 </ul>
-<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/meaning-of-words.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/word2vec-prob.png" /></p>
 <p>在早期的NLP中，人们将不同的词word表示为独立的符号（discrete symbol），这叫做localist representation，例如one-hot编码。</p>
 <p>这样表示的问题：</p>
 <ul>
@@ -307,7 +307,7 @@
 <li>每个word都使用固定长度的vector表示</li>
 <li>选中center word，计算它周围的outside word/context word出现的概率，并且不断更新参数让这个概率最大</li>
 </ul>
-<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/idea-word2vec.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/idea-word2vec.png" /></p>
 <p>核心问题在于如何计算<span class="math inline">\(P(w_{t+j}|w_t)\)</span>？</p>
 <p>在word2vec中，对于每个word建立两个vector：</p>
 <ul>
@@ -317,7 +317,7 @@
 <p>核心公式： <span class="math display">\[
 P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
 \]</span> 解释</p>
-<img data-src="/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/word2vec-prob.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/meaning-of-words.png" /></p>
 <p>使用点积来衡量相似度，当我们得知了context的时候，中心词的meaning应该也能知悉，即context与center word的meaning此时应该接近。对于在语料中经常出现的word，赋予它们比较大的概率。</p>
 <p>上面的公示实际是softmax</p>
 <ul>
@@ -491,13 +491,13 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

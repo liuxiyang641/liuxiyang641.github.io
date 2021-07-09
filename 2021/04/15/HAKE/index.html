@@ -27,17 +27,17 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614173832367.png">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614173938559.png">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614174230314.png">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614175049088.png">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614180811928.png">
-<meta property="og:image" content="http://example.com/2021/04/15/HAKE/image-20200614181125392.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173938559.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614174230314.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614175049088.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614181125392.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614180811928.png">
 <meta property="article:published_time" content="2021-04-15T08:35:28.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.253Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.682Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/HAKE/image-20200614173832367.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/HAKE/">
 
@@ -222,7 +222,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -311,7 +311,9 @@
 </ul>
 <h2 id="the-proposed-hake">2 The Proposed HAKE</h2>
 <p>HAKE的模型图：</p>
-<img data-src="/2021/04/15/HAKE/image-20200614173832367.png" class="" title="image-20200614173832367">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png" alt="image-20200614173832367" /><figcaption aria-hidden="true">image-20200614173832367</figcaption>
+</figure>
 <h3 id="the-modulus-part">2.1 The modulus part</h3>
 <p>极坐标的极径建模实体的语义层级。</p>
 <p>知识图谱中的实体可以组成一棵树，越往上的实体语义层级越高，越往下的语义层级越低。使用模量/极径表示实体在语义树中的深度，具有越高的语义层级的实体有更小的深度，更小的模量。</p>
@@ -344,7 +346,9 @@ p(h^{&#39;}_j, r, t^{&#39;}_j) =\frac{exp\alpha f_r(h^{&#39;}_j, t^{&#39;}_j)}{\
 \]</span></p>
 <h2 id="experiments-and-analysis">3 Experiments and Analysis</h2>
 <h3 id="main-results">3.1 Main Results</h3>
-<img data-src="/2021/04/15/HAKE/image-20200614173938559.png" class="" title="image-20200614173938559">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173938559.png" alt="image-20200614173938559" /><figcaption aria-hidden="true">image-20200614173938559</figcaption>
+</figure>
 <p>三个数据集：WN18RR, FB15k-237, YAGO3-10</p>
 <p>为了说明phase part部分的作用，只保留modulus part，作为模型<strong>ModE</strong>： <span class="math display">\[
 d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
@@ -352,7 +356,7 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 <h3 id="analysis-on-relation-embeddings">3.2 Analysis on Relation Embeddings</h3>
 <p>首先，说明HAKE能否捕获不同语义层级的信息。</p>
 <p>只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度</p>
-<img data-src="/2021/04/15/HAKE/image-20200614174230314.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614174230314.png" /></p>
 <p>其中，</p>
 <ul>
 <li>a和b是尾实体比头实体的关系语义层级高，结果显示关系embedding大部分元素&lt;1</li>
@@ -361,15 +365,17 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
 </ul>
 <p>同样可以看出HAKE比ModE的方差更小，说明HAKE的建模更准确。</p>
 <p>之后，说明phase part的作用，比较c和d的关系embedding的phase part</p>
-<img data-src="/2021/04/15/HAKE/image-20200614175049088.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614175049088.png" /></p>
 <p>上述结果说明有很多关系嵌入的phase part元素分布在<span class="math inline">\(\pi\)</span>，导致<span class="math inline">\(h_p\)</span>和<span class="math inline">\(t_p\)</span>不一样，可以区分同一语义层级的不同实体。</p>
 <h3 id="analysis-on-entity-embeddings">3.3 Analysis on Entity Embeddings</h3>
 <p>因为是使用极坐标来表示语义层级，可以把实体embedding在极坐标中可视化。</p>
 <p>实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。</p>
-<img data-src="/2021/04/15/HAKE/image-20200614180811928.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614181125392.png" /></p>
 <p>图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。</p>
 <h3 id="ablation-studies">3.4 Ablation Studies</h3>
-<img data-src="/2021/04/15/HAKE/image-20200614181125392.png" class="" title="image-20200614181125392">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614180811928.png" alt="image-20200614181125392" /><figcaption aria-hidden="true">image-20200614181125392</figcaption>
+</figure>
 
     </div>
 
@@ -537,13 +543,13 @@ d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

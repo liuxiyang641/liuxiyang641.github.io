@@ -27,13 +27,13 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="MLP-Mixer: An all-MLP Architecture for Vision 2021-5-4 谷歌大脑团队的新作MLP-Mixer，使用纯MLP进行CV任务，没有超越目前业界SOTA，但是效果很不错。最关键的是只使用了MLP，便于部署。同时要注意，该模型训练使用了TPU3.0，外加众多training skills，model size也很大，不是个人可以玩儿转的。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/05/07/MLP-Mixer/image-20210507145147282.png">
-<meta property="og:image" content="http://example.com/2021/05/07/MLP-Mixer/image-20210507150754155.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507145147282.png">
 <meta property="article:published_time" content="2021-05-07T06:43:07.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.421Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.714Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/05/07/MLP-Mixer/image-20210507145147282.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png">
 
 <link rel="canonical" href="http://example.com/2021/05/07/MLP-Mixer/">
 
@@ -218,7 +218,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -277,7 +277,7 @@
 <p>CNN是CV领域目前de-facto标准，近期的transformers-like的模型Vision Transformers (ViT)，也得到了SOTA的结果。</p>
 <h2 id="mixer-architecture">2 Mixer Architecture</h2>
 <p>本文提出了MLP-Mixer，完全使用MLP的架构。看一下整体结构：</p>
-<img data-src="/2021/05/07/MLP-Mixer/image-20210507145147282.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png" style="zoom:50%;" /></p>
 <p>接收的输入固定size的，将输入划分为一系列的patch，然后所有的patch经过一个投影层，进入核心的Mixer层。</p>
 <p>对于Mixer层，由两个不同的MLP组成，加上layer norm和GELU</p>
 <ul>
@@ -291,7 +291,7 @@
 </blockquote></li>
 </ul>
 <p>写成公式：</p>
-<img data-src="/2021/05/07/MLP-Mixer/image-20210507150754155.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507145147282.png" style="zoom:50%;" /></p>
 <p>两个MLP的操作区别就是对于输入简单的转置操作。</p>
 <p>另外，MLP-Mixer保持MLP的输出dim都是固定的。</p>
 <ul>
@@ -474,13 +474,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

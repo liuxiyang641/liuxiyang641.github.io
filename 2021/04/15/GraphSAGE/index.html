@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Inductive Representation Learning on Large Graphs NIPS 2017 GraphSAGE 主要贡献：  提出了一种inductive学习图结构的方法，使用节点的特征（文本、度等）作为输入，进行无监督学习 构造了三个节点分类（node classification）的数据集">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/GraphSAGE/image-20201220104337756.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GraphSAGE/image-20201220093929039.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GraphSAGE/image-20201220103317625.png">
-<meta property="og:image" content="http://example.com/2021/04/15/GraphSAGE/image-20201221090604439.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220093929039.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220104337756.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201221090604439.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220103317625.png">
 <meta property="article:published_time" content="2021-04-15T08:11:13.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.245Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.682Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/GraphSAGE/image-20201220104337756.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220093929039.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/GraphSAGE/">
 
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -280,8 +280,12 @@
 <p>从transductive到inductive 在GCN中训练需要训练整个图，所有节点的embedding，之后基于这些训练过的embedding进行测试，这叫做transductive； GraphSAGE计划设计一个inductive的方法，不训练所有的节点。在测试集中的节点在训练时是不可见的，使用节点的特征作为原始输入，然后使用训练好的网络在测试集中评估。</p>
 <p>提出了GraphSAGE（SAmple and aggreGAte）</p>
 <h2 id="method">2 Method</h2>
-<img data-src="/2021/04/15/GraphSAGE/image-20201220104337756.png" class="" title="image-20201220104337756">
-<img data-src="/2021/04/15/GraphSAGE/image-20201220093929039.png" class="" title="image-20201220093929039">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220093929039.png" alt="image-20201220104337756" /><figcaption aria-hidden="true">image-20201220104337756</figcaption>
+</figure>
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220104337756.png" alt="image-20201220093929039" /><figcaption aria-hidden="true">image-20201220093929039</figcaption>
+</figure>
 <p>核心在于如何聚合邻居节点的信息：</p>
 <ol type="1">
 <li>首先使用节点特征（文本等）作为初始输入</li>
@@ -315,10 +319,14 @@ J(\mathbf{z}_u) = -log(\sigma(\mathbf{z}_u^T \mathbf{z}_v))-Q\mathbb{E}_{v_n\sim
 </ul>
 <p>在验证集上寻找各个模型最好的参数，然后在测试集上评估。</p>
 <p>实验时，还对比了监督学习（直接与标签进行cross-entropy）和无监督学习</p>
-<img data-src="/2021/04/15/GraphSAGE/image-20201220103317625.png" class="" title="image-20201220103317625">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201221090604439.png" alt="image-20201220103317625" /><figcaption aria-hidden="true">image-20201220103317625</figcaption>
+</figure>
 <p>最终，作者发现K=2相对是比较好的选择，同时，采样s邻居数量<span class="math inline">\(S_1\cdot S_2 &lt; 500\)</span>较好，实验时使用的GraphSAGE都是K=2，<span class="math inline">\(S_1=25\)</span>，<span class="math inline">\(S_2=10\)</span>。</p>
 <h2 id="minibatch-pseudocode">4 Minibatch pseudocode</h2>
-<img data-src="/2021/04/15/GraphSAGE/image-20201221090604439.png" class="" title="mage-20201221090604439">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20201220103317625.png" alt="mage-20201221090604439" /><figcaption aria-hidden="true">mage-20201221090604439</figcaption>
+</figure>
 <p>首先采样在对batch <span class="math inline">\(B\)</span>进行K阶训练，需要用到的所有节点。<span class="math inline">\(B^k\)</span>包括了所有在训练<span class="math inline">\(k+1\)</span>时需要用到的节点的<span class="math inline">\(k\)</span>阶表示。</p>
 
     </div>
@@ -487,13 +495,13 @@ J(\mathbf{z}_u) = -log(\sigma(\mathbf{z}_u^T \mathbf{z}_v))-Q\mathbb{E}_{v_n\sim
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

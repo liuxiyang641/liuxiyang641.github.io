@@ -39,7 +39,7 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165133409.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165254620.png">
 <meta property="article:published_time" content="2021-06-29T07:26:35.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.425Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.718Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="KG">
 <meta name="twitter:card" content="summary">
@@ -228,7 +228,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -286,30 +286,30 @@
 <li>忽略了对于few-shot relation的学习，大多数方法假设不同relation有足够的实例进行学习</li>
 <li>无法学习zero-shot relation</li>
 </ol>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629162808164.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629162808164.png" style="zoom:50%;" /></p>
 <p>根据调研的情况来看，大多数的relation是few-shot relation。</p>
 <p><strong>method</strong>：作者利用many-shot relation来为相似的few-shot和zero-shot relation提供信息。主要做法是提出GRL，学习relation之间的相关性correlation。</p>
 <h2 id="method">Method</h2>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163143120-20210629200856777.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163143120-20210629200856777.png" style="zoom:50%;" /></p>
 <p>首先，通过一个base model获取embedding，比如利用ConvE或者DistMult。</p>
 <p>GRL详细的说有三个module，</p>
 <p>在Attention module中，首先捕获头实体与尾实体之间可能存在的潜在relation信息，即学习一个头尾实体的联合表示joint vector <span class="math inline">\(\mathbf{j}\)</span></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163754371.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163754371.png" style="zoom:50%;" /></p>
 <p>然后，作者使用了一个Relation Memory Block保存所有的relation信息，<span class="math inline">\(K\)</span>就是所有relation的数量。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163911233.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629163911233.png" style="zoom:50%;" /></p>
 <p>之后，作者希望从这个Relation Memory Block导出能够丰富<span class="math inline">\(\mathbf{j}\)</span>的信息，</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164240642.png" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164355894.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164240642.png" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164355894.png" style="zoom:50%;" /></p>
 <p>这一步实际就是捕获了不同relation之间的correlation，需要注意的是对于在<span class="math inline">\(\mathbf{M}\)</span>中的预测目标<span class="math inline">\(\mathbf{r}\)</span>，会被mask为0。<span class="math inline">\(\alpha_{sim}\)</span>就是joint vector <span class="math inline">\(\mathbf{j}\)</span>和不同relation之间的相似程度。这样，利用<span class="math inline">\(\alpha_{sim}\)</span>，在遭遇zero-shot relation时，可以选择最相似的relation来替代zero-shot relation。</p>
 <p>在Fusion module中，为了确定如何自适应的混合<span class="math inline">\(\mathbf{j}\)</span>和<span class="math inline">\(\mathbf{rk}\)</span>，使用了一个类似GRU的方法，计算一个weight scalar。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164658959.png" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164715132.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164658959.png" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629164715132.png" style="zoom:50%;" /></p>
 <p>最后，在classifier module，预测真实的relation：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165004731.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165004731.png" style="zoom:50%;" /></p>
 <p>其中，<span class="math inline">\(W_c\in \mathbb{R}^{dim\times K}\)</span>，计算loss</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165133409.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165133409.png" style="zoom:50%;" /></p>
 <p>最终，这个loss和base model的loss混合到一起</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165254620.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210629165254620.png" style="zoom:50%;" /></p>
 
     </div>
 
@@ -481,13 +481,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

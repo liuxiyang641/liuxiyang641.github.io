@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="InteractE: Improving Convolution-based Knowledge Graph Embeddings by Increasing Feature Interactions 2019-11-12 在ConvE的基础上，进行了特征dim随机排列，棋盘状的排列，以及多channel的卷积。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405164138063.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405171149898.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405171009766.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405191734032.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405191900132.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405192616146.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405193118638.png">
-<meta property="og:image" content="http://example.com/2021/04/15/InteractE/image-20200405193453990.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405164138063.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191734032.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191900132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405192616146.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193118638.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171149898.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193453990.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171009766.png">
 <meta property="article:published_time" content="2021-04-15T08:38:45.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.281Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/InteractE/image-20200405164138063.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405164138063.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/InteractE/">
 
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -253,7 +253,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>1.9k</span>
+              <span>2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -304,10 +304,12 @@ e_r=(b_1,\dots,b_d)
 \]</span> Reshaping Function： <span class="math display">\[
 \phi: R^d\times R^d=R^{m\times n}
 \]</span> <span class="math inline">\(\phi\)</span>函数有以下几种类型：<span class="math inline">\(\phi_{stk},\ \phi_{alt},\ \phi_{chk}\)</span></p>
-<img data-src="/2021/04/15/InteractE/image-20200405164138063.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405164138063.png" /></p>
 <h2 id="interacte-details">4 InteractE Details</h2>
 <p>总体结构</p>
-<img data-src="/2021/04/15/InteractE/image-20200405171149898.png" class="" title="image-20200405171149898">
+<figure>
+<img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191734032.png" alt="image-20200405171149898" /><figcaption aria-hidden="true">image-20200405171149898</figcaption>
+</figure>
 <h3 id="feature-permutation">4.1 Feature Permutation</h3>
 <p>拿到向量<span class="math inline">\(e_s,\ e_r\)</span>先进行特征随机排列，也就是对于<span class="math inline">\(e_s=(a_1,\dots,a_d)\  e_r=(b_1,\dots,b_d)\)</span>进行随机排序。一共可以进行<span class="math inline">\(t\)</span>次。得到， <span class="math display">\[
 P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
@@ -317,7 +319,7 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \phi_{chk}(P_t)=[\phi(e_s^1,e_r^1),\cdots,\phi(e_s^t,e_r^t)]
 \]</span></p>
 <h3 id="circular-convolution">4.3 Circular Convolution</h3>
-<img data-src="/2021/04/15/InteractE/image-20200405171009766.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191900132.png" /></p>
 <p>循环卷积， <span class="math display">\[
 [x\star \omega]_{p,q}=\sum_{i=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} \sum_{j=-\lfloor {k/2}\rfloor}^{\lfloor {k/2}\rfloor} x_{[p-i]_m,\ [q-j]_n} \omega_{i,j}
 \]</span></p>
@@ -327,13 +329,13 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 \]</span></p>
 <h2 id="experimental-setup">5 Experimental Setup</h2>
 <p>数据集</p>
-<img data-src="/2021/04/15/InteractE/image-20200405191734032.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405192616146.png" /></p>
 <h3 id="performance-comparison">5.1 Performance Comparison</h3>
-<img data-src="/2021/04/15/InteractE/image-20200405191900132.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193118638.png" /></p>
 <p>在整体性能的比较上来看，对于ConvE是有较明显的提升。同时在WN18RR数据集上的效果不显著。这一点和在ConvE里面发现的现象一致，因为这个数据集可能更适合于浅层的模型因为它的平均关联度就很低。</p>
 <h3 id="effect-of-feature-reshaping-and-circular-convolution">5.2 Effect of Feature Reshaping and Circular Convolution</h3>
 <p>探究重组方法以及循环卷积对于效果的影响。</p>
-<img data-src="/2021/04/15/InteractE/image-20200405192616146.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171149898.png" /></p>
 <p>可以看出来：</p>
 <ul>
 <li>多数情况下，采用同样的reshape方式，循环卷积要优于标准卷积</li>
@@ -341,11 +343,11 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
 </ul>
 <h3 id="effect-of-feature-permutations">5.3 Effect of Feature Permutations</h3>
 <p>探究特征随机排列的次数对于模型结果的影响</p>
-<img data-src="/2021/04/15/InteractE/image-20200405193118638.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193453990.png" /></p>
 <p>可以观察到，实际上较小的组合数量就能够取得较优的结果，1/2次随机的排列组合就能够取得不错的结果。再增加组合次数会造成过度参数化。</p>
 <h3 id="evaluation-on-different-relation-types">5.4 Evaluation on different Relation Types</h3>
 <p>对于不同类型的关系进行预测的结果。</p>
-<img data-src="/2021/04/15/InteractE/image-20200405193453990.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171009766.png" /></p>
 <p>可以看出来首先InteractE是全面优于ConvE的；另外，它更善于建模N-1和N-N的关系，而RotatE更擅长建模1-1的关系。</p>
 
     </div>
@@ -514,13 +516,13 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

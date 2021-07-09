@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="HoLE: Holographic Embeddings of Knowledge Graphs AAAI 2016 这篇文章提出了holographic embeddings (HOLE)，来学习KG的compositional vector space representations。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/05/10/HoLE/image-20210418184909978.png">
-<meta property="og:image" content="http://example.com/2021/05/10/HoLE/image-20210418181121701.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png">
 <meta property="article:published_time" content="2021-05-10T09:20:40.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.405Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.710Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="KGE">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/05/10/HoLE/image-20210418184909978.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png">
 
 <link rel="canonical" href="http://example.com/2021/05/10/HoLE/">
 
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -273,7 +273,7 @@
 <span id="more"></span>
 <p><strong>motivation</strong>：However, existing embedding models that can capture rich interactions in relational data are often limited in their scalability. Vice versa, models that can be computed efﬁciently are often considerably less expressive.</p>
 <p><strong>methods</strong>：直接从subject entity embedding和object entity embedding中，使用circular correlation获得新的embedding，称作holograph embedding，然后使用这个holograph embedding与relation embedding做点积，得到预测概率。</p>
-<img data-src="/2021/05/10/HoLE/image-20210418184909978.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png" style="zoom:50%;" /></p>
 <p><strong>理解circular correlation</strong>：</p>
 <p>它是一种捕获feature interaction的方法，首先我们来看以下几个不同的捕获特征交互的方法。</p>
 <ol type="1">
@@ -314,7 +314,7 @@ f(W[\mathbf{a};\mathbf{b}])
 \]</span></p>
 <p><span class="math inline">\(\mathbf{b}\)</span>不需要反转，然后与<span class="math inline">\(\mathbf{a}\)</span>进行卷积。</p>
 <p>一个图示：</p>
-<img data-src="/2021/05/10/HoLE/image-20210418181121701.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png" style="zoom:50%;" /></p>
 <p>从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。</p>
 <p>它与Circular Convolution的区别：</p>
 <ul>
@@ -504,13 +504,13 @@ f(W[\mathbf{a};\mathbf{b}])
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

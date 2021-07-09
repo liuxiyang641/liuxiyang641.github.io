@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="MR-GCN: Multi-Relational Graph Convolutional Networks based on Generalized Tensor Product IJCAI 2020 2020-7 作者在定义了在multi-relational graph中的卷积操作，命名为MR-GCO（multirelational graph convolution operators），提">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/06/26/MR-GCN/image-20210626164341117.png">
-<meta property="og:image" content="http://example.com/2021/06/26/MR-GCN/image-20210626164638896.png">
-<meta property="og:image" content="http://example.com/2021/06/26/MR-GCN/image-20210626165323451.png">
-<meta property="og:image" content="http://example.com/2021/06/26/MR-GCN/image-20210626164015015.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164638896.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164341117.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626165323451.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164015015.png">
 <meta property="article:published_time" content="2021-06-26T08:07:01.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.425Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.718Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="GNN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/06/26/MR-GCN/image-20210626164341117.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164638896.png">
 
 <link rel="canonical" href="http://example.com/2021/06/26/MR-GCN/">
 
@@ -221,7 +221,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -297,14 +297,14 @@
 <p>MR-GCO是作者论文的核心，主要思想从推导过程来看和一般情况下的图卷积是一致的。</p>
 <p>由于对泛化的张量积的核心思想不了解，因此无法确切的理解作者的操作。</p>
 <p>MR-GCO的定义，对于图信号 <span class="math inline">\(x\in \mathbb{R}^{N\times R}\)</span>和过滤器<span class="math inline">\(g\in \mathbb{R}^{N\times R}\)</span>，作者定义为：</p>
-<img data-src="/2021/06/26/MR-GCN/image-20210626164341117.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164638896.png" style="zoom:50%;" /></p>
 <p>其中<span class="math inline">\(U\)</span>是对于多关系拉普拉斯矩阵进行张量特征分解后的结果：</p>
-<img data-src="/2021/06/26/MR-GCN/image-20210626164638896.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164341117.png" style="zoom:50%;" /></p>
 <p>其中的特殊运算 <span class="math inline">\(\diamondsuit_\Phi\)</span>就是泛化的张量积<span class="math inline">\(\Phi\)</span>-product，<span class="math inline">\(\Phi\)</span>是转化矩阵。</p>
 <p>其中的拉普拉斯矩阵是多关系的三阶张量，每个relation有一个不同的拉普拉斯矩阵</p>
-<img data-src="/2021/06/26/MR-GCN/image-20210626165323451.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626165323451.png" style="zoom:50%;" /></p>
 <p>直接看作者结果</p>
-<img data-src="/2021/06/26/MR-GCN/image-20210626164015015.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164015015.png" style="zoom:50%;" /></p>
 
     </div>
 
@@ -476,13 +476,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

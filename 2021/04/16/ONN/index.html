@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="1 背景 ONN(Operation-aware Neural Networks for user response)是2018年腾讯广告算法比赛最优的推荐算法。主要任务是预测用户点击推荐广告的概率(click-through rate, CTR)或者进行其它期望的行为(conversion rate, CVR)。在基本的通用的Base model上，将PNN与FFM结合起来，实现了在embedd">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/AF76B24C-D512-4773-9889-07101C1075D9.png">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg">
-<meta property="og:image" content="http://example.com/2021/04/16/ONN/75087804-9474-4E93-AA7E-755B4C585275.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/AF76B24C-D512-4773-9889-07101C1075D9.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/75087804-9474-4E93-AA7E-755B4C585275.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png">
 <meta property="article:published_time" content="2021-04-16T07:15:05.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.357Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/16/ONN/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg">
 
 <link rel="canonical" href="http://example.com/2021/04/16/ONN/">
 
@@ -224,7 +224,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -282,7 +282,7 @@
 <p>在基本的通用的Base model上，<strong>将PNN与FFM结合起来</strong>，实现了在embedding层的每一个feature对于不同operation（内积或者外积）有不同的表示，之后进入MLP，得到更好的预测结果</p>
 <h2 id="相关的模型">3. 相关的模型</h2>
 <h3 id="ffm">3.1 FFM</h3>
-<img data-src="/2021/04/16/ONN/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg" style="zoom:50%;" /></p>
 <center>
 The architecture of the FFM model.
 </center>
@@ -300,18 +300,18 @@ The architecture of the FFM model.
 <li>第二步得到的结果输入MLP(multi-layer perceptron)，最终输出<span class="math inline">\(\hat{y} = \sigma(\Phi(f))\)</span>，<span class="math inline">\(\sigma\)</span>是sigmoid函数，<span class="math inline">\(\Phi\)</span>是MLP的非线性转换</li>
 </ol>
 <h3 id="pnn">3.3 PNN</h3>
-<img data-src="/2021/04/16/ONN/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg" style="zoom:50%;" /></p>
 <center>
 The architecture of the PNN model.
 </center>
 <h2 id="onn结构">4 ONN结构</h2>
-<img data-src="/2021/04/16/ONN/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg" style="zoom:50%;" /></p>
 <center>
 The architecture of the ONN model.
 </center>
 <p>可以看到最大的特点在于对于<span class="math inline">\(i\)</span>th feature的one-hot表示转换为embedding后拥有多个表示，在进行不同的operation时，采取了不同的表示形式。</p>
 <h3 id="operation-aware-embedding">4.1 Operation-aware embedding</h3>
-<p>下面说一下对于<span class="math inline">\(i\)</span>th feature的具体转换过程。 <img data-src="/2021/04/16/ONN/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg" class=""></p>
+<p>下面说一下对于<span class="math inline">\(i\)</span>th feature的具体转换过程。 <img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg" style="zoom:50%;" /></p>
 <center>
 The structures of the normal embedding layer and the operation-aware embedding layer.
 </center>
@@ -337,7 +337,7 @@ The structures of the normal embedding layer and the operation-aware embedding l
 <h3 id="对比的方面">6.2 对比的方面</h3>
 <p>分别从AUC，cross entropy，pearson‘s R以及root mean squared error在线下，线上以及采用不同的operation来进行试验</p>
 <h4 id="offline-training-performance-comparison">6.2.1 Offline-training performance comparison</h4>
-<img data-src="/2021/04/16/ONN/AF76B24C-D512-4773-9889-07101C1075D9.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/AF76B24C-D512-4773-9889-07101C1075D9.png" style="zoom:50%;" /></p>
 <p>从上面这两张表格可以看出来的有：</p>
 <ul>
 <li>PNN这些加入了深度网络的模型效果要优于FM, FFM，说明了深层的模型效果是要优于浅层的网络</li>
@@ -345,16 +345,16 @@ The structures of the normal embedding layer and the operation-aware embedding l
 <li>PNN，DeepFM，ONN优于了DNN，说明了进行求积的操作是有效的。</li>
 </ul>
 <h4 id="online-training-performance-comparison">6.2.2 Online-training performance comparison</h4>
-<img data-src="/2021/04/16/ONN/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/75087804-9474-4E93-AA7E-755B4C585275.png" style="zoom:50%;" /></p>
 <p>在线上的测试中，每一个测试样例只能够被训练一次，对于FM, PNN这些只有一种表示形式的模型来说，一次epoch就学到比较好的表示是比较难的。ONN依旧取得了最好的效果。</p>
-<img data-src="/2021/04/16/ONN/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg" style="zoom:50%;" /></p>
 <center>
 Model convergence curves on the Criteo dataset.
 </center>
 <p>从上面的收敛趋势可以看到FFM，ONN这样使用了aware的模型，logloss收敛速度是由于其它模型的。</p>
 <h4 id="analysis-of-different-operations">6.2.3 Analysis of different operations</h4>
 <p>默认情况下ONN是使用内积作为operation，论文中就inner-product, outer-product, sub-network, inner+outer-product四种operation进行了比较。</p>
-<img data-src="/2021/04/16/ONN/75087804-9474-4E93-AA7E-755B4C585275.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png" style="zoom:50%;" /></p>
 <p>可以看到inner+outer-product获得了最好的结果，但是优势并不明显，考虑到时间和空间复杂性，它并不是一个很好的选择。所以依旧是使用了inner product。 但需要注意的是，sub-network取得的效果也是非常有竞争性的。而且它在Criteo数据集上的AUC指标上取得了很好的效果，这个可以考虑为下一步的研究方向。</p>
 <h2 id="总结">7 总结</h2>
 <ul>
@@ -528,13 +528,13 @@ Model convergence curves on the Criteo dataset.
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

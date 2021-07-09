@@ -22,7 +22,7 @@
 
   <meta name="description" content="Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift ICML 2015 谷歌团队的经典论文，batchnorm操作。题目中的Internal Covariate Shift是论文中提出的一个名词，主要是指在网络结构中，由于各层模型参数不同，每一层接受的输入的分布都会">
 <meta property="og:type" content="article">
-<meta property="og:title" content="batchnorm">
+<meta property="og:title" content="BatchNorm">
 <meta property="og:url" content="http://example.com/2021/07/08/batchnorm/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift ICML 2015 谷歌团队的经典论文，batchnorm操作。题目中的Internal Covariate Shift是论文中提出的一个名词，主要是指在网络结构中，由于各层模型参数不同，每一层接受的输入的分布都会">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161902153.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161527909.png">
 <meta property="article:published_time" content="2021-07-08T08:07:06.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.429Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.718Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161603064.png">
@@ -50,7 +50,7 @@
   };
 </script>
 
-  <title>batchnorm | Liu Xiyang</title>
+  <title>BatchNorm | Liu Xiyang</title>
   
 
 
@@ -203,7 +203,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          batchnorm<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/07/batchnorm.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          BatchNorm<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/07/batchnorm.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -212,10 +212,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2021-07-08 16:07:06 / Modified: 21:40:53" itemprop="dateCreated datePublished" datetime="2021-07-08T16:07:06+08:00">2021-07-08</time>
+              <time title="Created: 2021-07-08 16:07:06" itemprop="dateCreated datePublished" datetime="2021-07-08T16:07:06+08:00">2021-07-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -264,12 +270,12 @@
 <p>归一化处理会增大feature之间的相对差异，排除绝对差异，因此可能更好训练。另外，归一化操作能够让激活值处于激活函数类似sigmoid的梯度较大的区域，能够缓解梯度消失问题。</p>
 <span id="more"></span>
 <p>pytorch中的核心公式：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161603064.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161603064.png" style="zoom:50%;" /></p>
 <p><span class="math inline">\(\gamma\)</span>和<span class="math inline">\(\beta\)</span>是两个很重要的可学习的参数，它从理论上保证归一化后的值<span class="math inline">\(y\)</span>通过学习合适的<span class="math inline">\(\gamma\)</span>和<span class="math inline">\(\beta\)</span>可以还原原来的<span class="math inline">\(x\)</span>。比如：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161844290.png" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161902153.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161844290.png" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161902153.png" style="zoom:50%;" /></p>
 <p>在mini-batch训练策略下的核心算法，对第<span class="math inline">\(i\)</span>维的激活值<span class="math inline">\(x\)</span>。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161527909.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161527909.png" style="zoom:50%;" /></p>
 <p>从<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_25737169/article/details/79048516">博客</a>上找的python代码实现方便理解。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Batchnorm_simple_for_train</span>(<span class="params">x, gamma, beta, bn_param</span>):</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">param:x    : 输入数据，设shape(B,L)</span></span><br><span class="line"><span class="string">param:gama : 缩放因子  γ</span></span><br><span class="line"><span class="string">param:beta : 平移因子  β</span></span><br><span class="line"><span class="string">param:bn_param   : batchnorm所需要的一些参数</span></span><br><span class="line"><span class="string">	eps      : 接近0的数，防止分母出现0</span></span><br><span class="line"><span class="string">	momentum : 动量参数，一般为0.9， 0.99， 0.999</span></span><br><span class="line"><span class="string">	running_mean ：滑动平均的方式计算新的均值，训练时计算，为测试数据做准备</span></span><br><span class="line"><span class="string">	running_var  : 滑动平均的方式计算新的方差，训练时计算，为测试数据做准备</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line">	running_mean = bn_param[<span class="string">&#x27;running_mean&#x27;</span>]  <span class="comment">#shape = [B]</span></span><br><span class="line">  running_var = bn_param[<span class="string">&#x27;running_var&#x27;</span>]    <span class="comment">#shape = [B]</span></span><br><span class="line">	results = <span class="number">0.</span> <span class="comment"># 建立一个新的变量</span></span><br><span class="line">    </span><br><span class="line">	x_mean=x.mean(axis=<span class="number">0</span>)  <span class="comment"># 计算x的均值</span></span><br><span class="line">  x_var=x.var(axis=<span class="number">0</span>)    <span class="comment"># 计算方差</span></span><br><span class="line">  x_normalized=(x-x_mean)/np.sqrt(x_var+eps)       <span class="comment"># 归一化</span></span><br><span class="line">  results = gamma * x_normalized + beta            <span class="comment"># 缩放平移</span></span><br><span class="line"></span><br><span class="line">  running_mean = momentum * running_mean + (<span class="number">1</span> - momentum) * x_mean</span><br><span class="line">  running_var = momentum * running_var + (<span class="number">1</span> - momentum) * x_var</span><br><span class="line"></span><br><span class="line">  <span class="comment">#记录新的值</span></span><br><span class="line">  bn_param[<span class="string">&#x27;running_mean&#x27;</span>] = running_mean</span><br><span class="line">  bn_param[<span class="string">&#x27;running_var&#x27;</span>] = running_var </span><br><span class="line">    </span><br><span class="line">	<span class="keyword">return</span> results , bn_param</span><br></pre></td></tr></table></figure>
 <p>论文实际没有完整读一遍，只看了核心算法方便实验，以后找时间从头看一遍。</p>
@@ -440,13 +446,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

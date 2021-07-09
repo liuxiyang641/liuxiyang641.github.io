@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Multi-Task Feature Learning for Knowledge Graph Enhanced Recommendation WWW 2019 MKR将KG和RS看做两个不同的学习任务，提出了cross&amp;compress unit。能够显式的捕获item和entities之间的高阶交互，并且自动在两个学习任务中控制cross knowledge。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/28/MKR/image-20210502182518838.png">
-<meta property="og:image" content="http://example.com/2021/04/28/MKR/image-20210502182833566.png">
-<meta property="og:image" content="http://example.com/2021/04/28/MKR/image-20210502183100668.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182518838.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182833566.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502183100668.png">
 <meta property="article:published_time" content="2021-04-28T14:01:49.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.345Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/28/MKR/image-20210502182518838.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182518838.png">
 
 <link rel="canonical" href="http://example.com/2021/04/28/MKR/">
 
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,16 +281,16 @@
 </blockquote>
 <p>MKR提出了<em>cross&amp;compress</em> unit。能够显式的捕获item和entities之间的高阶交互，并且自动在两个学习任务中控制cross knowledge。</p>
 <p>来看一下模型结构。</p>
-<img data-src="/2021/04/28/MKR/image-20210502182518838.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182518838.png" style="zoom:50%;" /></p>
 <p>总体而言，两个学习任务，两个学习任务之间的item和entities经过<em>cross&amp;compress</em> unit进行学习，用户user和KG中的relation都是经过MLP进行学习。两个学习任务意味着两个loss。</p>
 <p>在训练时，迭代一次，多次训练推荐任务，最后训练一次KG链路预测任务。</p>
 <p>那么核心创新点就是<em>cross&amp;compress</em> unit，看一下式子。</p>
 <p>Cross部分：</p>
-<img data-src="/2021/04/28/MKR/image-20210502182833566.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182833566.png" style="zoom:50%;" /></p>
 <p>对于item和entities进行tensor dot，不同维度之间相乘，捕获pairwise的interaction。</p>
 <p>Compress部分：</p>
 <p>将feature interaction matrix，投影到item和entities的不同feature space中：</p>
-<img data-src="/2021/04/28/MKR/image-20210502183100668.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502183100668.png" style="zoom:50%;" /></p>
 <p><strong>需要注意的点</strong>：需要看到，它在投影时，即压缩时，在horizontal和vertical两个方向上同时进行投影。也就是说对于<span class="math inline">\(C_L\)</span>和<span class="math inline">\(C_l^T\)</span>同时投影。对于horizontal方向的压缩，不同行之间的区别在于<span class="math inline">\(\mathbf{v}_l\)</span>，即item的信息；对于vertical方向的压缩，不同列之间的区别在于<span class="math inline">\(\mathbf{e}_l\)</span>，即entities提供的信息。</p>
 
     </div>
@@ -459,13 +459,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

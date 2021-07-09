@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Modeling Relational Data with Graph Convolutional Networks 2018 首个在KG上应用GNN的模型R-GCN">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222339835.png">
-<meta property="og:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222219414.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222339835.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222219414.png">
 <meta property="article:published_time" content="2021-04-15T08:33:19.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.369Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="KG">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/15/R-GCN/image-20210421222339835.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222339835.png">
 
 <link rel="canonical" href="http://example.com/2021/04/15/R-GCN/">
 
@@ -219,7 +219,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,12 +310,12 @@ W_r^l=\oplus_b^B Q_{b,r}^l
 W_r = diag(Q_{1r}^{l},\cdots,Q_{Br}^{l})\ with\ Q_{br}^{l} \in \mathbb{R}^{(d^{l+1}/B)\times (d^{l}/B)}
 \]</span></p>
 <p>其中符号<span class="math inline">\(\oplus\)</span>是矩阵加法中的Direct Sum，不是普通的相加，而是下面的形式，</p>
-<img data-src="/2021/04/15/R-GCN/image-20210421222339835.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222339835.png" style="zoom:50%;" /></p>
 <p>这里说明下block-diagonal matrix，根据维基百科的解释</p>
 <blockquote>
 <p>A <strong>block diagonal matrix</strong> is a block matrix that is a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Square_matrix">square matrix</a> such that the main-diagonal blocks are square matrices and all off-diagonal blocks are zero matrices.</p>
 </blockquote>
-<img data-src="/2021/04/15/R-GCN/image-20210421222219414.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222219414.png" style="zoom:50%;" /></p>
 <p>对于这种正则化方式的理解</p>
 <blockquote>
 <p>The block decomposition can be seen as a sparsity constraint on the weight matrices for each relation type.</p>
@@ -573,13 +573,13 @@ L=-\frac{1}{(1+w)|\varepsilon|}\sum_{(s,r,o,y)\in \Gamma}{ylog(f(s,r,o)) + (1-y)
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         

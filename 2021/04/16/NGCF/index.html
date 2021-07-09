@@ -27,20 +27,20 @@
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Neural Graph Collaborative Filtering  Wang X, He X, Wang M, et al. Neural Graph Collaborative Filtering[J]. arXiv preprint arXiv:1905.08108, 2019.  论文的主要贡献是提出了一种embeding propagation的方式，能够利用high order范">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191203155628521.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191203225032817.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191214230017160.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215094628886.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215095100798.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215095752801.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215100237965.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215100632501.png">
-<meta property="og:image" content="http://example.com/2021/04/16/NGCF/image-20191215102635413.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203225032817.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215094628886.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214230017160.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203155628521.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095752801.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100237965.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095100798.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100632501.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215102635413.png">
 <meta property="article:published_time" content="2021-04-16T07:19:35.000Z">
-<meta property="article:modified_time" content="2021-07-08T13:40:53.345Z">
+<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2021/04/16/NGCF/image-20191203155628521.png">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203225032817.png">
 
 <link rel="canonical" href="http://example.com/2021/04/16/NGCF/">
 
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-08 21:40:53" itemprop="dateModified" datetime="2021-07-08T21:40:53+08:00">2021-07-08</time>
+                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -285,7 +285,7 @@
 <p>但是多数模型都没有通过利用user-item的交互来训练得到embeding，只使用了用户属性等基本描述性的特征。</p>
 <p>如果要利用交互来获得embeding，存在的问题在于若使用user-item矩阵的形式表示交互，这样矩阵规模就非常的大，常常达到几百万量级，而且非常稀疏。</p>
 <p>为了解决这个问题，论文中将交互转换为graph的形式，集中注意力在有过交互的物品上，例子如下图：</p>
-<img data-src="/2021/04/16/NGCF/image-20191203155628521.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203225032817.png" style="zoom:50%;" /></p>
 <p>图中的用户u1是推荐的目标用户。右边的图看成是以<span class="math inline">\(u_1\)</span>为根结点形成的一个树，这样对于<span class="math inline">\(u_1\)</span>的预测，就由原来的<span class="math inline">\(i_1, i_2, i_3\)</span>(first order)拓展到<span class="math inline">\(i_4, i_5\)</span>(third order)这样的high order范围。</p>
 <p>论文的主要贡献是提出了一种embeding propagation的方式，能够利用high order范围内的实体，训练得到用户和物品的embeding。</p>
 <h2 id="model结构">2 Model结构</h2>
@@ -301,7 +301,7 @@ E=[\underbrace{e_{u_1}, e_{u_2}, \dots}_{N\ users},\underbrace{e_{i_1}, e_{i_1}}
 <li>Prediction layer：预测<span class="math inline">\(&lt;u, i&gt;\)</span>的概率</li>
 </ol>
 <p>整个网络的结构如图：</p>
-<img data-src="/2021/04/16/NGCF/image-20191203225032817.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215094628886.png" style="zoom:50%;" /></p>
 <h3 id="embedding-layer">2.1 Embedding layer</h3>
 <p>这一层与主流的推荐模型的embeding layer一样，对于N个用户u，M个物品i，使用d维的向量来表示，形成下面的矩阵(<span class="math inline">\((N+M)\times d\)</span>)： <span class="math display">\[
 E = [e_{u_1}, \dots, e_{u_N},e_{i_1}, \dots, e_{u_M},]^T, e_u, e_i\ \in R^d
@@ -359,7 +359,7 @@ O = \{ (u, i, j)|(u, i)\in R^+,\ (u, j)\in R^- \}
 <li>能够利用high order connectivity信息，对于用户和物品的表示的影响</li>
 </ol>
 <h3 id="dataset">3.1 Dataset</h3>
-<img data-src="/2021/04/16/NGCF/image-20191214230017160.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214230017160.png" style="zoom:50%;" /></p>
 <p>使用10-core形式，每个用户至少有10个历史交互数据。</p>
 <p>80%的interaction为训练集，20%为测试集。</p>
 <h3 id="experimental-settings">3.2 Experimental Settings</h3>
@@ -375,26 +375,26 @@ O = \{ (u, i, j)|(u, i)\in R^+,\ (u, j)\in R^- \}
 <h3 id="rq1-comparison">3.3 RQ1: comparison</h3>
 <h4 id="overall-comparison">3.3.1 Overall Comparison</h4>
 <p>对比了几个不同的CF算法如下</p>
-<img data-src="/2021/04/16/NGCF/image-20191215094628886.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203155628521.png" style="zoom:50%;" /></p>
 <h4 id="comparison-w.r.t.-interaction-sparsity-levels.">3.3.2 Comparison w.r.t. Interaction Sparsity Levels.</h4>
 <p>一个用户的推荐效果和这个用户的历史数据数量有很大的关系，如果交互的数量越少，越难推荐合适的物品，针对不同交互量用户分组进行了下图的研究。</p>
-<img data-src="/2021/04/16/NGCF/image-20191215095100798.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095752801.png" style="zoom:50%;" /></p>
 <p>图上能够看到在不同的分组下，NGCF都有最好的ndcg@20结果。</p>
 <h3 id="rq1-study-of-ngcf">3.4 RQ1: Study of NGCF</h3>
 <h4 id="effect-of-layer-numbers">3.4.1 Effect of Layer Numbers</h4>
 <p>针对NGCF不同层数产生的效果的研究，NGCF-4虽然在两个数据集上得到了较好的结果，但是提升并不大，而且参数数量增多，训练成本增加，也容易过拟合。</p>
-<img data-src="/2021/04/16/NGCF/image-20191215095752801.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100237965.png" style="zoom:50%;" /></p>
 <h4 id="effect-of-embedding-propagation-layer-and-layeraggregation-mechanism">3.4.2 Effect of Embedding Propagation Layer and LayerAggregation Mechanism</h4>
 <p>对于embeding propagation的方式，进行了研究，</p>
-<img data-src="/2021/04/16/NGCF/image-20191215100237965.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095100798.png" style="zoom:50%;" /></p>
 <h4 id="effect-of-dropout">3.4.3 Effect of Dropout</h4>
 <p>研究在不同数据集下，node和message dropout不同数值对于结果的影响</p>
-<img data-src="/2021/04/16/NGCF/image-20191215100632501.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100632501.png" style="zoom:50%;" /></p>
 <p>结果显示多数情况下，相同概率的node dropout方式好于message dropout，而且node dropout方式得到的最好效果要优于message dropout。</p>
 <p>一个可能的原因是node dropout会直接丢弃原来的node，这些node不会产生任何的效果，具有更强的鲁棒性。</p>
 <h3 id="rq3-effect-of-high-order-connectivity">3.5 RQ3: Effect of High-order Connectivity</h3>
 <p>为了研究利用high-order connectivity是否有效果，在Gowalla测试数据集中，截取6个用户和它们的物品在NGCF-1和NGCF-3下的embeding，利用t-SNE进行探究。</p>
-<img data-src="/2021/04/16/NGCF/image-20191215102635413.png" class="">
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215102635413.png" style="zoom:50%;" /></p>
 <p>从图上可以看出来，在3-order下，一个用户和它的物品更加倾向形成一聚类，即通过它的物品，能够更好的反映用户的实际情况。这表示利用high-order起到了作用，能够更好的捕获协同信息。</p>
 <h2 id="conclusion">4 Conclusion</h2>
 <p>论文的主要成果</p>
@@ -579,13 +579,13 @@ O = \{ (u, i, j)|(u, i)\in R^+,\ (u, j)\in R^- \}
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">122k</span>
+    <span title="Symbols count total">123k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:51</span>
+    <span title="Reading time total">1:52</span>
 </div>
 
         
