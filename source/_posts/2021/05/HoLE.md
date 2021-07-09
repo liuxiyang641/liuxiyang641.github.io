@@ -21,7 +21,7 @@ AAAI 2016
 
 **methods**：直接从subject entity embedding和object entity embedding中，使用circular correlation获得新的embedding，称作holograph embedding，然后使用这个holograph embedding与relation embedding做点积，得到预测概率。
 
-![](HoLE/image-20210418184909978.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png" style="zoom:50%;" />
 
 **理解circular correlation**：
 
@@ -73,7 +73,7 @@ $\mathbf{b}$不需要反转，然后与$\mathbf{a}$进行卷积。
 
 一个图示：
 
-![](HoLE/image-20210418181121701.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png" style="zoom:50%;" />
 
 从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。
 

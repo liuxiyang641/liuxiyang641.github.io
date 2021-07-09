@@ -1,5 +1,5 @@
 ---
-title: batchnorm
+title: BatchNorm
 notshow: false
 date: 2021-07-08 16:07:06
 categories:
@@ -19,17 +19,17 @@ ICML 2015
 
 pytorch中的核心公式：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161603064.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161603064.png" style="zoom:50%;" />
 
 $\gamma$和$\beta$是两个很重要的可学习的参数，它从理论上保证归一化后的值$y$通过学习合适的$\gamma$和$\beta$可以还原原来的$x$。比如：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161844290.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161844290.png" style="zoom:50%;" />
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161902153.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161902153.png" style="zoom:50%;" />
 
 在mini-batch训练策略下的核心算法，对第$i$维的激活值$x$。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161527909.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708161527909.png" style="zoom:50%;" />
 
 从[博客](https://blog.csdn.net/qq_25737169/article/details/79048516)上找的python代码实现方便理解。
 

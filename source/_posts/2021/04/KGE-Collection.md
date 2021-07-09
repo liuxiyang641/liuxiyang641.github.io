@@ -30,6 +30,7 @@ Now it contains models of:
 - SimplE(NIPS 2018)
 - Complex(ICML 2016)
 - REInceptionE(AAAI 2020)
+- R-MeN(ACL 2020)
 - HypER(ICANN 2019)
 
 <!--more-->
@@ -44,11 +45,11 @@ Now it contains models of:
 
 **methods**：直接从subject entity embedding和object entity embedding中，使用circular correlation获得新的embedding，称作holograph embedding，然后使用这个holograph embedding与relation embedding做点积，得到预测概率。
 
-![](KGE-Collection/image-20210418184909978.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png" style="zoom:50%;" />
 
 一个图示：
 
-![](KGE-Collection/image-20210418181121701.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102258964.png" style="zoom:50%;" />
 
 从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。
 
@@ -60,7 +61,7 @@ Now it contains models of:
 
 然后看一下整体结构：
 
-![](KGE-Collection/image-20210510170730416.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102445139.png" style="zoom:50%;" />
 
 ## TransF
 
@@ -68,15 +69,15 @@ Now it contains models of:
 
 基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系*“/people/person/place_of_birth*和*/people/person/nationality*就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。
 
-![](KGE-Collection/image-20210511102258964.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png)
 
 公式：
 
-![](KGE-Collection/image-20210511102445139.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png" style="zoom:50%;" />
 
 在实验中，在FB15k-237数据集上，作者使用了维度100，s数量5；在WN18RR数据集上，维度50，s数量5。最后使用TransR的方法投影：
 
-![](KGE-Collection/image-20210511102512774.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110706718.png" style="zoom:50%;" />
 
 ## TransCoRe
 
@@ -86,15 +87,15 @@ Now it contains models of:
 $$
 \mathbf{R}=\mathbf{U}\mathbf{V}
 $$
-![](KGE-Collection/image-20210511110706718.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110904912.png" style="zoom:50%;" />
 
 在这种情况下，矩阵$\mathbf{U}$的列是关系空间的basis
 
-![](KGE-Collection/image-20210511110904912.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png)
 
 最后
 
-![](KGE-Collection/image-20210511110958068.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210518225522673.png" style="zoom:50%;" />
 
 ## Interpreting-KGE
 
@@ -114,7 +115,7 @@ $$
 
 在WN18RR下不同关系的分类，
 
-![](KGE-Collection/image-20210518225522673.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170730416.png" style="zoom:50%;" />
 
 FB15k-237的relation大多是type C，也就是说该数据集中的relation没有特别明显的结构联系。
 
@@ -124,13 +125,13 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 这篇文章使用1996年就被提出来的分解方法 Tucker decomposition，提出了TuckER，TuckER的主要结构如下：
 
-![](KGE-Collection/image-20210520160757408.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520160757408.png" style="zoom:50%;" />
 
 其中的参数$W$是所有关系共享的，$e_s,w_r,e_o$是subject, relation和object entity的embedding，都是向量化的表示。
 
 具体计算公式是，沿着不同维度（mode）进行乘法运算
 
-![](KGE-Collection/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png)
 
 这篇文章可以考虑用来简化R-GCN中的$W_r$。
 
@@ -144,7 +145,7 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 在文章中，使用了MLP来获得KGE，主要用于评估构造的KG中的edge存在的概率，主要方法：
 
-![](KGE-Collection/image-20210520193708498.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png)
 
 其中的$\beta \in \mathbb{R}^{L\times 1}$，$u_s, w_p, v_o$是subject、relation和object。
 
@@ -159,11 +160,11 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 TransH的结构：
 
-![](KGE-Collection/image-20210520220226480.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png)
 
 数学公式：
 
-![](KGE-Collection/image-20210520220253182.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png)
 
 在训练中，保证$||w_r||_2=1$，同时$w_r \perp d_r$。
 
@@ -175,7 +176,7 @@ TransH的结构：
 
 作者认为对于以前的loss形式过于简单
 
-![](KGE-Collection/image-20210524162955001.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png)
 
 缺点两个：
 
@@ -189,7 +190,7 @@ TransH的结构：
 
 作者提出的新指标，将计算欧氏距离，换为计算马氏距离：
 
-![](KGE-Collection/image-20210524163344113.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220226480.png" style="zoom:50%;" />
 
 ## TransR
 
@@ -197,17 +198,17 @@ TransH的结构：
 
 这篇文章改进了TransE和TransH认为embedding都在相同的semantic space中。TransR认为不同关系具有不同的space，实体在entity space下，提出了TransR。
 
-![](KGE-Collection/image-20210520223130667.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223201288.png" style="zoom:50%;" />
 
 数学公式：
 
-![](KGE-Collection/image-20210520223201288.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223130667.png" style="zoom:50%;" />
 
 能够看到，还是有单独的relation embedding。
 
 作者还提出了一个改进版，CTransR（Cluster-based TransR）。它对于一个单独的relation r，将不同的(head, tail)对分成几个不同的clusters，不同的clusters拥有自己的relation vector $r_c$，整个relation下的所有clusters有一个共同的relation vector $r$，此时的scoring function为：
 
-![](KGE-Collection/image-20210520223607761.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193736657.png" style="zoom:50%;" />
 
 ## TransD
 
@@ -215,9 +216,9 @@ TransH的结构：
 
 作者将所有的entities和relations都赋予了两个vectors，一个vectors和以前的embedding一样，作为实体和关系的向量化embedding；一个vectors用来构件转换矩阵：
 
-![](KGE-Collection/image-20210524193736657.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223607761.png" style="zoom:50%;" />
 
-![](KGE-Collection/image-20210524193757495.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193757495.png" style="zoom:50%;" />
 
 ## TransG
 
@@ -246,11 +247,11 @@ TransH的结构：
 
 最终效果没有超越ComplEX，但是提升CP效果很多。
 
-![](KGE-Collection/image-20210526215101906.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215137325.png" style="zoom:50%;" />
 
 CP分解：
 
-![](KGE-Collection/image-20210526215137325.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530213931363.png" style="zoom:50%;" />
 
 其中的$\mathbf{X}$是整个KG张量。
 
@@ -262,11 +263,11 @@ CP分解：
 
 [SimplE](https://github.com/Mehran-k/SimplE) 使用CP分解，改进了一般的CP分解，与一般的CP分解一样，每个entity有两种表示对于head和tail，每个relation有唯一的表示。在预测triple是否成立时，同时用原关系和逆关系是否成立进行平均打分。在论文中，作者证明了SimplE是fully expressivene的。
 
-![](KGE-Collection/image-20210530213931363.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png)
 
 其中的$<>$函数是向量内积，定义为：
 
-![](KGE-Collection/image-20210530214019324.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215101906.png" style="zoom:67%;" />
 
 ## Complex
 
@@ -276,7 +277,7 @@ CP分解：
 
 具体公式：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png" style="zoom:50%;" />
 
 其中的，$Re$是实数部分，$Im$是虚数部分。
 
@@ -288,7 +289,7 @@ CP分解：
 
 [**ReInceptionE: Relation-Aware Inception Network with Joint Local-Global Structural Information for Knowledge Graph Embedding**](https://github.com/JuneTse/ReInceptionE.) AAAI 2020
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png" style="zoom:40%;" />
 
 使用Inception网络学习对所有的$(h,r,?)$都可以编码为一个embedding。
 
@@ -299,6 +300,28 @@ CP分解：
 对于要查询的关系$r$，对于图中所有属于$r$的头尾实体应该可以提供某种特定的特征，因此，利用查询embedding，计算所有属于$r$的头实体的注意力然后聚合；同样，聚合特定的尾实体的信息。
 
 最后，融合三方面的信息，通过一个MLP，进行预测。
+
+## R-MeN
+
+[**A Relational Memory-based Embedding Model for Triple Classiﬁcation and Search Personalization**](https://github.com/daiquocnguyen/ R-MeN)  R-MeN ACL 2020
+
+为了能够记忆KG中的三元组之间可能存在的潜在依赖，提出了R-MeN方法，模型图
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221208885.png" style="zoom:50%;" />
+
+在一个三元组$(s,r,o)$中，首先编码为三个不同的embedding
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221647609.png" style="zoom:50%;" />
+
+模仿Transformer加入了位置embedding。然后，设计了一个记忆力单元$M$，设计中$M$应该拥有$N$个memory slot，每一行是一个记忆力插槽。但是在实现的时候发现只有一个记忆力插槽的时候效果最好。
+
+之后，依次输入$x_t$，使用transformer的注意力机制聚合$x_t$和$M$。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222104512.png" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222043286.png" style="zoom:50%;" />
+
+在这个之后，加入了MLP，残差，gate。实际从结果来看，没有特别大的提升。
 
 ## HypER
 

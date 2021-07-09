@@ -15,6 +15,10 @@ tags:
 
 
 
+<!--more-->
+
+
+
 ## Highway GNN
 
 [**Semi-supervised User Geolocation via Graph Convolutional Networks**](https://github.com/ afshinrahimi/geographconv) ACL 2018
@@ -23,5 +27,5 @@ tags:
 
 在每一层，借鉴Highway networks的思路，计算一个门weight
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" />
 

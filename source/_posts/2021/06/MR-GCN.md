@@ -44,20 +44,19 @@ MR-GCO是作者论文的核心，主要思想从推导过程来看和一般情�
 
 MR-GCO的定义，对于图信号 $x\in \mathbb{R}^{N\times R}$和过滤器$g\in \mathbb{R}^{N\times R}$，作者定义为：
 
-![](MR-GCN/image-20210626164341117.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164638896.png" style="zoom:50%;" />
 
 其中$U$是对于多关系拉普拉斯矩阵进行张量特征分解后的结果：
 
-![](MR-GCN/image-20210626164638896.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164341117.png" style="zoom:50%;" />
 
 其中的特殊运算 $\diamondsuit_\Phi$就是泛化的张量积$\Phi$-product，$\Phi$是转化矩阵。
 
 其中的拉普拉斯矩阵是多关系的三阶张量，每个relation有一个不同的拉普拉斯矩阵
 
-![](MR-GCN/image-20210626165323451.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626165323451.png" style="zoom:50%;" />
 
 直接看作者结果
 
-![](MR-GCN/image-20210626164015015.png)
-
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626164015015.png" style="zoom:50%;" />
 

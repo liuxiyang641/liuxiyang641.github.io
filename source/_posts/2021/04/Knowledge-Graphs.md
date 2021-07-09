@@ -91,7 +91,7 @@ knowledge graph的一个归纳的定义：
 
 实际上本质的，知识图谱获得成功要得益于它的特点——弱语义，多实例
 
-![image-20200826100711774](Knowledge-Graphs/image-20200826100711774.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200826100711774.png" style="zoom:50%;" />
 
 不需要多强的语义，因为现实世界是如此的复杂，以至于我们不可能概括一个通用的、泛化性强的规则/语义去描述全部的现实世界。但语义又是必须的，没有语义的话，就没有知识，知识图谱的本身就不成立了。所以，知识图谱着眼于弱语义，同时看重实例的堆积，反而取得了成功，并且在快速的发展。
 
@@ -99,11 +99,11 @@ knowledge graph的一个归纳的定义：
 
 知识图谱怎么用？
 
-![image-20200826105530023](Knowledge-Graphs/image-20200826105530023.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200826153137057.png" style="zoom:50%;" />
 
 宏观角度看知识图谱
 
-![image-20200826105942543](Knowledge-Graphs/image-20200826105942543.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200829195712010.png" style="zoom:50%;" />
 
 知识图谱的缺点：
 
@@ -129,13 +129,13 @@ A graph dataset then consists of a set of named graphs and a default graph.
 
 即多个知识图的集合。
 
-![](Knowledge-Graphs/image-20200826152742454.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200826105530023.png" style="zoom:50%;" />
 
 ### 2.3 Property graphs
 
 属性图谱是在一般的知识图谱基础上改进的，A property graph allows a set of property–value pairs and a label to be associated with both nodes and edges.在边上添加了属性和标签。
 
-![](Knowledge-Graphs/image-20200826153137057.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200829204546266.png" style="zoom:50%;" />
 
 ### 2.4 Other graph data models
 
@@ -246,7 +246,7 @@ OWL是基于OWA，NUMA假设的。
 
 起始于TransE，
 
-![](Knowledge-Graphs/image-20200829195712010.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200826152742454.png" style="zoom:50%;" />
 
 TransE的不足：
 
@@ -267,7 +267,7 @@ TransE的不足：
 
 下图是关于CP d-rank分解的实例，图中的$x_i,y_i, z_i$表示的是在$x,y,z$三个方面的第$i$种latent factor。
 
-![](Knowledge-Graphs/image-20200829204546266.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200826105942543.png" style="zoom:50%;" />
 
 这一类型的方法有LFM， RESCAL，DistMult，ComplEx，ANALOGY，HolE。
 

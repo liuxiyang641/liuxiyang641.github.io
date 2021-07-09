@@ -56,13 +56,13 @@ $$
 $$
 $\phi$函数有以下几种类型：$\phi_{stk},\ \phi_{alt},\ \phi_{chk}$
 
-![](InteractE/image-20200405164138063.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405164138063.png)
 
 ## 4 InteractE Details
 
 总体结构
 
-![image-20200405171149898](InteractE/image-20200405171149898.png)
+![image-20200405171149898](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191734032.png)
 
 ### 4.1 Feature Permutation
 
@@ -81,7 +81,7 @@ $$
 
 ### 4.3 Circular Convolution
 
-![](InteractE/image-20200405171009766.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405191900132.png)
 
 循环卷积，
 $$
@@ -98,11 +98,11 @@ $$
 
 数据集
 
-![](InteractE/image-20200405191734032.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405192616146.png)
 
 ### 5.1 Performance Comparison
 
-![](InteractE/image-20200405191900132.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193118638.png)
 
 在整体性能的比较上来看，对于ConvE是有较明显的提升。同时在WN18RR数据集上的效果不显著。这一点和在ConvE里面发现的现象一致，因为这个数据集可能更适合于浅层的模型因为它的平均关联度就很低。
 
@@ -110,7 +110,7 @@ $$
 
 探究重组方法以及循环卷积对于效果的影响。
 
-![](InteractE/image-20200405192616146.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171149898.png)
 
 可以看出来：
 
@@ -121,7 +121,7 @@ $$
 
 探究特征随机排列的次数对于模型结果的影响
 
-![](InteractE/image-20200405193118638.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405193453990.png)
 
 可以观察到，实际上较小的组合数量就能够取得较优的结果，1/2次随机的排列组合就能够取得不错的结果。再增加组合次数会造成过度参数化。
 
@@ -129,6 +129,6 @@ $$
 
 对于不同类型的关系进行预测的结果。
 
-![](InteractE/image-20200405193453990.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200405171009766.png)
 
 可以看出来首先InteractE是全面优于ConvE的；另外，它更善于建模N-1和N-N的关系，而RotatE更擅长建模1-1的关系。

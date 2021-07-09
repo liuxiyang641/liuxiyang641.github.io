@@ -40,7 +40,7 @@ $$ min_{x\in A} f(x) $$
 
 举例：
 
-![](TPE/image-20191110144728090.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110144728090.png" style="zoom:50%;" />
 
 纵坐标是$f(x)$，很明显如果是我们人工去选择下一组超参数的话，会在左下角score=20的这几个点中间去搜索，而不会还是进行一个全局的抽样。这实际就是一个贝叶斯优化过程。
 
@@ -52,7 +52,7 @@ $$ min_{x\in A} f(x) $$
 
 序列化模型全局优化(SMBO)是把贝叶斯优化的一个形式化的定义。具体的伪代码如下：
 
-![](TPE/image-20191110145710920.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110161036552.png" style="zoom:50%;" />
 
 伪代码中出现的符号含义：
 
@@ -98,7 +98,7 @@ Objective Function是我们想要优化的目标。接受超参数作为输入�
 
 叫做响应面是因为它是在高维层次的objective function score的关于超参数的概率。如下图：
 
-![](TPE/image-20191110161036552.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110145710920.png" style="zoom:50%;" />
 
 存在几种不同的替代函数，如：
 
@@ -121,15 +121,15 @@ Objective Function是我们想要优化的目标。接受超参数作为输入�
 
 1. Tree：超参数优化问题可以理解为在图结构的参数空间上不断寻找objective function最优解的问题。所谓tree，是提出TPE的作者将该优化问题限制在了树状结构上，例如：
 
-   ![](TPE/image-20191110163042989.png)
+   <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163042989.png" style="zoom:50%;" />
 
    一些超参数只有在其它的超参数确定后才能够进行确认，例如网络的层数与每一层的节点数量，当然这不意味着这两个超参数是相关的。**实际上在TPE中，要求所估计的超参数必须是相互独立的**。
 
 2. Parzen：[Parzen–Rosenblatt window](https://en.wikipedia.org/wiki/Kernel_density_estimation)是在核密度估计问题中，由 [Emanuel Parzen](https://en.wikipedia.org/wiki/Emanuel_Parzen) 和 [Murray Rosenblatt](https://en.wikipedia.org/wiki/Murray_Rosenblatt)提出的能够根据当前的观察值和先验分布类型，估计估计值的概率密度。一般的函数如下：
 
-   ![](TPE/image-20191110163827025.png)
+   <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163827025.png" style="zoom:50%;" />
 
-   ![](TPE/image-20191110163935502.png)
+   <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163935502.png" style="zoom:50%;" />
 
    **在TPE中，假设了核函数都是高斯核函数**
 
@@ -159,9 +159,9 @@ $$ p(\lambda|c) = \left\{ \begin{aligned} &l(\lambda) \quad c \lt c^{*} \\ &g(\l
 
 $c^{*}$是一个阈值，通常是在H所有的c中，满足$p(c<c^{*})=\gamma$，$\gamma$默认可设置为0.15。这样所有的历史记录就分成了两部分，即风险较小的那部分和风险相对较大的那部分，$l(\lambda)$是由所有的风险较小的那部分的超参数集合形成的分布，$g(\lambda)$是由所有的风险较大的那部分的超参数集合形成的分布。如下图：
 
-![](TPE/image-20191110191535439.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191535439.png" style="zoom: 33%;" />
 
-![](TPE/image-20191110191405221.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191405221.png" style="zoom:33%;" />
 
 直觉上我们从风险较小的分布中抽样新的超参数，应该是比较合理的，下面的数学推理也证明了这一点。
 

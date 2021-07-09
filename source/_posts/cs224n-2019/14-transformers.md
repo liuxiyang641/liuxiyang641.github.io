@@ -19,6 +19,6 @@ tags:
 
 对于迁移不变性的解释。
 
-![](14-transformers/image-20210329210505679.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210329210505679.png)
 
 ## 

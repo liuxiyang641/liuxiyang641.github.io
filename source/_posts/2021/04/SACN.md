@@ -21,7 +21,7 @@ h_{i+1}=\sigma{\sum_{j\in N_{i}}\alpha_t^l h_j^l W^l + h_i^lW^l}
 $$
 Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head entity embedding和relation embedding stack成$2\times d$的矩阵，之后使用$2\times k$的卷积核进行卷积操作，这样仍然能够保持TransE中的transformation property。
 
-![](SACN/image-20200906104552852.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200906104625946.png" style="zoom:50%;" />
 
 需要注意的是，它构建了一个新的数据集，FB15k-237-Attr，从FB24k中导出属性，增加到FB15k-237数据集中。
 
@@ -33,4 +33,4 @@ Conv-TransE是在ConvE的基础上，取消了feature reshaing。直接将head e
 
 实验结果
 
-![](SACN/image-20200906104625946.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200906104552852.png" style="zoom:50%;" />

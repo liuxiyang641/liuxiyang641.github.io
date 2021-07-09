@@ -52,7 +52,7 @@ $$
 
 引入$w_{x,y}$限制了$t_{w_{x,y}}$，不再是所有分段的全体组合。
 
-![](SEEK/image-20200929220716325.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200929220716325.png" style="zoom:50%;" />
 
 最终实验在FB15K，DB100K，YAGO37三个数据集下进行了实验。
 

@@ -51,7 +51,7 @@ Ways to analyze networks:
 - Interactions: links, edges	$E$
 - System: network, graph     $G(N, E)$
 
-![image-20210309193044665](01-intro-graph/image-20210309193044665.png)
+![image-20210309193044665](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309193044665.png)
 
 > We will try to make this distinction whenever it is appropriate, but in
 >
@@ -81,16 +81,16 @@ node degree：对于无向图来说就是一个节点连接的边，因此一个
 
 还可以使用edge list和adjacent list表示：
 
-![](01-intro-graph/image-20210309203007866.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203007866.png)
 
-![](01-intro-graph/image-20210309203034763.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309203034763.png)
 
 graph的连通性connectivity：
 
 1. 对于无向图，如果说一个graph是Connected graph，这意味着任意两个节点都可以通过某个路径连接起来
 2. 对于有向图，分为强连接性图和弱连接性图
 
-![](01-intro-graph/image-20210309204211861.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309204211861.png)
 
 在研究图的连通性当中，可能存在关键的边或者节点，如果把这些关键点或边删除整个图就不再连通。
 

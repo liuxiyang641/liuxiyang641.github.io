@@ -65,19 +65,19 @@ Dynamic Heterogeneous Graph.
 
 整体结构：
 
-![](HGT/image-20210414152012151.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414163722393.png)
 
 注意这里，A-Linear是根据node $t$的type决定的。同时使用了残差结构。
 
 聚合函数就是直接相加。
 
-![](HGT/image-20210414163415151.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414170116901.png)
 
 核心是两部分，产生消息，然后产生注意力。
 
 产生消息：
 
-![](HGT/image-20210414163541401.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414163415151.png)
 
 邻居node的type和邻居relation的type的weight相乘。
 
@@ -87,7 +87,7 @@ Dynamic Heterogeneous Graph.
 
 产生attention：
 
-![](HGT/image-20210414163722393.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414170336206.png)
 
 这里在计算attention的时候就使用了meta relation。矩阵相乘的操作表示着parameter sharing。
 
@@ -107,17 +107,17 @@ Dynamic Heterogeneous Graph.
 
 首先计算时间差，
 
-![](HGT/image-20210414170116901.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414170312971.png)
 
 ，然后编码，使用一个scalar生成一个embedding
 
 $2i,\ 2i+1$应该是dim
 
-![](HGT/image-20210414170312971.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414180544283.png)
 
 最后加到邻居node $s$的表表示$H[s]$上。
 
-![](HGT/image-20210414170336206.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414163541401.png)
 
 ## HGSampling
 
@@ -132,9 +132,9 @@ HGSampling算法能够保证两点：
 
 核心思想是为不同的node type，根据重要程度，采样相同数量的node。
 
-![](HGT/image-20210414180544283.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414180603410.png)
 
-![](HGT/image-20210414180603410.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210414152012151.png)
 
 ## Experiment
 
@@ -181,5 +181,4 @@ prediction task有四个：
 - Cosine Annealing Learning Rate Scheduler
 - 200 epoch
 - select the one with the lowest validation loss
-
 

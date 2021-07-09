@@ -33,7 +33,7 @@ tags:
 
 但是这些模型都没有使用过Crossover interactions。
 
-![image-20200213103537464](CrossE/image-20200213103537464.png)
+![image-20200213103537464](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200213103537464.png)
 
 Crossover interactions包括interaction from relations to entities和interactions from entities to relations.
 
@@ -74,7 +74,7 @@ Crossover interactions包括interaction from relations to entities和interaction
 
 CrossE最大的创新就在于考虑了新的embedding内容，同时没有增加过多的参数。
 
-![image-20200213173128411](CrossE/image-20200213173128411.png)
+![image-20200213173128411](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200213173128411.png)
 
 初始定义：
 
@@ -128,11 +128,11 @@ $$
 
 - 对于一个explanation，应该有对应的一个或多个support，在这篇论文当中，explanation的support就是现存的知识图谱中相似结构，如下图所示。
 
-  ![image-20200213203729321](CrossE/image-20200213203729321.png)
+  ![image-20200213203729321](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200213203729321.png)
 
 寻找explanation的步骤：
 
-![image-20200213204130795](CrossE/image-20200213204130795.png)
+![image-20200213204130795](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200213204130795.png)
 
 详细的请参考论文
 

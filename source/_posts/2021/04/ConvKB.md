@@ -11,7 +11,7 @@ tags:
 
 2018-3-13 ConvKB
 
-![](ConvKB/image-20200219181643488.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200219181643488.png)
 
 <!--more-->
 
@@ -38,7 +38,7 @@ CNN的意义：
 
 ## 2 Proposed ConvKB model
 
-![](ConvKB/image-20200219181643488.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200219181643488.png)
 
 首先三元组组成矩阵
 $$

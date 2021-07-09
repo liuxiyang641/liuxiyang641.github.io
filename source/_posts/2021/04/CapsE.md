@@ -23,7 +23,7 @@ tags:
 
 ## 2 The proposed CapsE
 
-![image-20200217182118840](CapsE/image-20200217182118840.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200217182118840.png" style="zoom:50%;" />
 
 特点：
 

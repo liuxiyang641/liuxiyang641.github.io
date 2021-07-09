@@ -19,11 +19,11 @@ tags:
 
 推荐算法中的协同过滤考虑的根据某个用户的历史数据，寻找可能兴趣相投的群体，来推荐物品。比如在下图中，要给用户推荐物品，那么但从交互的物品来看，都与有交互，那么就可以认为是兴趣相投的用户，根据他们的历史数据来给推荐物品。但如果表示某部电影，的导演也是这部电影的演员，与之间是存在属性上的联系的，这种联系是单纯协同过滤无法解决的。
 
-![image-20191214102753089](KGAT/image-20191214102753089-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png" style="zoom:50%;" />
 
 为了解决这个问题，加入知识图谱(knowledge graph)，形成了下面的结构。
 
-![image-20191214103645598](KGAT/image-20191214103645598-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229105855957-8557739.png" style="zoom:50%;" />
 
 在这样的图中，与就关联起来了。同样给推荐物品，就能够找到更多的相似用户来进行推荐。
 
@@ -37,7 +37,7 @@ tags:
 
 ## 2 模型结构
 
-![image-20191214110411611](KGAT/image-20191214110411611-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214103645598-8557739.png" style="zoom:50%;" />
 
 主要包括三层：
 
@@ -120,7 +120,7 @@ $W_re_t$是实体$e_t$在关系$r$空间内的投影，$W_re_h+e_r$是$e_h$投�
 
 数据集：
 
-![image-20191229105855957](KGAT/image-20191229105855957-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214110411611-8557739.png" alt="image-20191229105855957" style="zoom:50%;" />
 
 可以发现，如果加入知识图谱，物品的数量就会极大的增加，这也是为什么建议预训练好用户和物品的embeding。
 
@@ -139,15 +139,15 @@ $$
 
 效果比较：
 
-![image-20191229110432499](KGAT/image-20191229110432499-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110432499-8557739.png" alt="image-20191229110432499" style="zoom:50%;" />
 
 不同模型结构设置的影响：
 
-![image-20191229110623067](KGAT/image-20191229110623067-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229111040431-8557739.png" alt="image-20191229110623067" style="zoom:50%;" />
 
 对于用户偏好的解释：
 
-![image-20191229111040431](KGAT/image-20191229111040431-8557739.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110623067-8557739.png" alt="image-20191229111040431" style="zoom:50%;" />
 
 从这张图上可以看出来通过加入知识图谱，获得了更多的额外信息。
 

@@ -42,7 +42,7 @@ $$
 
 ### 3.1 Attention
 
-![](KBGAT/image-20200220112116226.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200220112116226.png" style="zoom:50%;" />
 
 对于一个以$e_i$为顶点的edge (i, j, k)，应该能够传播给$e_i$一个embedding：
 $$

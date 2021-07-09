@@ -26,7 +26,7 @@ CNN是CV领域目前de-facto标准，近期的transformers-like的模型Vision T
 
 本文提出了MLP-Mixer，完全使用MLP的架构。看一下整体结构：
 
-![](MLP-Mixer/image-20210507145147282.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png" style="zoom:50%;" />
 
 接收的输入固定size的，将输入划分为一系列的patch，然后所有的patch经过一个投影层，进入核心的Mixer层。
 
@@ -42,7 +42,7 @@ CNN是CV领域目前de-facto标准，近期的transformers-like的模型Vision T
 
 写成公式：
 
-![](MLP-Mixer/image-20210507150754155.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507145147282.png" style="zoom:50%;" />
 
 两个MLP的操作区别就是对于输入简单的转置操作。
 

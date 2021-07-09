@@ -21,11 +21,11 @@ tags:
 
 作者首先做了一个实验，通过图傅里叶变化，使用不同的频率的信息经过mlp进行预测。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205446190.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205446190.png" style="zoom:50%;" />
 
 实验结果：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205516246.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205516246.png" style="zoom:50%;" />
 
 结果分析：高频的邻居信息与中心节点差异较大，可能是噪声；低频的意思是变化不剧烈，中心节点的信号与邻居节点的信号差值不大。虽然人工增加了噪声，但是在低频下没有太多变化。低频特征足以提供足够的信息。
 
@@ -33,7 +33,7 @@ tags:
 
 证明过程来自[知乎回答](https://www.zhihu.com/question/427800721/answer/1547978404)，不是论文本身的内容。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205850099.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210628205850099.png" style="zoom:50%;" />
 
 也就是说，与正则化的邻接矩阵相乘时，由于所有的特征都是大于等于0的，因此低频特征对应的$p(\lambda)$大，而高频特征对应的$p(\lambda)$小，即起到了一个低通滤波的作用。降低高频特征中的噪声，加强低频特征中的信息。
 

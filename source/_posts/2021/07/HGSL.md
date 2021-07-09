@@ -14,7 +14,7 @@ tags:
 AAAI 2021
 
 作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" />
 <!--more-->
 
 ## Introduction
@@ -27,7 +27,7 @@ AAAI 2021
 
 ## Method
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" />
 
 ### Feature Graph Generator
 
@@ -35,15 +35,15 @@ AAAI 2021
 
 对于边类型$r$，首先，对于$r$下的所有edge的头/尾node $i$，根据node的类型对node feature进行转换
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213656455.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213656455.png" style="zoom:50%;" />
 
 之后，计算利用余弦相似性计算两个节点的相似性
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213845698.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213845698.png" style="zoom:50%;" />
 
 设计一个阈值，然后创建graph
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213919202.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213919202.png" style="zoom:50%;" />
 
 这个graph，是边类型$r$下的不同类型的头、尾实体的feature similarity graph $\mathbf{S}^{FS}_r$。
 
@@ -53,27 +53,27 @@ AAAI 2021
 
 关系r的邻接矩阵是$\mathbf{A}_r$，头node和尾node可能具有不同的type。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706214453495.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706214453495.png" style="zoom:50%;" />
 
 对于相同类型type的头结点$i$和$j$，构造一个头结点的相似特征图
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215121910.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215121910.png" style="zoom:50%;" />
 
 之后，这些相似头结点可以通过拓扑结构传播，最终实现效果是相似头结点可以往相似头结点传播消息，获得了head feature propagation graph。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215417582.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215417582.png" style="zoom:50%;" />
 
 类似的，构造相似尾结点图，然后传播，获得了tail feature propagation graph。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215456493.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215456493.png" style="zoom:50%;" />
 
 之后，通过获得单纯的特征图、头实体的特征-拓扑结构交互图、尾实体的特征-拓扑结构交互图，进行融合，使用一个channel attention layer，学习一个$1\times 1\times 3$的卷积核$W^{Feat}_{\Psi,r}$。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215705310.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215705310.png" style="zoom:50%;" />
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215720881.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215720881.png" style="zoom:50%;" />
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215931644.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706215931644.png" style="zoom:50%;" />
 
 ### Semantic Graph Generator
 
@@ -83,27 +83,27 @@ AAAI 2021
 
 HGSL使用MP2Vec去进行学习，定义了$M$个元路径
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220259483.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220259483.png" style="zoom:50%;" />
 
 对于所有的node，学习到$M$个embedding集合，
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220338461.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220338461.png" style="zoom:50%;" />
 
 对于表示不同semantic的metapath信息，同样是构造一个相似图
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220514947.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220514947.png" style="zoom:50%;" />
 
 使用channel attention layer融合semantic subgraph，
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220632763.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220632763.png" style="zoom:50%;" />
 
 ### Overall generated graph
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220738042.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706220738042.png" style="zoom:50%;" />
 
 ### Optimization
 
 前面为每个关系都学习了一个融合的graph $\mathbf{A}_r$，接下来作者直接使用GCN进行学习，通过直接认为只要有两个相连的node就可以认为是1，构造了$\mathbf{A}^\prime$，推测就是直接所有的$\mathbf{A}_r$相加。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706221223318.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706221223318.png" style="zoom:50%;" />
 

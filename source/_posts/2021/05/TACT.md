@@ -34,11 +34,11 @@ AAAI 2021
 
 首先把KG上所有的relation的关联关系分为7种，作者在附录中证明了一共只有7种。
 
-![](TACT/image-20210510170648225.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510171104138.png" style="zoom:50%;" />
 
 然后看一下整体结构：
 
-![](TACT/image-20210510170730416.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170648225.png" style="zoom:50%;" />
 
 两个模块，RCN+R-GCN
 
@@ -48,11 +48,11 @@ RCN学习了$\mathbf{r}_t$，R-GCN学习$\mathbf{e}_u$，$\mathbf{e}_v$，以及
 
 主要看下RCN，两步：
 
-![](TACT/image-20210510171104138.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510171135345.png" style="zoom:50%;" />
 
 其中的$N_t^P\in \mathbb{R}^{1\times |R|}$，取值为0/1，表示关系之间的相连性；$\Lambda_t^P\in \mathbb{R}^{1\times |R|}$，是可学习的参数，表示relation之间的correlation coefﬁcients，并且保证 $\sum_{i=1}^{|R|}\Lambda_t^P=1$。
 
 然后得到relation $t$最终表示：
 
-![](TACT/image-20210510171135345.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170730416.png" style="zoom:50%;" />
 

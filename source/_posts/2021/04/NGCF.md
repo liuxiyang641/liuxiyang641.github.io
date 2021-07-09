@@ -28,7 +28,7 @@ tags:
 
 为了解决这个问题，论文中将交互转换为graph的形式，集中注意力在有过交互的物品上，例子如下图：
 
-![](NGCF/image-20191203155628521.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203225032817.png" style="zoom:50%;" />
 
 图中的用户u1是推荐的目标用户。右边的图看成是以$u_1$为根结点形成的一个树，这样对于$u_1$的预测，就由原来的$i_1, i_2, i_3$(first order)拓展到$i_4, i_5$(third order)这样的high order范围。
 
@@ -49,7 +49,7 @@ $$
 
 整个网络的结构如图：
 
-![](NGCF/image-20191203225032817.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215094628886.png" style="zoom:50%;" />
 
 ### 2.1 Embedding layer
 
@@ -148,7 +148,7 @@ $$
 
 ### 3.1 Dataset
 
-![](NGCF/image-20191214230017160.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214230017160.png" style="zoom:50%;" />
 
 使用10-core形式，每个用户至少有10个历史交互数据。
 
@@ -172,13 +172,13 @@ $$
 
 对比了几个不同的CF算法如下
 
-![](NGCF/image-20191215094628886.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191203155628521.png" style="zoom:50%;" />
 
 #### 3.3.2 Comparison w.r.t. Interaction Sparsity Levels.
 
 一个用户的推荐效果和这个用户的历史数据数量有很大的关系，如果交互的数量越少，越难推荐合适的物品，针对不同交互量用户分组进行了下图的研究。
 
-![](NGCF/image-20191215095100798.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095752801.png" style="zoom:50%;" />
 
 图上能够看到在不同的分组下，NGCF都有最好的ndcg@20结果。
 
@@ -188,19 +188,19 @@ $$
 
 针对NGCF不同层数产生的效果的研究，NGCF-4虽然在两个数据集上得到了较好的结果，但是提升并不大，而且参数数量增多，训练成本增加，也容易过拟合。
 
-![](NGCF/image-20191215095752801.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100237965.png" style="zoom:50%;" />
 
 #### 3.4.2 Effect of Embedding Propagation Layer and LayerAggregation Mechanism
 
 对于embeding propagation的方式，进行了研究，
 
-![](NGCF/image-20191215100237965.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215095100798.png" style="zoom:50%;" />
 
 #### 3.4.3 Effect of Dropout
 
 研究在不同数据集下，node和message dropout不同数值对于结果的影响
 
-![](NGCF/image-20191215100632501.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215100632501.png" style="zoom:50%;" />
 
 结果显示多数情况下，相同概率的node dropout方式好于message dropout，而且node dropout方式得到的最好效果要优于message dropout。
 
@@ -210,7 +210,7 @@ $$
 
 为了研究利用high-order connectivity是否有效果，在Gowalla测试数据集中，截取6个用户和它们的物品在NGCF-1和NGCF-3下的embeding，利用t-SNE进行探究。
 
-![](NGCF/image-20191215102635413.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191215102635413.png" style="zoom:50%;" />
 
 从图上可以看出来，在3-order下，一个用户和它的物品更加倾向形成一聚类，即通过它的物品，能够更好的反映用户的实际情况。这表示利用high-order起到了作用，能够更好的捕获协同信息。
 

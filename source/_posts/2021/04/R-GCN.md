@@ -82,13 +82,13 @@ $$
 
 其中符号$\oplus$是矩阵加法中的Direct Sum，不是普通的相加，而是下面的形式，
 
-![](R-GCN/image-20210421222339835.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222339835.png" style="zoom:50%;" />
 
 这里说明下block-diagonal matrix，根据维基百科的解释
 
 > A **block diagonal matrix** is a block matrix that is a [square matrix](https://en.wikipedia.org/wiki/Square_matrix) such that the main-diagonal blocks are square matrices and all off-diagonal blocks are zero matrices.
 
-![](R-GCN/image-20210421222219414.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210421222219414.png" style="zoom:50%;" />
 
 对于这种正则化方式的理解
 

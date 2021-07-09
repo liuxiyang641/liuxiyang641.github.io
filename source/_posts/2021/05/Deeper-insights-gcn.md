@@ -36,7 +36,7 @@ laplacian smoothing在1995年就被提出来，A signal processing approach to f
 
 定义为：
 
-![](Deeper-insights-gcn/image-20210504154544997.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210504154544997.png" style="zoom:50%;" />
 
 其中的$\gamma$是参数，控制当前vertex和邻居vertex的特征的weight。$\mathbf{x}_j$是邻居vertex。
 

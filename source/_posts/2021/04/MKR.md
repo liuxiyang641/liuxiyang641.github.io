@@ -28,7 +28,7 @@ MKR提出了*cross&compress* unit。能够显式的捕获item和entities之间�
 
 来看一下模型结构。
 
-![](MKR/image-20210502182518838.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182518838.png" style="zoom:50%;" />
 
 总体而言，两个学习任务，两个学习任务之间的item和entities经过*cross&compress* unit进行学习，用户user和KG中的relation都是经过MLP进行学习。两个学习任务意味着两个loss。
 
@@ -38,7 +38,7 @@ MKR提出了*cross&compress* unit。能够显式的捕获item和entities之间�
 
 Cross部分：
 
-![](MKR/image-20210502182833566.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502182833566.png" style="zoom:50%;" />
 
 对于item和entities进行tensor dot，不同维度之间相乘，捕获pairwise的interaction。
 
@@ -46,7 +46,7 @@ Compress部分：
 
 将feature interaction matrix，投影到item和entities的不同feature space中：
 
-![](MKR/image-20210502183100668.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210502183100668.png" style="zoom:50%;" />
 
 **需要注意的点**：需要看到，它在投影时，即压缩时，在horizontal和vertical两个方向上同时进行投影。也就是说对于$C_L$和$C_l^T$同时投影。对于horizontal方向的压缩，不同行之间的区别在于$\mathbf{v}_l$，即item的信息；对于vertical方向的压缩，不同列之间的区别在于$\mathbf{e}_l$，即entities提供的信息。
 

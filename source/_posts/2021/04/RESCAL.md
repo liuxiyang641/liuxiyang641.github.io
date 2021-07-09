@@ -30,7 +30,7 @@ tags:
 
 看一下对于relational data如何表示：
 
-![](RESCAL/image-20200223224511662.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200223224511662.png" style="zoom:50%;" />
 
 整体的数据被表示为张量$\cal{X}$，$\cal{X}_{ijk}=1$，表示fact存在。
 

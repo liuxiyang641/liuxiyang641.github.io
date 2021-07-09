@@ -17,7 +17,7 @@ AAAI 2020
 
 **无开源代码**
 
-{% asset_img RAGAT/image-20200906193934782.png %}
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200906193934782.png" style="zoom:50%;" />
 
 使用了两层的attention，
 
@@ -57,4 +57,4 @@ $$
 
 实验效果看起来很漂亮，但是无法复现就无法确定代码是否有正误，特别是在KBGAT存在test data leakage的情况下。
 
-![image-20200906194013652](RGHAT/image-20200906194013652.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200906194013652.png" style="zoom:50%;" />

@@ -11,7 +11,7 @@ tags:
 
 看一下整体结构：
 
-![](MAGNN/image-20210425134123312.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135447705.png" style="zoom:50%;" />
 
 <!--more-->
 
@@ -31,29 +31,29 @@ tags:
 
 对于同一metapath下的节点，编码单个邻居信息：
 
-![](MAGNN/image-20210425135447705.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135058447.png" style="zoom:67%;" />
 
 实验了三个具体的方法
 
 - Mean：
 
-![](MAGNN/image-20210425135012239.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135012239.png" style="zoom:67%;" />
 
 - Linear Mean：
 
-![](MAGNN/image-20210425135058447.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135330772.png" style="zoom: 67%;" />
 
 - Relational rotation encoder：
 
 模仿RotatE，可以建模metapath下的节点的序列信息，这一点区别于上面的方法。
 
-![](MAGNN/image-20210425135214910.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135214910.png" style="zoom: 67%;" />
 
 ## Intra-metapath Aggregation
 
 对于同一metapath下的节点，基于注意力聚合。
 
-![](MAGNN/image-20210425135330772.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140032603.png" style="zoom:50%;" />
 
 这里需要注意的是就是在计算注意力加入了target node embedding。
 
@@ -63,9 +63,9 @@ tags:
 
 计算在全局下，所有metapath的weight。首先对于不同type的node，相加相同mepath的embedding。需要注意的是，不是计算单个node的不同metapath。
 
-![](MAGNN/image-20210425140032603.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140219668.png" style="zoom:50%;" />
 
 计算注意力：
 
-![](MAGNN/image-20210425140219668.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425134123312.png" style="zoom:50%;" />
 

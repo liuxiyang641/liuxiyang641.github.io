@@ -26,7 +26,7 @@ Definition: **meaning**
 
 - the idea that is represented by a word
 
-![](1-Interoduction-word-vectors/meaning-of-words.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/word2vec-prob.png)
 
 在早期的NLP中，人们将不同的词word表示为独立的符号（discrete symbol），这叫做localist representation，例如one-hot编码。
 
@@ -59,7 +59,7 @@ Definition: **meaning**
 - 每个word都使用固定长度的vector表示
 - 选中center word，计算它周围的outside word/context word出现的概率，并且不断更新参数让这个概率最大
 
-![](1-Interoduction-word-vectors/idea-word2vec.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/idea-word2vec.png)
 
 核心问题在于如何计算$P(w_{t+j}|w_t)$？
 
@@ -74,7 +74,7 @@ P(o|c)=\frac{\text{exp}(u_o^T v_c)}{\sum_{w\in V} \text{exp}(u_w^T v_c)}
 $$
 解释
 
-![](1-Interoduction-word-vectors/word2vec-prob.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/meaning-of-words.png)
 
 使用点积来衡量相似度，当我们得知了context的时候，中心词的meaning应该也能知悉，即context与center word的meaning此时应该接近。对于在语料中经常出现的word，赋予它们比较大的概率。
 

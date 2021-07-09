@@ -21,7 +21,7 @@ tags:
 
 具有不同度的节点数量在所有graph node中的比例
 
-![](02-prop-of-graph-and-rand-model/image-20210309220725684.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309220725684.png)
 
 2. Paths in a graph
 
@@ -43,7 +43,7 @@ $$
 
 定义为最大连通单元中节点的数量。
 
-![](02-prop-of-graph-and-rand-model/image-20210309222007993.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210309222007993.png)
 
 ## Random Graph Model
 
@@ -60,11 +60,11 @@ $$
 
 ### Degree Distribution
 
-![](02-prop-of-graph-and-rand-model/image-20210322214919097.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210322215556478.png)
 
 ### Clustering Coefficient
 
-![](02-prop-of-graph-and-rand-model/image-20210322215556478.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210322214919097.png)
 
 ### Path Length
 
@@ -72,17 +72,17 @@ $$
 
 式子定义：
 
-![](02-prop-of-graph-and-rand-model/image-20210323163010845.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323170924449.png)
 
 式子下面的分母表示对于一个划分来说，如果划分的S越大，节点越多，如果离开集合S的edge数量不变，那么expansion应该小；如果划分的集合S的node数量不变，那么离开S的edge数量越多，expansion越大。随机的划分S，能得到V-S，对于S和V-S都可以计算出一个expansion，离开这两个集合的edge数量一样，但是如果拿较大的集合来算的话，计算出来的expansion就会偏小。因此，总是以数量较少的集合作为考虑的点。
 
 随机的划分集合，能得到很多的expansion，为了衡量整个graph的expansion，考虑expansion的下限，即最小的那个expansion。在这种情况下，如果graph的expansion比其它graph的expansion更大，可以理解为这个graph的expansion更大，locality更弱。
 
-![](02-prop-of-graph-and-rand-model/image-20210323163900359.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323163010845.png)
 
 一个random graph的path length是$O(log\ n)$。diameter是:
 
-![](02-prop-of-graph-and-rand-model/image-20210323170924449.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323163900359.png)
 
 也就是说对于random graph来说，随着node数量增加，diameter并不会增加很多。
 
@@ -96,9 +96,9 @@ $$
 
 一个graph的diameter衡量了graph的“shortcut”，如果diameter比较小，意味着对于一个node，可以在较小的step内链接到其它node。但是直径变小的话，一个graph的locality似乎会被破坏，一个node的很多邻居之间不相连，而是有更多的edge链接到其它的node上。
 
-![](02-prop-of-graph-and-rand-model/image-20210323105306472.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323105306472.png)
 
-![](02-prop-of-graph-and-rand-model/image-20210323105329615.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323105329615.png)
 
 那么，是否有办法让graph同时具有high clustering和small diameter？
 
@@ -108,4 +108,4 @@ $$
 
 示例图：
 
-![](02-prop-of-graph-and-rand-model/image-20210323110103346.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210323110103346.png)

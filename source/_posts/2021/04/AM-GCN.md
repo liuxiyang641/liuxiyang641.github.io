@@ -87,7 +87,7 @@ $$
 
 AM-GCN的整体模型图：
 
-![](AM-GCN/image-20210110165439556.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175132041.png" style="zoom:50%;" />
 
 可以看到其中有三个主要核心模块，包括在Topology Graph和Feature Graph上的卷积，以及捕获两者共有特征的卷积。
 
@@ -172,11 +172,11 @@ $$
 
 在7个数据集上进行评估，数据集主要是论文的引文网络和社交网络
 
-![](AM-GCN/image-20210110175132041.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175336414.png" style="zoom:50%;" />
 
 注意其中的每个数据集训练集有三个级别，分别对应每一类的节点有标签的比例为20%， 40%和60%，测试集恒定每一类由1000个节点评估。
 
-![](AM-GCN/image-20210110175336414.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180203704.png" style="zoom:50%;" />
 
 其中，kNN-GCN是AM-GCN只在feature graph上进行聚合。
 
@@ -192,18 +192,19 @@ $$
 
 - AM-GCN-d: AM-GCN with the disparity constraint $L_d$
 
-![](AM-GCN/image-20210110175813097.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110180340350.png" style="zoom:50%;" />
 
 可以看出来，一般情况下，consistency constraint比disparity constraint更加重要
 
 ### 4.3 Visualization
 
-![](AM-GCN/image-20210110180203704.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110175813097.png" style="zoom:50%;" />
 
 ### 4.4 Analysis of Attention Mechanism
 
 分析不同数据集下，三个不同embedding的注意力值的分布
 
-![](AM-GCN/image-20210110180340350.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210110165439556.png" style="zoom:50%;" />
 
 可以看到，不同数据集下，三个不同方面的embedding对应的注意力值不同，说明哪个方面包含了更加丰富的信息是依赖于具体数据的。
+

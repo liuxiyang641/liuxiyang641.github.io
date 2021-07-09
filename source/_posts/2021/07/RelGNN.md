@@ -34,7 +34,7 @@ AAAI 2021
 
 ## Method
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702160109326.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702160109326.png" style="zoom:50%;" />
 
 ### attribute embedding
 
@@ -42,19 +42,19 @@ AAAI 2021
 
 ### Message Passing
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161233932.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161233932.png" style="zoom:50%;" />
 
 上面就是R-GCN。实际上，为了避免过度参数化，使用了R-GCN的*basis-decomposition*。
 
 接下来，是使用了edge embedding的attention：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161403878.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161403878.png" style="zoom:50%;" />
 
 采用多头机制，同时要注意这个attention是不包括self-loop传递过来的信息的。
 
 最后，为了融合attribute embedding $h_{v}^{(0)}$以及graph embedding $h_{v}^{last}$，使用attention来融合
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161953963.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702161953963.png" style="zoom:50%;" />
 
 使用了*averaging*的multi-attention。
 
@@ -66,15 +66,15 @@ AAAI 2021
 
 RelGNN预测三元组存在的概率，使用了DistMult来打分：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163057832.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163057832.png" style="zoom:50%;" />
 
 之前的自对抗负采样方法：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163147312.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163147312.png" style="zoom:50%;" />
 
 改进后的负采样方法：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163241877.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163241877.png" style="zoom:50%;" />
 
 加入$u$之后，实际上是减小了小于正样本得分的负样本和正样本之间的差距，扩大了大于正样本得分的负样本和正样本之间的差距，让模型倾向于选择小于正样本得分的负样本。随着模型训练，模型越来越“正确”，可以考虑减小$u$的值，让模型去选择更难预测的负样本。
 
@@ -86,4 +86,4 @@ $u$如果太大，会倾向于选择那些trivial samples，不够discriminate�
 
 主要的结果忽略，可以学习的是它对于attention的可视化，计算每个node的领奖attention的熵entropy，计算不同节点的注意力的熵，熵约低，表示这个节点的邻居注意力差异越小，约不混沌，值约集中，越关注某些特定的邻居。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163855948.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210702163855948.png" style="zoom:50%;" />

@@ -58,7 +58,7 @@ HAKE为了区分所有的实体，将实体嵌入分为两部分：
 
 HAKE的模型图：
 
-![image-20200614173832367](HAKE/image-20200614173832367.png)
+![image-20200614173832367](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png)
 
 ### 2.1 The modulus part
 
@@ -116,7 +116,7 @@ $$
 
 ### 3.1 Main Results
 
-![image-20200614173938559](HAKE/image-20200614173938559.png)
+![image-20200614173938559](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173938559.png)
 
 三个数据集：WN18RR, FB15k-237, YAGO3-10
 
@@ -131,7 +131,7 @@ $$
 
 只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度
 
-![](HAKE/image-20200614174230314.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614174230314.png)
 
 其中，
 
@@ -143,7 +143,7 @@ $$
 
 之后，说明phase part的作用，比较c和d的关系embedding的phase part
 
-![](HAKE/image-20200614175049088.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614175049088.png)
 
 上述结果说明有很多关系嵌入的phase part元素分布在$\pi$，导致$h_p$和$t_p$不一样，可以区分同一语义层级的不同实体。
 
@@ -153,10 +153,10 @@ $$
 
 实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。
 
-![](HAKE/image-20200614180811928.png)
+![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614181125392.png)
 
 图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。
 
 ### 3.4 Ablation Studies
 
-![image-20200614181125392](HAKE/image-20200614181125392.png)
+![image-20200614181125392](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614180811928.png)

@@ -38,7 +38,7 @@ WWW 2021, [KE-GCN](https://github.com/PlusRoss/KE-GCN)，提出了一个泛化�
 
 原来GCN的公式：
 
-![](KE-GCN/image-20210517190907479.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192759415.png" style="zoom:50%;" />
 
 通过引入一个得分函数，重新定义GCN，假设引入得分函数$f$，该得分函数计算edge存在的score，对于已经存在的edge输出较大的值；对于不存在的边输出较小的值。假设$f$为求内积：
 $$
@@ -46,7 +46,7 @@ f(h_u,h_v)=h_u^T h_v
 $$
 那么计算的消息$h_u$能够看做是$f$对$v$的梯度，那么所有的$h_u$加起来就成为下面的形式
 
-![](KE-GCN/image-20210517191155431.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517191155431.png" style="zoom:50%;" />
 
 此时对于$h_v+m_v$看做是learning rate为1，对$h_v$的梯度提升；目的是使scoring function$f$的值最大。
 
@@ -60,11 +60,11 @@ $$
 
 更新实体表示：
 
-![](KE-GCN/image-20210517192759415.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195223629.png" style="zoom:50%;" />
 
 更新关系表示：
 
-![](KE-GCN/image-20210517192820729.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192820729.png" style="zoom:50%;" />
 
 更新的关系表示实际提供了一种global的view。
 
@@ -72,11 +72,11 @@ $$
 
 消息传递过程：
 
-![](KE-GCN/image-20210517195223629.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190645145.png" style="zoom:50%;" />
 
 消息聚合过程：
 
-![](KE-GCN/image-20210517190645145.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190907479.png" style="zoom:50%;" />
 
 它能够泛化COMPGCN、R-GCN以及W-GCN。实际上COMPGCN本身就已经泛化了R-GCN和W-GCN，这部分泛化参考论文原文。
 
@@ -86,7 +86,7 @@ $$
 
 使用了一系列的KGE方法：
 
-![](KE-GCN/image-20210517195011713.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195011713.png" style="zoom:50%;" />
 
 ### 3.1 Knowledge Graph Alignment
 
@@ -94,15 +94,15 @@ $$
 
 在这种情况下的loss function
 
-![](KE-GCN/image-20210517200018220.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200018220.png" style="zoom:50%;" />
 
 数据集，
 
-![](KE-GCN/image-20210517200315774.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200444629.png" style="zoom:50%;" />
 
 结果，这里只贴了KE-GCN的比较：
 
-![](KE-GCN/image-20210517200444629.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200123514.png" style="zoom:50%;" />
 
 ### 3.2 Knowledge Graph Entity Classification
 
@@ -110,19 +110,19 @@ $$
 
 multi-class classification
 
-![](KE-GCN/image-20210517200123514.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200315774.png" style="zoom:50%;" />
 
 multi-label classification
 
-![](KE-GCN/image-20210517200151721.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200151721.png" style="zoom:50%;" />
 
 数据集，AM和WN是multi-class，FB15K是multi-label
 
-![](KE-GCN/image-20210517200250204.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200250204.png" style="zoom:50%;" />
 
 结果：
 
-![](KE-GCN/image-20210517200606660.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200606660.png" style="zoom:50%;" />
 
 
 

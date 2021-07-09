@@ -27,7 +27,7 @@ tags:
 
 ### 3.1 FFM  
 
-![](ONN/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg)    
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/884D03E3-A229-4894-AF6A-177AAE3FE851.jpg" style="zoom:50%;" />    
 
 <center>The architecture of the FFM model.</center>  
 
@@ -46,13 +46,13 @@ tags:
 
 ### 3.3 PNN
 
-![](ONN/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/8B9A5379-797C-4D1B-AF09-4C4F7D6DFE55.jpg" style="zoom:50%;" />
 
 <center>The architecture of the PNN model.</center>  
 
 ## 4 ONN结构  
 
-![](ONN/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/389A9CB8-2500-4FBE-8FC8-5571A91C8D22.jpg" style="zoom:50%;" />
 
 <center>The architecture of the ONN model.</center>  
 
@@ -61,7 +61,7 @@ tags:
 ### 4.1 Operation-aware embedding
 
 下面说一下对于$i$th feature的具体转换过程。
-![](ONN/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/31572F4F-DF1E-4FEE-A231-B17B92F090C3.jpg" style="zoom:50%;" />
 
 <center>The structures of the normal embedding layer and the operation-aware embedding layer.</center>  
 
@@ -107,7 +107,7 @@ loss函数是交叉熵
 
 #### 6.2.1 Offline-training performance comparison 
 
-![](ONN/AF76B24C-D512-4773-9889-07101C1075D9.png)  
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/AF76B24C-D512-4773-9889-07101C1075D9.png" style="zoom:50%;" />  
 
 从上面这两张表格可以看出来的有：
 
@@ -117,11 +117,11 @@ loss函数是交叉熵
 
 #### 6.2.2 Online-training performance comparison
 
-![](ONN/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/75087804-9474-4E93-AA7E-755B4C585275.png" style="zoom:50%;" />
 
 在线上的测试中，每一个测试样例只能够被训练一次，对于FM, PNN这些只有一种表示形式的模型来说，一次epoch就学到比较好的表示是比较难的。ONN依旧取得了最好的效果。
 
-![](ONN/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/81E8040F-874A-4D9C-89D8-A7D87F654C5B.jpg" style="zoom:50%;" />
 
 <center>Model convergence curves on the Criteo dataset.</center>
 
@@ -131,7 +131,7 @@ loss函数是交叉熵
 
 默认情况下ONN是使用内积作为operation，论文中就inner-product, outer-product, sub-network, inner+outer-product四种operation进行了比较。
 
-![](ONN/75087804-9474-4E93-AA7E-755B4C585275.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/2E4E4961-55CF-49DE-9AD3-B67660A93A59.png" style="zoom:50%;" />
 
 可以看到inner+outer-product获得了最好的结果，但是优势并不明显，考虑到时间和空间复杂性，它并不是一个很好的选择。所以依旧是使用了inner product。
 但需要注意的是，sub-network取得的效果也是非常有竞争性的。而且它在Criteo数据集上的AUC指标上取得了很好的效果，这个可以考虑为下一步的研究方向。
