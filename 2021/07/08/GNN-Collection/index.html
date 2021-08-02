@@ -20,16 +20,27 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Collection of GNN papers  Highway GNN">
+  <meta name="description" content="Collection of GNN papers  Highway GNN（ACL 2018） HGAT（EMNLP 2019） HetGNN（KDD 2019）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GNN-Collection">
 <meta property="og:url" content="http://example.com/2021/07/08/GNN-Collection/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="Collection of GNN papers  Highway GNN">
+<meta property="og:description" content="Collection of GNN papers  Highway GNN（ACL 2018） HGAT（EMNLP 2019） HetGNN（KDD 2019）">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png">
 <meta property="article:published_time" content="2021-07-08T11:48:05.000Z">
-<meta property="article:modified_time" content="2021-07-09T15:04:28.718Z">
+<meta property="article:modified_time" content="2021-08-02T13:05:57.927Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="Collection">
 <meta name="twitter:card" content="summary">
@@ -133,7 +144,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">59</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -218,7 +229,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
+                <time title="Modified: 2021-08-02 21:05:57" itemprop="dateModified" datetime="2021-08-02T21:05:57+08:00">2021-08-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -247,7 +258,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>193</span>
+              <span>1.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -268,7 +279,9 @@
       
         <h1 id="collection-of-gnn-papers">Collection of GNN papers</h1>
 <ul>
-<li>Highway GNN</li>
+<li>Highway GNN（ACL 2018）</li>
+<li>HGAT（EMNLP 2019）</li>
+<li>HetGNN（KDD 2019）</li>
 </ul>
 <span id="more"></span>
 <h2 id="highway-gnn">Highway GNN</h2>
@@ -276,6 +289,36 @@
 <p>应用场景是社交媒体上的用户定位。单纯的在GNN上的创新点是使用Gate机制来控制传入的邻居的信息。</p>
 <p>在每一层，借鉴Highway networks的思路，计算一个门weight</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" /></p>
+<h2 id="hgat">HGAT</h2>
+<p><strong>Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classiﬁcation</strong> EMNLP 2019</p>
+<p>为短文本分类任务（semi-supervised short text classiﬁcation）设计了一个异质图神经网络HGAT。</p>
+<p>首先是利用原始文本构造一个异质图（HIN），把不同来源的文本组合到一起。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png" alt="image-20210728180026169" style="zoom:50%;" /></p>
+<p>重点在于，其中的node type各不相同，各自具有差异性很大的特征。</p>
+<p>然后是设计的网络结构，重点在于设计了一个两层的attention。</p>
+<p>不同type的node有不同的卷积核：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png" alt="image-20210728180219517" style="zoom:50%;" /></p>
+<p>然后，type-level的attention，聚合邻居下所有相同type的node embedding，然后计算attention weight。这样同一type下的所有neighbor node共享一个type level的weight。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png" alt="image-20210728180348109" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png" alt="image-20210728180319175" style="zoom:50%;" /></p>
+<p>不同type之间softmax。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png" alt="image-20210728180440793" style="zoom:50%;" /></p>
+<p>然后是node-level的attention，不同邻居node，计算attention。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png" alt="image-20210728180538577" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png" alt="image-20210728180555435" style="zoom:50%;" /></p>
+<p>最后结果：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png" alt="image-20210728180643981" style="zoom:50%;" /></p>
+<h2 id="hetgnn">HetGNN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/chuxuzhang/KDD2019_HetGNN">Heterogeneous Graph Neural Network</a> KDD 2019</p>
+<p>作者提出了一种同时处理node content和heterogeneous graph structure的GNN，HetGNN。</p>
+<p>看一下整体结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png" alt="image-20210802205726358" style="zoom:50%;" /></p>
+<p>核心模块有三方面：</p>
+<p><strong>Sampling Heterogeneous Neighbors</strong>：使用了random walk with restart (RWR)的邻居采样策略，需要注意的是这个采样策略保证对于node <span class="math inline">\(v\)</span>，能够采样到所有不同类型的邻居。然后相同类型的邻居聚合到一起。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png" alt="image-20210802205956510" style="zoom:50%;" /></p>
+<p><strong>Encoding Heterogeneous Contents</strong>：对于不同格式的content，使用不同的网络进行处理，然后使用Bi-LSTM进行融合，不同type的node有自己的Bi-LSTM网络。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png" alt="image-20210802210216977" style="zoom:50%;" /></p>
+<p><strong>Aggregating Heterogeneous Neighbors</strong>：对于相同类型的邻居，先基于Bi-LSTM进行聚合。然后不同类型的邻居基于attention进行聚合。</p>
 
     </div>
 
@@ -307,7 +350,10 @@
     <a href="/2021/07/08/batchnorm/" rel="prev" title="BatchNorm">
       <i class="fa fa-chevron-left"></i> BatchNorm
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/07/22/NSCaching/" rel="next" title="NSCaching">
+      NSCaching <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -366,7 +412,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-gnn-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of GNN papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#highway-gnn"><span class="nav-number">1.1.</span> <span class="nav-text">Highway GNN</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-gnn-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of GNN papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#highway-gnn"><span class="nav-number">1.1.</span> <span class="nav-text">Highway GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgat"><span class="nav-number">1.2.</span> <span class="nav-text">HGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetgnn"><span class="nav-number">1.3.</span> <span class="nav-text">HetGNN</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -382,7 +428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -444,13 +490,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">123k</span>
+    <span title="Symbols count total">128k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:52</span>
+    <span title="Reading time total">1:57</span>
 </div>
 
         

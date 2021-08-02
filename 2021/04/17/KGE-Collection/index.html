@@ -60,8 +60,16 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221647609.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222104512.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222043286.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154018301.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154108887.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154328117.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png">
 <meta property="article:published_time" content="2021-04-17T11:32:13.000Z">
-<meta property="article:modified_time" content="2021-07-09T15:04:28.694Z">
+<meta property="article:modified_time" content="2021-08-02T13:05:57.903Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="Collection">
 <meta name="twitter:card" content="summary">
@@ -165,7 +173,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">57</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">59</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -250,7 +258,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-07-09 23:04:28" itemprop="dateModified" datetime="2021-07-09T23:04:28+08:00">2021-07-09</time>
+                <time title="Modified: 2021-08-02 21:05:57" itemprop="dateModified" datetime="2021-08-02T21:05:57+08:00">2021-08-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -279,14 +287,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7k</span>
+              <span>8.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>6 mins.</span>
+              <span>8 mins.</span>
             </span>
 
         </div>
@@ -320,6 +328,8 @@
 <li>REInceptionE(AAAI 2020)</li>
 <li>R-MeN(ACL 2020)</li>
 <li>HypER(ICANN 2019)</li>
+<li>RSN(ICML 2019)</li>
+<li>NSCaching(ICDE 2019)</li>
 </ul>
 <span id="more"></span>
 <h2 id="hole">HoLE</h2>
@@ -333,13 +343,14 @@
 <p>从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。</p>
 <h2 id="tact">TACT</h2>
 <p><strong>Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs</strong> AAAI 2021</p>
+<a href="/2021/05/10/TACT/" title="[个人详细博客]">[个人详细博客]</a>
 <p><a target="_blank" rel="noopener" href="https://github.com/MIRALab-USTC/KG-TACT">TACT</a>，作者主要考虑的是inductive link prediction，使用gnn，捕获relation之间的语义上的关联性，即semantic correlation。作者认为relation之间的关联性通过relation的拓扑结构得到体现，因此，作者将所有的relation之间相连的拓扑结构分为7种，在relation形成的graph中进行学习，提出了RCN。</p>
 <p>然后看一下整体结构：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102445139.png" style="zoom:50%;" /></p>
 <h2 id="transf">TransF</h2>
 <p><strong>Knowledge Graph Embedding with Multiple Relation Projections</strong> ICPR 2018</p>
 <p>基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系<em>“/people/person/place_of_birth</em>和<em>/people/person/nationality</em>就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png" style="zoom:50%;" /></p>
 <p>公式：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png" style="zoom:50%;" /></p>
 <p>在实验中，在FB15k-237数据集上，作者使用了维度100，s数量5；在WN18RR数据集上，维度50，s数量5。最后使用TransR的方法投影：</p>
@@ -350,7 +361,7 @@
 \mathbf{R}=\mathbf{U}\mathbf{V}
 \]</span> <img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110904912.png" style="zoom:50%;" /></p>
 <p>在这种情况下，矩阵<span class="math inline">\(\mathbf{U}\)</span>的列是关系空间的basis</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png" style="zoom:50%;" /></p>
 <p>最后</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210518225522673.png" style="zoom:50%;" /></p>
 <h2 id="interpreting-kge">Interpreting-KGE</h2>
@@ -373,7 +384,7 @@
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520160757408.png" style="zoom:50%;" /></p>
 <p>其中的参数<span class="math inline">\(W\)</span>是所有关系共享的，<span class="math inline">\(e_s,w_r,e_o\)</span>是subject, relation和object entity的embedding，都是向量化的表示。</p>
 <p>具体计算公式是，沿着不同维度（mode）进行乘法运算</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png" style="zoom:50%;" /></p>
 <p>这篇文章可以考虑用来简化R-GCN中的<span class="math inline">\(W_r\)</span>。</p>
 <h2 id="mlp-for-kge">MLP for KGE</h2>
 <p><strong>Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion</strong> KDD 2014</p>
@@ -382,7 +393,7 @@
 <p>a Web-scale probabilistic knowledge base that combines extractions from Web content (obtained via analysis of text, tabular data, page structure, and human annotations)</p>
 </blockquote>
 <p>在文章中，使用了MLP来获得KGE，主要用于评估构造的KG中的edge存在的概率，主要方法：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png" style="zoom:50%;" /></p>
 <p>其中的<span class="math inline">\(\beta \in \mathbb{R}^{L\times 1}\)</span>，<span class="math inline">\(u_s, w_p, v_o\)</span>是subject、relation和object。</p>
 <h2 id="transh">TransH</h2>
 <p><strong>Knowledge Graph Embedding by Translating on Hyperplanes</strong> AAAI 2014</p>
@@ -392,15 +403,15 @@
 <li>使用了一个简单基于统计的，能够减小负采样错误率的方法。原理是one-to-many的relation应该倾向于替换head entity；many-to-one的relation倾向于替换tail entity。直接统计number of tail entities per head entity和number of head entities per tail entity，然后使用二元分布，计算替换head或者tail entity的概率。这种方法区别于以前的uniform的采样，可以叫做bernoulli采样。</li>
 </ul>
 <p>TransH的结构：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png" style="zoom:50%;" /></p>
 <p>数学公式：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png" style="zoom:50%;" /></p>
 <p>在训练中，保证<span class="math inline">\(||w_r||_2=1\)</span>，同时<span class="math inline">\(w_r \perp d_r\)</span>。</p>
 <h2 id="transa">TransA</h2>
 <p><strong>TransA: An Adaptive Approach for Knowledge Graph Embedding</strong> arxiv 2015</p>
 <p>这篇文章提出了一个新的计算loss的方法，将计算欧氏距离，换为计算马氏距离。</p>
 <p>作者认为对于以前的loss形式过于简单</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png" style="zoom:50%;" /></p>
 <p>缺点两个：</p>
 <ul>
 <li>这个loss metric实际是在计算一个球面等位超面spherical equipotential hyper-surfaces，这种方式过于简单，不够灵活，泛化</li>
@@ -456,7 +467,7 @@
 <h2 id="simple">SimplE</h2>
 <p><strong>SimplE Embedding for Link Prediction in Knowledge Graphs</strong> NIPS 2018</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/Mehran-k/SimplE">SimplE</a> 使用CP分解，改进了一般的CP分解，与一般的CP分解一样，每个entity有两种表示对于head和tail，每个relation有唯一的表示。在预测triple是否成立时，同时用原关系和逆关系是否成立进行平均打分。在论文中，作者证明了SimplE是fully expressivene的。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png" style="zoom:50%;" /></p>
 <p>其中的<span class="math inline">\(&lt;&gt;\)</span>函数是向量内积，定义为：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215101906.png" style="zoom:67%;" /></p>
 <h2 id="complex">Complex</h2>
@@ -466,7 +477,7 @@
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png" style="zoom:50%;" /></p>
 <p>其中的，<span class="math inline">\(Re\)</span>是实数部分，<span class="math inline">\(Im\)</span>是虚数部分。</p>
 <p>之后，预测概率</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png" style="zoom:50%;" /></p>
 <h2 id="reinceptione">REInceptionE</h2>
 <p><a target="_blank" rel="noopener" href="https://github.com/JuneTse/ReInceptionE."><strong>ReInceptionE: Relation-Aware Inception Network with Joint Local-Global Structural Information for Knowledge Graph Embedding</strong></a> AAAI 2020</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png" style="zoom:40%;" /></p>
@@ -487,7 +498,36 @@
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222043286.png" style="zoom:50%;" /></p>
 <p>在这个之后，加入了MLP，残差，gate。实际从结果来看，没有特别大的提升。</p>
 <h2 id="hyper">HypER</h2>
-<p><strong>Hypernetwork Knowledge Graph Embeddings</strong> ICANN 2019</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ibalazevic/HypER"><strong>Hypernetwork Knowledge Graph Embeddings</strong></a> ICANN 2019</p>
+<p>这篇文章在ConvE的基础上改进，提出了HypER，使用relation embedding通过一个hypernetwork（Hypernetworks. In: International Conference on Learning Representations.）为每个关系都产生一个1D卷积核。和ConvE有的区别是不使用2D的卷积，不需要reshape entity embedding和relation embedding。作者另外证明了这种1D卷积的方法最终可以归类到tensor factorization中。</p>
+<blockquote>
+<p>A hypernetwork is an approach by which one network generates weights for another network, that can be used to enable weight-sharing across layers and to dynamically synthesize weights given an input.</p>
+</blockquote>
+<p>结构图：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154018301.png" style="zoom:50%;" /></p>
+<p>核心公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154108887.png" style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(vec^{-1}\)</span>是重新将向量转化为矩阵形式。<span class="math inline">\(w_r\)</span>就是relation embedding，它的实际维度与entity embedding维度一致。</p>
+<p>从tensor operation的角度看HypER。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154328117.png" style="zoom:50%;" /></p>
+<h2 id="rsn">RSN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/nju-websoft/RSN"><strong>Learning to Exploit Long-term Relational Dependencies in Knowledge Graphs</strong></a> ICML 2019</p>
+<p>使用带残差的RNN的方法建模KG的relational path，预测实体对齐和链路预测两个任务。</p>
+<p>核心的模型结构，首先提出了一种Biased random walk sampling，偏好采用更深的实体路径，输出relational path。</p>
+<p>然后使用RSN(Recurrent skipping network)建模这个path，核心思想在于强调relational path中triple的重要性。将subject entity的hidden state作为残差输出到object entity的上一步hidden state中。一个relational path元素个数为奇数，头尾都是实体，<span class="math inline">\((x_1,\dots,x_{odd})\)</span>。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png" alt="image-20210719200737571" style="zoom:50%;" /></p>
+<p>然后，对实体和关系做区别对待：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png" alt="image-20210719200912943" style="zoom:50%;" /></p>
+<p>模型结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png" alt="image-20210719201218600" style="zoom:50%;" /></p>
+<p>使用Type-based noise contrastive estimation(NCE)进行优化，对这个优化方法没有很了解。</p>
+<h2 id="nscaching">NSCaching</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/yzhangee/NSCaching"><strong>NSCaching: Simple and Efﬁcient Negative Sampling for Knowledge Graph Embedding</strong></a> ICDE 2019</p>
+<a href="/2021/07/22/NSCaching/" title="[个人详细博客]">[个人详细博客]</a>
+<p>提出了一种针对KGE的动态负采样方法<a target="_blank" rel="noopener" href="https://github.com/yzhangee/NSCaching">NSCaching</a>，核心思想是得分高的负样本很重要但是数量少，因此，作者直接使用cache来保存得分高的负样本，同时随着训练动态更新cache，可以看做是基于GAN的负采样方法的distilled版本。</p>
+<p>在训练KGE的时候，负样本的质量很重要，也就是说那些越难与正样本区分的负样本可能越重要。<em>high-quality negative triplets should have large scores</em>，因为基于embedding的model实际上对于大多数负样本不敏感，给出的都是比较低的打分。如果使用random采样，采样得到的负样本，激活函数如果是sigmoid函数，那么如果负样本得分在&lt;&lt;0的区间内，那么梯度会很小，造成梯度消失的问题。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:50%;" /></p>
 
     </div>
 
@@ -581,7 +621,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reinceptione"><span class="nav-number">1.16.</span> <span class="nav-text">REInceptionE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-men"><span class="nav-number">1.17.</span> <span class="nav-text">R-MeN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.18.</span> <span class="nav-text">HypER</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reinceptione"><span class="nav-number">1.16.</span> <span class="nav-text">REInceptionE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-men"><span class="nav-number">1.17.</span> <span class="nav-text">R-MeN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.18.</span> <span class="nav-text">HypER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsn"><span class="nav-number">1.19.</span> <span class="nav-text">RSN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nscaching"><span class="nav-number">1.20.</span> <span class="nav-text">NSCaching</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -597,7 +637,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">57</span>
+          <span class="site-state-item-count">59</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -659,13 +699,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">123k</span>
+    <span title="Symbols count total">128k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">1:52</span>
+    <span title="Reading time total">1:57</span>
 </div>
 
         

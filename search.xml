@@ -511,12 +511,32 @@
       </tags>
   </entry>
   <entry>
+    <title>HyperNetworks</title>
+    <url>/2021/07/24/HyperNetworks/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Independence Survey</title>
     <url>/2021/07/07/Independence-Survey/</url>
     <content><![CDATA[]]></content>
       <categories>
         <category>Note</category>
       </categories>
+  </entry>
+  <entry>
+    <title>NSCaching</title>
+    <url>/2021/07/22/NSCaching/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Ppaer</category>
+        <category>KGE</category>
+      </categories>
+      <tags>
+        <tag>KGE</tag>
+      </tags>
   </entry>
   <entry>
     <title>RelGNN</title>
