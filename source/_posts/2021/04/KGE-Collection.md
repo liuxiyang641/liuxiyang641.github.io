@@ -32,6 +32,8 @@ Now it contains models of:
 - REInceptionE(AAAI 2020)
 - R-MeN(ACL 2020)
 - HypER(ICANN 2019)
+- RSN(ICML 2019)
+- NSCaching(ICDE 2019)
 
 <!--more-->
 
@@ -57,6 +59,8 @@ Now it contains models of:
 
 **Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs** AAAI 2021
 
+{% post_link TACT [个人详细博客] %}
+
 [TACT](https://github.com/MIRALab-USTC/KG-TACT)，作者主要考虑的是inductive link prediction，使用gnn，捕获relation之间的语义上的关联性，即semantic correlation。作者认为relation之间的关联性通过relation的拓扑结构得到体现，因此，作者将所有的relation之间相连的拓扑结构分为7种，在relation形成的graph中进行学习，提出了RCN。
 
 然后看一下整体结构：
@@ -69,7 +73,7 @@ Now it contains models of:
 
 基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系*“/people/person/place_of_birth*和*/people/person/nationality*就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png" style="zoom:50%;" />
 
 公式：
 
@@ -91,7 +95,7 @@ $$
 
 在这种情况下，矩阵$\mathbf{U}$的列是关系空间的basis
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png" style="zoom:50%;" />
 
 最后
 
@@ -131,7 +135,7 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 具体计算公式是，沿着不同维度（mode）进行乘法运算
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png" style="zoom:50%;" />
 
 这篇文章可以考虑用来简化R-GCN中的$W_r$。
 
@@ -145,7 +149,7 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 在文章中，使用了MLP来获得KGE，主要用于评估构造的KG中的edge存在的概率，主要方法：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png" style="zoom:50%;" />
 
 其中的$\beta \in \mathbb{R}^{L\times 1}$，$u_s, w_p, v_o$是subject、relation和object。
 
@@ -160,11 +164,11 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 TransH的结构：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png" style="zoom:50%;" />
 
 数学公式：
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png" style="zoom:50%;" />
 
 在训练中，保证$||w_r||_2=1$，同时$w_r \perp d_r$。
 
@@ -176,7 +180,7 @@ TransH的结构：
 
 作者认为对于以前的loss形式过于简单
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png" style="zoom:50%;" />
 
 缺点两个：
 
@@ -263,7 +267,7 @@ CP分解：
 
 [SimplE](https://github.com/Mehran-k/SimplE) 使用CP分解，改进了一般的CP分解，与一般的CP分解一样，每个entity有两种表示对于head和tail，每个relation有唯一的表示。在预测triple是否成立时，同时用原关系和逆关系是否成立进行平均打分。在论文中，作者证明了SimplE是fully expressivene的。
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png" style="zoom:50%;" />
 
 其中的$<>$函数是向量内积，定义为：
 
@@ -283,7 +287,7 @@ CP分解：
 
 之后，预测概率
 
-![](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png" style="zoom:50%;" />
 
 ## REInceptionE
 
@@ -325,5 +329,59 @@ CP分解：
 
 ## HypER
 
-**Hypernetwork Knowledge Graph Embeddings** ICANN 2019
+[**Hypernetwork Knowledge Graph Embeddings**](https://github.com/ibalazevic/HypER)  ICANN 2019
+
+这篇文章在ConvE的基础上改进，提出了HypER，使用relation embedding通过一个hypernetwork（Hypernetworks. In: International Conference on Learning Representations.）为每个关系都产生一个1D卷积核。和ConvE有的区别是不使用2D的卷积，不需要reshape entity embedding和relation embedding。作者另外证明了这种1D卷积的方法最终可以归类到tensor factorization中。
+
+> A hypernetwork is an approach by which one network generates weights for another network, that can be used to enable weight-sharing across layers and to dynamically synthesize weights given an input.
+
+结构图：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154018301.png" style="zoom:50%;" />
+
+核心公式：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154108887.png" style="zoom:50%;" />
+
+其中的$vec^{-1}$是重新将向量转化为矩阵形式。$w_r$就是relation embedding，它的实际维度与entity embedding维度一致。
+
+从tensor operation的角度看HypER。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154328117.png" style="zoom:50%;" />
+
+## RSN
+
+[**Learning to Exploit Long-term Relational Dependencies in Knowledge Graphs** ](https://github.com/nju-websoft/RSN) ICML 2019
+
+使用带残差的RNN的方法建模KG的relational path，预测实体对齐和链路预测两个任务。
+
+核心的模型结构，首先提出了一种Biased random walk sampling，偏好采用更深的实体路径，输出relational path。
+
+然后使用RSN(Recurrent skipping network)建模这个path，核心思想在于强调relational path中triple的重要性。将subject entity的hidden state作为残差输出到object entity的上一步hidden state中。一个relational path元素个数为奇数，头尾都是实体，$(x_1,\dots,x_{odd})$。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png" alt="image-20210719200737571" style="zoom:50%;" />
+
+然后，对实体和关系做区别对待：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png" alt="image-20210719200912943" style="zoom:50%;" />
+
+模型结构：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png" alt="image-20210719201218600" style="zoom:50%;" />
+
+使用Type-based noise contrastive estimation(NCE)进行优化，对这个优化方法没有很了解。
+
+## NSCaching
+
+[**NSCaching: Simple and Efﬁcient Negative Sampling for Knowledge Graph Embedding**](https://github.com/yzhangee/NSCaching) ICDE 2019
+
+{% post_link NSCaching [个人详细博客] %}
+
+提出了一种针对KGE的动态负采样方法[NSCaching](https://github.com/yzhangee/NSCaching)，核心思想是得分高的负样本很重要但是数量少，因此，作者直接使用cache来保存得分高的负样本，同时随着训练动态更新cache，可以看做是基于GAN的负采样方法的distilled版本。
+
+在训练KGE的时候，负样本的质量很重要，也就是说那些越难与正样本区分的负样本可能越重要。*high-quality negative triplets should have large scores*，因为基于embedding的model实际上对于大多数负样本不敏感，给出的都是比较低的打分。如果使用random采样，采样得到的负样本，激活函数如果是sigmoid函数，那么如果负样本得分在<<0的区间内，那么梯度会很小，造成梯度消失的问题。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:50%;" />
 
