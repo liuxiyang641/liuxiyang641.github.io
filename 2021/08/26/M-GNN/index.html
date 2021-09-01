@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Robust Embedding with Multi-Level Structures for Link Prediction 这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些">
+<meta property="og:type" content="article">
+<meta property="og:title" content="M-GNN">
+<meta property="og:url" content="http://example.com/2021/08/26/M-GNN/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Robust Embedding with Multi-Level Structures for Link Prediction 这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826144601695.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150307208.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150339407.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png">
+<meta property="article:published_time" content="2021-08-26T06:25:30.000Z">
+<meta property="article:modified_time" content="2021-09-01T14:50:43.337Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="KGE">
+<meta property="article:tag" content="GNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png">
+
+<link rel="canonical" href="http://example.com/2021/08/26/M-GNN/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>M-GNN | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">5</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">63</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/26/M-GNN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          M-GNN<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/08/M-GNN.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-26 14:25:30" itemprop="dateCreated datePublished" datetime="2021-08-26T14:25:30+08:00">2021-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-01 22:50:43" itemprop="dateModified" datetime="2021-09-01T22:50:43+08:00">2021-09-01</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>884</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>1 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="robust-embedding-with-multi-level-structures-for-link-prediction">Robust Embedding with Multi-Level Structures for Link Prediction</h1>
+<p>这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。</p>
+<span id="more"></span>
+<h2 id="graph-coarsening">Graph Coarsening</h2>
+<p>和一般的GNN消息聚合方式不同，M-GNN希望能够建模KG中不同尺度中的信息。</p>
+<p>首先构造k个Coarsened graph：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png" alt="image-20210826143747570" style="zoom:50%;" /></p>
+<p>核心是两种合并结构的方法：<strong>edge coarsening</strong>和<strong>neighbor coarsening</strong>。</p>
+<p>M-GNN考虑在图中的不同relation包括不同的结构信息：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826144601695.png" alt="image-20210826144601695" style="zoom:50%;" /></p>
+<p>对于1-1 structure，使用<strong>edge coarsening</strong>，1-1 structure是指两个edge没有相连的相同实体。edge coarsening直接把这样的edge分别看做是新的super node，对edge进行了coarsening。如下图a所示。edge coarsening使得节点包括了更多阶邻居的信息。</p>
+<p>对于1-n或者n-1 structure，同一关系下的不同邻居实体共享某种相同的信息，可以进行聚合，把两个邻居实体合并为新的super node，叫做<strong>neighbor coarsening</strong>。如下图b, c所示。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png" alt="image-20210826145202651" style="zoom:50%;" /></p>
+<p>对于n-n structure，可以看做是多个1-n或者n-1结构，不需要单独处理。</p>
+<p>通过先neighbor coarsening压缩实体，然后edge coarsening进一步压缩graph中实体和关系数量。</p>
+<h2 id="multi-level-gnn">Multi-Level GNN</h2>
+<p>与产生不同粒度的graph的顺序相反，在进行GNN的消息传递时，先从最粗粒度的graph进行学习，然后到更细粒度的graph，每个graph对应一层GNN。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150307208.png" alt="image-20210826150307208" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150339407.png" alt="image-20210826150339407" style="zoom:50%;" /></p>
+<p>公式中的<span class="math inline">\(S\)</span>是指实体到实体的对应矩阵。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png" alt="image-20210826150505564" style="zoom:50%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/KGE/" rel="tag"><i class="fa fa-tag"></i> KGE</a>
+              <a href="/tags/GNN/" rel="tag"><i class="fa fa-tag"></i> GNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/06/PATHCON/" rel="prev" title="PATHCON">
+      <i class="fa fa-chevron-left"></i> PATHCON
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/27/RDGCN/" rel="next" title="RDGCN">
+      RDGCN <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#robust-embedding-with-multi-level-structures-for-link-prediction"><span class="nav-number">1.</span> <span class="nav-text">Robust Embedding with Multi-Level Structures for Link Prediction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#graph-coarsening"><span class="nav-number">1.1.</span> <span class="nav-text">Graph Coarsening</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multi-level-gnn"><span class="nav-number">1.2.</span> <span class="nav-text">Multi-Level GNN</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">139k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">2:06</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>

@@ -559,4 +559,55 @@
         <category>Paper</category>
       </categories>
   </entry>
+  <entry>
+    <title>HetSANN</title>
+    <url>/2021/08/03/HetSANN/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>M-GNN</title>
+    <url>/2021/08/26/M-GNN/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>KGE</tag>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PATHCON</title>
+    <url>/2021/08/06/PATHCON/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>KG</tag>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RDGCN</title>
+    <url>/2021/08/27/RDGCN/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>KGE</tag>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
 </search>
