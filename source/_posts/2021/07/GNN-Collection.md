@@ -29,6 +29,8 @@ tags:
 - M-GNN（IJCAI 2019）
 - RDGCN（IJCAI 2019）
 - SLiCE（WWW 2021）
+- M<sup>2</sup>GNN（WWW 2021）
+- LGNN（IJCAI 2021）
 
 
 
@@ -353,4 +355,46 @@ CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然
 然后，有两个阶段，pre-training和Fine-tuning。pre-training预测被mask掉的node，fine-tuning进行link prediction。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png" alt="image-20210830200013984" style="zoom:50%;" />
+
+## M<sup>2</sup>GNN
+
+**Mixed-Curvature Multi-Relational Graph Neural Network for Knowledge Graph Completion** WWW 2021
+
+首个将mixed-curvature geometry与GNN联系起来学习KGE的方法，作者尝试利用不同的空间对KG中的异质性结构进行建模。但是由于对mixed-curvature space和manifold不了解，看不懂论文内容。之后可以找时间仔细补充下基本知识。可参照
+
+John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springer, 1–31.
+
+## LGNN
+
+**Node-wise Localization of Graph Neural Networks** IJCAI 2021
+
+作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png" alt="image-20210921195057584" style="zoom:50%;" />
+
+具体有两个Node-level localization和Edge-level localization.
+
+**Node-level localization**
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png" alt="image-20210921195215512" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png" alt="image-20210921195243176" style="zoom:50%;" />
+
+注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量$a_v$和$b_v$之后用于生成node $v$的weight matrix。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png" alt="image-20210921195358969" style="zoom:50%;" />
+
+注意这里，是把$a_v$和$b_v$作为一行，然后复制，最后作用到graph global matrix$W_l$上。
+
+**Edge-level localization**
+
+作者对node $v$的不同邻居edge进一步建模：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png" alt="image-20210921195557949" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png" alt="image-20210921195613526" style="zoom:50%;" />
+
+最后聚合：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" />
 
