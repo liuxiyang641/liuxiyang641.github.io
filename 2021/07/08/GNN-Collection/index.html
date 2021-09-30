@@ -73,8 +73,15 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830195131960.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png">
 <meta property="article:published_time" content="2021-07-08T11:48:05.000Z">
-<meta property="article:modified_time" content="2021-09-01T14:50:43.337Z">
+<meta property="article:modified_time" content="2021-09-30T03:04:16.810Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="Collection">
 <meta name="twitter:card" content="summary">
@@ -168,7 +175,7 @@
   </li>
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">5</span></a>
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">6</span></a>
 
   </li>
         <li class="menu-item menu-item-categories">
@@ -178,7 +185,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">63</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">65</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -263,7 +270,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-09-01 22:50:43" itemprop="dateModified" datetime="2021-09-01T22:50:43+08:00">2021-09-01</time>
+                <time title="Modified: 2021-09-30 11:04:16" itemprop="dateModified" datetime="2021-09-30T11:04:16+08:00">2021-09-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,14 +299,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>6.9k</span>
+              <span>7.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>6 mins.</span>
+              <span>7 mins.</span>
             </span>
 
         </div>
@@ -331,6 +338,8 @@
 <li>M-GNN（IJCAI 2019）</li>
 <li>RDGCN（IJCAI 2019）</li>
 <li>SLiCE（WWW 2021）</li>
+<li>M<sup>2</sup>GNN（WWW 2021）</li>
+<li>LGNN（IJCAI 2021）</li>
 </ul>
 <span id="more"></span>
 <h2 id="highway-gnn">Highway GNN</h2>
@@ -500,6 +509,27 @@
 <p>作者希望考虑的是，单个节点在特定的subgraph下的表示。对于节点对，利用随机游走寻找两个节点之间的context subgraph。首先，利用一个embedding function，在全图下学习每个node的初始表示，作为global embedding。</p>
 <p>然后，有两个阶段，pre-training和Fine-tuning。pre-training预测被mask掉的node，fine-tuning进行link prediction。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png" alt="image-20210830200013984" style="zoom:50%;" /></p>
+<h2 id="m2gnn">M<sup>2</sup>GNN</h2>
+<p><strong>Mixed-Curvature Multi-Relational Graph Neural Network for Knowledge Graph Completion</strong> WWW 2021</p>
+<p>首个将mixed-curvature geometry与GNN联系起来学习KGE的方法，作者尝试利用不同的空间对KG中的异质性结构进行建模。但是由于对mixed-curvature space和manifold不了解，看不懂论文内容。之后可以找时间仔细补充下基本知识。可参照</p>
+<p>John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springer, 1–31.</p>
+<h2 id="lgnn">LGNN</h2>
+<p><strong>Node-wise Localization of Graph Neural Networks</strong> IJCAI 2021</p>
+<p>作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png" alt="image-20210921195057584" style="zoom:50%;" /></p>
+<p>具体有两个Node-level localization和Edge-level localization.</p>
+<p><strong>Node-level localization</strong></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png" alt="image-20210921195215512" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png" alt="image-20210921195243176" style="zoom:50%;" /></p>
+<p>注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>之后用于生成node <span class="math inline">\(v\)</span>的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png" alt="image-20210921195358969" style="zoom:50%;" /></p>
+<p>注意这里，是把<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>作为一行，然后复制，最后作用到graph global matrix<span class="math inline">\(W_l\)</span>上。</p>
+<p><strong>Edge-level localization</strong></p>
+<p>作者对node <span class="math inline">\(v\)</span>的不同邻居edge进一步建模：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png" alt="image-20210921195557949" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png" alt="image-20210921195613526" style="zoom:50%;" /></p>
+<p>最后聚合：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" /></p>
 
     </div>
 
@@ -593,7 +623,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-gnn-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of GNN papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#highway-gnn"><span class="nav-number">1.1.</span> <span class="nav-text">Highway GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgsl"><span class="nav-number">1.2.</span> <span class="nav-text">HGSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgat"><span class="nav-number">1.3.</span> <span class="nav-text">HGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetgnn"><span class="nav-number">1.4.</span> <span class="nav-text">HetGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetsann"><span class="nav-number">1.5.</span> <span class="nav-text">HetSANN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rhine"><span class="nav-number">1.6.</span> <span class="nav-text">RHINE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jk"><span class="nav-number">1.7.</span> <span class="nav-text">JK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pathcon"><span class="nav-number">1.8.</span> <span class="nav-text">PATHCON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetegnn"><span class="nav-number">1.9.</span> <span class="nav-text">HeteGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kgnn"><span class="nav-number">1.10.</span> <span class="nav-text">KGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cprl"><span class="nav-number">1.11.</span> <span class="nav-text">CPRL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clhg"><span class="nav-number">1.12.</span> <span class="nav-text">CLHG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eagcn"><span class="nav-number">1.13.</span> <span class="nav-text">EAGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eigat"><span class="nav-number">1.14.</span> <span class="nav-text">EIGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaeat"><span class="nav-number">1.15.</span> <span class="nav-text">GAEAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m-gnn"><span class="nav-number">1.16.</span> <span class="nav-text">M-GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdgcn"><span class="nav-number">1.17.</span> <span class="nav-text">RDGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.18.</span> <span class="nav-text">SLiCE</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-gnn-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of GNN papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#highway-gnn"><span class="nav-number">1.1.</span> <span class="nav-text">Highway GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgsl"><span class="nav-number">1.2.</span> <span class="nav-text">HGSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgat"><span class="nav-number">1.3.</span> <span class="nav-text">HGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetgnn"><span class="nav-number">1.4.</span> <span class="nav-text">HetGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetsann"><span class="nav-number">1.5.</span> <span class="nav-text">HetSANN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rhine"><span class="nav-number">1.6.</span> <span class="nav-text">RHINE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jk"><span class="nav-number">1.7.</span> <span class="nav-text">JK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pathcon"><span class="nav-number">1.8.</span> <span class="nav-text">PATHCON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetegnn"><span class="nav-number">1.9.</span> <span class="nav-text">HeteGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kgnn"><span class="nav-number">1.10.</span> <span class="nav-text">KGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cprl"><span class="nav-number">1.11.</span> <span class="nav-text">CPRL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clhg"><span class="nav-number">1.12.</span> <span class="nav-text">CLHG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eagcn"><span class="nav-number">1.13.</span> <span class="nav-text">EAGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eigat"><span class="nav-number">1.14.</span> <span class="nav-text">EIGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaeat"><span class="nav-number">1.15.</span> <span class="nav-text">GAEAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m-gnn"><span class="nav-number">1.16.</span> <span class="nav-text">M-GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdgcn"><span class="nav-number">1.17.</span> <span class="nav-text">RDGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.18.</span> <span class="nav-text">SLiCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m2gnn"><span class="nav-number">1.19.</span> <span class="nav-text">M2GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lgnn"><span class="nav-number">1.20.</span> <span class="nav-text">LGNN</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -609,7 +639,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-count">65</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -622,7 +652,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -671,13 +701,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">139k</span>
+    <span title="Symbols count total">147k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">2:06</span>
+    <span title="Reading time total">2:13</span>
 </div>
 
         

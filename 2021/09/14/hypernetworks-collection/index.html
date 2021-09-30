@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Cardo:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","width":300,"display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Collection of Hypernetworks Papers 调研hypernetwork相关文章  Dynamic Convlutional Layer（CVPR 2015） SRCNN（ICCV 2015） DFN（NIPS 2016） HyperNetworks（ICLR 2017） Nachmani et al. （arxiv 2020） Hyper-CNN（arxiv 2021）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hypernetworks-collection">
+<meta property="og:url" content="http://example.com/2021/09/14/hypernetworks-collection/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Collection of Hypernetworks Papers 调研hypernetwork相关文章  Dynamic Convlutional Layer（CVPR 2015） SRCNN（ICCV 2015） DFN（NIPS 2016） HyperNetworks（ICLR 2017） Nachmani et al. （arxiv 2020） Hyper-CNN（arxiv 2021）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164044854.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164712746.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914165618622.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170121911.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170342132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170640801.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111631387.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210915103148269.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210915103214168.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210916103216333.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210916103510440.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210917180259574.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210917180815544.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png">
+<meta property="article:published_time" content="2021-09-14T08:11:20.000Z">
+<meta property="article:modified_time" content="2021-09-30T03:04:16.810Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164044854.png">
+
+<link rel="canonical" href="http://example.com/2021/09/14/hypernetworks-collection/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>hypernetworks-collection | Liu Xiyang</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Liu Xiyang</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags<span class="badge">6</span></a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories<span class="badge">16</span></a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives<span class="badge">65</span></a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/14/hypernetworks-collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hypernetworks-collection<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/09/hypernetworks-collection.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-09-14 16:11:20" itemprop="dateCreated datePublished" datetime="2021-09-14T16:11:20+08:00">2021-09-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-09-30 11:04:16" itemprop="dateModified" datetime="2021-09-30T11:04:16+08:00">2021-09-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">Views: </span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>3.1k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>3 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="collection-of-hypernetworks-papers">Collection of Hypernetworks Papers</h1>
+<p>调研hypernetwork相关文章</p>
+<ul>
+<li>Dynamic Convlutional Layer（CVPR 2015）</li>
+<li>SRCNN（ICCV 2015）</li>
+<li>DFN（NIPS 2016）</li>
+<li>HyperNetworks（ICLR 2017）</li>
+<li>Nachmani et al. （arxiv 2020）</li>
+<li>Hyper-CNN（arxiv 2021）</li>
+<li>HyperSeg（CVPR 2021）</li>
+<li>LGNN（IJCAI 2021）</li>
+</ul>
+<span id="more"></span>
+<h2 id="dynamic-convlutional-layer">Dynamic Convlutional Layer</h2>
+<p><strong>A Dynamic Convolutional Layer for Short Range Weather Prediction</strong> CVPR 2015</p>
+<p>针对短时天气预测任务，这个任务会接收一个时序的图像数据，然后预测新的天气图像。构造了一个动态卷积层，对于当前的天气图像要使用的卷积参数，该参数由前面时序的图像输入生成。</p>
+<p>模型的整体结构，DC表示动态卷积层，Network B就是用来生成卷积核的网络，同样是一个卷积网络。Network B的输出是两个，垂直卷积核V和水平卷积核H，经过softmax得到SV1和SH1。最后的CROP是一个裁剪层crop layer，只取DC2输出的中心patch。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164044854.png" alt="image-20210914164044854" style="zoom:50%;" /></p>
+<p>产生卷积核的network B结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164712746.png" alt="image-20210914164712746" style="zoom:50%;" /></p>
+<h2 id="srcnn">SRCNN</h2>
+<p><strong>Conditioned Regression Models for Non-Blind Single Image Super-Resolution</strong> ICCV 2015</p>
+<p>针对Single image super-resolution（SISR）任务，它接收一个低分率的图像<span class="math inline">\(l\)</span>，输出高分辨率图像<span class="math inline">\(h\)</span>。作者认为在还原为高分辨率的图片时，对于不同的图片，应该是有不同的blur kernel，而不是让blur kernel在训练和测试过程中一直固定。</p>
+<p>作者为每个image都定义了一个额外的blur kernel，然后使用生成参数的方法生成新的blur 卷积核。SRCNN的示例图。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914165618622.png" alt="image-20210914165618622" style="zoom:50%;" /></p>
+<p>图片中的<span class="math inline">\(W_{1}(k,\theta)\)</span>就是生成的blur kernels，生成方式就是简单的全连接层。</p>
+<h2 id="dfn">DFN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/dbbert/dfn"><strong>Dynamic Filter Networks</strong></a> NIPS 2016</p>
+<p>作者在video and stereo prediction任务上进行实验，使用一个ﬁlter-generating network生成参数，然后进行dynamic ﬁltering layer。作者除了让参数sample-specific，还产生了location-specific的参数。</p>
+<p>概念图如下，其中input B依赖于之前的input A。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170121911.png" alt="image-20210914170121911" style="zoom:50%;" /></p>
+<p>针对不同预测任务，作者设计了了不同的DFN。</p>
+<p>在video prediction上，产生参数的网络是一个encoder-decoder的网络，输出是location-specific的卷积核。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170342132.png" alt="image-20210914170342132" style="zoom:50%;" /></p>
+<p>学习steerable ﬁlters，产生参数的网络是MLP。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170640801.png" alt="image-20210914170640801" style="zoom:50%;" /></p>
+<h2 id="hypernetworks">HyperNetworks</h2>
+<p><strong>HyperNetworks</strong> ICLR 2017</p>
+<a href="#">Post not found: HyperNetworks[个人详细博客]</a>
+<p>核心贡献是将Hypernetwork扩展到了convolutional networks和long recurrent networks，证明其在使用更少的参数情况下，在序列模型和卷积网络的多个预测任务下都达到了不错的训练结果。</p>
+<p>CNN：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png" alt="image-20210725111153567" style="zoom:50%;" /></p>
+<p>RNN：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111631387.png" alt="image-20210725111631387" style="zoom: 33%;" /></p>
+<h2 id="nachmani-et-al.">Nachmani et al.</h2>
+<p><strong>Molecule Property Prediction and Classiﬁcation with Graph Hypernetworks</strong> arxiv 2020</p>
+<p>在molecule property prediction and classiﬁcation任务上，将hypernetwork引入GNN提升模型效果。为了解决hypernetwork存在的不稳定问题，作者发现拼接current message和first message来作为hypernetwork的输入能够解决这一问题。</p>
+<p>作者针对NMP-Edge network, Invariant Graph Network和Graph Isomorphism Network都引入了hypernetwork。下面重点关注对GIN的改进。</p>
+<p>GIN原来的形式</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210915103148269.png" alt="image-20210915103148269" style="zoom:50%;" /></p>
+<p>改进后：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210915103214168.png" alt="image-20210915103214168" style="zoom:50%;" /></p>
+<p><span class="math inline">\(f\)</span>和<span class="math inline">\(g\)</span>是3层和2层使用tanh的MLP。可以看到，它使用current message和first message作为hypernetwork输入，hypernetwork同样是一个GNN的形式，以节点为中心。</p>
+<h2 id="hyper-cnn">Hyper-CNN</h2>
+<p><strong>Hyper-Convolution Networks for Biomedical Image Segmentation</strong> arxiv 2021</p>
+<p>作者将filter kernel的二维坐标作为输入，经过hypernetwork产生对应的kernel value。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210916103216333.png" alt="image-20210916103216333" style="zoom: 33%;" /></p>
+<p>作者的hypernetwork是一个多层（四层）的1x1卷积网络，在实现的时候，主网络的每一层都有一个对应的hyper-CNN作为补充。</p>
+<p>hypernetwork输入是表示x和y轴的两个channel输入，然后不断经过1x1卷积，不改变channel维度，最后输出weight。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210916103510440.png" alt="image-20210916103510440" style="zoom:50%;" /></p>
+<h2 id="hyperseg">HyperSeg</h2>
+<p><a target="_blank" rel="noopener" href="https://nirkin.com/hyperseg"><strong>HyperSeg: Patch-wise Hypernetwork for Real-time Semantic Segmentation</strong></a> CVPR 2021</p>
+<p>这篇文章是针对Real-time Semantic Segmentation任务，不是很了解这个任务，看起来是针对实时拍摄的image进行scene understanding，划分图像边界。</p>
+<p>作者引入了hypernetwork，动态产生卷积weight，进行patch-wise的卷积操作，最后输出预测。hypernetwork使用了U-Net的结构（同样不了解）。</p>
+<p>整体结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210917180259574.png" alt="image-20210917180259574" style="zoom:50%;" /></p>
+<p>这里hypernetwork就是context head，它接受backbone的输出。backbone会把原来的image划分为不同resolution的feature map，最后的一个feature map输出给hypernetwork。</p>
+<p>hypernetwork的输出是一个大的signal map，提供给不同的meta-block使用，划分方式是作者设计了一个根据channel和不同meta-block需要的weights进行划分，划分方法在附录里，没有细看。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210917180815544.png" alt="image-20210917180815544" style="zoom:50%;" /></p>
+<h2 id="lgnn">LGNN</h2>
+<p><strong>Node-wise Localization of Graph Neural Networks</strong> IJCAI 2021</p>
+<p>作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png" alt="image-20210921195057584" style="zoom:50%;" /></p>
+<p>具体有两个Node-level localization和Edge-level localization.</p>
+<p><strong>Node-level localization</strong></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png" alt="image-20210921195215512" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png" alt="image-20210921195243176" style="zoom:50%;" /></p>
+<p>注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>之后用于生成node <span class="math inline">\(v\)</span>的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png" alt="image-20210921195358969" style="zoom:50%;" /></p>
+<p>注意这里，是把<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>作为一行，然后复制，最后作用到graph global matrix<span class="math inline">\(W_l\)</span>上。</p>
+<p><strong>Edge-level localization</strong></p>
+<p>作者对node <span class="math inline">\(v\)</span>的不同邻居edge进一步建模：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png" alt="image-20210921195557949" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png" alt="image-20210921195613526" style="zoom:50%;" /></p>
+<p>最后聚合：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+    <div style="text-align:center;color: #ccc;font-size:14px;">
+        ------ 本文结束 <i class="fas fa-glass-cheers"></i> ------</div>
+    
+      </div>
+    
+
+      <footer class="post-footer">
+          
+          <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/27/RDGCN/" rel="prev" title="RDGCN">
+      <i class="fa fa-chevron-left"></i> RDGCN
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/09/26/Essence-of-linear-algebra-3b1b/" rel="next" title="Essence-of-linear-algebra-3b1b">
+      Essence-of-linear-algebra-3b1b <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-hypernetworks-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of Hypernetworks Papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dynamic-convlutional-layer"><span class="nav-number">1.1.</span> <span class="nav-text">Dynamic Convlutional Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#srcnn"><span class="nav-number">1.2.</span> <span class="nav-text">SRCNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dfn"><span class="nav-number">1.3.</span> <span class="nav-text">DFN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hypernetworks"><span class="nav-number">1.4.</span> <span class="nav-text">HyperNetworks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nachmani-et-al."><span class="nav-number">1.5.</span> <span class="nav-text">Nachmani et al.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper-cnn"><span class="nav-number">1.6.</span> <span class="nav-text">Hyper-CNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyperseg"><span class="nav-number">1.7.</span> <span class="nav-text">HyperSeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lgnn"><span class="nav-number">1.8.</span> <span class="nav-text">LGNN</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">65</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641.github.io" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641.github.io" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">147k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time total &asymp;</span>
+    <span title="Reading time total">2:13</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/medium-zoom@1/dist/medium-zoom.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
