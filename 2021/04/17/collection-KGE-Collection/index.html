@@ -23,7 +23,7 @@
   <meta name="description" content="Collection of KGE Papers Volume 1 Collection of KGE papers, volume 1. Now it contains models of:  HoLE (AAAI 2016) TACT(AAAI 2021) TransF(ICPR 2018) TransCoRe(JCST 2018) Interpreting-KGE(ICLR 2021) Tu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KGE-Collection">
-<meta property="og:url" content="http://example.com/2021/04/17/KGE-Collection/index.html">
+<meta property="og:url" content="http://example.com/2021/04/17/collection-KGE-Collection/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
 <meta property="og:description" content="Collection of KGE Papers Volume 1 Collection of KGE papers, volume 1. Now it contains models of:  HoLE (AAAI 2016) TACT(AAAI 2021) TransF(ICPR 2018) TransCoRe(JCST 2018) Interpreting-KGE(ICLR 2021) Tu">
 <meta property="og:locale" content="en_US">
@@ -68,14 +68,17 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png">
 <meta property="article:published_time" content="2021-04-17T11:32:13.000Z">
-<meta property="article:modified_time" content="2021-12-22T03:08:28.322Z">
+<meta property="article:modified_time" content="2022-03-07T00:39:13.493Z">
 <meta property="article:author" content="Liu Xiyang">
 <meta property="article:tag" content="Collection">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png">
 
-<link rel="canonical" href="http://example.com/2021/04/17/KGE-Collection/">
+<link rel="canonical" href="http://example.com/2021/04/17/collection-KGE-Collection/">
 
 
 <script id="page-configurations">
@@ -228,7 +231,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/KGE-Collection/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/04/17/collection-KGE-Collection/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -241,7 +244,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          KGE-Collection<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/2021/04/KGE-Collection.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
+          KGE-Collection<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/KGE-Collection.md" class="post-edit-link" title="Edit this post" rel="noopener" target="_blank"><i class="fa fa-pencil-alt"></i></a>
         </h1>
 
         <div class="post-meta">
@@ -258,7 +261,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-12-22 11:08:28" itemprop="dateModified" datetime="2021-12-22T11:08:28+08:00">2021-12-22</time>
+                <time title="Modified: 2022-03-07 08:39:13" itemprop="dateModified" datetime="2022-03-07T08:39:13+08:00">2022-03-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -287,7 +290,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>8.5k</span>
+              <span>8.7k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -526,8 +529,15 @@
 <a href="/2021/07/22/NSCaching/" title="[个人详细博客]">[个人详细博客]</a>
 <p>提出了一种针对KGE的动态负采样方法<a target="_blank" rel="noopener" href="https://github.com/yzhangee/NSCaching">NSCaching</a>，核心思想是得分高的负样本很重要但是数量少，因此，作者直接使用cache来保存得分高的负样本，同时随着训练动态更新cache，可以看做是基于GAN的负采样方法的distilled版本。</p>
 <p>在训练KGE的时候，负样本的质量很重要，也就是说那些越难与正样本区分的负样本可能越重要。<em>high-quality negative triplets should have large scores</em>，因为基于embedding的model实际上对于大多数负样本不敏感，给出的都是比较低的打分。如果使用random采样，采样得到的负样本，激活函数如果是sigmoid函数，那么如果负样本得分在&lt;&lt;0的区间内，那么梯度会很小，造成梯度消失的问题。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:40%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:40%;" /></p>
+<h2 id="structure">StructurE</h2>
+<p><strong>Structural context-based knowledge graph embedding for link prediction</strong> Neurocomputing 2022</p>
+<p>这篇文章是基于trans的KGE方法，它对于两个预测任务<span class="math inline">\(&lt;h, t, ?&gt;\)</span>和<span class="math inline">\(&lt;?, r, t&gt;\)</span>分别设计了不同的score function。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png" alt="image-20220303152549137" style="zoom:50%;" /></p>
+<p>核心是两个公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png" alt="image-20220303152702651" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png" alt="image-20220303152749096" style="zoom:50%;" /></p>
 
     </div>
 
@@ -621,7 +631,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reinceptione"><span class="nav-number">1.16.</span> <span class="nav-text">REInceptionE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-men"><span class="nav-number">1.17.</span> <span class="nav-text">R-MeN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.18.</span> <span class="nav-text">HypER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsn"><span class="nav-number">1.19.</span> <span class="nav-text">RSN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nscaching"><span class="nav-number">1.20.</span> <span class="nav-text">NSCaching</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reinceptione"><span class="nav-number">1.16.</span> <span class="nav-text">REInceptionE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-men"><span class="nav-number">1.17.</span> <span class="nav-text">R-MeN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.18.</span> <span class="nav-text">HypER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsn"><span class="nav-number">1.19.</span> <span class="nav-text">RSN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nscaching"><span class="nav-number">1.20.</span> <span class="nav-text">NSCaching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#structure"><span class="nav-number">1.21.</span> <span class="nav-text">StructurE</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -689,7 +699,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-flag"></i>
   </span>
@@ -699,13 +709,13 @@
       <i class="fa fa-chart-area"></i>
     </span>
       <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">196k</span>
+    <span title="Symbols count total">197k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span class="post-meta-item-text">Reading time total &asymp;</span>
-    <span title="Reading time total">2:58</span>
+    <span title="Reading time total">2:59</span>
 </div>
 
         

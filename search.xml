@@ -100,6 +100,41 @@
       </tags>
   </entry>
   <entry>
+    <title>GNN-Collection</title>
+    <url>/2021/07/08/collection-GNN-Collection/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Ppaer</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>KGE-Collection</title>
+    <url>/2021/04/17/collection-KGE-Collection/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hypernetworks-collection</title>
+    <url>/2021/09/14/collection-hypernetworks-collection/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>1-Interoduction-word-vectors</title>
     <url>/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/</url>
     <content><![CDATA[]]></content>
@@ -328,18 +363,6 @@
         <category>Paper</category>
         <category>RS</category>
       </categories>
-  </entry>
-  <entry>
-    <title>KGE-Collection</title>
-    <url>/2021/04/17/KGE-Collection/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>KGE</category>
-      </categories>
-      <tags>
-        <tag>Collection</tag>
-      </tags>
   </entry>
   <entry>
     <title>KGIN</title>
@@ -586,18 +609,6 @@
       </tags>
   </entry>
   <entry>
-    <title>GNN-Collection</title>
-    <url>/2021/07/08/GNN-Collection/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Ppaer</category>
-        <category>GNN</category>
-      </categories>
-      <tags>
-        <tag>Collection</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>HGSL</title>
     <url>/2021/07/06/HGSL/</url>
     <content><![CDATA[]]></content>
@@ -718,17 +729,6 @@
       </categories>
       <tags>
         <tag>Math</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hypernetworks-collection</title>
-    <url>/2021/09/14/hypernetworks-collection/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Paper</category>
-      </categories>
-      <tags>
-        <tag>Collection</tag>
       </tags>
   </entry>
 </search>
