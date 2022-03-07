@@ -398,3 +398,90 @@ John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springe
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" />
 
+## SRGCN
+
+**SRGCN: Graph-based multi-hop reasoning on knowledge graphs** Neurocomputing 2021
+
+这篇文章在预测$<h, r, t>$的时候，首先构建$h$和$t$之间的graph，然后在这个graph上，逐步使用R-GCN得到对于尾实体的预测embedding，最后使用MLP获得score。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303170039139.png" alt="image-20220303170039139" style="zoom:40%;" />
+
+图中的label指的是从头实体出发，遇到的第几阶邻居。一个实体与头实体之间存在多个不同长度的path时，以最长的path作为label。
+
+之后在使用R-GCN进行图卷积时，并不是以头实体为中心不断的聚合邻居。而是将头实体作为一开始，不断聚合到下一阶邻居实体上，直到聚合到具有最大label的实体上。
+
+## Chen et al.
+
+**Learning graph attention-aware knowledge graph embedding** Neurocomputing 2021
+
+这篇文章核心是提出了一种新的在KG上计算attention的方法，有三个部分：entity attention、relation attention和structure attention。最核心的创新点是计算structural attention。
+
+Entity attention：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183431157.png" alt="image-20220303183431157" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183447999.png" alt="image-20220303183447999" style="zoom:50%;" />
+
+Relation attention：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183517954.png" alt="image-20220303183517954" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183538437.png" alt="image-20220303183538437" style="zoom:50%;" />
+
+Structure attention：
+
+使用带重启机制的随机游走方法（Random Walk with Restart，RWR），
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183705455.png" alt="image-20220303183705455" style="zoom:50%;" />
+
+其中，$w_i \in \mathbb{R}^{N\times 1}$，其中的entry $p$表示实体$i$通过随机游走到达实体$p$的概率，这个概率越大，表示这两个实体在结构上的相关性越大。
+
+然后，由于每个实体$i$都有一个对应的$w_i$，计算邻居边$<i,j>$在结构上的权重，使用了jaccard相似度计算方法，核心思想是某个实体$p$如果同时出现在实体$i$和实体$j$的邻居中，那么如果实体$i$和实体$j$的结构相似度越大，实体$p$在$w_i$和$w_j$中的差距应该越小。因此有：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184150967.png" alt="image-20220303184150967" style="zoom:50%;" />
+
+最后是softmax：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184212826.png" alt="image-20220303184212826" style="zoom:50%;" />
+
+整体结构图：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184251972.png" alt="image-20220303184251972" style="zoom:30%;" />
+
+## MTE
+
+**Relation-based multi-type aware knowledge graph embedding** Neurocomputing 2021
+
+这篇文章将本体（ontology）考虑到了GNN当中，从而学习KGE。ontology是描述entity的类型的语法树。
+
+作者将ontology树使用bi-directional transformer model获得关于type的embedding。其中的输入是从root到leaf的序列。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303202610179.png" alt="image-20220303202610179" style="zoom:40%;" />
+
+获得type的embedding之后，对于某个具体实体$e$，不同type的比重应该不同。作者认为如果实体$e$链接的triples中，关系$r$属于某个type $t$的数量越多，则比重越大。比如在上图，对于实体*Ang_Lee*，类型*director*的比重应该比*actor*更大，因为属于$director$的triple数量更多。
+
+实体$e$的type embedding应该是：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203115074.png" alt="image-20220303203115074" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203130712.png" alt="image-20220303203130712" style="zoom:50%;" />
+
+上面第二个公式的含义就是统计属于某个type $t$的triples的数量占比。
+
+之后，作者提出一种基于relation的attention聚合方法。
+
+单个relation下的实体聚合：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203413691.png" alt="image-20220303203413691" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203428588.png" alt="image-20220303203428588" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203449437.png" alt="image-20220303203449437" style="zoom:50%;" />
+
+多个relation的聚合：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203516612.png" alt="image-20220303203516612" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png" alt="image-20220303203532350" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png" alt="image-20220303203547104" style="zoom:50%;" />

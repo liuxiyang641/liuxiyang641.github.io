@@ -381,7 +381,20 @@ CP分解：
 
 在训练KGE的时候，负样本的质量很重要，也就是说那些越难与正样本区分的负样本可能越重要。*high-quality negative triplets should have large scores*，因为基于embedding的model实际上对于大多数负样本不敏感，给出的都是比较低的打分。如果使用random采样，采样得到的负样本，激活函数如果是sigmoid函数，那么如果负样本得分在<<0的区间内，那么梯度会很小，造成梯度消失的问题。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:40%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:40%;" />
 
+## StructurE
+
+**Structural context-based knowledge graph embedding for link prediction** Neurocomputing 2022
+
+这篇文章是基于trans的KGE方法，它对于两个预测任务$<h, t, ?>$和$<?, r, t>$分别设计了不同的score function。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png" alt="image-20220303152549137" style="zoom:50%;" />
+
+核心是两个公式：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png" alt="image-20220303152702651" style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png" alt="image-20220303152749096" style="zoom:50%;" />
