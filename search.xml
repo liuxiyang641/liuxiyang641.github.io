@@ -135,6 +135,14 @@
       </tags>
   </entry>
   <entry>
+    <title>good-paper-sentences-collection</title>
+    <url>/2022/03/10/collection-paper-sentences-collection/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>1-Interoduction-word-vectors</title>
     <url>/2021/04/26/cs224n-2019-1-Interoduction-word-vectors/</url>
     <content><![CDATA[]]></content>
@@ -538,19 +546,6 @@
       </tags>
   </entry>
   <entry>
-    <title>KE-GCN</title>
-    <url>/2021/05/17/KE-GCN/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>KGE</category>
-      </categories>
-      <tags>
-        <tag>KGE</tag>
-        <tag>GNN</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>MLP-Mixer</title>
     <url>/2021/05/07/MLP-Mixer/</url>
     <content><![CDATA[]]></content>
@@ -721,6 +716,19 @@
       </tags>
   </entry>
   <entry>
+    <title>KE-GCN</title>
+    <url>/2021/05/17/KE-GCN/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
+      <tags>
+        <tag>KGE</tag>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Essence-of-linear-algebra-3b1b</title>
     <url>/2021/09/26/Essence-of-linear-algebra-3b1b/</url>
     <content><![CDATA[]]></content>
@@ -729,6 +737,37 @@
       </categories>
       <tags>
         <tag>Math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GNN-1000-layers</title>
+    <url>/2022/03/23/GNN-1000-layers/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ResNet</title>
+    <url>/2022/03/24/ResNet/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>prototypical-network</title>
+    <url>/2022/03/10/prototypical-network/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+      <tags>
+        <tag>theory</tag>
       </tags>
   </entry>
 </search>
