@@ -64,7 +64,7 @@ $$
 $$
 Z_i=\sum_{p=1}^P \beta_{\Phi_p}z_i^{\Phi_p}
 $$
-![image-20200221215000895](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200221215000895.png)
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200221215000895.png" alt="image-20200221215000895" style="zoom: 33%;" />
 
 ## 5 EXPERIMENTS
 

@@ -31,7 +31,7 @@ tags:
 
 模型的整体结构，DC表示动态卷积层，Network B就是用来生成卷积核的网络，同样是一个卷积网络。Network B的输出是两个，垂直卷积核V和水平卷积核H，经过softmax得到SV1和SH1。最后的CROP是一个裁剪层crop layer，只取DC2输出的中心patch。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164044854.png" alt="image-20210914164044854" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914164044854.png" alt="image-20210914164044854" />
 
 产生卷积核的network B结构：
 

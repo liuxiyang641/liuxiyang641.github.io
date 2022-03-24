@@ -31,7 +31,7 @@ tags:
 
 对于同一metapath下的节点，编码单个邻居信息：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135058447.png" style="zoom:67%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220309182244290.png" alt="image-20220309182244290" style="zoom:50%;" />
 
 实验了三个具体的方法
 
@@ -41,7 +41,7 @@ tags:
 
 - Linear Mean：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425135330772.png" style="zoom: 67%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220309182100917.png" alt="image-20220309182100917" style="zoom:50%;" />
 
 - Relational rotation encoder：
 
@@ -53,7 +53,7 @@ tags:
 
 对于同一metapath下的节点，基于注意力聚合。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140032603.png" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220309182403668.png" alt="image-20220309182403668" style="zoom:50%;" />
 
 这里需要注意的是就是在计算注意力加入了target node embedding。
 
@@ -62,6 +62,8 @@ tags:
 ## Inter-metapath Aggregation
 
 计算在全局下，所有metapath的weight。首先对于不同type的node，相加相同mepath的embedding。需要注意的是，不是计算单个node的不同metapath。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140032603.png" style="zoom:50%;" />
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210425140219668.png" style="zoom:50%;" />
 

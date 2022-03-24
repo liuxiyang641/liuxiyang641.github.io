@@ -31,6 +31,7 @@ tags:
 - SLiCE（WWW 2021）
 - M<sup>2</sup>GNN（WWW 2021）
 - LGNN（IJCAI 2021）
+- RevGNN（ICML 2021）
 
 
 
@@ -485,3 +486,13 @@ Structure attention：
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png" alt="image-20220303203532350" style="zoom:50%;" />
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png" alt="image-20220303203547104" style="zoom:50%;" />
+
+## RevGNN
+
+**Training Graph Neural Networks with 1000 Layers** ICML 2021
+
+{% post_link GNN-1000-layers[个人详细博客] %}
+
+这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png" alt="image-20220323192539787" style="zoom:50%;" />
