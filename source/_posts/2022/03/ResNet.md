@@ -23,7 +23,7 @@ tags:
 
 但是没有解决另外的一个问题，那就是深度的model效果比浅层的model效果还要差，出现了degradation问题，如图所示。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220324175027867.png" alt="image-20220324175027867" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220324175027867.png"  style="zoom:50%;" />
 
 ### Solution
 
