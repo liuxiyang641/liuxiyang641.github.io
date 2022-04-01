@@ -851,7 +851,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" /></p>
 <h2 id="hgsl">HGSL</h2>
 <p><strong>Heterogeneous Graph Structure Learning for Graph Neural Networks</strong> AAAI 2021</p>
-<a href="#">Post not found: HGSL[个人详细博客]</a>
+<a href="/2021/07/06/HGSL/" title="[个人详细博客]">[个人详细博客]</a>
 <p>作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" /></p>
 <p><strong>motivation</strong>：目前的异质图神经网络基于一个假设，学习使用的graph是足够好的。但是实际上这个假设不一定总能够满足。两个方面的原因，（1）在建模graph的时候，使用到的信息难免会包含错误的信息，导致最终的graph是不够好的（2）另一个原因是异质图结构本身与下游任务是独立的，不一定是有利于下游任务的最优解。为了解决上面的问题，图结构学习graph structure learning (GSL)被提出来，但是这些方法主要是在考虑同质图，无法很好的考虑异质图中的异质性以及异质图中存在的复杂的交互。</p>
@@ -942,7 +942,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p>简单的论文的实验结果看，前两个方法还不错，但是后面的LSTM-attention，效果并不好。通过使用前面的JK设计，作者能够在不同数据集下，基于更多更深的GCN层达到最好的结果。</p>
 <h2 id="pathcon">PATHCON</h2>
 <p><a href="https://github.com/hwwang55/PathCon"><strong>Relational Message Passing for Knowledge Graph Completion</strong></a> KDD 2021</p>
-<a href="#">Post not found: PATHCON[个人详细博客]</a>
+<a href="/2021/08/06/PATHCON/" title="[个人详细博客]">[个人详细博客]</a>
 <p>在这篇论文中，作者只考虑了KG中的relation embedding，没有学习entity embedding。更具体的说，学习两个方面的结构信息，relational context和relation paths。前者是头/尾实体的邻居relation，后者是头尾实体在KG中相连的relational path。提出了<a href="https://github.com/hwwang55/PathCon">PATHCON</a></p>
 <p>作者预测的是relation prediction，<span class="math inline">\(&lt;h,?,t&gt;\)</span>，区别于常见的head/tail prediction，这样情况下relation prediction的候选项是所有的relation，会少很多候选项。这篇文章，作者还提出了一个新的数据集，DDB14，基于医药和疾病的一个知识图谱。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210807105609410.png" alt="image-20210807105609410" style="zoom:50%;" /></p>
@@ -993,7 +993,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210825164436321.png" alt="image-20210825164436321" style="zoom:50%;" /></p>
 <h2 id="m-gnn">M-GNN</h2>
 <p><strong>Robust Embedding with Multi-Level Structures for Link Prediction</strong> IJCAI 2019</p>
-<a href="#">Post not found: M-GNN[个人详细博客]</a>
+<a href="/2021/08/26/M-GNN/" title="[个人详细博客]">[个人详细博客]</a>
 <p>这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。</p>
 <p>和一般的GNN消息聚合方式不同，M-GNN希望能够建模KG中不同尺度中的信息。</p>
 <p>首先构造k个Coarsened graph：</p>
@@ -1002,7 +1002,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png" alt="image-20210826150505564" style="zoom:50%;" /></p>
 <h2 id="rdgcn">RDGCN</h2>
 <p><strong>Relation-Aware Entity Alignment for Heterogeneous Knowledge Graphs</strong> IJCAI 2019</p>
-<a href="#">Post not found: RDGCN[个人详细博客]</a>
+<a href="/2021/08/27/RDGCN/" title="[个人详细博客]">[个人详细博客]</a>
 <p><a href="https://github.com/StephanieWyt/RDGCN"><strong>RDGCN</strong></a> (Relation-aware Dual-Graph Convolutional Network)，预测任务是KG的实体对齐，主要是为了捕获更多的在dual KG中的relation的信息。核心创新点是对于dual KG（即要对齐的两个KG），构造了Dual Relation Graph，捕获relation和relation之间的联系。之后在这个Dual Relation Graph上学习relation的表示，融入到original KG中进行entity的表示学习，最终用于entity之间的对齐。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png" alt="image-20210827161832004" style="zoom:50%;" /></p>
 <h2 id="slice">SLiCE</h2>
@@ -1078,7 +1078,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png" alt="image-20220303203547104" style="zoom:50%;" /></p>
 <h2 id="revgnn">RevGNN</h2>
 <p><strong>Training Graph Neural Networks with 1000 Layers</strong> ICML 2021</p>
-<a href="#">Post not found: GNN-1000-layers[个人详细博客]</a>
+<a href="/2022/03/23/GNN-1000-layers/" title="[个人详细博客]">[个人详细博客]</a>
 <p>这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png" alt="image-20220323192539787" style="zoom:50%;" /></p>
 ]]></content>
@@ -5641,6 +5641,164 @@ f(h_u,h_v)=h_u^T h_v
       </tags>
   </entry>
   <entry>
+    <title>GNN-size-generalization</title>
+    <url>/2022/03/28/GNN-size-generalization/</url>
+    <content><![CDATA[<h1 id="from-local-structures-to-size-generalization-in-graph-neural-networks">From Local Structures to Size Generalization in Graph Neural Networks</h1>
+<p>ICML 2021</p>
+<p>作者主要讨论了GNN对于graph size generalization问题的性质探究。具体一点是指GNN在一个small graph上训练，然后在一个更大的large graph上测试的场景。</p>
+<p>主要贡献：</p>
+<ul>
+<li>提出了graph的local structure的一种定义，d-pattern。GNN在对于相同的d-pattern会产生相同的输出。因此使用d-pattern可以作为GNN表达能力的一种抽象。</li>
+<li>理论上和实验上证明了GNN在size不同的graph上，不能保证学习到的模型是有足够size generalization能力的。</li>
+<li>提出了一种基于自监督的方法（Self-Supervised Learning，SSL）来提升size generalization能力，分别有无监督（unsupervised）和半监督（semi-supervised）两种loss设置。训练过程采用了预训练和多任务学习两种不同的学习过程。</li>
+</ul>
+<span id="more"></span>
+<h2 id="introduction">Introduction</h2>
+<p>作者主要的研究场景：small graph训练+large graph测试</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328201522509.png" alt="image-20220328201522509" style="zoom:40%;" /></p>
+<p>为什么要研究这个问题？作者的出发点：</p>
+<ol type="1">
+<li>理论上，graph的size的差异是很大的，虽然训练好一个graph可以让它在任意size的graph（保证是统一domain下的graph）上运行，但是效果好吗？什么情况下能够做到size泛化？这个问题很有趣（intriguing）但是还没被充分研究。</li>
+<li>实际上，很多large graph想要获得准确的label是很困难的，想要获得large graph的label可能是非常困难的优化问题，也可能对于人来说想要准确的给复杂的graph打label也是很难的。因此，如果GNN能够做到在small graph上训练好，然后很好的泛化到large graph上，就是一个很有意义的研究。</li>
+</ol>
+<h2 id="overview">Overview</h2>
+<p>几个作者希望声明的argument：</p>
+<ol type="1">
+<li><p>作者提出的d-pattern是研究GNN表达能力的一种合适的抽象表达（<strong>d-patterns are a correct notion for studying the expressivity of GNNs.</strong>）。依赖于d-pattern，GNN可以输出独立的任意值，对于具有一样d-pattern的node来说，GNN会输出一样的值。因此对于现有的GNN来说，d-pattern直接限制了它的表达能力。</p></li>
+<li><p>small graph和large graph之间的d-pattern差异，暗示了可能存在某种糟糕的优化选择，导致GNN无法做到size generalization（<strong>d-pattern discrepancy implies the existence of bad global minima.</strong>）。</p></li>
+<li><p>GNN在一般的情况下，会倾向于收敛到不泛化的解（<strong>GNNs converge to non-generalizing solutions.</strong>）。作者进行了实验上的证明，并且也发现，如果尝试不断改变small graph的分布，GNN泛化能力会有相应的提升</p></li>
+<li><p>GNN的size generalization可以被提升（<strong>Size generalization can be improved.</strong>）。作者提出了新的SSL的训练方法，可以提升GNN的size generalization能力。</p></li>
+<li><p>GNN的size泛化，不是简单的L1或L2防止过拟合问题，实际上，如果单纯的加入正则项，反而会让GNN的size generalization能力降低。</p></li>
+</ol>
+<h2 id="gnns-and-local-graph-patterns">GNNs and local graph patterns</h2>
+<p>来看一下作者定义的d-pattern：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328203208523.png" alt="image-20220328203208523" style="zoom:50%;" /></p>
+<p>这里的定义与WL-test类似。看看示例图：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328203249132.png" alt="image-20220328203249132" style="zoom:40%;" /></p>
+<p>作者提出的两个定理：</p>
+<ol type="1">
+<li>对于具有相同d-pattern的node，任意GNN都会输出相同的值。</li>
+</ol>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328203453181.png" alt="image-20220328203453181" style="zoom:50%;" /></p>
+<p>这个定理是说GNN能够表达的映射函数，如果节点的d-pattern一样，那么GNN输出也一样；如果d-pattern不一样，那么GNN输出可能一样，可能不一样。联想到GIN中提出的单射问题，和这个理论是能够联系的。GIN提出的单射问题是希望不同d-pattern能够对于不同的输出。</p>
+<ol start="2" type="1">
+<li>对于具有不同d-pattern的node，假设各自不同的d-pattern有不同的label，那么总存在一个GNN能够完美拟合。</li>
+</ol>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328203635494.png" alt="image-20220328203635494" style="zoom:40%;" /></p>
+<h2 id="bad-global-minima-exist">”Bad” global minima exist</h2>
+<p>在这一部分，作者提出GNN可能学习到泛化能力弱的解。</p>
+<p>同样，作者提出了两个定理：</p>
+<ol type="1">
+<li>存在一个GNN在small graph上效果很好，但是对于large graph（包含没有在small graph上出现过的d-pattern），可能有任意范围的error。</li>
+</ol>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328204225483.png" alt="image-20220328204225483" style="zoom:40%;" /></p>
+<ol start="2" type="1">
+<li>一个和上面定理相似的定理，但是描述了small graph和large graph的d-pattern分布差异和可能导致的error。存在一个GNN在small graph上，表现好（指对于d-pattern集合A，<span class="math inline">\(error&lt;\epsilon\)</span>），但是在large graph上的error更大（指让large graph error最大的集合A的误差）。</li>
+</ol>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328204906574.png" alt="image-20220328204906574" style="zoom:40%;" /></p>
+<h2 id="towards-improving-size-generalization">Towards improving size generalization</h2>
+<p>来看一下作者如果尝试解决size generalization问题。首先，作者同时从small graph和large graph上构造了pattern-tree，然后用这个pattern-tree进行学习任务。</p>
+<p>pattern-tree：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328205133102.png" alt="image-20220328205133102" style="zoom:40%;" /></p>
+<p>左上角是原来的graph，右上角是node对应的pattern-tree，底部是要预测的值（向量），也就是计算每一层的节点数量。</p>
+<p>为什么要使用这个pattern-tree呢？作者在前面发现，GNN的size generalization做不好，就是因为在large graph上会有unseen d-pattern，那么如果提前想办法学习好small和large graph的d-pattern的信息，让两者的d-pattern表示有某种程度的对齐（通过一起训练的方法），是不是就能够提升模型效果？</p>
+<p>如果构造pattern-tree：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328205701565.png" alt="image-20220328205701565" style="zoom:50%;" /></p>
+<p>简单说，就是迭代的往叶子结点上添加它的邻居节点。</p>
+<p>怎么使用？</p>
+<p>两种训练策略：</p>
+<ul>
+<li>Pretraining：第一阶段，训练GNN，预测pattern-tree的descriptor；第二阶段，固定GNN值，预测目标task。</li>
+</ul>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328210257357.png" alt="image-20220328210257357" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328210309307.png" alt="image-20220328210309307" style="zoom:50%;" /></p>
+<ul>
+<li>Multitask training：同时训练pattern-tree task和main task。</li>
+</ul>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328210353315.png" alt="image-20220328210353315" style="zoom:50%;" /></p>
+<p>两种设置的示意图：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328210152599.png" alt="image-20220328210152599" style="zoom:50%;" /></p>
+<p>实验发现，还是pretraining的方式更好一点。</p>
+<p>作者还尝试了另外的semi-supervised setup，即加入一小部分large graph中有label的data，加入到前面的训练loss中。</p>
+<h2 id="appendix">Appendix</h2>
+<p>作者在附录提供了定理详细的证明过程，我只是粗略的看了一遍从直观上认识定理证明是否正确，没有严谨的推导。但是，有一个有意思的前人（Small relu networks are powerful memorizers: a tight analysis of memorization capacity.）提出的定理可以学习：</p>
+<ul>
+<li>对于各不相同的输入<span class="math inline">\(\mathbf{x}_i\)</span>，输出是<span class="math inline">\(y_i\in[-1,1]\)</span>，总存在一个三层的<span class="math inline">\(ReLU\)</span>网络可以完美拟合</li>
+</ul>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220328211224061.png" alt="image-20220328211224061" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>GNN</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Meta-learning-intro</title>
+    <url>/2022/03/30/Meta-learning-intro/</url>
+    <content><![CDATA[<h1 id="meta-learning-learning-to-learn-fast">Meta-Learning: Learning to Learn Fast</h1>
+<p>这是一篇博客（<a href="https://lilianweng.github.io/posts/2018-11-30-meta-learning/">Meta-Learning: Learning to Learn Fast</a>）的笔记，另外参考了对应的<a href="https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html">中文博客</a>，简单了解什么是meta-learning。</p>
+<p>元学习尝试解决深度学习经常需要大量实例数据才能收敛的问题。我们期望好的元学习模型拥有好的泛化能力和适应能力，能够根据少量的样本就学习到比较合适的信息。</p>
+<p>元学习可以解决一类定义好的预测任务，这篇文章主要讨论的是监督学习下的元学习问题。例如让一个图片分类器在训练集中没有猫的情况下，在测试集中能够实现只看到几张猫的图片就能够学会识别猫。</p>
+<span id="more"></span>
+<h2 id="overview">Overview</h2>
+<p>假设有很多的任务可以学习，我们期望元学习模型能够在整个的任务空间下都达到比较好的效果，即使是遇到了一个新的任务也能够表现不错。比如下面的任务：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330211915167.png" style="zoom:35%;" /></p>
+<p>上面的任务是少次学习的一个示例图，它是元学习在监督学习问题的一个实例，一般说明K-shot N-class，是指一个数据集中class包括K个labeled examples。</p>
+<p>为了模拟测试集中的推理过程，在训练的时候，会尝试采样一个support set和一个prediction set，support set用来计算一次loss，然后假梯度下降，使用这个假更新后的参数计算模型在prediction set上的loss，计算梯度，使用这时候的梯度才真正的更新原来的梯度。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330212645013.png" style="zoom:50%;" /></p>
+<p>通过上面的操作，让梯度下降的方向不是当前loss的梯度，而是“往前看了一步”，让梯度朝着更能拟合新的prediction task的方向优化。</p>
+<p>接下来介绍三类经典的meta-learning模型。</p>
+<h2 id="metric-based">Metric-Based</h2>
+<p>基于度量的方法，核心思想是计算新的样本和当前support set中的样本的相似程度，让后让已有的样本提供信息。</p>
+<h3 id="siamese-neural-networks">Siamese Neural Networks</h3>
+<p><a href="http://www.cs.toronto.edu/~rsalakhu/papers/oneshot1.pdf">Koch, Zemel &amp; Salakhutdinov</a>提出。对于one-shot任务，设计一个CNN网络导出图片特征，然后分辨两个图片对于的embedding的相似程度（使用L1-distance），如果属于同一类就输出1，否则输出0。在测试的时候，让测试样本和support set中所有的图片计算相似度，最相似的那一个图片对应的类就是测试样本的类别。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330213424764.png" alt="image-20220330213424764" style="zoom:30%;" /></p>
+<h3 id="matching-networks">Matching Networks</h3>
+<p><a href="http://papers.nips.cc/paper/6385-matching-networks-for-one-shot-learning.pdf">Vinyals et al., 2016</a>提出。对于K-shot任务，使用下面的方法：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330213849574.png" alt="image-20220330213849574" style="zoom:30%;" /></p>
+<p>核心公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330213923274.png" alt="image-20220330213923274" style="zoom:40%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330213937734.png" alt="image-20220330213937734" style="zoom:40%;" /></p>
+<h3 id="relation-network">Relation Network</h3>
+<p><a href="http://openaccess.thecvf.com/content_cvpr_2018/papers_backup/Sung_Learning_to_Compare_CVPR_2018_paper.pdf">Sung et al., 2018</a>提出。样本的相似度计算是使用一个CNN方法<span class="math inline">\(g_{\phi}\)</span>来实现的。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330214037937.png" alt="image-20220330214037937" style="zoom:40%;" /></p>
+<h3 id="prototypical-networks">Prototypical Networks</h3>
+<p><a href="http://papers.nips.cc/paper/6996-prototypical-networks-for-few-shot-learning.pdf">Snell, Swersky &amp; Zemel, 2017</a>提出。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330214215177.png" alt="image-20220330214215177" style="zoom:40%;" /></p>
+<h2 id="model-based">Model-Based</h2>
+<p>让模型本身拥有快速学习的能力。</p>
+<h3 id="mann-for-meta-learning">MANN for Meta-Learning</h3>
+<p><a href="http://proceedings.mlr.press/v48/santoro16.pdf">Santoro et al., 2016</a>提出。以<a href="https://lilianweng.github.io/lil-log/2018/06/24/attention-attention.html#neural-turing-machines">NTM模型</a>为基础让拥有外部存储单元的MANN（Memory-Augmented Neural Networks）模型（注意，仅仅是GRU和LSTM这些不属于MANN）适用于元学习。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330215049680.png" alt="image-20220330215049680" style="zoom:50%;" /></p>
+<h3 id="metanet">MetaNet</h3>
+<p><a href="https://arxiv.org/abs/1703.00837">Munkhdalai &amp; Yu, 2017</a>提出。这里的fast weights和slow weights需要进一步了解。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330215357448.png" alt="image-20220330215357448" style="zoom:40%;" /></p>
+<h2 id="optimization-based">Optimization-Based</h2>
+<p>不再依赖于具体的模型，而是直接从梯度下降的原理出发进行设计。</p>
+<h3 id="lstm-meta-learner">LSTM Meta-Learner</h3>
+<p>适用LSTM来显式建模梯度下降的过程。<a href="https://openreview.net/pdf?id=rJY0-Kcll">Ravi &amp; Larochelle (2017)</a>提出。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330215638810.png" alt="image-20220330215638810" style="zoom:40%;" /></p>
+<p>把梯度下降，看做是一步LSTM中的状态更新：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330215906741.png" alt="image-20220330215906741" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330215923820.png" alt="image-20220330215923820" style="zoom:50%;" /></p>
+<p>然后使用LSTM来显式的建模梯度下降步骤：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220330220104006.png" alt="image-20220330220104006" style="zoom:50%;" /></p>
+<h3 id="maml">MAML</h3>
+<p><strong>Model-Agnostic Meta-Learning</strong> 简称 <strong>MAML</strong> (<a href="https://arxiv.org/abs/1703.03400">Finn, et al. 2017</a>)，是一种通用的优化算法，</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/maml-algo.png" alt="MAML Algorithm" style="zoom:40%;" /></p>
+<p>使用不同task，分别计算梯度，然后再使用prediction set进行实际的参数更新。</p>
+]]></content>
+      <categories>
+        <category>Blog</category>
+      </categories>
+      <tags>
+        <tag>meta-learning</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ResNet</title>
     <url>/2022/03/24/ResNet/</url>
     <content><![CDATA[<h1 id="deep-residual-learning-for-image-recognition">Deep Residual Learning for Image Recognition</h1>
@@ -5707,5 +5865,40 @@ f(h_u,h_v)=h_u^T h_v
       <tags>
         <tag>theory</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Fast-weights-RNN</title>
+    <url>/2022/04/01/Fast-weights-RNN/</url>
+    <content><![CDATA[<h1 id="using-fast-weights-to-attend-to-the-recent-past">Using Fast Weights to Attend to the Recent Past</h1>
+<p>NIPS 2016</p>
+<p>作者将fast weights引入到RNN中实现了更好的效果。本质上是在RNN的t时刻到t+1时刻中间，插入了一段新的RNN结构，每个step计算之前的隐藏状态和当前隐藏状态的关系权重，不断累加，最后达到比较好的效果。</p>
+<span id="more"></span>
+<p>这里需要先介绍下fast weights。</p>
+<p>在1987年的时候，有一篇paper《Using Fast Weights to Deblur Old Memories》，提出了下面的说法：</p>
+<blockquote>
+<p>Despite the emerging biological evidence that changes in synaptic efficacy at a single synapse occur at many different time-scales (Kupferman, 1979; Hartzell, 1981), there have been relatively few attempts to investigate the computational advantages of giving each connection several different weights that change at different speeds.</p>
+</blockquote>
+<p>意思是说如果把一个weight的更新看做是神经元的一次神经活动，那么weight的更新也应该是有不同time scalse的。</p>
+<p>那么如果模仿这个过程，除了一般的weight外，还可以尝试加入其它time scale的weight，也就是fast weight，fast weight用来模拟短时的记忆。</p>
+<ul>
+<li>Slow weight: The slow weights are like the weights normally used in connectionist networks-they change slowly and they hold all the long-term knowledge of the network.</li>
+<li>Fast weight: The fast weights change more rapidly and they continually regress towards zero so that their magnitude is determined solely by their recent past.</li>
+</ul>
+<p>来看一下作者具体怎么样把fast weight引入到RNN中：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220401213438036.png" alt="image-20220401213438036" style="zoom:40%;" /></p>
+<p>首先定义一个fast weight matrix：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220401213526767.png" alt="image-20220401213526767" style="zoom:50%;" /></p>
+<p>然后在RNN的<span class="math inline">\(t\)</span> step到<span class="math inline">\(t+1\)</span> step中间，插入新的多个step：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220401213626396.png" alt="image-20220401213626396" style="zoom:50%;" /></p>
+<p>从这里可以看出来，<span class="math inline">\(A\)</span>被用来快速更新状态。</p>
+<p>由于实际中，sequence的time step数量是要比定义的hidden state vector的维度要小的，所以最后计算出来的A实际上远远不是一个满秩的矩阵。为了计算方便，作者假定对于不同sequence，<span class="math inline">\(A\)</span>的初始值是0，那么有：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220401213830869.png" alt="image-20220401213830869" style="zoom:50%;" /></p>
+<p>通过简单计算之前时刻隐藏状态和最近隐藏状态的点积，作为权重（也是attention），然后加上以前的隐藏状态，计算很快速。</p>
+<p>作者还使用了layer normalization来防止两个向量的点积可能出现的数值消失或者爆炸的问题。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>Theory</category>
+      </categories>
   </entry>
 </search>

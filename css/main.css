@@ -1,10 +1,28 @@
+article .post-body {
+  text-align: left;
+}
 article .post-body p {
-  line-height: 1.5em;
+  line-height: 1.6;
   margin: 0 0 0.5em 0;
 }
 article .post-body ol {
-  line-height: 2em;
+  line-height: 1.5em;
   margin: 0 0 1em 0;
+}
+article .post-body ol li p {
+  margin-bottom: 0em;
+}
+article .post-body ol li {
+  margin-bottom: 0.3em;
+}
+article .post-body ul {
+  line-height: 1.5em;
+}
+article .post-body ul li p {
+  margin-bottom: 0em;
+}
+article .post-body ul li {
+  margin-bottom: 0.3em;
 }
 article .post-body blockquote {
   margin-bottom: 15px;
@@ -22,8 +40,8 @@ article .post-body img {
 }
 article .post-body>*:not(.post-body-toc):not(.post-button) a {
   color: #3884ff;
-  border: none;
-  margin: 0 5px;
+  border-color: #3884ff;
+  margin: 0 0px;
 }
 article .post-body>*:not(.post-body-toc):not(.post-button) a:hover {
   color: #2d6cd2;
@@ -50,7 +68,7 @@ article .post-body em {
   --body-bg-color: #eee;
   --content-bg-color: #fff;
   --card-bg-color: #f5f5f5;
-  --text-color: #555;
+  --text-color: #111;
   --blockquote-color: #666;
   --link-color: #555;
   --link-hover-color: #222;
@@ -704,7 +722,7 @@ pre code {
   width: 100%;
 }
 .post-body .label {
-  color: #555;
+  color: #111;
   padding: 0 2px;
 }
 .post-body .label.default {
@@ -1049,6 +1067,7 @@ pre code {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  z-index: 5;
 }
 @media (max-width: 413px) {
   .post-body .tabs ul.nav-tabs,
@@ -2014,7 +2033,7 @@ pre code {
   width: 4px;
 }
 .post-body {
-  font-family: "Carbo", "Noto Serif SC";
+  font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   overflow-wrap: break-word;
 }
 @media (min-width: 1200px) {
@@ -2217,7 +2236,7 @@ pre code {
 }
 .posts-expand .post-meta-container {
   color: #999;
-  font-family: "Carbo", "Noto Serif SC";
+  font-family: "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.75em;
   margin-top: 3px;
 }
