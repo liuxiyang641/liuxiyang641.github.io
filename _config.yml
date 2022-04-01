@@ -3,7 +3,7 @@ subtitle: ''
 description: Try your best to be an ordinary man.
 keywords: null
 author: Liu Xiyang
-language: en
+language: zh-CN
 timezone: Asia/Shanghai
 url: http://example.com
 permalink: ':year/:month/:day/:title/'
@@ -73,3 +73,13 @@ search:
   content: true
   format: html
   limit: 10000
+
+moon_menu:
+  back2top:
+    enable: true
+    icon: fas fa-chevron-up
+    order: -1
+  back2bottom:
+    enable: true
+    icon: fas fa-chevron-down
+    order: -2
