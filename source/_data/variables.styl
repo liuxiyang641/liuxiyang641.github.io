@@ -1,22 +1,45 @@
 // $font-family-chinese = "Microsoft YaHei"
-$font-family-chinese = "Noto Serif SC"
-$font-family-posts = "Carbo", $font-family-chinese
+// $font-family-chinese = "Helvetica Neue"
+// $font-family-posts = "Times New Roman", $font-family-chinese
+
+$font-family-posts = "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif
 
 // $font-family-monospace = consolas, Menlo, monospace, $font-family-chinese
 // $font-family-monospace = get_font_family('codes'), consolas, Menlo, monospace, $font-family-chinese if get_font_family('codes')
 
-//$font-size-base = 16px
-//$font-size-posts = 1px
+// $font-size-base = 16px
+// $font-size-posts = 16px
+$text-color = #111;
 
 // blockquote 引用块
+article .post-body {
+    text-align: left;
+}
 article .post-body p {
-    line-height: 1.5em;
+    line-height: 1.6;
     margin: 0 0 0.5em 0;
 }
 article .post-body ol {
-    line-height: 2em;
+    line-height: 1.5em;
     margin: 0 0 1em 0;
 }
+article .post-body ol li p {
+    margin-bottom: 0em
+}
+article .post-body ol li {
+    margin-bottom: 0.3em;
+}
+
+article .post-body ul {
+    line-height: 1.5em;
+}
+article .post-body ul li p {
+    margin-bottom: 0em
+}
+article .post-body ul li {
+    margin-bottom: 0.3em;
+}
+
 article .post-body blockquote {
     margin-bottom: 15px;
     border-left: 4px solid rgb(56, 132, 255);
@@ -34,8 +57,9 @@ article .post-body img {
 // a 链接（不处理'目录'和'阅读全文按钮'的链接）
 article .post-body>*:not(.post-body-toc):not(.post-button) a {
     color: #3884FF;
-    border: none;
-    margin: 0 5px;
+    // border: none;
+    border-color: #3884FF;
+    margin: 0 0px;
 }
 article .post-body>*:not(.post-body-toc):not(.post-button) a:hover {
     color: #2d6cd2;

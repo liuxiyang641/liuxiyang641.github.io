@@ -53,7 +53,7 @@ tags:
 
 **Heterogeneous Graph Structure Learning for Graph Neural Networks** AAAI 2021
 
-{% post_link HGSL[个人详细博客] %}
+{% post_link HGSL [个人详细博客] %}
 
 作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。
 
@@ -218,7 +218,7 @@ JUMP的意思是每一层输出都jump到最后一层，在最后一层进行lay
 
 [**Relational Message Passing for Knowledge Graph Completion**](https://github.com/hwwang55/PathCon) KDD 2021
 
-{% post_link PATHCON[个人详细博客] %}
+{% post_link PATHCON  [个人详细博客] %}
 
 在这篇论文中，作者只考虑了KG中的relation embedding，没有学习entity embedding。更具体的说，学习两个方面的结构信息，relational context和relation paths。前者是头/尾实体的邻居relation，后者是头尾实体在KG中相连的relational path。提出了[PATHCON](https://github.com/hwwang55/PathCon)
 
@@ -320,7 +320,7 @@ CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然
 
 **Robust Embedding with Multi-Level Structures for Link Prediction** IJCAI 2019
 
-{% post_link M-GNN[个人详细博客] %}
+{% post_link M-GNN  [个人详细博客] %}
 
 这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。
 
@@ -339,7 +339,7 @@ CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然
 
 **Relation-Aware Entity Alignment for Heterogeneous Knowledge Graphs** IJCAI 2019
 
-{% post_link RDGCN[个人详细博客] %}
+{% post_link RDGCN  [个人详细博客] %}
 
 [**RDGCN**](https://github.com/StephanieWyt/RDGCN) (Relation-aware Dual-Graph Convolutional Network)，预测任务是KG的实体对齐，主要是为了捕获更多的在dual KG中的relation的信息。核心创新点是对于dual KG（即要对齐的两个KG），构造了Dual Relation Graph，捕获relation和relation之间的联系。之后在这个Dual Relation Graph上学习relation的表示，融入到original KG中进行entity的表示学习，最终用于entity之间的对齐。
 
@@ -491,7 +491,7 @@ Structure attention：
 
 **Training Graph Neural Networks with 1000 Layers** ICML 2021
 
-{% post_link GNN-1000-layers[个人详细博客] %}
+{% post_link GNN-1000-layers  [个人详细博客] %}
 
 这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。
 

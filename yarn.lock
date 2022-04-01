@@ -2274,11 +2274,6 @@
   dependencies:
     "function-bind" "^1.1.1"
 
-"hexo-asset-img@^1.0.0":
-  "integrity" "sha1-jFt1yuADul4GyP6nr4gyePPUVwU="
-  "resolved" "https://registry.nlark.com/hexo-asset-img/download/hexo-asset-img-1.0.0.tgz"
-  "version" "1.0.0"
-
 "hexo-browsersync@^0.3.0":
   "integrity" "sha1-PUNDU3SSFEKJHtGAuhflGU7Q05Q="
   "resolved" "https://registry.npm.taobao.org/hexo-browsersync/download/hexo-browsersync-0.3.0.tgz"
@@ -2428,15 +2423,10 @@
   dependencies:
     "hexo-util" "1.9.0"
 
-"hexo-theme-next@^8.10.1":
-  "integrity" "sha512-c7XoUki1VAxx4TKvyemXJeV/WtPWaUCOm+4c/ca2deCpwSmieKcXA4eFK3acJafh+BxN5mlfg8IhB+PeGGC12Q=="
-  "resolved" "https://registry.npmmirror.com/hexo-theme-next/-/hexo-theme-next-8.10.1.tgz"
-  "version" "8.10.1"
-
-"hexo-typora-img@^1.1.0":
-  "integrity" "sha1-RAVa2R842AymxfZIlVctu9Cy/i4="
-  "resolved" "https://registry.npm.taobao.org/hexo-typora-img/download/hexo-typora-img-1.1.0.tgz"
-  "version" "1.1.0"
+"hexo-theme-next@^8.11.0":
+  "integrity" "sha512-gmMu+6Z6PqeKWryfc9XzM4VUKfmLAryI2RL51b0MrP0OLhptIznIWqcZDpZ/CEkgL74jlAJqDqxrUZTsXOgLCg=="
+  "resolved" "https://registry.npmmirror.com/hexo-theme-next/-/hexo-theme-next-8.11.0.tgz"
+  "version" "8.11.0"
 
 "hexo-util@^2.0.0", "hexo-util@^2.1.0", "hexo-util@^2.4.0":
   "integrity" "sha1-9cAJmgoXGLOtJwYeXk0fuet/K0E="
