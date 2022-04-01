@@ -817,280 +817,6 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
       </tags>
   </entry>
   <entry>
-    <title>GNN-Collection</title>
-    <url>/2021/07/08/collection-GNN-Collection/</url>
-    <content><![CDATA[<h1 id="collection-of-gnn-papers">Collection of GNN papers</h1>
-<ul>
-<li>Highway GNN（ACL 2018）</li>
-<li>HGSL（AAAI 2021）</li>
-<li>HGAT（EMNLP 2019）</li>
-<li>HetGNN（KDD 2019）</li>
-<li>HetSANN（AAAI 2020）</li>
-<li>RHINE（AAAI 2019）</li>
-<li>JK（ICML 2018）</li>
-<li>PATHCON（KDD 2021）</li>
-<li>HeteGNN（WSDM 2021）</li>
-<li>KGNN（IJCAI 2020）</li>
-<li>CPRL（NAACL 2021）</li>
-<li>CLHG（ACL 2021）</li>
-<li>EAGCN（Neurocomputing）</li>
-<li>ETGAT（ACL-IJCNLP 2021）</li>
-<li>GAEAT（CIKM 2020）</li>
-<li>M-GNN（IJCAI 2019）</li>
-<li>RDGCN（IJCAI 2019）</li>
-<li>SLiCE（WWW 2021）</li>
-<li>M<sup>2</sup>GNN（WWW 2021）</li>
-<li>LGNN（IJCAI 2021）</li>
-<li>RevGNN（ICML 2021）</li>
-</ul>
-<span id="more"></span>
-<h2 id="highway-gnn">Highway GNN</h2>
-<p><a href="https://github.com/%20afshinrahimi/geographconv"><strong>Semi-supervised User Geolocation via Graph Convolutional Networks</strong></a> ACL 2018</p>
-<p>应用场景是社交媒体上的用户定位。单纯的在GNN上的创新点是使用Gate机制来控制传入的邻居的信息。</p>
-<p>在每一层，借鉴Highway networks的思路，计算一个门weight</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" /></p>
-<h2 id="hgsl">HGSL</h2>
-<p><strong>Heterogeneous Graph Structure Learning for Graph Neural Networks</strong> AAAI 2021</p>
-<a href="/2021/07/06/HGSL/" title="[个人详细博客]">[个人详细博客]</a>
-<p>作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" /></p>
-<p><strong>motivation</strong>：目前的异质图神经网络基于一个假设，学习使用的graph是足够好的。但是实际上这个假设不一定总能够满足。两个方面的原因，（1）在建模graph的时候，使用到的信息难免会包含错误的信息，导致最终的graph是不够好的（2）另一个原因是异质图结构本身与下游任务是独立的，不一定是有利于下游任务的最优解。为了解决上面的问题，图结构学习graph structure learning (GSL)被提出来，但是这些方法主要是在考虑同质图，无法很好的考虑异质图中的异质性以及异质图中存在的复杂的交互。</p>
-<p><strong>method</strong>：提出HGSL，首先学习合适的graph structure，然后在这个graph structure上使用GCN进行学习。这种heterogeneous graph structure learning是核心创新点，包括三种graph的融合，<strong>feature similarity graph</strong>，<strong>feature propagation graph</strong>,和<strong>semantic graph</strong>。</p>
-<h2 id="hgat">HGAT</h2>
-<p><strong>Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classiﬁcation</strong> EMNLP 2019</p>
-<p>为短文本分类任务（semi-supervised short text classiﬁcation）设计了一个异质图神经网络HGAT。</p>
-<p>首先是利用原始文本构造一个异质图（HIN），把不同来源的文本组合到一起。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png" alt="image-20210728180026169" style="zoom:50%;" /></p>
-<p>重点在于，其中的node type各不相同，各自具有差异性很大的特征。</p>
-<p>然后是设计的网络结构，重点在于设计了一个两层的attention。</p>
-<p>不同type的node有不同的卷积核：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png" alt="image-20210728180219517" style="zoom:50%;" /></p>
-<p>然后，type-level的attention，聚合邻居下所有相同type的node embedding，然后计算attention weight。这样同一type下的所有neighbor node共享一个type level的weight。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png" alt="image-20210728180348109" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png" alt="image-20210728180319175" style="zoom:50%;" /></p>
-<p>不同type之间softmax。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png" alt="image-20210728180440793" style="zoom:50%;" /></p>
-<p>然后是node-level的attention，不同邻居node，计算attention。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png" alt="image-20210728180538577" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png" alt="image-20210728180555435" style="zoom:50%;" /></p>
-<p>最后结果：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png" alt="image-20210728180643981" style="zoom:50%;" /></p>
-<h2 id="hetgnn">HetGNN</h2>
-<p><a href="https://github.com/chuxuzhang/KDD2019_HetGNN">Heterogeneous Graph Neural Network</a> KDD 2019</p>
-<p>作者提出了一种同时处理node content和heterogeneous graph structure的GNN，HetGNN。</p>
-<p>看一下整体结构：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png" alt="image-20210802205726358" style="zoom:50%;" /></p>
-<p>核心模块有三方面：</p>
-<p><strong>Sampling Heterogeneous Neighbors</strong>：使用了random walk with restart (RWR)的邻居采样策略，需要注意的是这个采样策略保证对于node <span class="math inline">\(v\)</span>，能够采样到所有不同类型的邻居。然后相同类型的邻居聚合到一起。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png" alt="image-20210802205956510" style="zoom:50%;" /></p>
-<p><strong>Encoding Heterogeneous Contents</strong>：对于不同格式的content，使用不同的网络进行处理，然后使用Bi-LSTM进行融合，不同type的node有自己的Bi-LSTM网络。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png" alt="image-20210802210216977" style="zoom:50%;" /></p>
-<p><strong>Aggregating Heterogeneous Neighbors</strong>：对于相同类型的邻居，先基于Bi-LSTM进行聚合。然后不同类型的邻居基于attention进行聚合。</p>
-<h2 id="hetsann">HetSANN</h2>
-<a href="/2021/08/03/HetSANN/" title="[个人详细博客]">[个人详细博客]</a>
-<p><a href="https://github.com/didi/hetsann"><strong>An Attention-based Graph Neural Network for Heterogeneous Structural Learning</strong></a> AAAI 2020</p>
-<p>提出了Heterogeneous Graph Structural Attention Neural Network (HetSANN），主要创新点有三个：</p>
-<ul>
-<li>对于预测标签任务，采用多任务学习，不同type的节点进行预测有不同的classifier（实际是全连接层+softmax）</li>
-<li>针对edge和reversed edge，除了一般的基于拼接的方法计算attention外，提出了voice-sharing product的计算注意力方法。</li>
-<li>在不同type的邻居信息转换中，提出了一个保持weight matrix的cycle consistent的方法。</li>
-</ul>
-<p>看一下模型的整体结构：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193220627.png" alt="image-20210803193220627" style="zoom:50%;" /></p>
-<p>核心是一个注意力层，TAL层如图所示。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803194602158.png" alt="image-20210803194602158" style="zoom:50%;" /></p>
-<p>首先是基于type的邻居信息转化，node <span class="math inline">\(i\)</span> 提供给node <span class="math inline">\(j\)</span>。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193433545.png" alt="image-20210803193433545" style="zoom:50%;" /></p>
-<p>然后基于注意力聚合邻居信息，下面的是一般的GAT的方法，作者叫做<em>concat product</em>。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193632456.png" alt="image-20210803193632456" style="zoom:50%;" /></p>
-<p>需要注意的是，这里的注意力向量<span class="math inline">\(\alpha_r\)</span>，是每个edge type各有一个。然后就是基于softmax的attention聚合。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193716164.png" alt="image-20210803193716164" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193733856.png" alt="image-20210803193733856" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193750622.png" alt="image-20210803193750622" style="zoom:50%;" /></p>
-<p>实际上，作者还提出了<em>voice-sharing</em>的注意力计算方法，主要是希望考虑关系和逆关系之间的对应联系。让注意力向量<span class="math inline">\(\alpha_r\)</span>​互为负数，然后利用相加计算注意力。详见博客。</p>
-<h2 id="rhine">RHINE</h2>
-<p><strong>Relation Structure-Aware Heterogeneous Information Network Embedding</strong> AAAI 2019</p>
-<p>这篇文章不是GNN领域的文章，但是由于它也尝试捕获relation在结构上的角色，所以干脆放到一起了。</p>
-<p>它核心创新点是把所有的relation划分为了两类：</p>
-<ul>
-<li>Afﬁliation Relations (ARs)：one-centeredby-another structures</li>
-<li>Interaction Relations (IRs)：peer-to-peer structures</li>
-</ul>
-<p>划分的依据是作者根据不同relation的头尾节点类型的平均数量比，对于关系<span class="math inline">\(&lt;u,r,v&gt;\)</span>：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804154636282.png" alt="image-20210804154636282" style="zoom:50%;" /></p>
-<p>里面的<span class="math inline">\(\overline{d}_{t_u}\)</span>，<span class="math inline">\(t_u\)</span>表示的是头节点<span class="math inline">\(u\)</span>的类型，<span class="math inline">\(\overline{d}_{t_u}\)</span>是指这一类型下的所有节点的平均度degree。在这样的网络中，能够确定某个relation两边的entity type，所以可以这样评估。但是在KG中，无法确定entity的type，也就无法这样计算。</p>
-<p><span class="math inline">\(D(r)\)</span>比较小的划分为IR关系，<span class="math inline">\(D(r)\)</span>比较大的划分为AR关系。</p>
-<p>这样划分完之后，对于AR关系和IR关系使用两种不同的embedding model。</p>
-<p>AR，直接评估两个点之间的欧氏距离。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155417686.png" alt="image-20210804155417686" style="zoom:50%;" /></p>
-<p>IR，借助TransE的思想，建模这种1-1的关系。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155434262.png" alt="image-20210804155434262" style="zoom:50%;" /></p>
-<h2 id="jk">JK</h2>
-<p><strong>Representation Learning on Graphs with Jumping Knowledge Networks</strong> ICML 2018</p>
-<p>作者认为一般GCN模型实际假定了为不同的node都学习固定范围/半径的邻居信息，这种情况下不一定是最优解。比如通常GCN只需要两层就达到了最优解，但是对于一个graph来说，有的node可能是tree-like的，两层邻居也只包含了很少的邻居信息，而有的node是expander-like core，两层邻居就包含了非常多的邻居信息。比如下面的GooglePlus社交网络：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172507196.png" alt="image-20210804172507196" style="zoom:50%;" /></p>
-<p>因此，作者希望设计一种方法能够实现adaptively adjust (i.e., learn) the inﬂuence radii for each node and task。提出了<em>Jumping Knowledge Networks (JK-Nets)</em>。</p>
-<p>主要结构：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172641046.png" alt="image-20210804172641046" style="zoom: 33%;" /></p>
-<p>JUMP的意思是每一层输出都jump到最后一层，在最后一层进行layer aggregation。</p>
-<p>作者提出三种方法</p>
-<ul>
-<li>Concatenation</li>
-<li>Max-pooling</li>
-<li>LSTM-attention：双向LSTM</li>
-</ul>
-<p>简单的论文的实验结果看，前两个方法还不错，但是后面的LSTM-attention，效果并不好。通过使用前面的JK设计，作者能够在不同数据集下，基于更多更深的GCN层达到最好的结果。</p>
-<h2 id="pathcon">PATHCON</h2>
-<p><a href="https://github.com/hwwang55/PathCon"><strong>Relational Message Passing for Knowledge Graph Completion</strong></a> KDD 2021</p>
-<a href="/2021/08/06/PATHCON/" title="[个人详细博客]">[个人详细博客]</a>
-<p>在这篇论文中，作者只考虑了KG中的relation embedding，没有学习entity embedding。更具体的说，学习两个方面的结构信息，relational context和relation paths。前者是头/尾实体的邻居relation，后者是头尾实体在KG中相连的relational path。提出了<a href="https://github.com/hwwang55/PathCon">PATHCON</a></p>
-<p>作者预测的是relation prediction，<span class="math inline">\(&lt;h,?,t&gt;\)</span>，区别于常见的head/tail prediction，这样情况下relation prediction的候选项是所有的relation，会少很多候选项。这篇文章，作者还提出了一个新的数据集，DDB14，基于医药和疾病的一个知识图谱。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210807105609410.png" alt="image-20210807105609410" style="zoom:50%;" /></p>
-<h2 id="hetegnn">HeteGNN</h2>
-<p><strong>HeteGCN: Heterogeneous Graph Convolutional Networks for Text Classification</strong> WSDM 2021</p>
-<p>针对文本预测任务，简化TEXTGCN，将原来整个TEXTGCN中使用的graph分解为几个不同的小graph，每个graph有自己的<span class="math inline">\(W_r\)</span>。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809161131674.png" alt="image-20210809161131674" style="zoom:50%;" /></p>
-<h2 id="kgnn">KGNN</h2>
-<p><a href="https://github.com/xzenglab/KGNN"><strong>KGNN: Knowledge Graph Neural Network for Drug-Drug Interaction Prediction</strong></a> IJCAI 2020</p>
-<p>针对DDI问题（Drug-drug interaction），首先从数据集中构造一个关于drug的KG，然后使用GNN捕获drug的邻居信息。在GNN上没有太大的创新，发现在聚合的时候使用自身embedding与邻居embedding各自具有不同的weight matrix比较合适。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809171558677.png" alt="image-20210809171558677" style="zoom:50%;" /></p>
-<h2 id="cprl">CPRL</h2>
-<p><strong>Heterogeneous Graph Neural Networks for Concept Prerequisite Relation Learning in Educational Data</strong> NAACL 2021</p>
-<p>CPRL（concept prerequisite relation learning），在GNN上没有太大创新，主要是属于应用场景的一个创新。针对概念之间的依赖关系进行预测，作者创建了一个异质图，然后直接使用R-GCN进行学习，方法上没有太多可以借鉴的地方。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105105557.png" alt="image-20210810105105557" style="zoom:50%;" /></p>
-<p>这里使用了一个Siamese network，以前没见过。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105626109.png" alt="image-20210810105626109" style="zoom: 33%;" /></p>
-<h2 id="clhg">CLHG</h2>
-<p><a href="https://github.com/%20TencentGameMate/gnn_cross_lingual"><strong>Cross-lingual Text Classiﬁcation with Heterogeneous Graph Neural Network</strong></a> ACL 2021</p>
-<p>CLHG（Cross-Lingual Heterogeneous GCN），针对跨语言的文本分类任务，使用HGCN捕获不同语言的异质信息。这篇文章在GNN上没有太大创新，直接使用了前面HGAT的方法，根据邻居节点类型有不同的weight matrix。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810151243856.png" alt="image-20210810151243856" style="zoom:50%;" /></p>
-<h2 id="eagcn">EAGCN</h2>
-<p><a href="https://github.com/Luckick/EAGCN"><strong>Multi-view spectral graph convolution with consistent edge attention for molecular modeling</strong></a> Neurocomputing</p>
-<p>EAGCN，预测任务是molecular graph property prediction，核心创新点个人认为是把异质图根据edge type分为不同view的graph，然后在molecular graph的背景下，同一个type的edge有不同的取值，这些取值会有不同的weight scalar。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210811150803687.png" alt="image-20210811150803687" style="zoom:50%;" /></p>
-<p>另外作者开源了项目，里面有attention的可视化这些操作，如果需要可以参考。</p>
-<h2 id="eigat">EIGAT</h2>
-<p><strong>Incorporating Global Information in Local Attention for Knowledge Representation Learning</strong> ACL 2021</p>
-<p>核心创新点在于建模KG中实体的重要性，为每个实体赋值一个实数scalar，然后根据邻居实体的重要性评估中心实体的重要性。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160654200.png" alt="image-20210824160654200" style="zoom:50%;" /></p>
-<p><strong>local attention</strong></p>
-<p>与KBGAT的方法一样。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160807701.png" alt="image-20210824160807701" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160745666.png" alt="image-20210824160745666" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160828759.png" alt="image-20210824160828759" style="zoom:50%;" /></p>
-<p><strong>entity importance</strong></p>
-<p>核心创新点，</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160908960.png" alt="image-20210824160908960" style="zoom:50%;" /></p>
-<p>从in edge出发，聚合邻居的重要性，注意，这里融合了前面计算的message的重要性。每个邻居提供的重要性是相对于自身所有的out message重要性来计算的。</p>
-<p>其中<span class="math inline">\(d\)</span>是一个超参，第一项是为了给KG中没有in-degree的实体一个初始值。</p>
-<p>在实验时，所有的<span class="math inline">\(EI\)</span>初始化为0.1，<span class="math inline">\(d\)</span>初始化为0.85。</p>
-<p>最后，两种attention进行融合。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161639285.png" alt="image-20210824161639285" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161622524.png" alt="image-20210824161622524" style="zoom:50%;" /></p>
-<h2 id="gaeat">GAEAT</h2>
-<p><strong>GAEAT: Graph Auto-Encoder Attention Networks for Knowledge Graph Completion</strong> CIKM 2020</p>
-<p>CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然后DistMult作为解码器。不过可以作为对比的Baseline。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210825164436321.png" alt="image-20210825164436321" style="zoom:50%;" /></p>
-<h2 id="m-gnn">M-GNN</h2>
-<p><strong>Robust Embedding with Multi-Level Structures for Link Prediction</strong> IJCAI 2019</p>
-<a href="/2021/08/26/M-GNN/" title="[个人详细博客]">[个人详细博客]</a>
-<p>这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。</p>
-<p>和一般的GNN消息聚合方式不同，M-GNN希望能够建模KG中不同尺度中的信息。</p>
-<p>首先构造k个Coarsened graph：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png" alt="image-20210826143747570" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png" alt="image-20210826145202651" style="zoom:50%;" /> 最后模型结构。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png" alt="image-20210826150505564" style="zoom:50%;" /></p>
-<h2 id="rdgcn">RDGCN</h2>
-<p><strong>Relation-Aware Entity Alignment for Heterogeneous Knowledge Graphs</strong> IJCAI 2019</p>
-<a href="/2021/08/27/RDGCN/" title="[个人详细博客]">[个人详细博客]</a>
-<p><a href="https://github.com/StephanieWyt/RDGCN"><strong>RDGCN</strong></a> (Relation-aware Dual-Graph Convolutional Network)，预测任务是KG的实体对齐，主要是为了捕获更多的在dual KG中的relation的信息。核心创新点是对于dual KG（即要对齐的两个KG），构造了Dual Relation Graph，捕获relation和relation之间的联系。之后在这个Dual Relation Graph上学习relation的表示，融入到original KG中进行entity的表示学习，最终用于entity之间的对齐。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png" alt="image-20210827161832004" style="zoom:50%;" /></p>
-<h2 id="slice">SLiCE</h2>
-<p><a href="https://github.com/pnnl/SLICE"><strong>Self-Supervised Learning of Contextual Embeddings for Link Prediction in Heterogeneous Networks</strong></a> WWW 2021</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830195131960.png" alt="image-20210830195131960" style="zoom:50%;" /></p>
-<p>作者希望考虑的是，单个节点在特定的subgraph下的表示。对于节点对，利用随机游走寻找两个节点之间的context subgraph。首先，利用一个embedding function，在全图下学习每个node的初始表示，作为global embedding。</p>
-<p>然后，有两个阶段，pre-training和Fine-tuning。pre-training预测被mask掉的node，fine-tuning进行link prediction。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png" alt="image-20210830200013984" style="zoom:50%;" /></p>
-<h2 id="m2gnn">M<sup>2</sup>GNN</h2>
-<p><strong>Mixed-Curvature Multi-Relational Graph Neural Network for Knowledge Graph Completion</strong> WWW 2021</p>
-<p>首个将mixed-curvature geometry与GNN联系起来学习KGE的方法，作者尝试利用不同的空间对KG中的异质性结构进行建模。但是由于对mixed-curvature space和manifold不了解，看不懂论文内容。之后可以找时间仔细补充下基本知识。可参照</p>
-<p>John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springer, 1–31.</p>
-<h2 id="lgnn">LGNN</h2>
-<p><strong>Node-wise Localization of Graph Neural Networks</strong> IJCAI 2021</p>
-<p>作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png" alt="image-20210921195057584" style="zoom:50%;" /></p>
-<p>具体有两个Node-level localization和Edge-level localization.</p>
-<p><strong>Node-level localization</strong></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png" alt="image-20210921195215512" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png" alt="image-20210921195243176" style="zoom:50%;" /></p>
-<p>注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>之后用于生成node <span class="math inline">\(v\)</span>的weight matrix。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png" alt="image-20210921195358969" style="zoom:50%;" /></p>
-<p>注意这里，是把<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>作为一行，然后复制，最后作用到graph global matrix<span class="math inline">\(W_l\)</span>上。</p>
-<p><strong>Edge-level localization</strong></p>
-<p>作者对node <span class="math inline">\(v\)</span>的不同邻居edge进一步建模：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png" alt="image-20210921195557949" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png" alt="image-20210921195613526" style="zoom:50%;" /></p>
-<p>最后聚合：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" /></p>
-<h2 id="srgcn">SRGCN</h2>
-<p><strong>SRGCN: Graph-based multi-hop reasoning on knowledge graphs</strong> Neurocomputing 2021</p>
-<p>这篇文章在预测<span class="math inline">\(&lt;h, r, t&gt;\)</span>的时候，首先构建<span class="math inline">\(h\)</span>和<span class="math inline">\(t\)</span>之间的graph，然后在这个graph上，逐步使用R-GCN得到对于尾实体的预测embedding，最后使用MLP获得score。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303170039139.png" alt="image-20220303170039139" style="zoom:40%;" /></p>
-<p>图中的label指的是从头实体出发，遇到的第几阶邻居。一个实体与头实体之间存在多个不同长度的path时，以最长的path作为label。</p>
-<p>之后在使用R-GCN进行图卷积时，并不是以头实体为中心不断的聚合邻居。而是将头实体作为一开始，不断聚合到下一阶邻居实体上，直到聚合到具有最大label的实体上。</p>
-<h2 id="chen-et-al.">Chen et al.</h2>
-<p><strong>Learning graph attention-aware knowledge graph embedding</strong> Neurocomputing 2021</p>
-<p>这篇文章核心是提出了一种新的在KG上计算attention的方法，有三个部分：entity attention、relation attention和structure attention。最核心的创新点是计算structural attention。</p>
-<p>Entity attention：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183431157.png" alt="image-20220303183431157" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183447999.png" alt="image-20220303183447999" style="zoom:50%;" /></p>
-<p>Relation attention：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183517954.png" alt="image-20220303183517954" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183538437.png" alt="image-20220303183538437" style="zoom:50%;" /></p>
-<p>Structure attention：</p>
-<p>使用带重启机制的随机游走方法（Random Walk with Restart，RWR），</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183705455.png" alt="image-20220303183705455" style="zoom:50%;" /></p>
-<p>其中，<span class="math inline">\(w_i \in \mathbb{R}^{N\times 1}\)</span>，其中的entry <span class="math inline">\(p\)</span>表示实体<span class="math inline">\(i\)</span>通过随机游走到达实体<span class="math inline">\(p\)</span>的概率，这个概率越大，表示这两个实体在结构上的相关性越大。</p>
-<p>然后，由于每个实体<span class="math inline">\(i\)</span>都有一个对应的<span class="math inline">\(w_i\)</span>，计算邻居边<span class="math inline">\(&lt;i,j&gt;\)</span>在结构上的权重，使用了jaccard相似度计算方法，核心思想是某个实体<span class="math inline">\(p\)</span>如果同时出现在实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的邻居中，那么如果实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的结构相似度越大，实体<span class="math inline">\(p\)</span>在<span class="math inline">\(w_i\)</span>和<span class="math inline">\(w_j\)</span>中的差距应该越小。因此有：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184150967.png" alt="image-20220303184150967" style="zoom:50%;" /></p>
-<p>最后是softmax：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184212826.png" alt="image-20220303184212826" style="zoom:50%;" /></p>
-<p>整体结构图：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184251972.png" alt="image-20220303184251972" style="zoom:30%;" /></p>
-<h2 id="mte">MTE</h2>
-<p><strong>Relation-based multi-type aware knowledge graph embedding</strong> Neurocomputing 2021</p>
-<p>这篇文章将本体（ontology）考虑到了GNN当中，从而学习KGE。ontology是描述entity的类型的语法树。</p>
-<p>作者将ontology树使用bi-directional transformer model获得关于type的embedding。其中的输入是从root到leaf的序列。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303202610179.png" alt="image-20220303202610179" style="zoom:40%;" /></p>
-<p>获得type的embedding之后，对于某个具体实体<span class="math inline">\(e\)</span>，不同type的比重应该不同。作者认为如果实体<span class="math inline">\(e\)</span>链接的triples中，关系<span class="math inline">\(r\)</span>属于某个type <span class="math inline">\(t\)</span>的数量越多，则比重越大。比如在上图，对于实体<em>Ang_Lee</em>，类型<em>director</em>的比重应该比<em>actor</em>更大，因为属于<span class="math inline">\(director\)</span>的triple数量更多。</p>
-<p>实体<span class="math inline">\(e\)</span>的type embedding应该是：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203115074.png" alt="image-20220303203115074" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203130712.png" alt="image-20220303203130712" style="zoom:50%;" /></p>
-<p>上面第二个公式的含义就是统计属于某个type <span class="math inline">\(t\)</span>的triples的数量占比。</p>
-<p>之后，作者提出一种基于relation的attention聚合方法。</p>
-<p>单个relation下的实体聚合：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203413691.png" alt="image-20220303203413691" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203428588.png" alt="image-20220303203428588" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203449437.png" alt="image-20220303203449437" style="zoom:50%;" /></p>
-<p>多个relation的聚合：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203516612.png" alt="image-20220303203516612" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png" alt="image-20220303203532350" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png" alt="image-20220303203547104" style="zoom:50%;" /></p>
-<h2 id="revgnn">RevGNN</h2>
-<p><strong>Training Graph Neural Networks with 1000 Layers</strong> ICML 2021</p>
-<a href="/2022/03/23/GNN-1000-layers/" title="[个人详细博客]">[个人详细博客]</a>
-<p>这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png" alt="image-20220323192539787" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>Ppaer</category>
-        <category>GNN</category>
-      </categories>
-      <tags>
-        <tag>Collection</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>KGE-Collection</title>
     <url>/2021/04/17/collection-KGE-Collection/</url>
     <content><![CDATA[<h1 id="collection-of-kge-papers-volume-1">Collection of KGE Papers Volume 1</h1>
@@ -1981,6 +1707,280 @@ HSIC(\mathbf{\mathbf{Z}_{F}},\ \mathbf{\mathbf{Z}_{CF}}) = (n-1)^{-2}tr(\mathbf{
         <category>Paper</category>
         <category>KGE</category>
       </categories>
+  </entry>
+  <entry>
+    <title>GNN-Collection</title>
+    <url>/2021/07/08/collection-GNN-Collection/</url>
+    <content><![CDATA[<h1 id="collection-of-gnn-papers">Collection of GNN papers</h1>
+<ul>
+<li>Highway GNN（ACL 2018）</li>
+<li>HGSL（AAAI 2021）</li>
+<li>HGAT（EMNLP 2019）</li>
+<li>HetGNN（KDD 2019）</li>
+<li>HetSANN（AAAI 2020）</li>
+<li>RHINE（AAAI 2019）</li>
+<li>JK（ICML 2018）</li>
+<li>PATHCON（KDD 2021）</li>
+<li>HeteGNN（WSDM 2021）</li>
+<li>KGNN（IJCAI 2020）</li>
+<li>CPRL（NAACL 2021）</li>
+<li>CLHG（ACL 2021）</li>
+<li>EAGCN（Neurocomputing）</li>
+<li>ETGAT（ACL-IJCNLP 2021）</li>
+<li>GAEAT（CIKM 2020）</li>
+<li>M-GNN（IJCAI 2019）</li>
+<li>RDGCN（IJCAI 2019）</li>
+<li>SLiCE（WWW 2021）</li>
+<li>M<sup>2</sup>GNN（WWW 2021）</li>
+<li>LGNN（IJCAI 2021）</li>
+<li>RevGNN（ICML 2021）</li>
+</ul>
+<span id="more"></span>
+<h2 id="highway-gnn">Highway GNN</h2>
+<p><a href="https://github.com/%20afshinrahimi/geographconv"><strong>Semi-supervised User Geolocation via Graph Convolutional Networks</strong></a> ACL 2018</p>
+<p>应用场景是社交媒体上的用户定位。单纯的在GNN上的创新点是使用Gate机制来控制传入的邻居的信息。</p>
+<p>在每一层，借鉴Highway networks的思路，计算一个门weight</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" /></p>
+<h2 id="hgsl">HGSL</h2>
+<p><strong>Heterogeneous Graph Structure Learning for Graph Neural Networks</strong> AAAI 2021</p>
+<a href="/2021/07/06/HGSL/" title="[个人详细博客]">[个人详细博客]</a>
+<p>作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" /></p>
+<p><strong>motivation</strong>：目前的异质图神经网络基于一个假设，学习使用的graph是足够好的。但是实际上这个假设不一定总能够满足。两个方面的原因，（1）在建模graph的时候，使用到的信息难免会包含错误的信息，导致最终的graph是不够好的（2）另一个原因是异质图结构本身与下游任务是独立的，不一定是有利于下游任务的最优解。为了解决上面的问题，图结构学习graph structure learning (GSL)被提出来，但是这些方法主要是在考虑同质图，无法很好的考虑异质图中的异质性以及异质图中存在的复杂的交互。</p>
+<p><strong>method</strong>：提出HGSL，首先学习合适的graph structure，然后在这个graph structure上使用GCN进行学习。这种heterogeneous graph structure learning是核心创新点，包括三种graph的融合，<strong>feature similarity graph</strong>，<strong>feature propagation graph</strong>,和<strong>semantic graph</strong>。</p>
+<h2 id="hgat">HGAT</h2>
+<p><strong>Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classiﬁcation</strong> EMNLP 2019</p>
+<p>为短文本分类任务（semi-supervised short text classiﬁcation）设计了一个异质图神经网络HGAT。</p>
+<p>首先是利用原始文本构造一个异质图（HIN），把不同来源的文本组合到一起。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png" alt="image-20210728180026169" style="zoom:50%;" /></p>
+<p>重点在于，其中的node type各不相同，各自具有差异性很大的特征。</p>
+<p>然后是设计的网络结构，重点在于设计了一个两层的attention。</p>
+<p>不同type的node有不同的卷积核：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png" alt="image-20210728180219517" style="zoom:50%;" /></p>
+<p>然后，type-level的attention，聚合邻居下所有相同type的node embedding，然后计算attention weight。这样同一type下的所有neighbor node共享一个type level的weight。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png" alt="image-20210728180348109" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png" alt="image-20210728180319175" style="zoom:50%;" /></p>
+<p>不同type之间softmax。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png" alt="image-20210728180440793" style="zoom:50%;" /></p>
+<p>然后是node-level的attention，不同邻居node，计算attention。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png" alt="image-20210728180538577" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png" alt="image-20210728180555435" style="zoom:50%;" /></p>
+<p>最后结果：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png" alt="image-20210728180643981" style="zoom:50%;" /></p>
+<h2 id="hetgnn">HetGNN</h2>
+<p><a href="https://github.com/chuxuzhang/KDD2019_HetGNN">Heterogeneous Graph Neural Network</a> KDD 2019</p>
+<p>作者提出了一种同时处理node content和heterogeneous graph structure的GNN，HetGNN。</p>
+<p>看一下整体结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png" alt="image-20210802205726358" style="zoom:50%;" /></p>
+<p>核心模块有三方面：</p>
+<p><strong>Sampling Heterogeneous Neighbors</strong>：使用了random walk with restart (RWR)的邻居采样策略，需要注意的是这个采样策略保证对于node <span class="math inline">\(v\)</span>，能够采样到所有不同类型的邻居。然后相同类型的邻居聚合到一起。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png" alt="image-20210802205956510" style="zoom:50%;" /></p>
+<p><strong>Encoding Heterogeneous Contents</strong>：对于不同格式的content，使用不同的网络进行处理，然后使用Bi-LSTM进行融合，不同type的node有自己的Bi-LSTM网络。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png" alt="image-20210802210216977" style="zoom:50%;" /></p>
+<p><strong>Aggregating Heterogeneous Neighbors</strong>：对于相同类型的邻居，先基于Bi-LSTM进行聚合。然后不同类型的邻居基于attention进行聚合。</p>
+<h2 id="hetsann">HetSANN</h2>
+<a href="/2021/08/03/HetSANN/" title="[个人详细博客]">[个人详细博客]</a>
+<p><a href="https://github.com/didi/hetsann"><strong>An Attention-based Graph Neural Network for Heterogeneous Structural Learning</strong></a> AAAI 2020</p>
+<p>提出了Heterogeneous Graph Structural Attention Neural Network (HetSANN），主要创新点有三个：</p>
+<ul>
+<li>对于预测标签任务，采用多任务学习，不同type的节点进行预测有不同的classifier（实际是全连接层+softmax）</li>
+<li>针对edge和reversed edge，除了一般的基于拼接的方法计算attention外，提出了voice-sharing product的计算注意力方法。</li>
+<li>在不同type的邻居信息转换中，提出了一个保持weight matrix的cycle consistent的方法。</li>
+</ul>
+<p>看一下模型的整体结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193220627.png" alt="image-20210803193220627" style="zoom:50%;" /></p>
+<p>核心是一个注意力层，TAL层如图所示。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803194602158.png" alt="image-20210803194602158" style="zoom:50%;" /></p>
+<p>首先是基于type的邻居信息转化，node <span class="math inline">\(i\)</span> 提供给node <span class="math inline">\(j\)</span>。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193433545.png" alt="image-20210803193433545" style="zoom:50%;" /></p>
+<p>然后基于注意力聚合邻居信息，下面的是一般的GAT的方法，作者叫做<em>concat product</em>。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193632456.png" alt="image-20210803193632456" style="zoom:50%;" /></p>
+<p>需要注意的是，这里的注意力向量<span class="math inline">\(\alpha_r\)</span>，是每个edge type各有一个。然后就是基于softmax的attention聚合。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193716164.png" alt="image-20210803193716164" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193733856.png" alt="image-20210803193733856" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193750622.png" alt="image-20210803193750622" style="zoom:50%;" /></p>
+<p>实际上，作者还提出了<em>voice-sharing</em>的注意力计算方法，主要是希望考虑关系和逆关系之间的对应联系。让注意力向量<span class="math inline">\(\alpha_r\)</span>​互为负数，然后利用相加计算注意力。详见博客。</p>
+<h2 id="rhine">RHINE</h2>
+<p><strong>Relation Structure-Aware Heterogeneous Information Network Embedding</strong> AAAI 2019</p>
+<p>这篇文章不是GNN领域的文章，但是由于它也尝试捕获relation在结构上的角色，所以干脆放到一起了。</p>
+<p>它核心创新点是把所有的relation划分为了两类：</p>
+<ul>
+<li>Afﬁliation Relations (ARs)：one-centeredby-another structures</li>
+<li>Interaction Relations (IRs)：peer-to-peer structures</li>
+</ul>
+<p>划分的依据是作者根据不同relation的头尾节点类型的平均数量比，对于关系<span class="math inline">\(&lt;u,r,v&gt;\)</span>：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804154636282.png" alt="image-20210804154636282" style="zoom:50%;" /></p>
+<p>里面的<span class="math inline">\(\overline{d}_{t_u}\)</span>，<span class="math inline">\(t_u\)</span>表示的是头节点<span class="math inline">\(u\)</span>的类型，<span class="math inline">\(\overline{d}_{t_u}\)</span>是指这一类型下的所有节点的平均度degree。在这样的网络中，能够确定某个relation两边的entity type，所以可以这样评估。但是在KG中，无法确定entity的type，也就无法这样计算。</p>
+<p><span class="math inline">\(D(r)\)</span>比较小的划分为IR关系，<span class="math inline">\(D(r)\)</span>比较大的划分为AR关系。</p>
+<p>这样划分完之后，对于AR关系和IR关系使用两种不同的embedding model。</p>
+<p>AR，直接评估两个点之间的欧氏距离。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155417686.png" alt="image-20210804155417686" style="zoom:50%;" /></p>
+<p>IR，借助TransE的思想，建模这种1-1的关系。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155434262.png" alt="image-20210804155434262" style="zoom:50%;" /></p>
+<h2 id="jk">JK</h2>
+<p><strong>Representation Learning on Graphs with Jumping Knowledge Networks</strong> ICML 2018</p>
+<p>作者认为一般GCN模型实际假定了为不同的node都学习固定范围/半径的邻居信息，这种情况下不一定是最优解。比如通常GCN只需要两层就达到了最优解，但是对于一个graph来说，有的node可能是tree-like的，两层邻居也只包含了很少的邻居信息，而有的node是expander-like core，两层邻居就包含了非常多的邻居信息。比如下面的GooglePlus社交网络：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172507196.png" alt="image-20210804172507196" style="zoom:50%;" /></p>
+<p>因此，作者希望设计一种方法能够实现adaptively adjust (i.e., learn) the inﬂuence radii for each node and task。提出了<em>Jumping Knowledge Networks (JK-Nets)</em>。</p>
+<p>主要结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172641046.png" alt="image-20210804172641046" style="zoom: 33%;" /></p>
+<p>JUMP的意思是每一层输出都jump到最后一层，在最后一层进行layer aggregation。</p>
+<p>作者提出三种方法</p>
+<ul>
+<li>Concatenation</li>
+<li>Max-pooling</li>
+<li>LSTM-attention：双向LSTM</li>
+</ul>
+<p>简单的论文的实验结果看，前两个方法还不错，但是后面的LSTM-attention，效果并不好。通过使用前面的JK设计，作者能够在不同数据集下，基于更多更深的GCN层达到最好的结果。</p>
+<h2 id="pathcon">PATHCON</h2>
+<p><a href="https://github.com/hwwang55/PathCon"><strong>Relational Message Passing for Knowledge Graph Completion</strong></a> KDD 2021</p>
+<a href="/2021/08/06/PATHCON/" title="[个人详细博客]">[个人详细博客]</a>
+<p>在这篇论文中，作者只考虑了KG中的relation embedding，没有学习entity embedding。更具体的说，学习两个方面的结构信息，relational context和relation paths。前者是头/尾实体的邻居relation，后者是头尾实体在KG中相连的relational path。提出了<a href="https://github.com/hwwang55/PathCon">PATHCON</a></p>
+<p>作者预测的是relation prediction，<span class="math inline">\(&lt;h,?,t&gt;\)</span>，区别于常见的head/tail prediction，这样情况下relation prediction的候选项是所有的relation，会少很多候选项。这篇文章，作者还提出了一个新的数据集，DDB14，基于医药和疾病的一个知识图谱。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210807105609410.png" alt="image-20210807105609410" style="zoom:50%;" /></p>
+<h2 id="hetegnn">HeteGNN</h2>
+<p><strong>HeteGCN: Heterogeneous Graph Convolutional Networks for Text Classification</strong> WSDM 2021</p>
+<p>针对文本预测任务，简化TEXTGCN，将原来整个TEXTGCN中使用的graph分解为几个不同的小graph，每个graph有自己的<span class="math inline">\(W_r\)</span>。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809161131674.png" alt="image-20210809161131674" style="zoom:50%;" /></p>
+<h2 id="kgnn">KGNN</h2>
+<p><a href="https://github.com/xzenglab/KGNN"><strong>KGNN: Knowledge Graph Neural Network for Drug-Drug Interaction Prediction</strong></a> IJCAI 2020</p>
+<p>针对DDI问题（Drug-drug interaction），首先从数据集中构造一个关于drug的KG，然后使用GNN捕获drug的邻居信息。在GNN上没有太大的创新，发现在聚合的时候使用自身embedding与邻居embedding各自具有不同的weight matrix比较合适。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809171558677.png" alt="image-20210809171558677" style="zoom:50%;" /></p>
+<h2 id="cprl">CPRL</h2>
+<p><strong>Heterogeneous Graph Neural Networks for Concept Prerequisite Relation Learning in Educational Data</strong> NAACL 2021</p>
+<p>CPRL（concept prerequisite relation learning），在GNN上没有太大创新，主要是属于应用场景的一个创新。针对概念之间的依赖关系进行预测，作者创建了一个异质图，然后直接使用R-GCN进行学习，方法上没有太多可以借鉴的地方。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105105557.png" alt="image-20210810105105557" style="zoom:50%;" /></p>
+<p>这里使用了一个Siamese network，以前没见过。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105626109.png" alt="image-20210810105626109" style="zoom: 33%;" /></p>
+<h2 id="clhg">CLHG</h2>
+<p><a href="https://github.com/%20TencentGameMate/gnn_cross_lingual"><strong>Cross-lingual Text Classiﬁcation with Heterogeneous Graph Neural Network</strong></a> ACL 2021</p>
+<p>CLHG（Cross-Lingual Heterogeneous GCN），针对跨语言的文本分类任务，使用HGCN捕获不同语言的异质信息。这篇文章在GNN上没有太大创新，直接使用了前面HGAT的方法，根据邻居节点类型有不同的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810151243856.png" alt="image-20210810151243856" style="zoom:50%;" /></p>
+<h2 id="eagcn">EAGCN</h2>
+<p><a href="https://github.com/Luckick/EAGCN"><strong>Multi-view spectral graph convolution with consistent edge attention for molecular modeling</strong></a> Neurocomputing</p>
+<p>EAGCN，预测任务是molecular graph property prediction，核心创新点个人认为是把异质图根据edge type分为不同view的graph，然后在molecular graph的背景下，同一个type的edge有不同的取值，这些取值会有不同的weight scalar。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210811150803687.png" alt="image-20210811150803687" style="zoom:50%;" /></p>
+<p>另外作者开源了项目，里面有attention的可视化这些操作，如果需要可以参考。</p>
+<h2 id="eigat">EIGAT</h2>
+<p><strong>Incorporating Global Information in Local Attention for Knowledge Representation Learning</strong> ACL 2021</p>
+<p>核心创新点在于建模KG中实体的重要性，为每个实体赋值一个实数scalar，然后根据邻居实体的重要性评估中心实体的重要性。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160654200.png" alt="image-20210824160654200" style="zoom:50%;" /></p>
+<p><strong>local attention</strong></p>
+<p>与KBGAT的方法一样。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160807701.png" alt="image-20210824160807701" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160745666.png" alt="image-20210824160745666" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160828759.png" alt="image-20210824160828759" style="zoom:50%;" /></p>
+<p><strong>entity importance</strong></p>
+<p>核心创新点，</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160908960.png" alt="image-20210824160908960" style="zoom:50%;" /></p>
+<p>从in edge出发，聚合邻居的重要性，注意，这里融合了前面计算的message的重要性。每个邻居提供的重要性是相对于自身所有的out message重要性来计算的。</p>
+<p>其中<span class="math inline">\(d\)</span>是一个超参，第一项是为了给KG中没有in-degree的实体一个初始值。</p>
+<p>在实验时，所有的<span class="math inline">\(EI\)</span>初始化为0.1，<span class="math inline">\(d\)</span>初始化为0.85。</p>
+<p>最后，两种attention进行融合。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161639285.png" alt="image-20210824161639285" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161622524.png" alt="image-20210824161622524" style="zoom:50%;" /></p>
+<h2 id="gaeat">GAEAT</h2>
+<p><strong>GAEAT: Graph Auto-Encoder Attention Networks for Knowledge Graph Completion</strong> CIKM 2020</p>
+<p>CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然后DistMult作为解码器。不过可以作为对比的Baseline。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210825164436321.png" alt="image-20210825164436321" style="zoom:50%;" /></p>
+<h2 id="m-gnn">M-GNN</h2>
+<p><strong>Robust Embedding with Multi-Level Structures for Link Prediction</strong> IJCAI 2019</p>
+<a href="/2021/08/26/M-GNN/" title="[个人详细博客]">[个人详细博客]</a>
+<p>这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。</p>
+<p>和一般的GNN消息聚合方式不同，M-GNN希望能够建模KG中不同尺度中的信息。</p>
+<p>首先构造k个Coarsened graph：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png" alt="image-20210826143747570" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png" alt="image-20210826145202651" style="zoom:50%;" /> 最后模型结构。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png" alt="image-20210826150505564" style="zoom:50%;" /></p>
+<h2 id="rdgcn">RDGCN</h2>
+<p><strong>Relation-Aware Entity Alignment for Heterogeneous Knowledge Graphs</strong> IJCAI 2019</p>
+<a href="/2021/08/27/RDGCN/" title="[个人详细博客]">[个人详细博客]</a>
+<p><a href="https://github.com/StephanieWyt/RDGCN"><strong>RDGCN</strong></a> (Relation-aware Dual-Graph Convolutional Network)，预测任务是KG的实体对齐，主要是为了捕获更多的在dual KG中的relation的信息。核心创新点是对于dual KG（即要对齐的两个KG），构造了Dual Relation Graph，捕获relation和relation之间的联系。之后在这个Dual Relation Graph上学习relation的表示，融入到original KG中进行entity的表示学习，最终用于entity之间的对齐。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png" alt="image-20210827161832004" style="zoom:50%;" /></p>
+<h2 id="slice">SLiCE</h2>
+<p><a href="https://github.com/pnnl/SLICE"><strong>Self-Supervised Learning of Contextual Embeddings for Link Prediction in Heterogeneous Networks</strong></a> WWW 2021</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830195131960.png" alt="image-20210830195131960" style="zoom:50%;" /></p>
+<p>作者希望考虑的是，单个节点在特定的subgraph下的表示。对于节点对，利用随机游走寻找两个节点之间的context subgraph。首先，利用一个embedding function，在全图下学习每个node的初始表示，作为global embedding。</p>
+<p>然后，有两个阶段，pre-training和Fine-tuning。pre-training预测被mask掉的node，fine-tuning进行link prediction。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png" alt="image-20210830200013984" style="zoom:50%;" /></p>
+<h2 id="m2gnn">M<sup>2</sup>GNN</h2>
+<p><strong>Mixed-Curvature Multi-Relational Graph Neural Network for Knowledge Graph Completion</strong> WWW 2021</p>
+<p>首个将mixed-curvature geometry与GNN联系起来学习KGE的方法，作者尝试利用不同的空间对KG中的异质性结构进行建模。但是由于对mixed-curvature space和manifold不了解，看不懂论文内容。之后可以找时间仔细补充下基本知识。可参照</p>
+<p>John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springer, 1–31.</p>
+<h2 id="lgnn">LGNN</h2>
+<p><strong>Node-wise Localization of Graph Neural Networks</strong> IJCAI 2021</p>
+<p>作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png" alt="image-20210921195057584" style="zoom:50%;" /></p>
+<p>具体有两个Node-level localization和Edge-level localization.</p>
+<p><strong>Node-level localization</strong></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png" alt="image-20210921195215512" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png" alt="image-20210921195243176" style="zoom:50%;" /></p>
+<p>注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>之后用于生成node <span class="math inline">\(v\)</span>的weight matrix。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png" alt="image-20210921195358969" style="zoom:50%;" /></p>
+<p>注意这里，是把<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>作为一行，然后复制，最后作用到graph global matrix<span class="math inline">\(W_l\)</span>上。</p>
+<p><strong>Edge-level localization</strong></p>
+<p>作者对node <span class="math inline">\(v\)</span>的不同邻居edge进一步建模：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png" alt="image-20210921195557949" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png" alt="image-20210921195613526" style="zoom:50%;" /></p>
+<p>最后聚合：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png" alt="image-20210921195641977" style="zoom:50%;" /></p>
+<h2 id="srgcn">SRGCN</h2>
+<p><strong>SRGCN: Graph-based multi-hop reasoning on knowledge graphs</strong> Neurocomputing 2021</p>
+<p>这篇文章在预测<span class="math inline">\(&lt;h, r, t&gt;\)</span>的时候，首先构建<span class="math inline">\(h\)</span>和<span class="math inline">\(t\)</span>之间的graph，然后在这个graph上，逐步使用R-GCN得到对于尾实体的预测embedding，最后使用MLP获得score。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303170039139.png" alt="image-20220303170039139" style="zoom:40%;" /></p>
+<p>图中的label指的是从头实体出发，遇到的第几阶邻居。一个实体与头实体之间存在多个不同长度的path时，以最长的path作为label。</p>
+<p>之后在使用R-GCN进行图卷积时，并不是以头实体为中心不断的聚合邻居。而是将头实体作为一开始，不断聚合到下一阶邻居实体上，直到聚合到具有最大label的实体上。</p>
+<h2 id="chen-et-al.">Chen et al.</h2>
+<p><strong>Learning graph attention-aware knowledge graph embedding</strong> Neurocomputing 2021</p>
+<p>这篇文章核心是提出了一种新的在KG上计算attention的方法，有三个部分：entity attention、relation attention和structure attention。最核心的创新点是计算structural attention。</p>
+<p>Entity attention：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183431157.png" alt="image-20220303183431157" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183447999.png" alt="image-20220303183447999" style="zoom:50%;" /></p>
+<p>Relation attention：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183517954.png" alt="image-20220303183517954" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183538437.png" alt="image-20220303183538437" style="zoom:50%;" /></p>
+<p>Structure attention：</p>
+<p>使用带重启机制的随机游走方法（Random Walk with Restart，RWR），</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183705455.png" alt="image-20220303183705455" style="zoom:50%;" /></p>
+<p>其中，<span class="math inline">\(w_i \in \mathbb{R}^{N\times 1}\)</span>，其中的entry <span class="math inline">\(p\)</span>表示实体<span class="math inline">\(i\)</span>通过随机游走到达实体<span class="math inline">\(p\)</span>的概率，这个概率越大，表示这两个实体在结构上的相关性越大。</p>
+<p>然后，由于每个实体<span class="math inline">\(i\)</span>都有一个对应的<span class="math inline">\(w_i\)</span>，计算邻居边<span class="math inline">\(&lt;i,j&gt;\)</span>在结构上的权重，使用了jaccard相似度计算方法，核心思想是某个实体<span class="math inline">\(p\)</span>如果同时出现在实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的邻居中，那么如果实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的结构相似度越大，实体<span class="math inline">\(p\)</span>在<span class="math inline">\(w_i\)</span>和<span class="math inline">\(w_j\)</span>中的差距应该越小。因此有：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184150967.png" alt="image-20220303184150967" style="zoom:50%;" /></p>
+<p>最后是softmax：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184212826.png" alt="image-20220303184212826" style="zoom:50%;" /></p>
+<p>整体结构图：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184251972.png" alt="image-20220303184251972" style="zoom:30%;" /></p>
+<h2 id="mte">MTE</h2>
+<p><strong>Relation-based multi-type aware knowledge graph embedding</strong> Neurocomputing 2021</p>
+<p>这篇文章将本体（ontology）考虑到了GNN当中，从而学习KGE。ontology是描述entity的类型的语法树。</p>
+<p>作者将ontology树使用bi-directional transformer model获得关于type的embedding。其中的输入是从root到leaf的序列。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303202610179.png" alt="image-20220303202610179" style="zoom:40%;" /></p>
+<p>获得type的embedding之后，对于某个具体实体<span class="math inline">\(e\)</span>，不同type的比重应该不同。作者认为如果实体<span class="math inline">\(e\)</span>链接的triples中，关系<span class="math inline">\(r\)</span>属于某个type <span class="math inline">\(t\)</span>的数量越多，则比重越大。比如在上图，对于实体<em>Ang_Lee</em>，类型<em>director</em>的比重应该比<em>actor</em>更大，因为属于<span class="math inline">\(director\)</span>的triple数量更多。</p>
+<p>实体<span class="math inline">\(e\)</span>的type embedding应该是：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203115074.png" alt="image-20220303203115074" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203130712.png" alt="image-20220303203130712" style="zoom:50%;" /></p>
+<p>上面第二个公式的含义就是统计属于某个type <span class="math inline">\(t\)</span>的triples的数量占比。</p>
+<p>之后，作者提出一种基于relation的attention聚合方法。</p>
+<p>单个relation下的实体聚合：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203413691.png" alt="image-20220303203413691" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203428588.png" alt="image-20220303203428588" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203449437.png" alt="image-20220303203449437" style="zoom:50%;" /></p>
+<p>多个relation的聚合：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203516612.png" alt="image-20220303203516612" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png" alt="image-20220303203532350" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png" alt="image-20220303203547104" style="zoom:50%;" /></p>
+<h2 id="revgnn">RevGNN</h2>
+<p><strong>Training Graph Neural Networks with 1000 Layers</strong> ICML 2021</p>
+<a href="/2022/03/23/GNN-1000-layers/" title="[个人详细博客]">[个人详细博客]</a>
+<p>这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png" alt="image-20220323192539787" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>Ppaer</category>
+        <category>GNN</category>
+      </categories>
+      <tags>
+        <tag>Collection</tag>
+      </tags>
   </entry>
   <entry>
     <title>CoPER</title>
@@ -4700,134 +4700,6 @@ f(W[\mathbf{a};\mathbf{b}])
       </tags>
   </entry>
   <entry>
-    <title>KE-GCN</title>
-    <url>/2021/05/17/KE-GCN/</url>
-    <content><![CDATA[<h1 id="knowledge-embedding-based-graph-convolutional-network">Knowledge Embedding Based Graph Convolutional Network</h1>
-<p>WWW 2021, <a href="https://github.com/PlusRoss/KE-GCN">KE-GCN</a>，提出了一个泛化的框架，将GCN和KGE的传统方法结合起来，认为在GCN中的信息传播过程是传播计算edge是否存在的得分函数<span class="math inline">\(f(u,r,v)\)</span>对<span class="math inline">\(v\)</span>的梯度，并且提出了对于relation的传播过程，在knowledge graph alignment和entity classification上进行了实验。</p>
-<span id="more"></span>
-<blockquote>
-<p>Recently, a considerable literature has grown up around the theme of Graph Convolutional Network (GCN). How to effectively leverage the rich structural information in complex graphs, such as knowledge graphs with heterogeneous types of entities and relations, is a primary open challenge in the field. Most GCN methods are either restricted to graphs with a homogeneous type of edges (e.g., citation links only), or focusing on representation learning for nodes only instead of jointly propagating and updating the embeddings of both nodes and edges for target-driven objectives. This paper addresses these limitations by proposing a novel framework, namely the Knowledge Embedding based Graph Convolutional Network (KE-GCN), which combines the power of GCNs in graphbased belief propagation and the strengths of advanced knowledge embedding (a.k.a. knowledge graph embedding) methods, and goes beyond. Our theoretical analysis shows that KE-GCN offers an elegant unification of several well-known GCN methods as specific cases, with a new perspective of graph convolution. Experimental results on benchmark datasets show the advantageous performance of KE-GCN over strong baseline methods in the tasks of knowledge graph alignment and entity classification .</p>
-</blockquote>
-<h2 id="introduction">1 Introduction</h2>
-<p><strong>motivation</strong>：</p>
-<ul>
-<li>传统的GCN方法主要假设在同质图上进行学习，忽略了KG中的relation蕴含的丰富的信息。</li>
-<li>传统的KGE方法没有考虑graph的结构信息</li>
-<li>将GCN和KGE结合的方法比如VR-GCN，COMPGCN等，在学习relation embedding的时候没有考虑entity embedding对relation embedding的影响</li>
-</ul>
-<p><strong>method</strong>：</p>
-<p>为了解决上面的问题，提出了KE-GCN（Knowledge Embedding based Graph Convolution Network），能够结合KGE的方法，基于图卷积操作同时学习entity和relation embedding。</p>
-<h2 id="method">2 Method</h2>
-<h3 id="reformulation-of-vanilla-gcn">2.1 Reformulation of Vanilla GCN</h3>
-<p>作者首先从新的角度看原始GCN的公式：</p>
-<p>原来GCN的公式：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192759415.png" style="zoom:50%;" /></p>
-<p>通过引入一个得分函数，重新定义GCN，假设引入得分函数<span class="math inline">\(f\)</span>，该得分函数计算edge存在的score，对于已经存在的edge输出较大的值；对于不存在的边输出较小的值。假设<span class="math inline">\(f\)</span>为求内积： <span class="math display">\[
-f(h_u,h_v)=h_u^T h_v
-\]</span> 那么计算的消息<span class="math inline">\(h_u\)</span>能够看做是<span class="math inline">\(f\)</span>对<span class="math inline">\(v\)</span>的梯度，那么所有的<span class="math inline">\(h_u\)</span>加起来就成为下面的形式</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517191155431.png" style="zoom:50%;" /></p>
-<p>此时对于<span class="math inline">\(h_v+m_v\)</span>看做是learning rate为1，对<span class="math inline">\(h_v\)</span>的梯度提升；目的是使scoring function<span class="math inline">\(f\)</span>的值最大。</p>
-<p>通过修改为上面的形式，能够看到，它从新的角度说明了GCN做了什么，邻居信息是如何提供给中心节点的，是如何帮助中心节点获得更好的表示的。</p>
-<blockquote>
-<p>The above reformulation provides an explicit view about what the vanilla GCN is optimizing, instead of how the updates are executed procedurally.</p>
-</blockquote>
-<h3 id="the-new-framework">2.2 The New Framework</h3>
-<p>新的framework有两个核心部分，更新实体表示以及更新关系表示：</p>
-<p>更新实体表示：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195223629.png" style="zoom:50%;" /></p>
-<p>更新关系表示：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192820729.png" style="zoom:50%;" /></p>
-<p>更新的关系表示实际提供了一种global的view。</p>
-<p>整体结构：</p>
-<p>消息传递过程：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190645145.png" style="zoom:50%;" /></p>
-<p>消息聚合过程：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190907479.png" style="zoom:50%;" /></p>
-<p>它能够泛化COMPGCN、R-GCN以及W-GCN。实际上COMPGCN本身就已经泛化了R-GCN和W-GCN，这部分泛化参考论文原文。</p>
-<h2 id="experiments">3 EXPERIMENTS</h2>
-<p>在实验的时候，对于KE-GCN，主要是引入不同的得分函数<span class="math inline">\(f\)</span>，该得分函数使用不同的KGE方法，并且为了简化模型，对于in，out，self-loop都使用了相同的<span class="math inline">\(W\)</span>和相同的得分函数<span class="math inline">\(f\)</span>。</p>
-<p>使用了一系列的KGE方法：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195011713.png" style="zoom:50%;" /></p>
-<h3 id="knowledge-graph-alignment">3.1 Knowledge Graph Alignment</h3>
-<p>匹配不同KG中的实体和关系，在实验中直接计算embedding之间的L1-distance，</p>
-<p>在这种情况下的loss function</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200018220.png" style="zoom:50%;" /></p>
-<p>数据集，</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200444629.png" style="zoom:50%;" /></p>
-<p>结果，这里只贴了KE-GCN的比较：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200123514.png" style="zoom:50%;" /></p>
-<h3 id="knowledge-graph-entity-classification">3.2 Knowledge Graph Entity Classification</h3>
-<p>在这种情况下的loss function</p>
-<p>multi-class classification</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200315774.png" style="zoom:50%;" /></p>
-<p>multi-label classification</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200151721.png" style="zoom:50%;" /></p>
-<p>数据集，AM和WN是multi-class，FB15K是multi-label</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200250204.png" style="zoom:50%;" /></p>
-<p>结果：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200606660.png" style="zoom:50%;" /></p>
-<div class="pdf-container" data-target="KE-GCN.pdf" data-height="1000px"></div>
-]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>KGE</category>
-      </categories>
-      <tags>
-        <tag>KGE</tag>
-        <tag>GNN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MLP-Mixer</title>
-    <url>/2021/05/07/MLP-Mixer/</url>
-    <content><![CDATA[<h1 id="mlp-mixer-an-all-mlp-architecture-for-vision">MLP-Mixer: An all-MLP Architecture for Vision</h1>
-<p>2021-5-4</p>
-<p>谷歌大脑团队的新作<a href="https://github.com/google-research/vision_transformer">MLP-Mixer</a>，使用纯MLP进行CV任务，没有超越目前业界SOTA，但是效果很不错。最关键的是只使用了MLP，便于部署。同时要注意，该模型训练使用了TPU3.0，外加众多training skills，model size也很大，不是个人可以玩儿转的。</p>
-<span id="more"></span>
-<blockquote>
-<p>Convolutional Neural Networks (CNNs) are the go-to model for computer vision. Recently, attention-based networks, such as the Vision Transformer, have also become popular. In this paper we show that while convolutions and attention are both sufﬁcient for good performance, neither of them are necessary. <strong>We present MLP-Mixer, an architecture based exclusively on multi-layer perceptrons (MLPs).</strong> MLP-Mixer contains two types of layers: one with MLPs applied independently to image patches (i.e. “mixing” the per-location features), and one with MLPs applied across patches (i.e. “mixing” spatial information). When trained on large datasets, or with modern regularization schemes, MLP-Mixer attains competitive scores on image classiﬁcation benchmarks, with pre-training and inference cost comparable to state-of-the-art models. We hope that these results spark further research beyond the realms of well established CNNs and Transformers.1</p>
-</blockquote>
-<h2 id="introduction">1 Introduction</h2>
-<p>CNN是CV领域目前de-facto标准，近期的transformers-like的模型Vision Transformers (ViT)，也得到了SOTA的结果。</p>
-<h2 id="mixer-architecture">2 Mixer Architecture</h2>
-<p>本文提出了MLP-Mixer，完全使用MLP的架构。看一下整体结构：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png" style="zoom:50%;" /></p>
-<p>接收的输入固定size的，将输入划分为一系列的patch，然后所有的patch经过一个投影层，进入核心的Mixer层。</p>
-<p>对于Mixer层，由两个不同的MLP组成，加上layer norm和GELU</p>
-<ul>
-<li><p>token-mixing：不同patch的相同维度，应该如何产生输出</p>
-<blockquote>
-<p>The token-mixing MLPs allow communication between different spatial locations (tokens); they operate on each channel independently and take individual columns of the table as inputs.</p>
-</blockquote></li>
-<li><p>channel-mising：相同patch不同channel，应该如何产生输出</p>
-<blockquote>
-<p>The channel-mixing MLPs allow communication between different channels; they operate on each token independently and take individual rows of the table as inputs.</p>
-</blockquote></li>
-</ul>
-<p>写成公式：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507145147282.png" style="zoom:50%;" /></p>
-<p>两个MLP的操作区别就是对于输入简单的转置操作。</p>
-<p>另外，MLP-Mixer保持MLP的输出dim都是固定的。</p>
-<ul>
-<li>channel-mixing MLPs对于不同patch的处理是一样的，这提供了位置不变性，it provides positional invariance, a prominent feature of convolutions.</li>
-<li>token-mixing MLPs是跨patch，对于所有的channel使用相同的kernel，这点是和很多CNN模型有区别的。它带来的一个好处是不会随着channel的增加而增加参数量。另外，token-mixing MLPs是对输入patch的位置有感知的。一个patch的位置发生变化，对于channel-mixing来说，没有区别。但是对于token-mixing来说，patch位置变动在参数不变的情况下，会导致输出会发生变化，最终参数也会更新。所以它隐式的可以学习位置的表示。</li>
-</ul>
-<h2 id="experiments">3 Experiments</h2>
-<p>没有细看，很多细节都不了解，看不懂。</p>
-<p>总结一下：</p>
-<ol type="1">
-<li>至少8层起步的MLP，也就是至少16层全连接；另外，MLP的size都是很大的，256size起步</li>
-<li>使用了非常多的训练技巧！！</li>
-<li>使用了谷歌的TPU 3.0，1小时8$</li>
-<li>先预训练，再fine-tuning，但没看过CV paper，不理解为什么这么做</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>ML</category>
-      </categories>
-  </entry>
-  <entry>
     <title>TACT</title>
     <url>/2021/05/10/TACT/</url>
     <content><![CDATA[<h1 id="topology-aware-correlations-between-relations-for-inductive-link-prediction-in-knowledge-graphs">Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs</h1>
@@ -5053,47 +4925,6 @@ f(h_u,h_v)=h_u^T h_v
       </tags>
   </entry>
   <entry>
-    <title>HyperNetworks</title>
-    <url>/2021/07/24/HyperNetworks/</url>
-    <content><![CDATA[<h1 id="hypernetworks">HYPERNETWORKS</h1>
-<p>ICLR 2017</p>
-<p>核心贡献是将Hypernetwork扩展到了convolutional networks和long recurrent networks，证明其在使用更少的参数情况下，在序列模型和卷积网络的多个预测任务下都达到了不错的训练结果。</p>
-<span id="more"></span>
-<h2 id="introduction">Introduction</h2>
-<p>Hypernetwork是一个能够为另一个更大的网络产生weight的较小的网络。示例：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725110111444.png" alt="image-20210725110111444" style="zoom:50%;" /></p>
-<blockquote>
-<p>In this work, we consider an approach of using a small network (called a “hypernetwork") to generate the weights for a larger network (called a main network).</p>
-</blockquote>
-<blockquote>
-<p>hypernetwork takes a set of inputs that contain information about the structure of the weights and generates the weight for that layer</p>
-</blockquote>
-<p>HyperNEAT是一个使用hypernetwork的实例，输入时weight的virtual coordinates。</p>
-<p>这篇文章的hypernetwork直接接收一个描述weight的embedding vector。同时设计了CNN和RNN的两种变体。</p>
-<h2 id="method">Method</h2>
-<h3 id="static-hypernetwork-a-weight-factorization-approach-for-deep-convolutional-networks">Static Hypernetwork : A Weight Factorization Approach For Deep Convolutional Networks</h3>
-<p><span class="math inline">\(K^j\)</span>是第<span class="math inline">\(j\)</span>​层的卷积核，一共有<span class="math inline">\(D\)</span>层</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111008315.png" alt="image-20210725111008315" style="zoom:50%;" /></p>
-<p>它由一个hypernetwork产生，每层接收一个描述weight的embedding <span class="math inline">\(z^j\)</span></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111037575.png" alt="image-20210725111037575" style="zoom:50%;" /></p>
-<p>具体产生方法，一个静态的hypernetwork，简单看了下实验，<span class="math inline">\(z^j\)</span>是一个比较小的embedding，甚至只有4。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png" alt="image-20210725111153567" style="zoom:50%;" /></p>
-<h3 id="dynamic-hypernetwork-a-daptive-weight-generation-for-recurrent-networks">Dynamic Hypernetwork : A Daptive Weight Generation For Recurrent Networks</h3>
-<p>一个新的RNN，weight是生成的：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111430981.png" alt="image-20210725111430981" style="zoom:50%;" /></p>
-<p>这个hypernetwork同样是用另一个小的RNN产生。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111544605.png" alt="image-20210725111544605" style="zoom:50%;" /></p>
-<p>示例图：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111631387.png" alt="image-20210725111631387" style="zoom:50%;" /></p>
-<p>实际上，作者使用了另一种简化的版本，每一层定义了一个weight scaling vector <span class="math inline">\(d\)</span>​​，不再是完成生成weight matrix，而是生成weight vector。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111733324.png" alt="image-20210725111733324" style="zoom:50%;" /></p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111717560.png" alt="image-20210725111717560" style="zoom:50%;" /></p>
-]]></content>
-      <categories>
-        <category>Paper</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Independence Survey</title>
     <url>/2021/07/07/Independence-Survey/</url>
     <content><![CDATA[<h1 id="independence-modeling-method">Independence Modeling Method</h1>
@@ -5218,6 +5049,97 @@ f(h_u,h_v)=h_u^T h_v
       </tags>
   </entry>
   <entry>
+    <title>HyperNetworks</title>
+    <url>/2021/07/24/HyperNetworks/</url>
+    <content><![CDATA[<h1 id="hypernetworks">HYPERNETWORKS</h1>
+<p>ICLR 2017</p>
+<p>核心贡献是将Hypernetwork扩展到了convolutional networks和long recurrent networks，证明其在使用更少的参数情况下，在序列模型和卷积网络的多个预测任务下都达到了不错的训练结果。</p>
+<span id="more"></span>
+<h2 id="introduction">Introduction</h2>
+<p>Hypernetwork是一个能够为另一个更大的网络产生weight的较小的网络。示例：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725110111444.png" alt="image-20210725110111444" style="zoom:50%;" /></p>
+<blockquote>
+<p>In this work, we consider an approach of using a small network (called a “hypernetwork") to generate the weights for a larger network (called a main network).</p>
+</blockquote>
+<blockquote>
+<p>hypernetwork takes a set of inputs that contain information about the structure of the weights and generates the weight for that layer</p>
+</blockquote>
+<p>HyperNEAT是一个使用hypernetwork的实例，输入时weight的virtual coordinates。</p>
+<p>这篇文章的hypernetwork直接接收一个描述weight的embedding vector。同时设计了CNN和RNN的两种变体。</p>
+<h2 id="method">Method</h2>
+<h3 id="static-hypernetwork-a-weight-factorization-approach-for-deep-convolutional-networks">Static Hypernetwork : A Weight Factorization Approach For Deep Convolutional Networks</h3>
+<p><span class="math inline">\(K^j\)</span>是第<span class="math inline">\(j\)</span>​层的卷积核，一共有<span class="math inline">\(D\)</span>层</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111008315.png" alt="image-20210725111008315" style="zoom:50%;" /></p>
+<p>它由一个hypernetwork产生，每层接收一个描述weight的embedding <span class="math inline">\(z^j\)</span></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111037575.png" alt="image-20210725111037575" style="zoom:50%;" /></p>
+<p>具体产生方法，一个静态的hypernetwork，简单看了下实验，<span class="math inline">\(z^j\)</span>是一个比较小的embedding，甚至只有4。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png" alt="image-20210725111153567" style="zoom:50%;" /></p>
+<h3 id="dynamic-hypernetwork-a-daptive-weight-generation-for-recurrent-networks">Dynamic Hypernetwork : A Daptive Weight Generation For Recurrent Networks</h3>
+<p>一个新的RNN，weight是生成的：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111430981.png" alt="image-20210725111430981" style="zoom:50%;" /></p>
+<p>这个hypernetwork同样是用另一个小的RNN产生。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111544605.png" alt="image-20210725111544605" style="zoom:50%;" /></p>
+<p>示例图：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111631387.png" alt="image-20210725111631387" style="zoom:50%;" /></p>
+<p>实际上，作者使用了另一种简化的版本，每一层定义了一个weight scaling vector <span class="math inline">\(d\)</span>​​，不再是完成生成weight matrix，而是生成weight vector。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111733324.png" alt="image-20210725111733324" style="zoom:50%;" /></p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111717560.png" alt="image-20210725111717560" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>MLP-Mixer</title>
+    <url>/2021/05/07/MLP-Mixer/</url>
+    <content><![CDATA[<h1 id="mlp-mixer-an-all-mlp-architecture-for-vision">MLP-Mixer: An all-MLP Architecture for Vision</h1>
+<p>2021-5-4</p>
+<p>谷歌大脑团队的新作<a href="https://github.com/google-research/vision_transformer">MLP-Mixer</a>，使用纯MLP进行CV任务，没有超越目前业界SOTA，但是效果很不错。最关键的是只使用了MLP，便于部署。同时要注意，该模型训练使用了TPU3.0，外加众多training skills，model size也很大，不是个人可以玩儿转的。</p>
+<span id="more"></span>
+<blockquote>
+<p>Convolutional Neural Networks (CNNs) are the go-to model for computer vision. Recently, attention-based networks, such as the Vision Transformer, have also become popular. In this paper we show that while convolutions and attention are both sufﬁcient for good performance, neither of them are necessary. <strong>We present MLP-Mixer, an architecture based exclusively on multi-layer perceptrons (MLPs).</strong> MLP-Mixer contains two types of layers: one with MLPs applied independently to image patches (i.e. “mixing” the per-location features), and one with MLPs applied across patches (i.e. “mixing” spatial information). When trained on large datasets, or with modern regularization schemes, MLP-Mixer attains competitive scores on image classiﬁcation benchmarks, with pre-training and inference cost comparable to state-of-the-art models. We hope that these results spark further research beyond the realms of well established CNNs and Transformers.1</p>
+</blockquote>
+<h2 id="introduction">1 Introduction</h2>
+<p>CNN是CV领域目前de-facto标准，近期的transformers-like的模型Vision Transformers (ViT)，也得到了SOTA的结果。</p>
+<h2 id="mixer-architecture">2 Mixer Architecture</h2>
+<p>本文提出了MLP-Mixer，完全使用MLP的架构。看一下整体结构：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507150754155.png" style="zoom:50%;" /></p>
+<p>接收的输入固定size的，将输入划分为一系列的patch，然后所有的patch经过一个投影层，进入核心的Mixer层。</p>
+<p>对于Mixer层，由两个不同的MLP组成，加上layer norm和GELU</p>
+<ul>
+<li><p>token-mixing：不同patch的相同维度，应该如何产生输出</p>
+<blockquote>
+<p>The token-mixing MLPs allow communication between different spatial locations (tokens); they operate on each channel independently and take individual columns of the table as inputs.</p>
+</blockquote></li>
+<li><p>channel-mising：相同patch不同channel，应该如何产生输出</p>
+<blockquote>
+<p>The channel-mixing MLPs allow communication between different channels; they operate on each token independently and take individual rows of the table as inputs.</p>
+</blockquote></li>
+</ul>
+<p>写成公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210507145147282.png" style="zoom:50%;" /></p>
+<p>两个MLP的操作区别就是对于输入简单的转置操作。</p>
+<p>另外，MLP-Mixer保持MLP的输出dim都是固定的。</p>
+<ul>
+<li>channel-mixing MLPs对于不同patch的处理是一样的，这提供了位置不变性，it provides positional invariance, a prominent feature of convolutions.</li>
+<li>token-mixing MLPs是跨patch，对于所有的channel使用相同的kernel，这点是和很多CNN模型有区别的。它带来的一个好处是不会随着channel的增加而增加参数量。另外，token-mixing MLPs是对输入patch的位置有感知的。一个patch的位置发生变化，对于channel-mixing来说，没有区别。但是对于token-mixing来说，patch位置变动在参数不变的情况下，会导致输出会发生变化，最终参数也会更新。所以它隐式的可以学习位置的表示。</li>
+</ul>
+<h2 id="experiments">3 Experiments</h2>
+<p>没有细看，很多细节都不了解，看不懂。</p>
+<p>总结一下：</p>
+<ol type="1">
+<li>至少8层起步的MLP，也就是至少16层全连接；另外，MLP的size都是很大的，256size起步</li>
+<li>使用了非常多的训练技巧！！</li>
+<li>使用了谷歌的TPU 3.0，1小时8$</li>
+<li>先预训练，再fine-tuning，但没看过CV paper，不理解为什么这么做</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>ML</category>
+      </categories>
+  </entry>
+  <entry>
     <title>BatchNorm</title>
     <url>/2021/07/08/batchnorm/</url>
     <content><![CDATA[<h1 id="batch-normalization-accelerating-deep-network-training-by-reducing-internal-covariate-shift">Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift</h1>
@@ -5239,6 +5161,84 @@ f(h_u,h_v)=h_u^T h_v
       <categories>
         <category>Paper</category>
       </categories>
+  </entry>
+  <entry>
+    <title>KE-GCN</title>
+    <url>/2021/05/17/KE-GCN/</url>
+    <content><![CDATA[<h1 id="knowledge-embedding-based-graph-convolutional-network">Knowledge Embedding Based Graph Convolutional Network</h1>
+<p>WWW 2021, <a href="https://github.com/PlusRoss/KE-GCN">KE-GCN</a>，提出了一个泛化的框架，将GCN和KGE的传统方法结合起来，认为在GCN中的信息传播过程是传播计算edge是否存在的得分函数<span class="math inline">\(f(u,r,v)\)</span>对<span class="math inline">\(v\)</span>的梯度，并且提出了对于relation的传播过程，在knowledge graph alignment和entity classification上进行了实验。</p>
+<span id="more"></span>
+<blockquote>
+<p>Recently, a considerable literature has grown up around the theme of Graph Convolutional Network (GCN). How to effectively leverage the rich structural information in complex graphs, such as knowledge graphs with heterogeneous types of entities and relations, is a primary open challenge in the field. Most GCN methods are either restricted to graphs with a homogeneous type of edges (e.g., citation links only), or focusing on representation learning for nodes only instead of jointly propagating and updating the embeddings of both nodes and edges for target-driven objectives. This paper addresses these limitations by proposing a novel framework, namely the Knowledge Embedding based Graph Convolutional Network (KE-GCN), which combines the power of GCNs in graphbased belief propagation and the strengths of advanced knowledge embedding (a.k.a. knowledge graph embedding) methods, and goes beyond. Our theoretical analysis shows that KE-GCN offers an elegant unification of several well-known GCN methods as specific cases, with a new perspective of graph convolution. Experimental results on benchmark datasets show the advantageous performance of KE-GCN over strong baseline methods in the tasks of knowledge graph alignment and entity classification .</p>
+</blockquote>
+<h2 id="introduction">1 Introduction</h2>
+<p><strong>motivation</strong>：</p>
+<ul>
+<li>传统的GCN方法主要假设在同质图上进行学习，忽略了KG中的relation蕴含的丰富的信息。</li>
+<li>传统的KGE方法没有考虑graph的结构信息</li>
+<li>将GCN和KGE结合的方法比如VR-GCN，COMPGCN等，在学习relation embedding的时候没有考虑entity embedding对relation embedding的影响</li>
+</ul>
+<p><strong>method</strong>：</p>
+<p>为了解决上面的问题，提出了KE-GCN（Knowledge Embedding based Graph Convolution Network），能够结合KGE的方法，基于图卷积操作同时学习entity和relation embedding。</p>
+<h2 id="method">2 Method</h2>
+<h3 id="reformulation-of-vanilla-gcn">2.1 Reformulation of Vanilla GCN</h3>
+<p>作者首先从新的角度看原始GCN的公式：</p>
+<p>原来GCN的公式：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192759415.png" style="zoom:50%;" /></p>
+<p>通过引入一个得分函数，重新定义GCN，假设引入得分函数<span class="math inline">\(f\)</span>，该得分函数计算edge存在的score，对于已经存在的edge输出较大的值；对于不存在的边输出较小的值。假设<span class="math inline">\(f\)</span>为求内积： <span class="math display">\[
+f(h_u,h_v)=h_u^T h_v
+\]</span> 那么计算的消息<span class="math inline">\(h_u\)</span>能够看做是<span class="math inline">\(f\)</span>对<span class="math inline">\(v\)</span>的梯度，那么所有的<span class="math inline">\(h_u\)</span>加起来就成为下面的形式</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517191155431.png" style="zoom:50%;" /></p>
+<p>此时对于<span class="math inline">\(h_v+m_v\)</span>看做是learning rate为1，对<span class="math inline">\(h_v\)</span>的梯度提升；目的是使scoring function<span class="math inline">\(f\)</span>的值最大。</p>
+<p>通过修改为上面的形式，能够看到，它从新的角度说明了GCN做了什么，邻居信息是如何提供给中心节点的，是如何帮助中心节点获得更好的表示的。</p>
+<blockquote>
+<p>The above reformulation provides an explicit view about what the vanilla GCN is optimizing, instead of how the updates are executed procedurally.</p>
+</blockquote>
+<h3 id="the-new-framework">2.2 The New Framework</h3>
+<p>新的framework有两个核心部分，更新实体表示以及更新关系表示：</p>
+<p>更新实体表示：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195223629.png" style="zoom:50%;" /></p>
+<p>更新关系表示：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517192820729.png" style="zoom:50%;" /></p>
+<p>更新的关系表示实际提供了一种global的view。</p>
+<p>整体结构：</p>
+<p>消息传递过程：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190645145.png" style="zoom:50%;" /></p>
+<p>消息聚合过程：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517190907479.png" style="zoom:50%;" /></p>
+<p>它能够泛化COMPGCN、R-GCN以及W-GCN。实际上COMPGCN本身就已经泛化了R-GCN和W-GCN，这部分泛化参考论文原文。</p>
+<h2 id="experiments">3 EXPERIMENTS</h2>
+<p>在实验的时候，对于KE-GCN，主要是引入不同的得分函数<span class="math inline">\(f\)</span>，该得分函数使用不同的KGE方法，并且为了简化模型，对于in，out，self-loop都使用了相同的<span class="math inline">\(W\)</span>和相同的得分函数<span class="math inline">\(f\)</span>。</p>
+<p>使用了一系列的KGE方法：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517195011713.png" style="zoom:50%;" /></p>
+<h3 id="knowledge-graph-alignment">3.1 Knowledge Graph Alignment</h3>
+<p>匹配不同KG中的实体和关系，在实验中直接计算embedding之间的L1-distance，</p>
+<p>在这种情况下的loss function</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200018220.png" style="zoom:50%;" /></p>
+<p>数据集，</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200444629.png" style="zoom:50%;" /></p>
+<p>结果，这里只贴了KE-GCN的比较：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200123514.png" style="zoom:50%;" /></p>
+<h3 id="knowledge-graph-entity-classification">3.2 Knowledge Graph Entity Classification</h3>
+<p>在这种情况下的loss function</p>
+<p>multi-class classification</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200315774.png" style="zoom:50%;" /></p>
+<p>multi-label classification</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200151721.png" style="zoom:50%;" /></p>
+<p>数据集，AM和WN是multi-class，FB15K是multi-label</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200250204.png" style="zoom:50%;" /></p>
+<p>结果：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210517200606660.png" style="zoom:50%;" /></p>
+<div class="pdf-container" data-target="KE-GCN.pdf" data-height="1000px"></div>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>KGE</category>
+      </categories>
+      <tags>
+        <tag>KGE</tag>
+        <tag>GNN</tag>
+      </tags>
   </entry>
   <entry>
     <title>HetSANN</title>
