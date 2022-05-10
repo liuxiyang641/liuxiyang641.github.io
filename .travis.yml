@@ -4,7 +4,8 @@ sudo: required # 需要管理员权限
 
 dist: xenial # 指定 CI 系统版本为 Ubuntu16.04 LTS
 
-node_js: stable #Node.js 版本
+node_js: #Node.js 版本
+- 17 
 
 branches:
   only:
