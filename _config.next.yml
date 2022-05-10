@@ -457,7 +457,7 @@ font:
   # Font settings for posts (.post-body).
   posts:
     external: true
-    family: SimHei Times New Roman
+    family: 
 
   # Font settings for <code> and code blocks.
   codes:
