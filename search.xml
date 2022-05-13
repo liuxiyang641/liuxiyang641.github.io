@@ -1083,7 +1083,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png" alt="image-20220323192539787" style="zoom:50%;" /></p>
 ]]></content>
       <categories>
-        <category>Ppaer</category>
+        <category>Paper</category>
         <category>GNN</category>
       </categories>
       <tags>
@@ -1493,6 +1493,7 @@ H[i...j] = ((H[j] - H[i-1]\times p^{j-i+1})\%\ mod + mod)\%\ mod
 <li>Figure 1 depicts he macro-structure of Mixer.（图1描绘了整体结构）</li>
 <li>Vinyals et al. [32] and Ravi and Larochelle [24] apply Matching Networks using cosine distance. However for both Prototypical Networks and Matching Networks any distance is permissible（对于模型来说...都是允许的）</li>
 <li>For Protypical Networks, we conjecture this is primarily due to cosine distance not being a Bregman divergence（我们猜测某种现象/结果可能是因为...）</li>
+<li>While suggestive as a research result, in terms of practical applications, the zero-shot performance of GPT-2 is still far from use-able.（作为实验结果有启发性）</li>
 </ol>
 ]]></content>
       <tags>
@@ -2969,6 +2970,78 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
       </categories>
   </entry>
   <entry>
+    <title>KBGAT</title>
+    <url>/2021/04/15/KBGAT/</url>
+    <content><![CDATA[<h1 id="learning-attention-based-embeddings-for-relation-prediction-in-knowledge-graphs">Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs</h1>
+<p>2019-6-4</p>
+<p>将GAT应用到KG上。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<blockquote>
+<p>Our architecture is an encoder-decoder model where our generalized graph attention model and ConvKB (Nguyen et al., 2018) play the roles of an encoder and decoder, respectively.</p>
+</blockquote>
+<p>CNN-based和translational-based的模型单独的处理triplet，没有考虑到KG当中某个entity附近的丰富的语义信息。</p>
+<p>本论文在GAT的基础上改进。</p>
+<blockquote>
+<p>To the best of our knowledge, we are the ﬁrst to learn new graph attention based embeddings that speciﬁcally target relation prediction on KGs.</p>
+</blockquote>
+<h2 id="our-approach">3 Our Approach</h2>
+<p>和之前的GAT模型比较起来，用于知识图谱的话需要考虑relation。</p>
+<p>假设每一层的输入包括两个矩阵，entity matrix和relation matrix <span class="math display">\[
+H\in N_e\times T \\
+G\in N_r\times P
+\]</span> 每一层的输出为： <span class="math display">\[
+H^{&#39;}\in N_e\times T^{&#39;} \\
+G^{&#39;}\in N_r\times P^{&#39;}
+\]</span></p>
+<h3 id="attention">3.1 Attention</h3>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200220112116226.png" style="zoom:50%;" /></p>
+<p>对于一个以<span class="math inline">\(e_i\)</span>为顶点的edge (i, j, k)，应该能够传播给<span class="math inline">\(e_i\)</span>一个embedding： <span class="math display">\[
+c_{ijk}=W_1[h_i][h_k][g_j]
+\]</span> 接下来计算对应的attention value。 <span class="math display">\[
+b_{ijk}=LeakRelu(W_2c_{ijk}) \\
+\alpha_{ijk}=softmax(b_{ijk})
+\]</span> 之后进行weighted sum就可以了，neighbour指的是某个的状态 <span class="math display">\[
+h_i^{&#39;}=\sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}c_{ijk})
+\]</span></p>
+<p>但类似与GAT中，使用multihead attention机制，在实现的时候作者并不是使用了<span class="math inline">\(\sigma\)</span>，而是使用<span class="math inline">\(elu\)</span>函数。 <span class="math display">\[
+h_i^{&#39;}=\lVert_{m=1}^{M} \sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}^{m} c_{ijk}^{m})
+\]</span> 在这一层传入下一层的时候，作者实现中加了一个dropout层，防止过拟合。</p>
+<p>但是在最后一层，就不使用concate操作了， <span class="math display">\[
+h_i^{&#39;}=\sigma(\frac{1}{M} \sum_{m=1}^M \sum_{j\in N_i} \sum_{k\in R_{ij}} \alpha_{ijk}^{m} c_{ijk}^{m})
+\]</span> 最后一层的输出记作<span class="math inline">\(H^f \in N_e \times T^{f}\)</span></p>
+<h3 id="对于关系的处理">3.2 对于关系的处理</h3>
+<p>对于输入的<span class="math inline">\(G\)</span>，前面获得的<span class="math inline">\(h_i^{&#39;}\)</span>只是针对实体i的，所以关系<span class="math inline">\(G\)</span>的变换是直接进行线性转换。 <span class="math display">\[
+G^{&#39;}=GW^R \\
+W^R\in R^{P\times P^{&#39;}}
+\]</span></p>
+<h3 id="保留原来的entity-embedding">3.3 保留原来的entity embedding</h3>
+<p>在最后一层，加上原来的entity embedding。 <span class="math display">\[
+H^{&#39;&#39;}=W^EH + H^f
+\]</span></p>
+<h3 id="training-objective">3.4 Training Objective</h3>
+<p>hinge-loss： <span class="math display">\[
+L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}^{&#39;}+\gamma,\ 0)
+\]</span></p>
+<h3 id="decoder">3.5 Decoder</h3>
+<p>使用ConVKB作为decoder</p>
+<h2 id="experiments-and-results">4 Experiments and Results</h2>
+<p>数据集：</p>
+<ul>
+<li>WN18RR (Dettmers et al., 2018),</li>
+<li>FB15k-237 (Toutanova et al., 2015),</li>
+<li>NELL-995 (Xiong et al., 2017),</li>
+<li>Uniﬁed Medical Language Systems (UMLS) (Kok and Domingos, 2007)<br />
+</li>
+<li>Alyawarra Kinship (Lin et al., 2018).</li>
+</ul>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
     <title>Introduction-GNN</title>
     <url>/2021/04/15/Introduction-GNN/</url>
     <content><![CDATA[<h1 id="introduction-to-graph-neural-networks">Introduction to Graph Neural Networks</h1>
@@ -3112,177 +3185,6 @@ P_t=[(e_s^1,e_r^1),\cdots,(e_s^t,e_r^t)]
       <categories>
         <category>Paper</category>
         <category>GNN</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>KBGAT</title>
-    <url>/2021/04/15/KBGAT/</url>
-    <content><![CDATA[<h1 id="learning-attention-based-embeddings-for-relation-prediction-in-knowledge-graphs">Learning Attention-based Embeddings for Relation Prediction in Knowledge Graphs</h1>
-<p>2019-6-4</p>
-<p>将GAT应用到KG上。</p>
-<span id="more"></span>
-<h2 id="introduction">1 Introduction</h2>
-<blockquote>
-<p>Our architecture is an encoder-decoder model where our generalized graph attention model and ConvKB (Nguyen et al., 2018) play the roles of an encoder and decoder, respectively.</p>
-</blockquote>
-<p>CNN-based和translational-based的模型单独的处理triplet，没有考虑到KG当中某个entity附近的丰富的语义信息。</p>
-<p>本论文在GAT的基础上改进。</p>
-<blockquote>
-<p>To the best of our knowledge, we are the ﬁrst to learn new graph attention based embeddings that speciﬁcally target relation prediction on KGs.</p>
-</blockquote>
-<h2 id="our-approach">3 Our Approach</h2>
-<p>和之前的GAT模型比较起来，用于知识图谱的话需要考虑relation。</p>
-<p>假设每一层的输入包括两个矩阵，entity matrix和relation matrix <span class="math display">\[
-H\in N_e\times T \\
-G\in N_r\times P
-\]</span> 每一层的输出为： <span class="math display">\[
-H^{&#39;}\in N_e\times T^{&#39;} \\
-G^{&#39;}\in N_r\times P^{&#39;}
-\]</span></p>
-<h3 id="attention">3.1 Attention</h3>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200220112116226.png" style="zoom:50%;" /></p>
-<p>对于一个以<span class="math inline">\(e_i\)</span>为顶点的edge (i, j, k)，应该能够传播给<span class="math inline">\(e_i\)</span>一个embedding： <span class="math display">\[
-c_{ijk}=W_1[h_i][h_k][g_j]
-\]</span> 接下来计算对应的attention value。 <span class="math display">\[
-b_{ijk}=LeakRelu(W_2c_{ijk}) \\
-\alpha_{ijk}=softmax(b_{ijk})
-\]</span> 之后进行weighted sum就可以了，neighbour指的是某个的状态 <span class="math display">\[
-h_i^{&#39;}=\sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}c_{ijk})
-\]</span></p>
-<p>但类似与GAT中，使用multihead attention机制，在实现的时候作者并不是使用了<span class="math inline">\(\sigma\)</span>，而是使用<span class="math inline">\(elu\)</span>函数。 <span class="math display">\[
-h_i^{&#39;}=\lVert_{m=1}^{M} \sigma(\sum_{j\in N_i}\sum_{k\in R_{ij}}\alpha_{ijk}^{m} c_{ijk}^{m})
-\]</span> 在这一层传入下一层的时候，作者实现中加了一个dropout层，防止过拟合。</p>
-<p>但是在最后一层，就不使用concate操作了， <span class="math display">\[
-h_i^{&#39;}=\sigma(\frac{1}{M} \sum_{m=1}^M \sum_{j\in N_i} \sum_{k\in R_{ij}} \alpha_{ijk}^{m} c_{ijk}^{m})
-\]</span> 最后一层的输出记作<span class="math inline">\(H^f \in N_e \times T^{f}\)</span></p>
-<h3 id="对于关系的处理">3.2 对于关系的处理</h3>
-<p>对于输入的<span class="math inline">\(G\)</span>，前面获得的<span class="math inline">\(h_i^{&#39;}\)</span>只是针对实体i的，所以关系<span class="math inline">\(G\)</span>的变换是直接进行线性转换。 <span class="math display">\[
-G^{&#39;}=GW^R \\
-W^R\in R^{P\times P^{&#39;}}
-\]</span></p>
-<h3 id="保留原来的entity-embedding">3.3 保留原来的entity embedding</h3>
-<p>在最后一层，加上原来的entity embedding。 <span class="math display">\[
-H^{&#39;&#39;}=W^EH + H^f
-\]</span></p>
-<h3 id="training-objective">3.4 Training Objective</h3>
-<p>hinge-loss： <span class="math display">\[
-L(\Omega)=\sum_{t_{ij\in S}}\sum_{t_{ij}^{&#39;}\in S^{&#39;}} max(d_{ij}-d_{ij}^{&#39;}+\gamma,\ 0)
-\]</span></p>
-<h3 id="decoder">3.5 Decoder</h3>
-<p>使用ConVKB作为decoder</p>
-<h2 id="experiments-and-results">4 Experiments and Results</h2>
-<p>数据集：</p>
-<ul>
-<li>WN18RR (Dettmers et al., 2018),</li>
-<li>FB15k-237 (Toutanova et al., 2015),</li>
-<li>NELL-995 (Xiong et al., 2017),</li>
-<li>Uniﬁed Medical Language Systems (UMLS) (Kok and Domingos, 2007)<br />
-</li>
-<li>Alyawarra Kinship (Lin et al., 2018).</li>
-</ul>
-]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>GNN</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>KGAT</title>
-    <url>/2021/04/16/KGAT/</url>
-    <content><![CDATA[<h1 id="kgat-knowledge-graph-attention-network-for-recommendation">KGAT: Knowledge Graph Attention Network for Recommendation</h1>
-<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
-<span id="more"></span>
-<h2 id="现在结合知识图谱的推荐存在的问题">1. 现在结合知识图谱的推荐存在的问题</h2>
-<h3 id="知识图谱出现解决的问题">1.1 知识图谱出现解决的问题</h3>
-<p>推荐算法中的协同过滤考虑的根据某个用户的历史数据，寻找可能兴趣相投的群体，来推荐物品。比如在下图中，要给用户推荐物品，那么但从交互的物品来看，都与有交互，那么就可以认为是兴趣相投的用户，根据他们的历史数据来给推荐物品。但如果表示某部电影，的导演也是这部电影的演员，与之间是存在属性上的联系的，这种联系是单纯协同过滤无法解决的。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png" style="zoom:50%;" /></p>
-<p>为了解决这个问题，加入知识图谱(knowledge graph)，形成了下面的结构。</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229105855957-8557739.png" style="zoom:50%;" /></p>
-<p>在这样的图中，与就关联起来了。同样给推荐物品，就能够找到更多的相似用户来进行推荐。</p>
-<p>考虑之前的用户和物品交互矩阵，矩阵当中只存在一种关系，就是用户和物品的交互，并且物品和物品之间是没有直接交互的，如果结合了知识图谱，物品和物品之间就出现了直接的关系，增加了新的实体，矩阵中的关系也就由一个变为了多个。</p>
-<p>在这样的条件下，就可以继续利用GNN来进行propagation。</p>
-<h3 id="使用gnn的思路">1.2 使用GNN的思路</h3>
-<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
-<h2 id="模型结构">2 模型结构</h2>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214103645598-8557739.png" style="zoom:50%;" /></p>
-<p>主要包括三层：</p>
-<ol type="1">
-<li>Embedding layer</li>
-<li>Attentive embedding propaggation layer</li>
-<li>Prediction layer</li>
-</ol>
-<h3 id="embedding-layer">2.1 Embedding layer</h3>
-<p>对于用户-物品可以表示为， <span class="math display">\[
-G_1 = \{(u, y_{ui}, i)|u\in U, i\in I, y_{ui}=1\}
-\]</span> 知识图谱使用下面的三元组来表示， <span class="math display">\[
-G_2 = \{(h, r, t)|h,t\in \epsilon , r\in R\}
-\]</span> 这样整个结构也就都成为了一个三元组， <span class="math display">\[
-G = \{(h, r, t)|h,t\in \epsilon^{&#39;} , r\in R^{&#39;}\}
-\]</span> 在新的结构当中，由于每一个物品都对应到了知识图谱中的实体。所以现在的矩阵变为了<span class="math inline">\(N用户\times\ M^{&#39;}实体\)</span>。</p>
-<p>在embeding layer这一层，存在一个loss，知识图谱embeding表示的loss。论文里使用了TransR，来获得知识图谱的embeding。</p>
-<p>TransR的原理是实体使用d维embeding，关系表示使用k为embeding，一个连接<span class="math inline">\(&lt;h, r, t&gt;\)</span>在数学上的含义可以是h投影到关系r的k维空间上，加上r的k维表示，得到t的k维投影： <span class="math display">\[
-W_re_h+e_r\approx W_re_t,\\ e_h, e_t\in R^d, e_r\in R^k, W_r\in R^{k\times d}
-\]</span> <span class="math inline">\(W_r\)</span>是关系r的转换矩阵。这个等式两边越接近越好，这样可以定义一个相似性得分的函数： <span class="math display">\[
-g(h,r,t)={\lVert W_re_h+e_r-W_re_t \rVert}^2_2
-\]</span> 在整个的矩阵上，对于有关系的<span class="math inline">\(&lt;h, t&gt;\)</span>score越小越好，对于没有关系的<span class="math inline">\(&lt;h, t^{&#39;}&gt;\)</span>score越大越好。</p>
-<p>因此可以得到一个损失函数： <span class="math display">\[
-L_{KG}=\sum_{(h,r,t,t^{&#39;})}{-ln\sigma (g(h,r,t^{&#39;})-g(h,r,t)) }
-\]</span> 在论文的代码实现当中，对于每一个head，取了1个positive，1个negative来计算loss。</p>
-<h3 id="attentive-embeding-propagation-layers">2.2 Attentive Embeding Propagation Layers</h3>
-<p>实质是在ngcf上加上了attention机制。</p>
-<p>对于一个实体<span class="math inline">\(h\)</span>，对于和 <span class="math inline">\(h\)</span> 有关系 <span class="math inline">\(r\)</span> 的集合 <span class="math inline">\(N_h=\{ (h,r,t)|(h,r,t)\in G \}\)</span> 使用propagation： <span class="math display">\[
-e_{N_h}=\sum_{(h,r,t)\in N_h} \pi (h,r,t)e_t
-\]</span> Attention: <span class="math display">\[
-\pi (h,r,t)=(W_re_t)^Ttanh(W_re_h+e_r) \\
-\pi (h,r,t)=\frac{exp(\pi (h,r,t))}{\sum_{(h,r^{&#39;},t^{&#39;})\in N_h} \pi (h,r,t)e_t}
-\]</span> 理解：</p>
-<p><span class="math inline">\(W_re_t\)</span>是实体<span class="math inline">\(e_t\)</span>在关系<span class="math inline">\(r\)</span>空间内的投影，<span class="math inline">\(W_re_h+e_r\)</span>是<span class="math inline">\(e_h\)</span>投影到关系<span class="math inline">\(r\)</span>的k维空间上，加上r的k维表示。如果这两个embeding点积越大，表示这两个向量越相似，对应的权重应该更大。</p>
-<p>之后的propagation和aggregation具体方式参考ngcf。</p>
-<h3 id="训练方式">2.3 训练方式</h3>
-<p>具体的，在训练之前，因为加入知识图谱相当于增加了新的物品，增加了大量的待训练参数，为了加快训练过程，首先利用BPR-MF的方式预训练好用户、物品的embeding，之后再进行kgat的训练。</p>
-<p>在训练的时候，在一个epoch里，</p>
-<ol type="1">
-<li>分batch(1024)训练完embeding propagation，更新所有实体的embeding</li>
-<li>分batch‘(2048)训练TransR，更新关系的转换矩阵<br />
-</li>
-<li>更新attentive embeding</li>
-</ol>
-<h2 id="experiments">3 Experiments</h2>
-<p>研究问题：</p>
-<ol type="1">
-<li>KGAT和其它模型的比较</li>
-<li>KGAT不同模型设置对结果的影响</li>
-<li>KGAT对于用户偏好解释性的影响</li>
-</ol>
-<p>可以发现，这三个问题与NGCF中探究的问题一致。</p>
-<p>数据集：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214110411611-8557739.png" alt="image-20191229105855957" style="zoom:50%;" /></p>
-<p>可以发现，如果加入知识图谱，物品的数量就会极大的增加，这也是为什么建议预训练好用户和物品的embeding。</p>
-<p>评估指标： <span class="math display">\[
-recall@K,\ ndcg@K,\ K=20
-\]</span> 超参数设置：</p>
-<ul>
-<li>embeding size：64</li>
-<li>batch size：1024</li>
-<li>early stopping</li>
-<li>KGAT layer size：[64, 32, 16]</li>
-</ul>
-<p>比较结果：</p>
-<p>效果比较：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110432499-8557739.png" alt="image-20191229110432499" style="zoom:50%;" /></p>
-<p>不同模型结构设置的影响：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229111040431-8557739.png" alt="image-20191229110623067" style="zoom:50%;" /></p>
-<p>对于用户偏好的解释：</p>
-<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110623067-8557739.png" alt="image-20191229111040431" style="zoom:50%;" /></p>
-<p>从这张图上可以看出来通过加入知识图谱，获得了更多的额外信息。</p>
-<h2 id="总结">4 总结</h2>
-<p>加入知识图谱导致了更加丰富的物品信息</p>
-<p>缺点：</p>
-<p>在知识图谱中，存在一些常见的属性，例如图4中的English，这些属性有很多物品都具备，但是在attention的计算中，attention的计算仅在当前用户的交互实体下进行，没有考虑全局的情况。</p>
-]]></content>
-      <categories>
-        <category>Paper</category>
-        <category>RS</category>
       </categories>
   </entry>
   <entry>
@@ -3768,6 +3670,105 @@ y^\prime=R(\{ h_v^T | v\in G \})
       <categories>
         <category>Paper</category>
         <category>GNN</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>KGAT</title>
+    <url>/2021/04/16/KGAT/</url>
+    <content><![CDATA[<h1 id="kgat-knowledge-graph-attention-network-for-recommendation">KGAT: Knowledge Graph Attention Network for Recommendation</h1>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<span id="more"></span>
+<h2 id="现在结合知识图谱的推荐存在的问题">1. 现在结合知识图谱的推荐存在的问题</h2>
+<h3 id="知识图谱出现解决的问题">1.1 知识图谱出现解决的问题</h3>
+<p>推荐算法中的协同过滤考虑的根据某个用户的历史数据，寻找可能兴趣相投的群体，来推荐物品。比如在下图中，要给用户推荐物品，那么但从交互的物品来看，都与有交互，那么就可以认为是兴趣相投的用户，根据他们的历史数据来给推荐物品。但如果表示某部电影，的导演也是这部电影的演员，与之间是存在属性上的联系的，这种联系是单纯协同过滤无法解决的。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png" style="zoom:50%;" /></p>
+<p>为了解决这个问题，加入知识图谱(knowledge graph)，形成了下面的结构。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229105855957-8557739.png" style="zoom:50%;" /></p>
+<p>在这样的图中，与就关联起来了。同样给推荐物品，就能够找到更多的相似用户来进行推荐。</p>
+<p>考虑之前的用户和物品交互矩阵，矩阵当中只存在一种关系，就是用户和物品的交互，并且物品和物品之间是没有直接交互的，如果结合了知识图谱，物品和物品之间就出现了直接的关系，增加了新的实体，矩阵中的关系也就由一个变为了多个。</p>
+<p>在这样的条件下，就可以继续利用GNN来进行propagation。</p>
+<h3 id="使用gnn的思路">1.2 使用GNN的思路</h3>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<h2 id="模型结构">2 模型结构</h2>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214103645598-8557739.png" style="zoom:50%;" /></p>
+<p>主要包括三层：</p>
+<ol type="1">
+<li>Embedding layer</li>
+<li>Attentive embedding propaggation layer</li>
+<li>Prediction layer</li>
+</ol>
+<h3 id="embedding-layer">2.1 Embedding layer</h3>
+<p>对于用户-物品可以表示为， <span class="math display">\[
+G_1 = \{(u, y_{ui}, i)|u\in U, i\in I, y_{ui}=1\}
+\]</span> 知识图谱使用下面的三元组来表示， <span class="math display">\[
+G_2 = \{(h, r, t)|h,t\in \epsilon , r\in R\}
+\]</span> 这样整个结构也就都成为了一个三元组， <span class="math display">\[
+G = \{(h, r, t)|h,t\in \epsilon^{&#39;} , r\in R^{&#39;}\}
+\]</span> 在新的结构当中，由于每一个物品都对应到了知识图谱中的实体。所以现在的矩阵变为了<span class="math inline">\(N用户\times\ M^{&#39;}实体\)</span>。</p>
+<p>在embeding layer这一层，存在一个loss，知识图谱embeding表示的loss。论文里使用了TransR，来获得知识图谱的embeding。</p>
+<p>TransR的原理是实体使用d维embeding，关系表示使用k为embeding，一个连接<span class="math inline">\(&lt;h, r, t&gt;\)</span>在数学上的含义可以是h投影到关系r的k维空间上，加上r的k维表示，得到t的k维投影： <span class="math display">\[
+W_re_h+e_r\approx W_re_t,\\ e_h, e_t\in R^d, e_r\in R^k, W_r\in R^{k\times d}
+\]</span> <span class="math inline">\(W_r\)</span>是关系r的转换矩阵。这个等式两边越接近越好，这样可以定义一个相似性得分的函数： <span class="math display">\[
+g(h,r,t)={\lVert W_re_h+e_r-W_re_t \rVert}^2_2
+\]</span> 在整个的矩阵上，对于有关系的<span class="math inline">\(&lt;h, t&gt;\)</span>score越小越好，对于没有关系的<span class="math inline">\(&lt;h, t^{&#39;}&gt;\)</span>score越大越好。</p>
+<p>因此可以得到一个损失函数： <span class="math display">\[
+L_{KG}=\sum_{(h,r,t,t^{&#39;})}{-ln\sigma (g(h,r,t^{&#39;})-g(h,r,t)) }
+\]</span> 在论文的代码实现当中，对于每一个head，取了1个positive，1个negative来计算loss。</p>
+<h3 id="attentive-embeding-propagation-layers">2.2 Attentive Embeding Propagation Layers</h3>
+<p>实质是在ngcf上加上了attention机制。</p>
+<p>对于一个实体<span class="math inline">\(h\)</span>，对于和 <span class="math inline">\(h\)</span> 有关系 <span class="math inline">\(r\)</span> 的集合 <span class="math inline">\(N_h=\{ (h,r,t)|(h,r,t)\in G \}\)</span> 使用propagation： <span class="math display">\[
+e_{N_h}=\sum_{(h,r,t)\in N_h} \pi (h,r,t)e_t
+\]</span> Attention: <span class="math display">\[
+\pi (h,r,t)=(W_re_t)^Ttanh(W_re_h+e_r) \\
+\pi (h,r,t)=\frac{exp(\pi (h,r,t))}{\sum_{(h,r^{&#39;},t^{&#39;})\in N_h} \pi (h,r,t)e_t}
+\]</span> 理解：</p>
+<p><span class="math inline">\(W_re_t\)</span>是实体<span class="math inline">\(e_t\)</span>在关系<span class="math inline">\(r\)</span>空间内的投影，<span class="math inline">\(W_re_h+e_r\)</span>是<span class="math inline">\(e_h\)</span>投影到关系<span class="math inline">\(r\)</span>的k维空间上，加上r的k维表示。如果这两个embeding点积越大，表示这两个向量越相似，对应的权重应该更大。</p>
+<p>之后的propagation和aggregation具体方式参考ngcf。</p>
+<h3 id="训练方式">2.3 训练方式</h3>
+<p>具体的，在训练之前，因为加入知识图谱相当于增加了新的物品，增加了大量的待训练参数，为了加快训练过程，首先利用BPR-MF的方式预训练好用户、物品的embeding，之后再进行kgat的训练。</p>
+<p>在训练的时候，在一个epoch里，</p>
+<ol type="1">
+<li>分batch(1024)训练完embeding propagation，更新所有实体的embeding</li>
+<li>分batch‘(2048)训练TransR，更新关系的转换矩阵<br />
+</li>
+<li>更新attentive embeding</li>
+</ol>
+<h2 id="experiments">3 Experiments</h2>
+<p>研究问题：</p>
+<ol type="1">
+<li>KGAT和其它模型的比较</li>
+<li>KGAT不同模型设置对结果的影响</li>
+<li>KGAT对于用户偏好解释性的影响</li>
+</ol>
+<p>可以发现，这三个问题与NGCF中探究的问题一致。</p>
+<p>数据集：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214110411611-8557739.png" alt="image-20191229105855957" style="zoom:50%;" /></p>
+<p>可以发现，如果加入知识图谱，物品的数量就会极大的增加，这也是为什么建议预训练好用户和物品的embeding。</p>
+<p>评估指标： <span class="math display">\[
+recall@K,\ ndcg@K,\ K=20
+\]</span> 超参数设置：</p>
+<ul>
+<li>embeding size：64</li>
+<li>batch size：1024</li>
+<li>early stopping</li>
+<li>KGAT layer size：[64, 32, 16]</li>
+</ul>
+<p>比较结果：</p>
+<p>效果比较：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110432499-8557739.png" alt="image-20191229110432499" style="zoom:50%;" /></p>
+<p>不同模型结构设置的影响：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229111040431-8557739.png" alt="image-20191229110623067" style="zoom:50%;" /></p>
+<p>对于用户偏好的解释：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110623067-8557739.png" alt="image-20191229111040431" style="zoom:50%;" /></p>
+<p>从这张图上可以看出来通过加入知识图谱，获得了更多的额外信息。</p>
+<h2 id="总结">4 总结</h2>
+<p>加入知识图谱导致了更加丰富的物品信息</p>
+<p>缺点：</p>
+<p>在知识图谱中，存在一些常见的属性，例如图4中的English，这些属性有很多物品都具备，但是在attention的计算中，attention的计算仅在当前用户的交互实体下进行，没有考虑全局的情况。</p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>RS</category>
       </categories>
   </entry>
   <entry>
@@ -4857,7 +4858,7 @@ f(h_u,h_v)=h_u^T h_v
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170730416.png" style="zoom:50%;" /></p>
 ]]></content>
       <categories>
-        <category>Ppaer</category>
+        <category>Paper</category>
         <category>KGE</category>
       </categories>
       <tags>
@@ -5151,7 +5152,7 @@ f(h_u,h_v)=h_u^T h_v
 <p>在作者实验中，采用<span class="math inline">\(N_1=N_2=50\)</span>，负样本数量为1。</p>
 ]]></content>
       <categories>
-        <category>Ppaer</category>
+        <category>Paper</category>
         <category>KGE</category>
       </categories>
       <tags>
@@ -5972,11 +5973,18 @@ f(h_u,h_v)=h_u^T h_v
     <title>GPT-1</title>
     <url>/2022/05/10/GPT-1/</url>
     <content><![CDATA[<h1 id="improving-language-understanding-by-generative-pre-training">Improving Language Understanding by Generative Pre-Training</h1>
-<p>2018年，OpenAI，GPT-1</p>
+<p>2018-06年，OpenAI，GPT-1</p>
 <blockquote>
 <p>Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. <strong>We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task.</strong> In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9% on commonsense reasoning (Stories Cloze Test), 5.7% on question answering (RACE), and 1.5% on textual entailment (MultiNLI).</p>
 </blockquote>
 <span id="more"></span>
+<p>参考：</p>
+<ul>
+<li>原论文《<em>Improving Language Understanding by Generative Pre-Training</em>》</li>
+<li><a href="https://www.bilibili.com/video/BV1AF411b7xQ/?spm_id_from=333.788">沐神的GPT讲解视频</a></li>
+</ul>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513101404397.png" style="zoom:25%;" /></p>
+<p>GPT把Transformer的解码器拿出来在大规模数据集上进行预训练；BERT把transformer的编码器拿过来。BERT-base维度和结构层数和GPT-1是一样的，并且也使用了BooksCorpus数据集进行预训练。</p>
 <h2 id="introduction">1 Introduction</h2>
 <p>作者希望解决什么问题？</p>
 <p>深度学习的模型往往需要足够的标注数据进行训练，但是这往往代表着高昂的人工代价和成本。同时在很多领域没有这么多的标注数据。但是直接利用无标签数据进行信息捕获的方法，是一直以来期望能够实现的方向。即便是有足够标注数据的领域，如果引入通过无监督方式学习到的表示，也可能进一步提升模型效果，比如使用预训练好的word embedding来提升NLP任务结果。</p>
@@ -5999,16 +6007,25 @@ f(h_u,h_v)=h_u^T h_v
 <p><em>有研究者认为预训练实际上是一个regularization scheme，因此能够让深度学习有更好的泛化性</em>，这里如有兴趣，可以参考paper《Why does unsupervised pre-training help deep learning?》</p>
 <h2 id="framework">2 Framework</h2>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154323724.png" style="zoom:50%;" /></p>
+<p>从上图可以看到，GPT会把各个子任务变为序列的形式，在开始加入一个<span class="math inline">\(Start\)</span>词元，在最后加入一个抽取<span class="math inline">\(Extract\)</span>词元。整个序列输入transformer解码器，然后使用抽取词元的表示经过线性层，作为具体的预测目标。</p>
+<ul>
+<li>Entailment：指在premise中是不是支持hypothesis，三分类问题</li>
+<li>Similarity：两段文本是不是相似，构造两个序列</li>
+<li>Multiple Choice：n个答案，构造n个序列输入</li>
+</ul>
 <h3 id="unsupervised-pre-training">2.1 Unsupervised pre-training</h3>
-<p>优化目标，已知前<span class="math inline">\(k\)</span>个token，尝试预测当前token <span class="math inline">\(i\)</span>：</p>
+<p>优化目标，标准的语言模型优化目标，已知前<span class="math inline">\(k\)</span>个token，尝试预测当前token <span class="math inline">\(i\)</span>，<span class="math inline">\(k\)</span>就是窗口大小：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154617674.png" style="zoom:50%;" /></p>
-<p>已知前面几个token的情况下，预测第i个token出现的概率；这点和BERT中的不太一样；BERT的预训练是mask掉任意的word然后进行了预测，这样来看BERT的预训练的语义方向是双向的。</p>
-<p>输入是context token（不太清楚具体指什么vector，难道是position embedding？），结构是12层+768 dimensional states+12 attention heads，输出是预测是哪个token的概率：</p>
+<p>已知前面几个token的情况下，预测第i个token出现的概率；这点和BERT中的不太一样；BERT的预训练是采用了带掩码的语言模型，会mask掉任意的word然后进行了预测，做完形填空，这样来看BERT的预训练的语义方向是双向的。</p>
+<p>优化目标<span class="math inline">\(L_1\)</span>是整个语料<span class="math inline">\(U\)</span>各个token出现的概率，一般情况下概率之间应该是相乘的，这里使用<span class="math inline">\(log\)</span>之后，就变成了多个概率相加。相加的操作比相乘更容易并行，计算也更简单。<span class="math inline">\(k\)</span>越大的话，整个模型会月倾向于使用更长的文本中寻找信息。</p>
+<p>输入是context token（不太清楚具体指什么vector，难道就是简单的token编码，比如one-hot？）。</p>
+<p>使用的模型是transformer的解码器，因为transformer的编码器是可以看到整个文本的，而解码器是只会看到前面的词，因此在GPT里还是使用了transformer的解码器。结构是12层+768 dimensional states+12 attention heads，输出是预测是哪个token的概率：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154934018.png" style="zoom:50%;" /></p>
 <p>其中的<span class="math inline">\(W_e\)</span>是指token embedding组成的矩阵。</p>
 <h3 id="supervised-ﬁne-tuning">2.2 Supervised ﬁne-tuning</h3>
 <p>输入是token，对于某些任务，比如问题-回答等，需要把原来结构化的输入变为与序列化的输入。</p>
-<p>结构很简单，就是前一步train好的Transformer，后面再加一线性层，最后经过softmax获得预测的标签<span class="math inline">\(y\)</span>：</p>
+<p>对于输入<span class="math inline">\(&lt;x^1,\cdots,x^m&gt;\)</span>，放入transformer里，获得最后一层的位置<span class="math inline">\(m\)</span>输出的表示。</p>
+<p>参数就是前一步train好的Transformer，后面再加一线性层，最后经过softmax获得预测的标签<span class="math inline">\(y\)</span>：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510155720266.png"  style="zoom:50%;" /></p>
 <p>优化的目标函数：</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510155835380.png"  style="zoom:50%;" /></p>
@@ -6016,6 +6033,7 @@ f(h_u,h_v)=h_u^T h_v
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510160042465.png" style="zoom:50%;" /></p>
 <p>在优化task相关的目标loss的同时，也进一步优化之前pretrain的目标loss。</p>
 <h2 id="experiments">3 Experiments</h2>
+<p>在BooksCorpus数据集上进行了预训练，7000篇没有被发表的书。</p>
 <p>作者用到了大量的训练上的trick，这里不提。有一部分是我不了解的，也没有使用过。</p>
 <p>总的来说，在4个任务atural language inference，question answering，semantic similarity， text classiﬁcation，一共12个数据集上的9个数据集取得了最好的结果。</p>
 <p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510160500198.png" style="zoom:50%;" /></p>
@@ -6031,6 +6049,186 @@ f(h_u,h_v)=h_u^T h_v
 <h2 id="conclusion">Conclusion</h2>
 <blockquote>
 <p><strong>Our work suggests that achieving signiﬁcant performance gains is indeed possible, and offers hints as to what models (Transformers) and data sets (text with long range dependencies) work best with this approach.</strong> We hope that this will help enable new research into unsupervised learning, for both natural language understanding and other domains, further improving our understanding of how and when unsupervised learning works</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>Pretrain</category>
+      </categories>
+      <tags>
+        <tag>NLP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GPT-2</title>
+    <url>/2022/05/11/GPT-2/</url>
+    <content><![CDATA[<h1 id="language-models-are-unsupervised-multitask-learners">Language Models are Unsupervised Multitask Learners</h1>
+<p>GPT-2 OpenAI，15亿参数量，2019-02</p>
+<blockquote>
+<p>Natural language processing tasks, such as question answering, machine translation, reading comprehension, and summarization, are typically approached with supervised learning on taskspeciﬁc datasets. <strong>We demonstrate that language models begin to learn these tasks without any explicit supervision when trained on a new dataset of millions of webpages called WebText.</strong> When conditioned on a document plus questions, the answers generated by the language model reach 55 F1 on the CoQA dataset - matching or exceeding the performance of 3 out of 4 baseline systems without using the 127,000+ training examples. The capacity of the language model is essential to the success of zero-shot task transfer and increasing it improves performance in a log-linear fashion across tasks. Our largest model, GPT-2, is a 1.5B parameter Transformer that achieves state of the art results on 7 out of 8 tested language modeling datasets in a zero-shot setting but still underﬁts WebText. Samples from the model reﬂect these improvements and contain coherent paragraphs of text. These ﬁndings suggest a promising path towards building language processing systems which learn to perform tasks from their naturally occurring demonstrations.</p>
+</blockquote>
+<p>遗憾的是尽管比BERT-large的3.5亿参数量还要大，但是效果并没有超过BERT。因此在GPT-2主要在zero-shot设置下进行探究。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p><strong>问题</strong>：之前出现的在大规模数据集上训练大模型的方法，对数据集的分布以及特定的任务很敏感。这些系统的适应面积还比较狭窄。作者希望能够进一步推动这些大模型的泛化性，往最终的理想目标更进一步：不需要给每个任务都创建和人工标注数据集。</p>
+<p><strong>假设</strong>：作者认为在特定领域下进行task相关的训练，是造成目前众多系统泛化性受到约束的原因。比如目前出现的利用多任务学习提升模型泛化性的方法，即在训练的时候可以同时看到不同任务相关的数据集，从元学习的角度看，每个任务(dataset, objective)可以看做是一个training sample。如果要让一个ML系统的泛化性足够好，可能需要成百上千的多任务。当然这是很难一直拓展的下去的。</p>
+<p>另外，对于已有的预训练+微调的模式，对于不同的任务仍然需要有标注好的数据。</p>
+<blockquote>
+<p>Our suspicion is that the prevalence of single task training on single domain datasets is a major contributor to the lack of generalization observed in current systems.</p>
+</blockquote>
+<p><strong>方法</strong>：作者直接让训练好的语言模型能够在下游的zero-shot的任务下进行预测，不需要任何结构和参数上的调整。核心在于两点：（1）足够大、足够多样化、质量较可靠的大规模数据集WebText（2）整体参数量达到了15亿的基于Transformer的模型（和GPT-1整体架构一样，只不过是层数更多，并且采用了一些新的训练trick）。</p>
+<h2 id="approach">2 Approach</h2>
+<p>在GPT-1里，对于要预测的任务加入了词元（START、EXTRACT和delimiter），这些词元是在无监督的时候没有见过的词元，但是因为会进行task-specific的微调，所以这些词元回去尝试学到合适的表示。但是现在GPT-2要做zero-shot的设置，那么就不能在不同task下，加入没见过的词元。因此在GPT-1中的词元的引入就不再合适了。</p>
+<p>也就是说要让输入的序列，变得更像自然语言。</p>
+<p>比如做机器翻译：(translate to french, english text, french text)。第一个输入<em>translate to french</em>，就叫做提示prompt。</p>
+<p>为什么加入这样自然语言描述的prompt就能够让机器执行相应的任务？作者认为训练好的大模型应该有能力学习到这样的推理能力。</p>
+<blockquote>
+<p>Our speculation is that a language model with sufficient capacity will begin to learn to infer and perform the tasks demonstrated in natural language sequences in order to better predict them, regardless of their method of procurement.</p>
+</blockquote>
+<p>比如下面在数据集里关于法语翻译成英语的例子：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513151520436.png" style="zoom:30%;" /></p>
+<p>可以猜想，如果语料库确实质量好，数据量足够大，那么对于不同的任务应该可以理解到不同的含义。</p>
+<h3 id="training-dataset">2.1 Training Dataset</h3>
+<p>作者构建了尽可能大，尽可能包括更多领域的数据。</p>
+<blockquote>
+<p>Our approach motivates building as large and diverse a dataset as possible in order to collect natural language demonstrations of tasks in as varied of domains and contexts as possible.</p>
+</blockquote>
+<p>作者自己从Reddit上导出了网页内容，为了保证数据质量，人工的过滤/审核抓取的网页内容是不实际的。因此作者从Reddit上爬取的数据是至少有3个karma的帖子（karma是佛教里业力、报应值的意思，在用户对Reddit的帖子进行点赞投票的时候，会获得相应的karma），表明至少这些内容是有意义或者是有趣的。最后的WebText，在2017年12月之后，经过了数据清洗，去重之后，包括了超过800万的文档，总共40G的数据。</p>
+<h3 id="input-representation">2.2 Input Representation</h3>
+<p>模型对输入文本的要求会限制模型的泛化性。</p>
+<p>作者采用了Byte Pair Encoding (BPE)的方法在word-level和byte-level上进行平衡。word-level的编码效果比较好，而byte-level的泛化性强。</p>
+<p><em>这一部分没看懂</em>。</p>
+<h3 id="model">2.3 Model</h3>
+<p>继续沿着OpenAI GPT model的架构，但是做了几个稍稍的改进：</p>
+<ul>
+<li>把layer normalization移到每个block的输入部分；并且在最后的self-attention block输出加了一个额外的layer normalization、</li>
+<li>残差层的参数初始化值考虑到了网络的深度，乘以系数<span class="math inline">\(1/\sqrt{N}\)</span>，<span class="math inline">\(N\)</span>代表残差层的深度。</li>
+</ul>
+<p>根据网络的深度，设计了四个大小不同的模型：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220511193814757.png" style="zoom:50%;" /></p>
+<p>最大的模型参数量比GPT-2大了14倍。</p>
+<h2 id="experiments">3 Experiments</h2>
+<p>涉及到的方面很多，很多任务具体不是很了解，看一下总体的情况：</p>
+<p>在zero-shot设置下，不需要经过有监督的训练，直接在8个数据集中的7个数据集获得了SOTA：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220511194124158.png" style="zoom:50%;" /></p>
+<p>GPT-2在Children’s Book Test（类似于完形填空）、LAMBADA（文本长依赖建模能力，预测长句子的最后一个单词）、Winograd Schema challenge（对含糊不清的文本进行常识推理）等task都取得了SOTA的结果。</p>
+<p>但是在一些其它的task表现不太好，特别是翻译和QA，表现出来的效果并没有比之前非常粗浅的方法效果好，距离已有的SOTA方法差距很远。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513151837927.png" style="zoom:40%;" /></p>
+<p>需要注意的是，即便是这么大的模型，作者认为仍然是欠拟合（underfit）WebText的：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220511195003857.png" style="zoom:30%;" /></p>
+<p>随着模型增大，在WebText上的效果一直在变好，如果继续增大模型，效果应该会进一步增加。纵轴是困惑度（perplexity），越小越好，下面的它的常用的对数形式（来自<a href="https://www.zhihu.com/question/58482430">知乎</a>）：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220511195728092.png" style="zoom:50%;" /></p>
+]]></content>
+      <categories>
+        <category>Paper</category>
+        <category>Pretrain</category>
+      </categories>
+      <tags>
+        <tag>NLP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>GPT-3</title>
+    <url>/2022/05/12/GPT-3/</url>
+    <content><![CDATA[<h1 id="language-models-are-few-shot-learners">Language Models are Few-Shot Learners</h1>
+<p>GPT-3，NIPS 2020 技术报告63页，不是投稿的论文，OpenAI，2020-05</p>
+<blockquote>
+<p>Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by ﬁne-tuning on a speciﬁc task. While typically task-agnostic in architecture, this method still requires task-speciﬁc ﬁne-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions – something which current NLP systems still largely struggle to do. <strong>Here we show that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art ﬁne-tuning approaches.</strong> Speciﬁcally, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT-3 is applied without any gradient updates or ﬁne-tuning, with tasks and few-shot demonstrations speciﬁed purely via text interaction with the model. GPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-ﬂy reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic. At the same time, we also identify some datasets where GPT-3’s few-shot learning still struggles, as well as some datasets where GPT-3 faces methodological issues related to training on large web corpora. Finally, we ﬁnd that GPT-3 can generate samples of news articles which human evaluators have difﬁculty distinguishing from articles written by humans. We discuss broader societal impacts of this ﬁnding and of GPT-3 in general.</p>
+</blockquote>
+<p>GPT-3比GPT-2强调的zero-shot的设置，稍微回退了一点，变为强调few-shot的设置。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>最近NLP领域热衷于研究pre-trained的语言表示，寻找能够实现task-agnostic的方法。</p>
+<p>一开始研究者学习word的表示，然后作为task-specific的模型的输入。</p>
+<p>最近出现了预训练+fine-tunning的模式，取得了很大的进展。</p>
+<p><strong>问题</strong>：进行任务相关的微调，可能带来下面几个缺点：</p>
+<ol type="1">
+<li><p>fine-tuning需要为不同的任务收集有监督的数据。每一个新任务都需要收集新的数据，这当然限制了模型的表达能力</p></li>
+<li><p>fine-tuning的操作，会使得之前pre-training好的model向着一个狭隘的训练分布拟合，导致实际上更大的模型不一定会在训练分布之外表现出更好的泛化性，也就没有办法真正的评估出预训练模型的好坏</p></li>
+<li><p>从人类的角度来看，学习特定的语言任务并不需要太多的数据，比如一个简单的描述就可以让人类进行对应的行为。这使得人类可以很快的学会大量不同的任务，并且同时无缝的执行不同的语言任务。我们期望语言模型也能够拥有这样的易变性（ﬂuidity）和普遍性（generality）</p></li>
+</ol>
+<p><strong>解决思路</strong>：</p>
+<p>一方面近期出现了一些在NLP上进行元学习的方法，比如“in-context learning”，把预训练模型的输入，构造出不同task的形式，让模型能够在训练的时候学习到广泛的模式识别能力。</p>
+<blockquote>
+<p>Recent work [RWC +19] attempts to do this via what we call “in-context learning”, using the text input of a pretrained language model as a form of task speciﬁcation: the model is conditioned on a natural language instruction and/or a few demonstrations of the task and is then expected to complete further instances of the task simply by predicting what comes next.</p>
+</blockquote>
+<p>下面这张图是对于语言模型可能在进行潜在的元学习的说明，并不是GPT-3真正的训练过程。比如不同的document有不同的context，是在讨论不同的领域。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194903403.png" style="zoom:50%;" /></p>
+<p>但是这一方向的元学习方法效果还远远不够好。</p>
+<p>另一方面，最近出现了一系列基于transformer的大模型，随着规模增大，效果逐渐提升。</p>
+<p>那么作者的思路就是结合两者：</p>
+<p>如果也将元学习的模型规模扩大，可能它的能力也会得到提高。</p>
+<blockquote>
+<p>Since in-context learning involves absorbing many skills and tasks within the parameters of the model, it is plausible that in-context learning abilities might show similarly strong gains with scale.</p>
+</blockquote>
+<p>虽然作者提到了元学习的概念，但是这里的n-shot的example，并不会像一般的元学习方法一样去更新参数，在GPT-3的n-shot的example仅仅是作为输入，用来提示必要的信息。</p>
+<p>这篇文章作者进行了以下的探究和贡献：</p>
+<ul>
+<li>提出了拥有1750亿参数量的GPT-3，重点在于探究它的元学习能力。参数量是GPT-2的116倍；GPT-1的1600倍左右。</li>
+<li>对GPT-3的性能，分别在zero-shot、one-shot和few-shot的设置下进行了大量的实验。讨论了GPT-3表现优越的地方，和表现不好的情况。</li>
+<li>研究了在大规模语料中出现的数据污染问题（data contamination），即测试集中的内容可能在训练集中出现，特别是因为很多数据是收集于web上。发展出一套评估数据污染情况和后果的工具。</li>
+</ul>
+<h2 id="approach">2 Approach</h2>
+<p>GPT-3使用的几种不同的实验设置：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512193531024.png" style="zoom:40%;" /></p>
+<p>最终效果显示，GPT-3在少次任务下表现相对最好，甚至在某些情况下超过了SOTA的模型；在one-shot和zero-shot的情况下，很多的任务表示promising，没有达到SOTA。</p>
+<blockquote>
+<p>Broadly, on NLP tasks GPT-3 achieves promising results in the zero-shot and one-shot settings, and in the the few-shot setting is sometimes competitive with or even occasionally surpasses state-of-the-art (despite state-of-the-art being held by ﬁne-tuned models).</p>
+</blockquote>
+<p>在一个移除随机符号的NLP任务下，不同设置的GPT-3的性能：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512195107205.png" style="zoom:40%;" /></p>
+<p>作者也发现，GPT-3在一些任务，比如自然语言推理以及阅读理解的部分数据集下表现不好。</p>
+<blockquote>
+<p>At the same time, we also ﬁnd some tasks on which few-shot performance struggles, even at the scale of GPT-3. This includes natural language inference tasks like the ANLI dataset, and some reading comprehension datasets like RACE or QuAC.</p>
+</blockquote>
+<h3 id="model-and-architectures">2.1 Model and Architectures</h3>
+<p>沿用GPT-2的架构。区别是使用了Sparse Transformer中的一些机制：</p>
+<blockquote>
+<p>we use alternating dense and locally banded sparse attention patterns in the layers of the transformer, similar to the Sparse Transformer.</p>
+</blockquote>
+<p>实现的不同大小的模型：</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194115923.png" style="zoom:50%;" /></p>
+<p>更大的模型，使用了更大的batch size和更小的学习率。猜测是大模型拟合能力更强，容量更大，因此扩大batch size、减小learning rate都是避免模型拟合太快</p>
+<h3 id="training-dataset">2.2 Training Dataset</h3>
+<p>大规模语料，来自多个不同的数据集，由于规模大，整个语料基本上一个sequence只需要训练一次即可。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194411891.png" style="zoom:50%;" /></p>
+<p>这里需要特别注意Common Crawl，原始版本包括了万亿级别单词，但是数据质量比较低。因此作者对它进行了一系列的数据清洗，最后得到了大概4100亿token，大小570 GB。</p>
+<ol type="1">
+<li>把Common Crawl数据集下载下来，然后使用一个简单的线性回归分类器，正类是高质量的数据集，比如GPT-2的WebText里的数据；负类是Common Crawl中原始的数据。然后对所有的Common Crawl中数据进行预测，如果分类到了正，就认为质量还可以，否则的话就过滤掉。</li>
+<li>去重，使用LSH算法判断两个document是不是重合的。</li>
+<li>把多个高质量的数据集加进去</li>
+</ol>
+<p>在训练的时候，根据数据集的质量来采样，而不是根据数据集的大小。</p>
+<p>在训练大规模model的时候，大规模语料可能在无意间包含了下游任务的测试信息，因此作者根据所有测试任务的验证和测试集，对训练语料进行了数据清洗。</p>
+<blockquote>
+<p>To reduce such contamination, we searched for and attempted to remove any overlaps with the development and test sets of all benchmarks studied in this paper.</p>
+</blockquote>
+<p>但是GPT-3的初始版本训练的数据集没有完全过滤掉污染的数据，并且由于训练代价，没法再次进行训练。</p>
+<blockquote>
+<p>Unfortunately, a bug in the ﬁltering caused us to ignore some overlaps, and due to the cost of training it was not feasible to retrain the model.</p>
+</blockquote>
+<h2 id="results">3 Results</h2>
+<p>不同大小的模型，计算量和验证集上的损失下降的趋势。</p>
+<p><img data-src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513160142526.png" style="zoom:50%;" /></p>
+<p>可以看到，对于单个模型，最好的方案是在每个loss和计算量相对平衡的点，继续进行运算，loss基本处于收敛的情况。如果把各个模型的平衡点相连，大致上是一个power-law的分布。也就是说，找到一个合适的模型，不过度训练的情况下，随着计算量呈指数增长，模型精度大概是线性下降的趋势。</p>
+<h2 id="limitations">5 Limitations</h2>
+<ol type="1">
+<li>虽然效果比GPT-2要好很多，但是在文本生成任务上还是较弱。GPT-3擅长描述一段的文本，但是不擅长写更多、更长的文本。</li>
+<li>结构和算法上的局限性，比如只能从前向后看。然后比如是在预测的时候，对于每一个token都是一样的处理，没有提取最重要的token。并且也只能学习文本的信息，并没有对物理世界的各种其它信息的感知。</li>
+<li>样本有效性不够，使用了过多过大的语料。</li>
+<li>不确定性，不确定GPT-3到底是在推理的时候真的从头学习到了怎么进行新的任务，还是说只是识别出了之前在预训练的时候见过的模式。</li>
+<li>训练代价昂贵。</li>
+<li>无法解释。</li>
+</ol>
+<h2 id="broader-impacts">6 Broader Impacts</h2>
+<ol type="1">
+<li>可能会被用来做坏事，假新闻造谣、论文造假等等</li>
+<li>公平、偏见（性别、种族、宗教等等）。比如GPT-3更可能认为某个角色是男性</li>
+<li>能耗</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<blockquote>
+<p>We presented a 175 billion parameter language model which shows strong performance on many NLP tasks and benchmarks in the zero-shot, one-shot, and few-shot settings, in some cases nearly matching the performance of state-of-the-art ﬁne-tuned systems, as well as generating high-quality samples and strong qualitative performance at tasks deﬁned on-the-ﬂy. We documented roughly predictable trends of scaling in performance without using ﬁne-tuning. We also discussed the social impacts of this class of model. Despite many limitations and weaknesses, these results suggest that very large language models may be an important ingredient in the development of adaptable, general language systems.</p>
 </blockquote>
 ]]></content>
       <categories>
