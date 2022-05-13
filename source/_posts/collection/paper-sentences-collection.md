@@ -68,6 +68,7 @@ tags:
 55. most research applying machine learning to chemistry tasks has revolved around feature engineering.（大多数的研究都是围绕...）
 56. empowering HGT to maintain dedicated representation for different types of nodes and edges. (使HGT能够为不同的node和edge获得专门的表示)
 57. Figure 1 depicts he macro-structure of Mixer.（图1描绘了整体结构）
-57. Vinyals  et al. [32] and Ravi and Larochelle [24] apply Matching Networks using cosine  distance. However for both Prototypical Networks and Matching Networks any  distance is permissible（对于模型来说...都是允许的）
-57. For Protypical Networks, we conjecture this is primarily due to cosine distance not being a Bregman divergence（我们猜测某种现象/结果可能是因为...）
+58. Vinyals  et al. [32] and Ravi and Larochelle [24] apply Matching Networks using cosine  distance. However for both Prototypical Networks and Matching Networks any  distance is permissible（对于模型来说...都是允许的）
+59. For Protypical Networks, we conjecture this is primarily due to cosine distance not being a Bregman divergence（我们猜测某种现象/结果可能是因为...）
+60. While suggestive as a research result, in terms of practical applications, the zero-shot performance of GPT-2 is still far from use-able.（作为实验结果有启发性）
 

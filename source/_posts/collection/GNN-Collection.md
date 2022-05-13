@@ -3,7 +3,7 @@ title: GNN-Collection
 notshow: false
 date: 2021-07-08 19:48:05
 categories:
-- Ppaer
+- Paper
 - GNN
 tags:
 - Collection

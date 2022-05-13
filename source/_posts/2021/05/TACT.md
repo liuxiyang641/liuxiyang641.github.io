@@ -3,7 +3,7 @@ title: TACT
 notshow: false
 date: 2021-05-10 16:50:55
 categories:
-- Ppaer
+- Paper
 - KGE
 tags:
 - KGE

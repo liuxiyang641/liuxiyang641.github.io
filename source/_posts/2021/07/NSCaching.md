@@ -3,7 +3,7 @@ title: NSCaching
 notshow: false
 date: 2021-07-22 17:19:07
 categories:
-- Ppaer
+- Paper
 - KGE
 tags:
 - KGE

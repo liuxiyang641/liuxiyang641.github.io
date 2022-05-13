@@ -11,11 +11,20 @@ tags:
 
 # Improving Language Understanding by Generative Pre-Training
 
-2018年，OpenAI，GPT-1
+2018-06年，OpenAI，GPT-1
 
 > Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. **We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task.** In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9% on commonsense reasoning (Stories Cloze Test), 5.7% on question answering (RACE), and 1.5% on textual entailment (MultiNLI).
 
 <!--more-->
+
+参考：
+
+- 原论文《*Improving Language Understanding by Generative Pre-Training*》
+- [沐神的GPT讲解视频](https://www.bilibili.com/video/BV1AF411b7xQ/?spm_id_from=333.788)
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513101404397.png" style="zoom:25%;" />
+
+GPT把Transformer的解码器拿出来在大规模数据集上进行预训练；BERT把transformer的编码器拿过来。BERT-base维度和结构层数和GPT-1是一样的，并且也使用了BooksCorpus数据集进行预训练。
 
 ## 1 Introduction
 
@@ -48,15 +57,25 @@ tags:
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154323724.png" style="zoom:50%;" />
 
+从上图可以看到，GPT会把各个子任务变为序列的形式，在开始加入一个$Start$词元，在最后加入一个抽取$Extract$词元。整个序列输入transformer解码器，然后使用抽取词元的表示经过线性层，作为具体的预测目标。
+
+- Entailment：指在premise中是不是支持hypothesis，三分类问题
+- Similarity：两段文本是不是相似，构造两个序列
+- Multiple Choice：n个答案，构造n个序列输入
+
 ### 2.1 Unsupervised pre-training
 
-优化目标，已知前$k$个token，尝试预测当前token $i$：
+优化目标，标准的语言模型优化目标，已知前$k$个token，尝试预测当前token $i$，$k$就是窗口大小：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154617674.png" style="zoom:50%;" />
 
-已知前面几个token的情况下，预测第i个token出现的概率；这点和BERT中的不太一样；BERT的预训练是mask掉任意的word然后进行了预测，这样来看BERT的预训练的语义方向是双向的。
+已知前面几个token的情况下，预测第i个token出现的概率；这点和BERT中的不太一样；BERT的预训练是采用了带掩码的语言模型，会mask掉任意的word然后进行了预测，做完形填空，这样来看BERT的预训练的语义方向是双向的。
 
-输入是context token（不太清楚具体指什么vector，难道是position embedding？），结构是12层+768 dimensional states+12 attention heads，输出是预测是哪个token的概率：
+优化目标$L_1$是整个语料$U$各个token出现的概率，一般情况下概率之间应该是相乘的，这里使用$log$之后，就变成了多个概率相加。相加的操作比相乘更容易并行，计算也更简单。$k$越大的话，整个模型会月倾向于使用更长的文本中寻找信息。
+
+输入是context token（不太清楚具体指什么vector，难道就是简单的token编码，比如one-hot？）。
+
+使用的模型是transformer的解码器，因为transformer的编码器是可以看到整个文本的，而解码器是只会看到前面的词，因此在GPT里还是使用了transformer的解码器。结构是12层+768 dimensional states+12 attention heads，输出是预测是哪个token的概率：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510154934018.png" style="zoom:50%;" />
 
@@ -66,7 +85,9 @@ tags:
 
 输入是token，对于某些任务，比如问题-回答等，需要把原来结构化的输入变为与序列化的输入。
 
-结构很简单，就是前一步train好的Transformer，后面再加一线性层，最后经过softmax获得预测的标签$y$：
+对于输入$<x^1,\cdots,x^m>$，放入transformer里，获得最后一层的位置$m$输出的表示。
+
+参数就是前一步train好的Transformer，后面再加一线性层，最后经过softmax获得预测的标签$y$：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220510155720266.png"  style="zoom:50%;" />
 
@@ -81,6 +102,8 @@ tags:
 在优化task相关的目标loss的同时，也进一步优化之前pretrain的目标loss。
 
 ## 3 Experiments
+
+在BooksCorpus数据集上进行了预训练，7000篇没有被发表的书。
 
 作者用到了大量的训练上的trick，这里不提。有一部分是我不了解的，也没有使用过。
 
@@ -103,3 +126,4 @@ tags:
 ## Conclusion
 
 > **Our work suggests that achieving signiﬁcant performance gains is indeed possible, and offers hints as to what models (Transformers) and data sets (text with long range dependencies) work best with this approach.**  We hope that this will help enable new research into unsupervised learning, for both natural language understanding and other domains, further improving our understanding of how and when unsupervised learning works
+
