@@ -53,7 +53,7 @@ tags:
 
 **Heterogeneous Graph Structure Learning for Graph Neural Networks** AAAI 2021
 
-{% post_link HGSL [个人详细博客] %}
+{% post_link HGSL  [test] %}
 
 作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。
 
