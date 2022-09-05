@@ -19,6 +19,8 @@ SIGIR 2022
 
 作者提出了一种基于Transformer的能够适用于不同多模态知识图谱预测任务的方法，MKGformer。对于不同的预测任务，作者通过定义输入数据和输出数据拥有相同的格式，从而到达不改变模型结构，还能够同时用于不同预测任务；其次，作者提出了一种在text和image模态之间，进行multi-level混合的Transformer结构。
 
+{% post_link collection/KGE-Collection %}
+
 作者在多模态KG补全、多模态关系抽取和多模态命名实体识别三个任务的有监督学习和低资源学习的场景上进行了实验。
 
 > Multimodal Knowledge Graphs (MKGs), which organize visualtext factual knowledge, have recently been successfully applied to tasks such as information retrieval, question answering, and recommendation system. Since most MKGs are far from complete, extensive knowledge graph completion studies have been proposed focusing on the multimodal entity, relation extraction and link prediction. However, different tasks and modalities require changes to the model architecture, and not all images/objects are relevant to text input, which hinders the applicability to diverse real-world scenarios. In this paper, we propose a hybrid transformer with multi-level fusion to address those issues. Specifically, we leverage a hybrid transformer architecture with unified input-output for diverse multimodal knowledge graph completion tasks. Moreover, we propose multi-level fusion, which integrates visual and text representation via coarse-grained prefix-guided interaction and fine-grained correlation-aware fusion modules. We conduct extensive experiments to validate that our MKGformer can obtain SOTA performance on four datasets of multimodal link prediction, multimodal RE, and multimodal NER.

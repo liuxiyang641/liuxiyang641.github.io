@@ -6,7 +6,7 @@ author: Liu Xiyang
 language: zh-CN
 timezone: Asia/Shanghai
 url: http://example.com
-permalink: ':year/:month/:day/:title/'
+permalink: ':title/'
 permalink_defaults: null
 pretty_urls:
   trailing_index: true
@@ -19,7 +19,7 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: ':lang'
 skip_render: null
-new_post_name: 'title.md'
+new_post_name: ':title.md'
 default_layout: post
 titlecase: false
 external_link:
