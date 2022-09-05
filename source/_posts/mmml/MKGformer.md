@@ -4,11 +4,11 @@ notshow: false
 date: 2022-09-02 14:28:25
 categories:
 - Paper
-- MultiModal
+- multimodal
 tags:
 - Transformer
 - KG
-- MultiModal
+- multimodal
 ---
 
 # Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion

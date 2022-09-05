@@ -59,7 +59,7 @@ Now it contains models of:
 
 **Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs** AAAI 2021
 
-{% post_link TACT [个人详细博客] %}
+{% post_link kge/TACT [个人详细博客] %}
 
 [TACT](https://github.com/MIRALab-USTC/KG-TACT)，作者主要考虑的是inductive link prediction，使用gnn，捕获relation之间的语义上的关联性，即semantic correlation。作者认为relation之间的关联性通过relation的拓扑结构得到体现，因此，作者将所有的relation之间相连的拓扑结构分为7种，在relation形成的graph中进行学习，提出了RCN。
 
@@ -375,7 +375,7 @@ CP分解：
 
 [**NSCaching: Simple and Efﬁcient Negative Sampling for Knowledge Graph Embedding**](https://github.com/yzhangee/NSCaching) ICDE 2019
 
-{% post_link NSCaching [个人详细博客] %}
+{% post_link kge/NSCaching  [个人详细博客] %}
 
 提出了一种针对KGE的动态负采样方法[NSCaching](https://github.com/yzhangee/NSCaching)，核心思想是得分高的负样本很重要但是数量少，因此，作者直接使用cache来保存得分高的负样本，同时随着训练动态更新cache，可以看做是基于GAN的负采样方法的distilled版本。
 

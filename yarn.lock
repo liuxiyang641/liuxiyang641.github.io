@@ -2604,6 +2604,11 @@
   "resolved" "https://registry.npm.taobao.org/highlight.js/download/highlight.js-9.18.5.tgz"
   "version" "9.18.5"
 
+"highlight@^0.2.4":
+  "integrity" "sha512-TEcWU6BolpDYIaVD91KmaYe/kRZwOmQlLWZGO8DK+Cs555+7mawk2KUnF/dBwcLnrvlCDk/xC+BXfz7Zva+Jfg=="
+  "resolved" "https://registry.npmmirror.com/highlight/-/highlight-0.2.4.tgz"
+  "version" "0.2.4"
+
 "hogan.js@^3.0.2":
   "integrity" "sha512-RqGs4wavGYJWE07t35JQccByczmNUXQT0E12ZYV1VKYu5UiAU9lsos/yBAcf840+zrUQQxgVduCR5/B8nNtibg=="
   "resolved" "https://registry.npmmirror.com/hogan.js/-/hogan.js-3.0.2.tgz"
