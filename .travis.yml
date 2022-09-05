@@ -5,7 +5,7 @@ sudo: required # 需要管理员权限
 dist: xenial # 指定 CI 系统版本为 Ubuntu16.04 LTS
 
 node_js: #Node.js 版本
-- 17 
+- stable 
 
 branches:
   only:
@@ -15,7 +15,7 @@ before_install:
   - export TZ='Asia/Shanghai' #配置时区为东八区 UTC+8
   - curl -L https://github.com/jgm/pandoc/releases/download/2.13/pandoc-2.13-1-amd64.deb > pandoc.deb
   - sudo dpkg -i pandoc.deb
-  # - npm install -g hexo-cli # 安装 hexo
+  - npm install -g hexo-cli # 安装 hexo
   
 #  - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
 
