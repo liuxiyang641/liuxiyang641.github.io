@@ -20,6 +20,7 @@ before_install:
   # - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
 
 install:
+  - npm cache clear --force
   - npm install # 安装依赖
 
 script: # 执行脚本，清除缓存，生成静态文件 
