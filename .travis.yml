@@ -5,7 +5,7 @@ sudo: required # 需要管理员权限
 dist: xenial # 指定 CI 系统版本为 Ubuntu16.04 LTS
 
 node_js: #Node.js 版本
-- stable 
+- 17 
 
 branches:
   only:
@@ -17,7 +17,7 @@ before_install:
   - sudo dpkg -i pandoc.deb
   - npm install -g hexo-cli # 安装 hexo
   
-#  - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
+  - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
 
 install:
   - npm install # 安装依赖
