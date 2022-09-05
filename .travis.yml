@@ -15,7 +15,7 @@ before_install:
   - export TZ='Asia/Shanghai' #配置时区为东八区 UTC+8
   - curl -L https://github.com/jgm/pandoc/releases/download/2.13/pandoc-2.13-1-amd64.deb > pandoc.deb
   - sudo dpkg -i pandoc.deb
-  - npm install -g hexo-cli # 安装 hexo
+  # - npm install -g hexo-cli # 安装 hexo
   
 #  - sudo apt-get install libpng16-dev # 安装 libpng16-dev CI 编译出现相关报错时请取消注释
 
