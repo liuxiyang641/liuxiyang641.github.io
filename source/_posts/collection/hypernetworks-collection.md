@@ -62,13 +62,10 @@ tags:
 针对不同预测任务，作者设计了了不同的DFN。
 
 在video prediction上，产生参数的网络是一个encoder-decoder的网络，输出是location-specific的卷积核。
-
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170342132.png" alt="image-20210914170342132" style="zoom:50%;" />
-
 学习steerable ﬁlters，产生参数的网络是MLP。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210914170640801.png" alt="image-20210914170640801" style="zoom:50%;" />
-
 ## HyperNetworks
 
 **HyperNetworks** ICLR 2017
@@ -79,7 +76,7 @@ tags:
 
 CNN：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png" alt="image-20210725111153567" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210725111153567.png"  style="zoom:50%;" />
 
 RNN：
 

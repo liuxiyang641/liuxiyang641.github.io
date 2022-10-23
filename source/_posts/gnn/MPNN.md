@@ -35,11 +35,11 @@ Google Brain, Google DeepMind
 
 ## 2. Message Passing Neural Networks
 
-MPNN，泛化了至少之前的8种方法。分为两大阶段，message passsing phase和readout phase。
+MPNN，泛化了至少之前的8种方法。分为两大阶段，message passing phase和readout phase。
 
-### message passsing phase
+### message passing phase
 
-包括两个函数，消息函数Message Funciton和Update Function。
+包括两个函数，消息函数Message Function和Update Function。
 
 Message Function：用来产生消息，$M_t(h_v^t, h_w^t, e_{v,w})$
 $$

@@ -83,3 +83,11 @@ moon_menu:
     enable: true
     icon: fas fa-chevron-down
     order: -2
+
+backlink: true
+
+emoji:
+  enable: true
+  className: github-emoji
+  styles:
+  customEmojis:

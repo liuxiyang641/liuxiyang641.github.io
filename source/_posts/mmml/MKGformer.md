@@ -13,13 +13,9 @@ tags:
 
 # Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion
 
-SIGIR 2022
-
-[https://github.com/zjunlp/MKGformer](https://github.com/zjunlp/MKGformer)
+SIGIR 2022，[代码](https://github.com/zjunlp/MKGformer)，Zhejiang University。
 
 作者提出了一种基于Transformer的能够适用于不同多模态知识图谱预测任务的方法，MKGformer。对于不同的预测任务，作者通过定义输入数据和输出数据拥有相同的格式，从而到达不改变模型结构，还能够同时用于不同预测任务；其次，作者提出了一种在text和image模态之间，进行multi-level混合的Transformer结构。
-
-{% post_link collection/KGE-Collection %}
 
 作者在多模态KG补全、多模态关系抽取和多模态命名实体识别三个任务的有监督学习和低资源学习的场景上进行了实验。
 
@@ -27,7 +23,7 @@ SIGIR 2022
 
 <!--more-->
 
-## Introduction
+## 1 Introduction
 
 作者认为目前的多模态KGC任务存在以下问题：
 
@@ -39,13 +35,13 @@ SIGIR 2022
 1. 之前有研究者发现，预训练模型能够在Transformer的self-attention层和feed-forward层激活和输入数据相关的knowledge。因此，作者尝试基于Transformer架构，同时学习textual和visual的信息。
 2. 作者提出的MKGformer，有两个核心结构，prefix-guided interaction module (PGI)和correlation-aware fusion module (CAF)。前者用于pre-reduce不同模态的heterogeneity，后者用来进一步降低模型对于irrelevant image/text的错误敏感性。
 
-## Approach
+## 2 Approach
 
 总体结构：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902145750837.png"  style="zoom:40%;" />
 
-### Unified Multimodal KGC Framework
+### 2.1 Unified Multimodal KGC Framework
 
 对于文本，使用BERT进行编码（T-Encoder）；对于图像，使用ViT (*An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale*)进行编码（V-Encoder）。先分别独立进行几层的学习之后，在最后$M$层，利用作者提出的M-Encoder进行模态混合。需要注意的是，这里的M-Encoder并不是额外的层，而是作者在BERT和ViT的架构基础上，直接进行了改进，让不同模态模型之间能够进行信息流通。
 
@@ -76,7 +72,11 @@ SIGIR 2022
 
    <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155007744.png"   style="zoom:50%;" />
 
-### Hybrid Transformer Architecture
+对于MNER和MRE任务，使用*A Fast and Accurate One-Stage Approach to Visual Grounding. ICCV 2019* 导出前$m$个visual objects。
+
+对于MMKGC任务，直接使用整个图像。
+
+### 2.2 Hybrid Transformer Architecture
 
 首先是原始的Transformer结构，MHA表示多头注意力，FFN表示前馈网络。
 
@@ -98,13 +98,13 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155825058.png"   style="zoom:50%;" />
 
-### Insights of M-Encoder
+### 2.3 Insights of M-Encoder
 
-#### PGI
+#### 2.3.1 PGI
 
 对于PGI（Prefix-guided Interaction Module），作者是受到了前面研究的影响（*Prefix-Tuning: Optimizing Continuous Prompts for Generation*和*Towards a Unified View of Parameter-Efficient Transfer Learning.*）。
 
-作者在自注意力层，让visual Transformer侧考虑聚合textual信息，通过让visual query和textual key，textual value进行操作。实际上是询问当前的patch image和哪些token更接近，然后聚合token embedding。视觉侧的query，文本侧的key，文本侧的value：
+作者在自注意力层，让visual Transformer侧考虑聚合textual信息，通过让visual query和textual key，textual value进行操作。实际上是询问当前的patch image和哪些token更接近，然后聚合token embedding。视觉侧的query，文本侧和视觉侧的key，文本侧和视觉侧的value：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902161732093.png"   style="zoom:50%;" />
 
@@ -114,7 +114,7 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 这里我没有直接推算出来。但是从作者推算出的可以看出来，实质上它是降低了原来单纯的visual attention，增加了文本-图像的跨模态注意力。
 
-#### CAF
+#### 2.3.2 CAF
 
 对于CAF（Correlation-aware Fusion Module），作者受到前面研究的影响，之前有人发现Transformer中的FFN层能够学习到task-specific textual pattern（*Transformer Feed-Forward Layers Are Key-Value Memories*）。因此作者通过计算token embedding和patch embedding之间的相似性矩阵来衡量视觉信息的重要性。
 
@@ -128,13 +128,11 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163525975.png"   style="zoom:50%;" />
 
-
-
 回顾下上述两个过程，作者都是没有直接创建新的layer进行信息融合，而是通过让信息在dual Transformer之间进行流通。因为作者提出图像的信息噪音很大，对自注意力层和全连接层的改造都是围绕这一点来的。先在注意力层让文本信息流通到视觉信息上，让V-Encoder侧能够考虑文本信息，而不是单纯在patch之间聚合信息。试想下，如果让视觉信息流通到文本信息上，那么就意味着视觉的噪音直接加入到了文本侧，不太合适。随后，在全连接层让已经考虑了文本信息的视觉信息，再流通回文本侧，进一步降低视觉噪音。
 
-## Experiments
+## 3 Experiments
 
-### Experimental Setup
+### 3.1 Experimental Setup
 
 数据集：
 
@@ -146,7 +144,7 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 在所有的情况下，M-Encoder保持3层，基于BERT_base和ViT-B/32。
 
-### Overall Performance
+### 3.2 Overall Performance
 
 链路预测：
 
@@ -156,7 +154,7 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165357479.png"   style="zoom:40%;" />
 
-### Low-Resource Evaluation
+### 3.3 Low-Resource Evaluation
 
 作者认为对文本和图像，使用类似的网络结构进行处理，降低了差异性，在低资源预测任务中这种作用更加突出。在数据量更少的情况下，需要想办法更好的处理数据模态之间的差异性，因此模型对于不同模态的差异性的处理能力可能需要更加突出。
 
@@ -174,11 +172,11 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165544824.png"   style="zoom:40%;" />
 
-### Ablation Study
+### 3.4 Ablation Study
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165723859.png"   style="zoom:40%;" />
 
-### Case Analysis for Image-text Relevance
+### 3.5 Case Analysis for Image-text Relevance
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165850066.png"   style="zoom:50%;" />
 

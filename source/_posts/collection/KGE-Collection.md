@@ -22,7 +22,7 @@ Now it contains models of:
 - TuckER(EMNLP 2019)
 - MLP for KGE(KDD 2014)
 - TransH(AAAI 2014)
-- TransA(arxiv 2015)
+- TransA(arXiv 2015)
 - TransR(AAAI 2015)
 - TransD(IJNLP 2015)
 - TransG(ACL 2016)
@@ -43,7 +43,7 @@ Now it contains models of:
 
 这篇文章提出了holographic embeddings (HOLE)，来学习KG的compositional vector space representations。
 
-**motivation**：However, existing embedding models that can capture rich interactions in relational data are often limited in their scalability. Vice versa, models that can be computed efﬁciently are often considerably less expressive.
+**motivation**：However, existing embedding models that can capture rich interactions in relational data are often limited in their scalability. Vice versa, models that can be computed efficiently are often considerably less expressive.
 
 **methods**：直接从subject entity embedding和object entity embedding中，使用circular correlation获得新的embedding，称作holograph embedding，然后使用这个holograph embedding与relation embedding做点积，得到预测概率。
 
@@ -71,7 +71,7 @@ Now it contains models of:
 
 **Knowledge Graph Embedding with Multiple Relation Projections** ICPR 2018
 
-基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系*“/people/person/place_of_birth*和*/people/person/nationality*就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。
+基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系*/people/person/place_of_birth*和*/people/person/nationality*就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png" style="zoom:50%;" />
 
@@ -143,7 +143,7 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 **Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion** KDD 2014
 
-这篇文章介绍了Knowledge Valult
+这篇文章介绍了Knowledge Vault
 
 > a Web-scale probabilistic knowledge base that combines extractions from Web content (obtained via analysis of text, tabular data, page structure, and human annotations)
 
@@ -157,10 +157,10 @@ FB15k-237的relation大多是type C，也就是说该数据集中的relation没�
 
 **Knowledge Graph Embedding by Translating on Hyperplanes** AAAI 2014
 
-这篇文章的贡献有两点
+这篇文章的贡献有两点 
 
 - 在TransE的基础上，提出了TransH，将subject和object entity投影到不同relation的超平面上，该超平面由一个法向量$w_r$决定，超平面上有一个偏移向量$d_r$，用于算头实体和尾实体投影之间的偏移。
-- 使用了一个简单基于统计的，能够减小负采样错误率的方法。原理是one-to-many的relation应该倾向于替换head entity；many-to-one的relation倾向于替换tail entity。直接统计number of tail entities per head entity和number of head entities per tail entity，然后使用二元分布，计算替换head或者tail entity的概率。这种方法区别于以前的uniform的采样，可以叫做bernoulli采样。
+- 使用了一个简单基于统计的，能够减小负采样错误率的方法。原理是one-to-many的relation应该倾向于替换head entity；many-to-one的relation倾向于替换tail entity。直接统计number of tail entities per head entity和number of head entities per tail entity，然后使用二元分布，计算替换head或者tail entity的概率。这种方法区别于以前的uniform的采样，可以叫做Bernoulli采样。
 
 TransH的结构：
 
@@ -186,11 +186,11 @@ TransH的结构：
 
 - 这个loss metric实际是在计算一个球面等位超面spherical equipotential hyper-surfaces，这种方式过于简单，不够灵活，泛化
 
-> Firstly, due to the inﬂexibility of loss metric, current translation-based methods apply spherical equipotential hyper-surfaces with different plausibilities, where more near to the centre, more plausible the triple is.
+> Firstly, due to the inflexibility of loss metric, current translation-based methods apply spherical equipotential hyper-surfaces with different plausibilities, where more near to the centre, more plausible the triple is.
 
 - 它实际是假设embedding的不同entry的weight在计算最终loss的时候一样
 
-> Secondly, because of the oversimpliﬁed loss metric, current translation-based methods treat each dimension identically.
+> Secondly, because of the oversimplified loss metric, current translation-based methods treat each dimension identically.
 
 作者提出的新指标，将计算欧氏距离，换为计算马氏距离：
 
@@ -359,15 +359,15 @@ CP分解：
 
 然后使用RSN(Recurrent skipping network)建模这个path，核心思想在于强调relational path中triple的重要性。将subject entity的hidden state作为残差输出到object entity的上一步hidden state中。一个relational path元素个数为奇数，头尾都是实体，$(x_1,\dots,x_{odd})$。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png" alt="image-20210719200737571" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png"   style="zoom:50%;" />
 
 然后，对实体和关系做区别对待：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png" alt="image-20210719200912943" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png"   style="zoom:50%;" />
 
 模型结构：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png" alt="image-20210719201218600" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png"   style="zoom:50%;" />
 
 使用Type-based noise contrastive estimation(NCE)进行优化，对这个优化方法没有很了解。
 
@@ -383,7 +383,7 @@ CP分解：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:40%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png" alt="image-20210722173851214" style="zoom:40%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png"   style="zoom:40%;" />
 
 ## StructurE
 
@@ -391,10 +391,10 @@ CP分解：
 
 这篇文章是基于trans的KGE方法，它对于两个预测任务$<h, t, ?>$和$<?, r, t>$分别设计了不同的score function。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png" alt="image-20220303152549137" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png"   style="zoom:50%;" />
 
 核心是两个公式：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png" alt="image-20220303152702651" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png"   style="zoom:50%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png" alt="image-20220303152749096" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png"   style="zoom:50%;" />
