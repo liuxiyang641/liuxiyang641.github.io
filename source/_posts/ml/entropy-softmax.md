@@ -109,7 +109,7 @@ softmax = np.exp(scores) / np.sum(np.exp(scores))
 print(softmax) # [ 0.  0. nan]
 ```
 
-在深度学习框架TensorFlow中，因为softmax和交叉熵通常是一起的，因此设置了额外的函数功能避免出现上述情况。
+在深度学习框架TensorFlow中，因为softmax和交叉熵通常是一起的，因此设置了额外的loss函数同时实现了softmax和交叉熵的计算，避免出现上述情况。
 
 接下来我们要讨论**softmax函数的求导**。
 
@@ -227,6 +227,9 @@ $$
 $$
 S= \sum_j y_k\times log(S_j)
 $$
-如果$S_j$是softmax输出结果，那么，可以一步到位直接计算logSoftmax：
+如果$S_j$是softmax输出结果，那么，可以一步到位直接计算`logSoftmax`：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220930212116078.png"   style="zoom:50%;" />
+
+在pytorch的`nn.CrossEntropyLoss()`函数实现中，就是直接输入神经网络计算得到的激活值$a_j$（无需经过`Softmax`）即可，`nn.CrossEntropyLoss()`会按照`logSoftmax`来计算最终的loss
+

@@ -18,7 +18,7 @@ MNRE，ICME 2021。作者创建了首个用于multimodal relation extraction的�
 
 > Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then ﬁltered by crowdworkers. All the relations are identiﬁed manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difﬁculties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.
 
-<!--mroe-->
+<!--more-->
 
 ### 1. Introduction
 
@@ -75,9 +75,9 @@ MNRE-2的统计：
 
 下图是不同关系类型的统计：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png" alt="image-20221017145814092" style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png"   style="zoom:50%;" />
 
-经过检查发现，实际的训练集还包括了关系`None`。
+经过检查发现，实际的训练集还包括了关系`None`。上面的统计图没有展现出None关系的分布。
 
 作者的MNRE-2数据集从32变为了23种关系，发现大部分的关系还是和人相关的。MNRE-2训练集有12247、验证集1624和测试集1614实例。
 
@@ -91,7 +91,7 @@ MNRE-2的统计：
 
 - `img_id`: ` 'twitter_19_31_16_6.jpg' `，所有的图片下载完后是1.2GB，下图是对应的图片
 
-  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg" alt="twitter_19_31_16_6" style="zoom:33%;" />
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg"   style="zoom:40%;" />
 
 - `relation`: `/misc/misc/part_of`
 
@@ -125,6 +125,6 @@ MNRE-2的统计：
    - `img_id`: `twitter_19_31_9_14.jpg` 
    - `relation`: `/misc/loc/held_on`
 
-   <img src="/Users/liuxiyang/myData/python-project/MNRE/img_org/train/twitter_19_31_9_14.jpg" alt="twitter_19_31_9_14" style="zoom:50%;" />
+   <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_9_14.jpg"  style="zoom:50%;" />
 
    实际上通过文本中的单词`in`就能够判断出来关系可能是`held_on`

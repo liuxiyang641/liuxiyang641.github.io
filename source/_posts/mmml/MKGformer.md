@@ -146,9 +146,15 @@ M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：
 
 ### 3.2 Overall Performance
 
-链路预测：
+链路预测（作者提到了，原来的论文中对于FB15k-237-IMG的结果由于作者代码对于数据处理错误，因此出现了错误的性能提升，作者在arxiv上上传了更新后的结果）：
+
+原论文结果：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165320438.png"   style="zoom:40%;" />
+
+更新后的结果，可以看出来结果变化挺大
+
+![image-20221118160223529](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221118160223529.png)
 
 关系抽取和命名实体识别：
 
