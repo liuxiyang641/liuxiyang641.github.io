@@ -89,7 +89,7 @@ GWD：
 
 其中，$H_I^\prime,H_T^\prime$表示邻接节点集合。$L()$函数用来度量两个graph的edge之间的距离：
 $$
-L(H_I^i,H_I^{i\prime},H_T^i,H_T^{i\prime})=||c(H_I^i,H_I^{i\prime})-c(H_I^i,H_I^{i\prime})||
+L(H_I^i,H_I^{i\prime},H_T^i,H_T^{i\prime})=||c(H_I^i,H_I^{i\prime})-c(H_T^i,H_T^{i\prime})||
 $$
 之后，使用下面的loss函数优化对齐的效果：
 

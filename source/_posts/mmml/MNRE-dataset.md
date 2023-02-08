@@ -66,7 +66,7 @@ relation extraction（RE）是预测一个句子中两个命名实体之间的�
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210628691.png"   style="zoom:50%;" />
 
 最终包含了10k的实例，31种关系；平均句子的长度是11.62，远远小于之前文本上下文信息丰富的RE数据集中的句子平均长度。
-作者在后续更新了数据集，得到了MNRT-2：
+作者在后续更新了数据集，得到了MNRE-2：
 
 > 2021.6.22 We provide MNRE-2, a refined version which merges several ambigious categories with much more support samples. The original version has been moved to [Version-1](https://github.com/thecharm/MNRE/blob/main/Version-1)
 

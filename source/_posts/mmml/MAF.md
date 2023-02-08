@@ -111,7 +111,7 @@ WSDM 2022，[代码](https://github.com/xubodhu/MAF)，复旦大学。
 
 最后，经过层层过滤的图像信息，与文本表征进行拼接，就得到了最后的表征$H$。
 
-整个模型训练的loss：
+整个模型训练的loss，$\alpha=\beta=0.2$：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221117213043975.png"   style="zoom:50%;" />
 
