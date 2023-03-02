@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="数据结构专题2 《算法笔记》第九章，数据结构专题2，主要涉及树、并查集、堆等。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="9-data-structure2">
+<meta property="og:url" content="https://liuxiyang641.github.io/algorithm-note/9-data-structure2/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="数据结构专题2 《算法笔记》第九章，数据结构专题2，主要涉及树、并查集、堆等。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-11-26T02:23:33.000Z">
+<meta property="article:modified_time" content="2022-03-24T14:45:00.371Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="book">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/algorithm-note/9-data-structure2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/algorithm-note/9-data-structure2/","path":"algorithm-note/9-data-structure2/","title":"9-data-structure2"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>9-data-structure2 | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%93%E9%A2%982"><span class="nav-number">1.</span> <span class="nav-text">数据结构专题2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E5%92%8C%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">1.1.</span> <span class="nav-text">树和二叉树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">1.2.</span> <span class="nav-text">二叉树的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86"><span class="nav-number">1.3.</span> <span class="nav-text">树的遍历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%9F%A5%E6%89%BE%E6%A0%91bst"><span class="nav-number">1.4.</span> <span class="nav-text">二叉查找树（BST）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91avl"><span class="nav-number">1.5.</span> <span class="nav-text">平衡二叉树（AVL）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B9%B6%E6%9F%A5%E9%9B%86"><span class="nav-number">1.6.</span> <span class="nav-text">并查集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A0%86"><span class="nav-number">1.7.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%88%E5%A4%AB%E6%9B%BC%E6%A0%91"><span class="nav-number">1.8.</span> <span class="nav-text">哈夫曼树</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/algorithm-note/9-data-structure2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="9-data-structure2 | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          9-data-structure2<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/algorithm-note/9-data-structure2.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-11-26 10:23:33" itemprop="dateCreated datePublished" datetime="2021-11-26T10:23:33+08:00">2021-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-24 22:45:00" itemprop="dateModified" datetime="2022-03-24T22:45:00+08:00">2022-03-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="数据结构专题2">数据结构专题2</h1>
+<p>《算法笔记》第九章，数据结构专题2，主要涉及树、并查集、堆等。</p>
+<span id="more"></span>
+<h2 id="树和二叉树">树和二叉树</h2>
+<p>树的基本定义：在数据结构中的树只有一个根结点，若干个节点和边，并且所有的节点是连通的且无闭环。</p>
+<p>几个比较实用的性质：</p>
+<ul>
+<li>树可以是空的，此时连根结点都没有，叫做空树。</li>
+<li>树的层次layer，是从根结点作为第一层开始计算的，依次递增。</li>
+<li>结点的子树数量叫做度degree，注意不计算空树。结点的最大度数看做是树的度数，叫做宽度。</li>
+<li>树中的边只能连接两个结点，因此，对于有<span class="math inline">\(n\)</span>个结点的树，一定有<span class="math inline">\(n-1\)</span>个边。如果有<span class="math inline">\(n\)</span>个相互连通的结点，并且有<span class="math inline">\(n-1\)</span>个边，那么一定是一棵树。</li>
+<li>叶子结点是度为0的结点。</li>
+<li>节点的深度是从根结点深度为1开始算起到该节点的层数；节点的高度是从最底层的叶子结点到该节点的层数。类似于树的宽度定义，树的深度是结点的最大深度，树的高度是根结点的高度。</li>
+<li>多棵树组合在一起叫做森林forest。</li>
+</ul>
+<p>二叉树的递归定义：</p>
+<ol type="1">
+<li>二叉树可以是空树（没有根结点）；</li>
+<li>二叉树由根结点、左子树、右子树组成。左右子树都是二叉树；</li>
+</ol>
+<p>二叉树一定是度为2的树，但是度为2的树不一定是二叉树，因为二叉树的左右子树是严格区分的，不能互换。</p>
+<p>两种特殊的二叉树：</p>
+<ol type="1">
+<li>满二叉树：除去叶子结点外，所有的节点的左右子树都是满的（即树的每一层都是满的，包括最底层）</li>
+<li>完全二叉树：除去最底层外，所有层都是满结点的；并且最底层的叶子结点从左到右是连续的。</li>
+</ol>
+<p>二叉树的存储，一般的二叉树使用链表来定义（对于完全二叉树可以使用数组来定义）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">	<span class="keyword">typename</span> data;</span><br><span class="line">  Node * lchild; <span class="comment">// lchild == NULL表示左子树为空</span></span><br><span class="line">  Node * rchild; <span class="comment">// rchild == NULL表示右子树为空</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 定义一棵空树</span></span><br><span class="line">Node * root = <span class="literal">NULL</span>;</span><br></pre></td></tr></table></figure>
+<p>新建一个结点，但是还未加入到树中，具体要增加到树的哪个地方依赖于之后的具体二叉树的性质。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Node * <span class="title">newNode</span> <span class="params">(<span class="keyword">int</span> data)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// c语言和c++两种创建方式</span></span><br><span class="line">  Node * node = <span class="keyword">new</span> Node;</span><br><span class="line">  Node * node = (Node*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(Node));</span><br><span class="line">  node-&gt;data = data;</span><br><span class="line">  node-&gt;lchild = node-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二叉树的查找与修改：查找到所有满足查询条件的结点，并且可以修改数据</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面的代码是从左开始的DFS</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">search</span><span class="params">(Node* current_root, <span class="keyword">int</span> x, <span class="keyword">int</span> new_data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (current_root==<span class="literal">NULL</span>) <span class="keyword">return</span>; <span class="comment">// 空树返回</span></span><br><span class="line">  <span class="keyword">if</span> (current_root-&gt;data == x)</span><br><span class="line">    current_root-&gt;data = new_data;</span><br><span class="line">  <span class="comment">// 继续查询左子树</span></span><br><span class="line">  search(current_root-&gt;lchild, x, new_data);</span><br><span class="line">  <span class="comment">// 查询右子树</span></span><br><span class="line">  search(current_root-&gt;rchild, x, new_data);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二叉树的插入依赖于具体二叉树的性质，但是一般来说，二叉树的插入就是在不满足某种条件的位置，并且这个位置一般是确定唯一的，否则就会有多个位置适合插入了。</p>
+<p>下面是一个二叉树插入新结点的伪代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 下面的函数需要特殊注意，current_root是引用形式，这样方便直接修改传入的root值</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Node* &amp;current_root, <span class="keyword">int</span> new_data)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(current_root==<span class="literal">NULL</span>) &#123;</span><br><span class="line">		root = newNode(new_data); <span class="comment">// 没有找到合适位置，就是目前的空树插入新结点</span></span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (根据new_data和目前节点的数据判断发现应该插入到左子树) &#123;</span><br><span class="line">    insert(current_root-&gt;lchild, new_data);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123; <span class="comment">// 根据new_data和目前节点的数据判断发现应该插入到右子树</span></span><br><span class="line">    insert(current_root-&gt;rchild, new_data);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二叉树的创建，就是重复上面的插入函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Node* <span class="title">create</span><span class="params">(<span class="keyword">int</span> data[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  Node* root = <span class="literal">NULL</span>; <span class="comment">// 注意不能new Node，这样就不是空树了</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n ; i++) &#123;</span><br><span class="line">    insert(root, data[i]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面是一般的二叉树存储，对于完全二叉树，在元素数量不多的情况下，可以直接使用数组存储。</p>
+<p>将根结点放在数据的位置<span class="math inline">\(1\)</span>，不能从<span class="math inline">\(0\)</span>开始存放，否则会丧失下面的规律：</p>
+<p>对于结点<span class="math inline">\(i\)</span>，它的左子树位置一定是<span class="math inline">\(2i\)</span>，右子树位置是<span class="math inline">\(2i+1\)</span>。</p>
+<p>判断是否是叶子结点，该结点的左子树位置超过了树的结点数量<span class="math inline">\(n\)</span>。</p>
+<h2 id="二叉树的遍历">二叉树的遍历</h2>
+<p>这里讨论二叉树的四种遍历方法：</p>
+<ul>
+<li>先序遍历：根结点、左子树、右子树</li>
+<li>中序遍历：左子树、根结点、右子树</li>
+<li>后序遍历：左子树、右子树、根结点</li>
+<li>层序遍历：BFS，访问同一层的结点结束后，再访问下一层</li>
+</ul>
+<p>在上面的遍历过程中，可以发现，总是先访问左子树，再访问右子树。</p>
+<p>下面是先序遍历的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">preSearch</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, root-&gt;data);</span><br><span class="line">  preSearch(root-&gt;lchild);</span><br><span class="line">  preSearch(root-&gt;rchild);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 中序与后序遍历就是上面代码的顺序改变下即可</span></span><br></pre></td></tr></table></figure>
+<p>层序遍历，利用到之前学的使用队列实现BFS</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">layerSearch</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="built_in">queue</span>&lt;Node*&gt; q; <span class="comment">// 注意是结点指针的队列</span></span><br><span class="line">  q.push(root);</span><br><span class="line">  <span class="keyword">while</span>(!q.empty()) &#123;</span><br><span class="line">    Node* tmp_node = q.front();</span><br><span class="line">    q.pop();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%d &quot;</span>, tmp_node-&gt;data);</span><br><span class="line">    <span class="comment">// 左右子树入队</span></span><br><span class="line">    q.push(tmp_node-&gt;lchild);</span><br><span class="line">    q.push(tmp_node-&gt;rchild);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>先序、中序以及后序遍历的作用在于，可以根据先序+中序或者后序+中序的输出，来唯一的重建树。先序或者后序都可以确定当前序列的根结点（第一位或者最后一位），然后结合中序就可以找到左右子树。</p>
+<p>利用先序+中序重建树，如果两者对应的序列数组是<span class="math inline">\([preL, preR]\)</span>和<span class="math inline">\([inL, inR]\)</span>，那么根结点是<span class="math inline">\(preL\)</span>位置的元素，根据根结点寻找根结点在中序中的位置假设为<span class="math inline">\(k\)</span>，那么对应的左子树的先序和中序序列是<span class="math inline">\([preL+1, preL+k-inL]\)</span>，<span class="math inline">\([inL, k-1]\)</span>；右子树的先序序列是<span class="math inline">\([preL+k-inL+1, preR]\)</span>，中序序列是<span class="math inline">\([k+1, inR]\)</span>。</p>
+<p>使用递归的方式就可以实现重建树。</p>
+<p>二叉树也可以使用数组的方式来实现，指针变为数组的下标，左右子树都指向数组的下标，同时，如果是空树就设为-1，这里不赘述具体实现。</p>
+<h2 id="树的遍历">树的遍历</h2>
+<p>一般的树有多个子结点，并且不限制左右树顺序。</p>
+<p>对于多个子树，当然可以使用链表来保存，但是有些麻烦，这里按照书上的说明统一使用静态写法，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">  <span class="keyword">typename</span> data;</span><br><span class="line">  <span class="built_in">vector</span> child;</span><br><span class="line">&#125; node[maxn];</span><br></pre></td></tr></table></figure>
+<p>创建新结点的办法，类似与前面的静态二叉树：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> index = <span class="number">0</span>; <span class="comment">// 记录当前的新元素在tree数组中的位置，index下没有数据</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">	node[index].data = x;</span><br><span class="line">  node[index].child.clear();</span><br><span class="line">  <span class="keyword">return</span> index++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="二叉查找树bst">二叉查找树（BST）</h2>
+<p>二叉查找树就是满足左子树中的元素都<span class="math inline">\(&lt;=\)</span>根结点，右子树都<span class="math inline">\(&gt;\)</span>根结点的二叉树。当然，<span class="math inline">\(==\)</span>根结点的元素到底在哪颗子树存放可以看题目的具体要求。</p>
+<p>bst的查找：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Node* <span class="title">search</span><span class="params">(Node* root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">if</span>(x==root-&gt;data) &#123;</span><br><span class="line">    <span class="keyword">return</span> root;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (x&lt;root-&gt;data) <span class="keyword">return</span> search(root-&gt;lchild, x);</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">return</span> search(root-&gt;rchild, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>bst的插入：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Node* &amp;root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root==<span class="literal">NULL</span>) &#123;</span><br><span class="line">    node = <span class="keyword">new</span> Node;</span><br><span class="line">    node-&gt;data = x;</span><br><span class="line">    node-&gt;lchild = node-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">    root = node;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (x&lt;=root-&gt;data) insert(root-&gt;lchild, x);</span><br><span class="line">  <span class="keyword">else</span> insert(root-&gt;rchild, x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>bst的删除比较特殊，主要是涉及如何让结点被删除后，以该结点为根结点的整棵树还能够保证原来二叉查找树的性质。</p>
+<p>有两种办法：用该结点的前驱或者后继来替换该结点。</p>
+<ul>
+<li>前驱：某个节点左子树中的最大结点，在树上表现为左子树的最右结点（可能有自己的左子树）</li>
+<li>后继：某个结点右子树中的最小结点，在树上表现为右子树的最左结点（可能有自己的右子树）</li>
+</ul>
+<p>寻找前驱和后继：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 寻找某棵树的最大结点</span></span><br><span class="line"><span class="function">Node * <span class="title">findMax</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(root!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">    root = root-&gt;rchild;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Node* preMaxNode = findMax(root-&gt;lchild);</span><br><span class="line"><span class="comment">// 寻找某棵树的最小结点</span></span><br><span class="line"><span class="function">Node * <span class="title">findMin</span><span class="params">(Node* root)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(root!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">    root = root-&gt;lchild;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">Node* postMinNode = findMin(root-&gt;rchild);</span><br></pre></td></tr></table></figure>
+<p>bst的删除操作：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteNode</span><span class="params">(Node* &amp;root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(root==<span class="literal">NULL</span>) <span class="keyword">return</span>;</span><br><span class="line">  <span class="keyword">if</span>(root-&gt;data == x) &#123;</span><br><span class="line">    <span class="comment">// 如果要删除的结点是叶子结点</span></span><br><span class="line">    <span class="keyword">if</span>(root-&gt;lchild == <span class="literal">NULL</span> &amp;&amp; root-&gt;rchild==<span class="literal">NULL</span>) &#123;</span><br><span class="line">      <span class="keyword">delete</span>(root);</span><br><span class="line">      root=<span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 寻找前驱</span></span><br><span class="line">    <span class="keyword">if</span>(root-&gt;lchild != <span class="literal">NULL</span>) &#123;</span><br><span class="line">      Node* preMaxNode = findMax(root-&gt;lchild);</span><br><span class="line">      root-&gt;data = preMaxNode-&gt;data; <span class="comment">// 替换为前驱</span></span><br><span class="line">      deleteNode(preMaxNode, preMaxNode-&gt;data); <span class="comment">// 删除前驱</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">      Node* postMinNode = findMin(root-&gt;rchild);</span><br><span class="line">      root-&gt;data = postMinNode-&gt;data; <span class="comment">// 替换为后继</span></span><br><span class="line">      deleteNode(postMinNode, postMinNode-&gt;data); <span class="comment">// 删除后继</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span>(root-&gt;data &lt; x) &#123;</span><br><span class="line">    deleteNode(root-&gt;rchild, x);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    deleteNode(root-&gt;lchild, x);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="平衡二叉树avl">平衡二叉树（AVL）</h2>
+<p>平衡二叉树是对于前面二叉查找树的改进，“平衡“的意思是保证左右子树的高度差不超过1，这样总能够保证找寻所需元素时的搜索效率在<span class="math inline">\(O(log(n))\)</span>内。</p>
+<p>平衡二叉树是两位前苏联的数学家提出来的，取他们名的大写字母命名为AVL树。在AVL树中的每个结点会额外记录一下当前结点的高度，同时利用左右子树的结点高度差<span class="math inline">\(左子树高度-右子树高度\)</span>，可以可以计算当前结点的<em>平衡因子</em>。</p>
+<p>AVL树的难点在于插入与删除，一个结点的定义</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Node</span> &#123;</span></span><br><span class="line">  <span class="keyword">int</span> data;</span><br><span class="line">  <span class="keyword">int</span> height; <span class="comment">// 默认为1</span></span><br><span class="line">  Node* lchild, rchild;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新建结点</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Node* <span class="title">newNode</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  Node* node = <span class="keyword">new</span> Node;</span><br><span class="line">  node-&gt;data = x;</span><br><span class="line">  node-&gt;height = <span class="number">1</span>; <span class="comment">// 新增的定义</span></span><br><span class="line">  node-&gt;lchild = node-&gt;rchild = <span class="literal">NULL</span>;</span><br><span class="line">  <span class="keyword">return</span> node;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查询当前结点的高度与计算平衡因子</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getHight</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> node-&gt;height;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getBalanceFactor</span><span class="params">(Node * node)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> getHeight(node-&gt;lchild) - getHeight(node-&gt;rchild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>更新节点高度</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">updateHeight</span><span class="params">(Node* node)</span> </span>&#123;</span><br><span class="line">  node-&gt;height = max(getHeight(node-&gt;lchild), getHeight(node-&gt;rchild)) + <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AVL树的查询操作，与一般的BST树一样，这里不重复叙述。</p>
+<p>AVL树的插入操作，比较复杂，需要考虑在插入新结点后，如何保持”平衡“？这里有两种办法调整当前树的左右子树高度，<em>左旋</em>和<em>右旋</em>：</p>
+<ul>
+<li>左旋：通过旋转，让当前根结点变为原来右子树根结点的左结点，原来右子树根结点成为新根结点</li>
+<li>右旋：通过旋转，让当前根结点变为原来左子树根结点的右结点，原来左子树根结点成为新根结点</li>
+</ul>
+<p>详细的旋转过程可以参考《算法笔记》上的图示，这里提供代码，核心思想在于：</p>
+<ul>
+<li>左旋：当前根结点变为新的左结点，当前根结点的右子树链接到右结点（新根结点）的左子树</li>
+<li>右旋：当前根结点变为新的右结点，当前根结点的左子树链接到左结点（新根结点）的右子树</li>
+</ul>
+<p>代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 左旋</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">L</span><span class="params">(Node* &amp;root)</span> </span>&#123;</span><br><span class="line">  Node * tmp = root-&gt;rchild; <span class="comment">// 新根结点是原右子树</span></span><br><span class="line">  root-&gt;rchild = tmp-&gt;lchild; <span class="comment">// 当前根结点右子树变为原右子树的左子树</span></span><br><span class="line">  tmp-&gt;lchild = root; <span class="comment">// 新根结点的左子树是原根结点</span></span><br><span class="line">  updateHeight(root); <span class="comment">// 先更新新树的子树</span></span><br><span class="line">  updateHeight(tmp); <span class="comment">// 然后更新根结点</span></span><br><span class="line">  root = tmp; <span class="comment">// 将root改为新的根结点</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 右旋</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">R</span><span class="params">(Node* &amp;root)</span> </span>&#123;</span><br><span class="line">  Node * tmp = root-&gt;lchild; <span class="comment">// 新根结点是原左子树</span></span><br><span class="line">  root-&gt;lchild = tmp-&gt;rchild; <span class="comment">// 当前根结点左子树变为原左子树的右子树</span></span><br><span class="line">  tmp-&gt;rchild = root; <span class="comment">// 新根结点的右子树是原根结点</span></span><br><span class="line">  updateHeight(root); <span class="comment">// 先更新新树的子树</span></span><br><span class="line">  updateHeight(tmp); <span class="comment">// 然后更新根结点</span></span><br><span class="line">  root = tmp; <span class="comment">// 将root改为新的根结点</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来可以讨论AVL树插入新元素的操作了。当AVL树插入新结点后，可能造成左子树比右子树高<span class="math inline">\(2\)</span>，或者是右子树比左子树高<span class="math inline">\(2\)</span>。一共有四种可能（更详细的讨论在书上）：</p>
+<ol type="1">
+<li>LL型：左子树高-&gt;左子树的左子树高；右旋根结点解决</li>
+<li>LR型：左子树高-&gt;左子树的右子树高；先左旋左子树，后右旋根结点</li>
+<li>RR型：右子树高-&gt;右子树的右子树高；左旋解决</li>
+<li>RL型：右子树高-&gt;右子树的左子树高；右旋右子树，后左旋根结点</li>
+</ol>
+<p>插入操作的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(Node* &amp;root, <span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (root==<span class="literal">NULL</span>) &#123;</span><br><span class="line">    root = newNode(x);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(root-&gt;data &gt; x) &#123; <span class="comment">// 插入到左子树</span></span><br><span class="line">    insert(root-&gt;lchild, x);</span><br><span class="line">    updateHeight(root);</span><br><span class="line">    <span class="keyword">if</span>(getBalanceFactor(root) == <span class="number">2</span>) &#123; <span class="comment">// 如果左子树失衡了，因为是递归，总能保证从下往上调整失衡树</span></span><br><span class="line">			<span class="keyword">if</span>(getBalanceFactor(root-&gt;lchild) == <span class="number">1</span>) &#123; <span class="comment">// LL型</span></span><br><span class="line">        R(root);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(getBalanceFactor(root-&gt;lchild) == <span class="number">-1</span>) &#123; <span class="comment">// LR型</span></span><br><span class="line">        L(root-&gt;lchild);</span><br><span class="line">        R(root);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span> &#123; <span class="comment">// 插入右子树</span></span><br><span class="line">    insert(root-&gt;rchild, x);</span><br><span class="line">    updateHeight(root);</span><br><span class="line">    <span class="keyword">if</span>(getBalanceFactor(root) == <span class="number">-2</span>) &#123; <span class="comment">// 如果左子树失衡了</span></span><br><span class="line">			<span class="keyword">if</span>(getBalanceFactor(root-&gt;rchild) == <span class="number">1</span>) &#123; <span class="comment">// RL型</span></span><br><span class="line">        R(root-&gt;child);</span><br><span class="line">        L(root);</span><br><span class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span>(getBalanceFactor(root-&gt;rchild) == <span class="number">-1</span>) &#123; <span class="comment">// RR型</span></span><br><span class="line">        L(root);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>AVL树的删除，书上没有提及。</p>
+<h2 id="并查集">并查集</h2>
+<p>并查集是一种维护集合的数据结构，主要针对合并、查找与集合三个单词。</p>
+<p>并查集的实现就是一个数组，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> father[N];</span><br></pre></td></tr></table></figure>
+<p><code>father[i]</code>指的是元素<code>i</code>的父亲结点。在并查集中，一个集合只有一个结点满足<code>father[i]=i</code>，叫做根结点，把这个根结点看做是集合的标志。</p>
+<p>并查集支持的操作，</p>
+<p>初始化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i =<span class="number">0</span>;i&lt;n;++i) &#123;</span><br><span class="line">  father[i] = i; <span class="comment">// 初始化时，默认每个结点的父结点都是自身</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>查找当前集合的根结点：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findFather</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span>(father[i]!=i) &#123;</span><br><span class="line">    i = father[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>合并操作，如果两个元素实际是属于同一集合，就合并这两个元素分属的两集合的根结点，只保留一个根结点：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Union</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> fatherX = findFather(x);</span><br><span class="line">  <span class="keyword">int</span> fatherY = findFather(y);</span><br><span class="line">  <span class="keyword">if</span>(fatehrX!=fatherY) &#123;</span><br><span class="line">    father[fatherX] = fatherY; <span class="comment">// 集合X的根结点变换为集合Y的根结点</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>路径压缩操作，是一种简化<code>father</code>数组，从而提高寻找根结点效率的方法，直接让<code>father[i]</code>指向根结点，而不是父结点。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">findFather</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> tmp = i;</span><br><span class="line">  <span class="keyword">while</span>(father[i]!=i) &#123;</span><br><span class="line">    i = father[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 此时i是根结点，在此从i结点出发，逐次修改结点的父结点为根结点</span></span><br><span class="line">  <span class="keyword">while</span>(father[tmp]!=tmp) &#123;</span><br><span class="line">    <span class="keyword">int</span> current_node = tmp;</span><br><span class="line">    tmp = father[tmp];</span><br><span class="line">    father[current_node] = i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="堆">堆</h2>
+<p>堆是一课完全二叉树。它区别于BST和AVL的是，它只规定根结点要<code>&gt;=</code>或者<code>&lt;=</code>两个结点，根结点是当前树最大值的完全二叉树叫做大顶堆，反之叫做小顶堆。</p>
+<p>如果现在我们已经有一棵完全二叉树，如何把它调整为一个大顶堆？</p>
+<p>原则是从右到左，从下到上依次检查当前结点是否满足条件：</p>
+<ul>
+<li>叶子结点无需调整</li>
+<li>非叶子结点，将当前根结点与左、右子结点的最大值进行比较，如果当前根结点已经是最大值就无需变动；否则就互换，互换之后，由于左右子树在之前的调整过程中已经保证了大顶堆，那么新的根结点一定是最大值，只需要继续让被换以后的根结点与下一级子树进行比较即可。重复这个过程，直至无需再调整位置。</li>
+</ul>
+<p>类似的，如果我们想新建一个小顶堆，只需要总是寻找根结点、左、右结点中的最小值即可，整体过程与上述过程类似。</p>
+<p>从代码的角度分析，如何实现大顶堆？按照之前的讨论，完全二叉树可以使用根结点在位置<span class="math inline">\(1\)</span>的数组进行存储。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn = <span class="number">110</span>;</span><br><span class="line"><span class="keyword">int</span> heap[maxn]; <span class="comment">// 堆</span></span><br></pre></td></tr></table></figure>
+<p>实现下上面的调整过程，让当前位置的<span class="math inline">\(i\)</span>一直向下调整。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// high一般为n</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">downAdjust</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = low, child = <span class="number">2</span> * i;</span><br><span class="line">  <span class="keyword">while</span>(child &lt;= high) &#123;</span><br><span class="line">    <span class="keyword">if</span>(child+<span class="number">1</span> &lt;= high &amp;&amp; heap[child] &lt; heap[child]) &#123;</span><br><span class="line">      child = lchild + <span class="number">1</span>; <span class="comment">// 寻找child中的最大值，此时为右结点</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(heap[i]&gt;=heap[child]) </span><br><span class="line">      <span class="keyword">break</span>; <span class="comment">// 如果当前根结点已经保证是最大值，退出</span></span><br><span class="line">    swap(heap[i], heap[child]);</span><br><span class="line">    <span class="comment">// 交换位置后，继续遍历子树</span></span><br><span class="line">    i = child;</span><br><span class="line">    child = <span class="number">2</span> * child;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>建堆过程，从最右边，最低层的非叶子结点开始遍历，逐个执行上述函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">createHeap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 如果完全二叉树有n个结点，那么非叶子结点有 取下限(n/2) 个</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = n/<span class="number">2</span>; i&gt;=<span class="number">1</span>; i--) &#123;</span><br><span class="line">    downAdjust(i, n);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>删除堆顶元素，让最末端的叶子结点替换堆顶元素，然后执行向下调整</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deleteTop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  heap[<span class="number">1</span>] = heap[n--];</span><br><span class="line">  downAdjust(<span class="number">1</span>, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>新增元素，让新元素放在堆的最末端，然后执行从下到上的调整</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// low一般为1， high是当前要进行向上调整的元素</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">upAdjust</span><span class="params">(<span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> i = high, parent = high / <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">while</span>(high&gt;=low) &#123;</span><br><span class="line">    <span class="keyword">if</span> (heap[parent]&gt;=heap[i]) </span><br><span class="line">      <span class="keyword">break</span>; <span class="comment">// 父亲结点已经比当前结点大，无需再调整</span></span><br><span class="line">    swap(heap[parent], heap[i]);</span><br><span class="line">    i = parent;</span><br><span class="line">    parent = parent / <span class="number">2</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  heap[++n] = x;</span><br><span class="line">  upAdjust(<span class="number">1</span>, n);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>堆的基本元素讲完后，我们可以使用堆来实现堆排序，下面是一个实现从小到大递增排序的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">heapSort</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 建好堆之后，每次把堆顶元素和最末端的元素互换，然后执行向下调整</span></span><br><span class="line">  crateHeap();</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> i = n; i&gt;<span class="number">1</span>; --i) &#123;</span><br><span class="line">    swap(heap[<span class="number">1</span>], heap[i]);</span><br><span class="line">    downAdjust(<span class="number">1</span>, i<span class="number">-1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="哈夫曼树">哈夫曼树</h2>
+<p>哈夫曼树的构建方法：</p>
+<ul>
+<li>初始状态的n个结点看做是单独的n个二叉树</li>
+<li>选择根结点值最小的两个结点进行合并，生成新的父结点，父结点的值是两个结点的和</li>
+<li>重复上述过程，直至形成一棵完整的二叉树</li>
+</ul>
+<p>叶子结点的权值<span class="math inline">\(\times\)</span>根结点该叶子结点的路径长度，叫做改叶子结点的带权路径长度。一棵二叉树的带权路径长度Weight Path Length of tree（WPL）是所有叶子结点带权路径长度的和。哈夫曼树是满足一组叶子结点，带权路径长度最小的树。在建立哈夫曼树的过程中，能够保证哈夫曼树的WPL是最小的，但是可能存在多个哈夫曼树，比如可能同时存在多个相同的最小值结点。</p>
+<p>哈夫曼树用来计算某个值的时候，可以考虑使用优先队列/小顶堆，每次取出最小的两个值合并后再入队。</p>
+<p>现在考虑给字符用01编码的问题，如果随便给字符编码，就可能导致某个叶子结点的编码是另一个叶子结点编码的前缀，这样在使用这种编码过程的时候就可能出现问题。如果任一字符的编码都不是另一字符的编码前缀，这种编码方式叫做前缀编码。</p>
+<p>对于这种情况，可以使用任意一棵二叉树，根结点到叶子结点的路径（左子树0，右子树1）作为该叶子结点的编码。它能够满足前缀编码的要求。</p>
+<p>但是，另一个问题是如果我们希望一段字符串的01编码长度最小呢？这就可以使用哈夫曼编码来解决，统计字符串中各个字符的出现次数作为权值，然后建立哈夫曼树，就能够保证最后字符串的编码一定是最短的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/algorithm-note/9-data-structure2/" title="9-data-structure2">https://liuxiyang641.github.io/algorithm-note/9-data-structure2/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/book/" rel="tag"><i class="fa fa-tag"></i> book</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/algorithm-note/8-search/" rel="prev" title="8-search">
+                  <i class="fa fa-chevron-left"></i> 8-search
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/algorithm-note/10-graph/" rel="next" title="10-graph">
+                  10-graph <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"8341cf15fa5c8ad00a80c69ef911c378"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

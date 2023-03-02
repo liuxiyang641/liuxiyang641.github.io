@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Collection of GNN papers  Highway GNN（ACL 2018） HGSL（AAAI 2021） HGAT（EMNLP 2019） HetGNN（KDD 2019） HetSANN （AAAI 2020） RHINE（AAAI 2019） JK（ICML 2018） PATHCON（KDD 2021） HeteGNN（WSDM 2021） KGNN（IJCAI 202">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="GNN-Collection">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/GNN-Collection/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Collection of GNN papers  Highway GNN（ACL 2018） HGSL（AAAI 2021） HGAT（EMNLP 2019） HetGNN（KDD 2019） HetSANN （AAAI 2020） RHINE（AAAI 2019） JK（ICML 2018） PATHCON（KDD 2021） HeteGNN（WSDM 2021） KGNN（IJCAI 202">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193220627.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803194602158.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193433545.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193632456.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193716164.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193733856.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193750622.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804154636282.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155417686.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155434262.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172507196.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172641046.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210807105609410.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809161131674.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809171558677.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105105557.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105626109.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810151243856.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210811150803687.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160654200.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160807701.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160745666.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160828759.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160908960.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161639285.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161622524.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210825164436321.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830195131960.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303170039139.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183431157.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183447999.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183517954.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183538437.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183705455.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184150967.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184212826.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184251972.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303202610179.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203115074.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203130712.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203413691.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203428588.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203449437.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203516612.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png">
+<meta property="article:published_time" content="2021-07-08T11:48:05.000Z">
+<meta property="article:modified_time" content="2022-09-28T02:48:00.699Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/GNN-Collection/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/GNN-Collection/","path":"collection/GNN-Collection/","title":"GNN-Collection"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GNN-Collection | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-gnn-papers"><span class="nav-number">1.</span> <span class="nav-text">Collection of GNN papers</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#highway-gnn"><span class="nav-number">1.1.</span> <span class="nav-text">Highway GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgsl"><span class="nav-number">1.2.</span> <span class="nav-text">HGSL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hgat"><span class="nav-number">1.3.</span> <span class="nav-text">HGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetgnn"><span class="nav-number">1.4.</span> <span class="nav-text">HetGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetsann"><span class="nav-number">1.5.</span> <span class="nav-text">HetSANN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rhine"><span class="nav-number">1.6.</span> <span class="nav-text">RHINE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jk"><span class="nav-number">1.7.</span> <span class="nav-text">JK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pathcon"><span class="nav-number">1.8.</span> <span class="nav-text">PATHCON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hetegnn"><span class="nav-number">1.9.</span> <span class="nav-text">HeteGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kgnn"><span class="nav-number">1.10.</span> <span class="nav-text">KGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cprl"><span class="nav-number">1.11.</span> <span class="nav-text">CPRL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#clhg"><span class="nav-number">1.12.</span> <span class="nav-text">CLHG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eagcn"><span class="nav-number">1.13.</span> <span class="nav-text">EAGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eigat"><span class="nav-number">1.14.</span> <span class="nav-text">EIGAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaeat"><span class="nav-number">1.15.</span> <span class="nav-text">GAEAT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m-gnn"><span class="nav-number">1.16.</span> <span class="nav-text">M-GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rdgcn"><span class="nav-number">1.17.</span> <span class="nav-text">RDGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.18.</span> <span class="nav-text">SLiCE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#m2gnn"><span class="nav-number">1.19.</span> <span class="nav-text">M2GNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lgnn"><span class="nav-number">1.20.</span> <span class="nav-text">LGNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#srgcn"><span class="nav-number">1.21.</span> <span class="nav-text">SRGCN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chen-et-al."><span class="nav-number">1.22.</span> <span class="nav-text">Chen et al.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mte"><span class="nav-number">1.23.</span> <span class="nav-text">MTE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#revgnn"><span class="nav-number">1.24.</span> <span class="nav-text">RevGNN</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/GNN-Collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GNN-Collection | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GNN-Collection<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/GNN-Collection.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-07-08 19:48:05" itemprop="dateCreated datePublished" datetime="2021-07-08T19:48:05+08:00">2021-07-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-28 10:48:00" itemprop="dateModified" datetime="2022-09-28T10:48:00+08:00">2022-09-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="collection-of-gnn-papers">Collection of GNN papers</h1>
+<ul>
+<li><a href="#highway-gnn">Highway GNN（ACL 2018）</a></li>
+<li><a href="#hgsl">HGSL（AAAI 2021）</a></li>
+<li>HGAT（EMNLP 2019）</li>
+<li>HetGNN（KDD 2019）</li>
+<li><a href="/gnn/HetSANN/" title="HetSANN">HetSANN</a>
+（AAAI 2020）</li>
+<li>RHINE（AAAI 2019）</li>
+<li>JK（ICML 2018）</li>
+<li>PATHCON（KDD 2021）</li>
+<li>HeteGNN（WSDM 2021）</li>
+<li>KGNN（IJCAI 2020）</li>
+<li>CPRL（NAACL 2021）</li>
+<li>CLHG（ACL 2021）</li>
+<li>EAGCN（Neurocomputing）</li>
+<li>ETGAT（ACL-IJCNLP 2021）</li>
+<li>GAEAT（CIKM 2020）</li>
+<li>M-GNN（IJCAI 2019）</li>
+<li>RDGCN（IJCAI 2019）</li>
+<li>SLiCE（WWW 2021）</li>
+<li>M<sup>2</sup>GNN（WWW 2021）</li>
+<li>LGNN（IJCAI 2021）</li>
+<li>RevGNN（ICML 2021）</li>
+</ul>
+<span id="more"></span>
+<h2 id="highway-gnn">Highway GNN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/%20afshinrahimi/geographconv"><strong>Semi-supervised User Geolocation via Graph Convolutional Networks</strong></a> ACL 2018</p>
+<p>应用场景是社交媒体上的用户定位。单纯的在GNN上的创新点是使用Gate机制来控制传入的邻居的信息。</p>
+<p>在每一层，借鉴Highway networks的思路，计算一个门weight</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210708195301778.png" style="zoom:50%;" /></p>
+<h2 id="hgsl">HGSL</h2>
+<p><strong>Heterogeneous Graph Structure Learning for Graph Neural Networks</strong> AAAI 2021</p>
+<a href="/gnn/HGSL/" title="[详细博客]">[详细博客]</a>
+<p>作者声称是首个尝试为异质图神经网络寻找最优的图结构进行学习的方法，提出了HGSL（Heterogeneous Graph Structure Learning）。核心方法有两个，异质图结构学习和图神经网络。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210706213222126.png" style="zoom:40%;" /></p>
+<p><strong>motivation</strong>：目前的异质图神经网络基于一个假设，学习使用的graph是足够好的。但是实际上这个假设不一定总能够满足。两个方面的原因，（1）在建模graph的时候，使用到的信息难免会包含错误的信息，导致最终的graph是不够好的（2）另一个原因是异质图结构本身与下游任务是独立的，不一定是有利于下游任务的最优解。为了解决上面的问题，图结构学习graph structure learning (GSL)被提出来，但是这些方法主要是在考虑同质图，无法很好的考虑异质图中的异质性以及异质图中存在的复杂的交互。</p>
+<p><strong>method</strong>：提出HGSL，首先学习合适的graph structure，然后在这个graph structure上使用GCN进行学习。这种heterogeneous graph structure learning是核心创新点，包括三种graph的融合，<strong>feature similarity graph</strong>，<strong>feature propagation graph</strong>,和<strong>semantic graph</strong>。</p>
+<h2 id="hgat">HGAT</h2>
+<p><strong>Heterogeneous Graph Attention Networks for Semi-supervised Short Text Classification</strong> EMNLP 2019</p>
+<p>为短文本分类任务（semi-supervised short text classification）设计了一个异质图神经网络HGAT。</p>
+<p>首先是利用原始文本构造一个异质图（HIN），把不同来源的文本组合到一起。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180026169.png"   style="zoom:50%;" /></p>
+<p>重点在于，其中的node type各不相同，各自具有差异性很大的特征。</p>
+<p>然后是设计的网络结构，重点在于设计了一个两层的attention。</p>
+<p>不同type的node有不同的卷积核：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180219517.png"   style="zoom:50%;" /></p>
+<p>然后，type-level的attention，聚合邻居下所有相同type的node embedding，然后计算attention weight。这样同一type下的所有neighbor node共享一个type level的weight。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180348109.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180319175.png"  style="zoom:50%;" /></p>
+<p>不同type之间softmax。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180440793.png"   style="zoom:50%;" /></p>
+<p>然后是node-level的attention，不同邻居node，计算attention。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180538577.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180555435.png"   style="zoom:50%;" /></p>
+<p>最后结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210728180643981.png"  style="zoom:50%;" /></p>
+<h2 id="hetgnn">HetGNN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/chuxuzhang/KDD2019_HetGNN">Heterogeneous Graph Neural Network</a> KDD 2019</p>
+<p>作者提出了一种同时处理node content和heterogeneous graph structure的GNN，HetGNN。</p>
+<p>看一下整体结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205726358.png"   style="zoom:50%;" /></p>
+<p>核心模块有三方面：</p>
+<p><strong>Sampling Heterogeneous Neighbors</strong>：使用了random walk with restart (RWR)的邻居采样策略，需要注意的是这个采样策略保证对于node <span class="math inline">\(v\)</span>，能够采样到所有不同类型的邻居。然后相同类型的邻居聚合到一起。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802205956510.png"   style="zoom:50%;" /></p>
+<p><strong>Encoding Heterogeneous Contents</strong>：对于不同格式的content，使用不同的网络进行处理，然后使用Bi-LSTM进行融合，不同type的node有自己的Bi-LSTM网络。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210802210216977.png"   style="zoom:50%;" /></p>
+<p><strong>Aggregating Heterogeneous Neighbors</strong>：对于相同类型的邻居，先基于Bi-LSTM进行聚合。然后不同类型的邻居基于attention进行聚合。</p>
+<h2 id="hetsann">HetSANN</h2>
+<a href="/gnn/HetSANN/" title="[个人详细博客]">[个人详细博客]</a>
+<p><a target="_blank" rel="noopener" href="https://github.com/didi/hetsann"><strong>An Attention-based Graph Neural Network for Heterogeneous Structural Learning</strong></a> AAAI 2020 HetSANN</p>
+<p>提出了Heterogeneous Graph Structural Attention Neural Network (<a href="/gnn/HetSANN/" title="HetSANN">HetSANN</a>），主要创新点有三个：</p>
+<ul>
+<li>对于预测标签任务，采用多任务学习，不同type的节点进行预测有不同的classifier（实际是全连接层+softmax）</li>
+<li>针对edge和reversed edge，除了一般的基于拼接的方法计算attention外，提出了voice-sharing product的计算注意力方法。</li>
+<li>在不同type的邻居信息转换中，提出了一个保持weight matrix的cycle consistent的方法。</li>
+</ul>
+<p>看一下模型的整体结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193220627.png"   style="zoom:50%;" /></p>
+<p>核心是一个注意力层，TAL层如图所示。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803194602158.png"   style="zoom:50%;" /></p>
+<p>首先是基于type的邻居信息转化，node <span class="math inline">\(i\)</span> 提供给node <span class="math inline">\(j\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193433545.png"   style="zoom:50%;" /></p>
+<p>然后基于注意力聚合邻居信息，下面的是一般的GAT的方法，作者叫做<em>concat product</em>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193632456.png"  style="zoom:50%;" /></p>
+<p>需要注意的是，这里的注意力向量<span class="math inline">\(\alpha_r\)</span>，是每个edge type各有一个。然后就是基于softmax的attention聚合。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193716164.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193733856.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210803193750622.png"   style="zoom:50%;" /></p>
+<p>实际上，作者还提出了<em>voice-sharing</em>的注意力计算方法，主要是希望考虑关系和逆关系之间的对应联系。让注意力向量<span class="math inline">\(\alpha_r\)</span>​互为负数，然后利用相加计算注意力。详见博客。</p>
+<h2 id="rhine">RHINE</h2>
+<p><strong>Relation Structure-Aware Heterogeneous Information Network Embedding</strong> AAAI 2019</p>
+<p>这篇文章不是GNN领域的文章，但是由于它也尝试捕获relation在结构上的角色，所以干脆放到一起了。</p>
+<p>它核心创新点是把所有的relation划分为了两类：</p>
+<ul>
+<li>Afﬁliation Relations (ARs)：one-centeredby-another structures</li>
+<li>Interaction Relations (IRs)：peer-to-peer structures</li>
+</ul>
+<p>划分的依据是作者根据不同relation的头尾节点类型的平均数量比，对于关系<span class="math inline">\(&lt;u,r,v&gt;\)</span>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804154636282.png"   style="zoom:50%;" /></p>
+<p>里面的<span class="math inline">\(\overline{d}_{t_u}\)</span>，<span class="math inline">\(t_u\)</span>表示的是头节点<span class="math inline">\(u\)</span>的类型，<span class="math inline">\(\overline{d}_{t_u}\)</span>是指这一类型下的所有节点的平均度degree。在这样的网络中，能够确定某个relation两边的entity type，所以可以这样评估。但是在KG中，无法确定entity的type，也就无法这样计算。</p>
+<p><span class="math inline">\(D(r)\)</span>比较小的划分为IR关系，<span class="math inline">\(D(r)\)</span>比较大的划分为AR关系。</p>
+<p>这样划分完之后，对于AR关系和IR关系使用两种不同的embedding model。</p>
+<p>AR，直接评估两个点之间的欧氏距离。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155417686.png"  style="zoom:50%;" /></p>
+<p>IR，借助TransE的思想，建模这种1-1的关系。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804155434262.png"   style="zoom:50%;" /></p>
+<h2 id="jk">JK</h2>
+<p><strong>Representation Learning on Graphs with Jumping Knowledge Networks</strong> ICML 2018</p>
+<p>作者认为一般GCN模型实际假定了为不同的node都学习固定范围/半径的邻居信息，这种情况下不一定是最优解。比如通常GCN只需要两层就达到了最优解，但是对于一个graph来说，有的node可能是tree-like的，两层邻居也只包含了很少的邻居信息，而有的node是expander-like core，两层邻居就包含了非常多的邻居信息。比如下面的GooglePlus社交网络：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172507196.png"   style="zoom:50%;" /></p>
+<p>因此，作者希望设计一种方法能够实现adaptively adjust (i.e., learn) the inﬂuence radii for each node and task。提出了<em>Jumping Knowledge Networks (JK-Nets)</em>。</p>
+<p>主要结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210804172641046.png"   style="zoom: 33%;" /></p>
+<p>JUMP的意思是每一层输出都jump到最后一层，在最后一层进行layer aggregation。</p>
+<p>作者提出三种方法</p>
+<ul>
+<li>Concatenation</li>
+<li>Max-pooling</li>
+<li>LSTM-attention：双向LSTM</li>
+</ul>
+<p>简单的论文的实验结果看，前两个方法还不错，但是后面的LSTM-attention，效果并不好。通过使用前面的JK设计，作者能够在不同数据集下，基于更多更深的GCN层达到最好的结果。</p>
+<h2 id="pathcon">PATHCON</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/hwwang55/PathCon"><strong>Relational Message Passing for Knowledge Graph Completion</strong></a> KDD 2021</p>
+<a href="/kge/PATHCON/" title="[个人详细博客]">[个人详细博客]</a>
+<p>在这篇论文中，作者只考虑了KG中的relation embedding，没有学习entity embedding。更具体的说，学习两个方面的结构信息，relational context和relation paths。前者是头/尾实体的邻居relation，后者是头尾实体在KG中相连的relational path。提出了<a target="_blank" rel="noopener" href="https://github.com/hwwang55/PathCon">PATHCON</a></p>
+<p>作者预测的是relation prediction，<span class="math inline">\(&lt;h,?,t&gt;\)</span>，区别于常见的head/tail prediction，这样情况下relation prediction的候选项是所有的relation，会少很多候选项。这篇文章，作者还提出了一个新的数据集，DDB14，基于医药和疾病的一个知识图谱。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210807105609410.png"   style="zoom:50%;" /></p>
+<h2 id="hetegnn">HeteGNN</h2>
+<p><strong>HeteGCN: Heterogeneous Graph Convolutional Networks for Text Classification</strong> WSDM 2021</p>
+<p>针对文本预测任务，简化TEXTGCN，将原来整个TEXTGCN中使用的graph分解为几个不同的小graph，每个graph有自己的<span class="math inline">\(W_r\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809161131674.png"   style="zoom:50%;" /></p>
+<h2 id="kgnn">KGNN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/xzenglab/KGNN"><strong>KGNN: Knowledge Graph Neural Network for Drug-Drug Interaction Prediction</strong></a> IJCAI 2020</p>
+<p>针对DDI问题（Drug-drug interaction），首先从数据集中构造一个关于drug的KG，然后使用GNN捕获drug的邻居信息。在GNN上没有太大的创新，发现在聚合的时候使用自身embedding与邻居embedding各自具有不同的weight matrix比较合适。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210809171558677.png"   style="zoom:50%;" /></p>
+<h2 id="cprl">CPRL</h2>
+<p><strong>Heterogeneous Graph Neural Networks for Concept Prerequisite Relation Learning in Educational Data</strong> NAACL 2021</p>
+<p>CPRL（concept prerequisite relation learning），在GNN上没有太大创新，主要是属于应用场景的一个创新。针对概念之间的依赖关系进行预测，作者创建了一个异质图，然后直接使用R-GCN进行学习，方法上没有太多可以借鉴的地方。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105105557.png"   style="zoom:50%;" /></p>
+<p>这里使用了一个Siamese network，以前没见过。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810105626109.png"   style="zoom: 33%;" /></p>
+<h2 id="clhg">CLHG</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/%20TencentGameMate/gnn_cross_lingual"><strong>Cross-lingual Text Classiﬁcation with Heterogeneous Graph Neural Network</strong></a> ACL 2021</p>
+<p>CLHG（Cross-Lingual Heterogeneous GCN），针对跨语言的文本分类任务，使用HGCN捕获不同语言的异质信息。这篇文章在GNN上没有太大创新，直接使用了前面HGAT的方法，根据邻居节点类型有不同的weight matrix。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210810151243856.png"   style="zoom:50%;" /></p>
+<h2 id="eagcn">EAGCN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/Luckick/EAGCN"><strong>Multi-view spectral graph convolution with consistent edge attention for molecular modeling</strong></a> Neurocomputing</p>
+<p>EAGCN，预测任务是molecular graph property prediction，核心创新点个人认为是把异质图根据edge type分为不同view的graph，然后在molecular graph的背景下，同一个type的edge有不同的取值，这些取值会有不同的weight scalar。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210811150803687.png"   style="zoom:50%;" /></p>
+<p>另外作者开源了项目，里面有attention的可视化这些操作，如果需要可以参考。</p>
+<h2 id="eigat">EIGAT</h2>
+<p><strong>Incorporating Global Information in Local Attention for Knowledge Representation Learning</strong> ACL 2021</p>
+<p>核心创新点在于建模KG中实体的重要性，为每个实体赋值一个实数scalar，然后根据邻居实体的重要性评估中心实体的重要性。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160654200.png"   style="zoom:50%;" /></p>
+<p><strong>local attention</strong></p>
+<p>与KBGAT的方法一样。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160807701.png"  style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160745666.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160828759.png"   style="zoom:50%;" /></p>
+<p><strong>entity importance</strong></p>
+<p>核心创新点，</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824160908960.png"   style="zoom:50%;" /></p>
+<p>从in edge出发，聚合邻居的重要性，注意，这里融合了前面计算的message的重要性。每个邻居提供的重要性是相对于自身所有的out message重要性来计算的。</p>
+<p>其中<span class="math inline">\(d\)</span>是一个超参，第一项是为了给KG中没有in-degree的实体一个初始值。</p>
+<p>在实验时，所有的<span class="math inline">\(EI\)</span>初始化为0.1，<span class="math inline">\(d\)</span>初始化为0.85。</p>
+<p>最后，两种attention进行融合。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161639285.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210824161622524.png"   style="zoom:50%;" /></p>
+<h2 id="gaeat">GAEAT</h2>
+<p><strong>GAEAT: Graph Auto-Encoder Attention Networks for Knowledge Graph Completion</strong> CIKM 2020</p>
+<p>CIKM的short track。实际没有什么创新，使用KBGAT作为编码器，然后DistMult作为解码器。不过可以作为对比的Baseline。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210825164436321.png"   style="zoom:50%;" /></p>
+<h2 id="m-gnn">M-GNN</h2>
+<p><strong>Robust Embedding with Multi-Level Structures for Link Prediction</strong> IJCAI 2019</p>
+<a href="/gnn/M-GNN/" title="[个人详细博客]">[个人详细博客]</a>
+<p>这篇文章提出了一种multi-level graph neural network，M-GNN。使用GIN中的MLP学习结构信息，然后提出了一种基于KG中图的不同粒度进行建模的方法。它会从原始的KG出发，不断合并邻居节点，合并边，构造出一系列不同粒度的graph，在这些graph上进行图卷积操作，得到最后的输出。除了一般的链路预测实验，作者还进行了在不同稀疏度以及加入noising edges的实验。</p>
+<p>和一般的GNN消息聚合方式不同，M-GNN希望能够建模KG中不同尺度中的信息。</p>
+<p>首先构造k个Coarsened graph：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826143747570.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826145202651.png"   style="zoom:50%;" /> 最后模型结构。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210826150505564.png"   style="zoom:50%;" /></p>
+<h2 id="rdgcn">RDGCN</h2>
+<p><strong>Relation-Aware Entity Alignment for Heterogeneous Knowledge Graphs</strong> IJCAI 2019</p>
+<a href="#">Post not found: gnn/RDGCN [个人详细博客]</a>
+<p><a target="_blank" rel="noopener" href="https://github.com/StephanieWyt/RDGCN"><strong>RDGCN</strong></a> (Relation-aware Dual-Graph Convolutional Network)，预测任务是KG的实体对齐，主要是为了捕获更多的在dual KG中的relation的信息。核心创新点是对于dual KG（即要对齐的两个KG），构造了Dual Relation Graph，捕获relation和relation之间的联系。之后在这个Dual Relation Graph上学习relation的表示，融入到original KG中进行entity的表示学习，最终用于entity之间的对齐。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210827161832004.png"   style="zoom:50%;" /></p>
+<h2 id="slice">SLiCE</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/pnnl/SLICE"><strong>Self-Supervised Learning of Contextual Embeddings for Link Prediction in Heterogeneous Networks</strong></a> WWW 2021</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830195131960.png"   style="zoom:50%;" /></p>
+<p>作者希望考虑的是，单个节点在特定的subgraph下的表示。对于节点对，利用随机游走寻找两个节点之间的context subgraph。首先，利用一个embedding function，在全图下学习每个node的初始表示，作为global embedding。</p>
+<p>然后，有两个阶段，pre-training和Fine-tuning。pre-training预测被mask掉的node，fine-tuning进行link prediction。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210830200013984.png"   style="zoom:50%;" /></p>
+<h2 id="m2gnn">M<sup>2</sup>GNN</h2>
+<p><strong>Mixed-Curvature Multi-Relational Graph Neural Network for Knowledge Graph Completion</strong> WWW 2021</p>
+<p>首个将mixed-curvature geometry与GNN联系起来学习KGE的方法，作者尝试利用不同的空间对KG中的异质性结构进行建模。但是由于对mixed-curvature space和manifold不了解，看不懂论文内容。之后可以找时间仔细补充下基本知识。可参照</p>
+<p>John M Lee. 2013. Smooth manifolds. In Introduction to Smooth Manifolds. Springer, 1–31.</p>
+<h2 id="lgnn">LGNN</h2>
+<p><strong>Node-wise Localization of Graph Neural Networks</strong> IJCAI 2021</p>
+<p>作者认为对于整个图学习同样的weight matrix，可能导致模型倾向于建模最常见的pattern，而不是针对不同node的不同的local context进行学习。作者让graph中不同node拥有不同的weight matrix。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195057584.png"   style="zoom:50%;" /></p>
+<p>具体有两个Node-level localization和Edge-level localization.</p>
+<p><strong>Node-level localization</strong></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195215512.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195243176.png"   style="zoom:50%;" /></p>
+<p>注意，这里没有给不同node都定义新的vector，而是直接从上一层的邻居直接mean聚合，然后进行转换，生成的向量<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>之后用于生成node <span class="math inline">\(v\)</span>的weight matrix。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195358969.png"   style="zoom:50%;" /></p>
+<p>注意这里，是把<span class="math inline">\(a_v\)</span>和<span class="math inline">\(b_v\)</span>作为一行，然后复制，最后作用到graph global matrix<span class="math inline">\(W_l\)</span>上。</p>
+<p><strong>Edge-level localization</strong></p>
+<p>作者对node <span class="math inline">\(v\)</span>的不同邻居edge进一步建模：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195557949.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195613526.png"  style="zoom:50%;" /></p>
+<p>最后聚合：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210921195641977.png"   style="zoom:50%;" /></p>
+<h2 id="srgcn">SRGCN</h2>
+<p><strong>SRGCN: Graph-based multi-hop reasoning on knowledge graphs</strong> Neurocomputing 2021</p>
+<p>这篇文章在预测<span class="math inline">\(&lt;h, r, t&gt;\)</span>的时候，首先构建<span class="math inline">\(h\)</span>和<span class="math inline">\(t\)</span>之间的graph，然后在这个graph上，逐步使用R-GCN得到对于尾实体的预测embedding，最后使用MLP获得score。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303170039139.png"   style="zoom:40%;" /></p>
+<p>图中的label指的是从头实体出发，遇到的第几阶邻居。一个实体与头实体之间存在多个不同长度的path时，以最长的path作为label。</p>
+<p>之后在使用R-GCN进行图卷积时，并不是以头实体为中心不断的聚合邻居。而是将头实体作为一开始，不断聚合到下一阶邻居实体上，直到聚合到具有最大label的实体上。</p>
+<h2 id="chen-et-al.">Chen et al.</h2>
+<p><strong>Learning graph attention-aware knowledge graph embedding</strong> Neurocomputing 2021</p>
+<p>这篇文章核心是提出了一种新的在KG上计算attention的方法，有三个部分：entity attention、relation attention和structure attention。最核心的创新点是计算structural attention。</p>
+<p>Entity attention：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183431157.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183447999.png"   style="zoom:50%;" /></p>
+<p>Relation attention：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183517954.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183538437.png"   style="zoom:50%;" /></p>
+<p>Structure attention：</p>
+<p>使用带重启机制的随机游走方法（Random Walk with Restart，RWR），</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303183705455.png"   style="zoom:50%;" /></p>
+<p>其中，<span class="math inline">\(w_i \in \mathbb{R}^{N\times 1}\)</span>，其中的entry <span class="math inline">\(p\)</span>表示实体<span class="math inline">\(i\)</span>通过随机游走到达实体<span class="math inline">\(p\)</span>的概率，这个概率越大，表示这两个实体在结构上的相关性越大。</p>
+<p>然后，由于每个实体<span class="math inline">\(i\)</span>都有一个对应的<span class="math inline">\(w_i\)</span>，计算邻居边<span class="math inline">\(&lt;i,j&gt;\)</span>在结构上的权重，使用了jaccard相似度计算方法，核心思想是某个实体<span class="math inline">\(p\)</span>如果同时出现在实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的邻居中，那么如果实体<span class="math inline">\(i\)</span>和实体<span class="math inline">\(j\)</span>的结构相似度越大，实体<span class="math inline">\(p\)</span>在<span class="math inline">\(w_i\)</span>和<span class="math inline">\(w_j\)</span>中的差距应该越小。因此有：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184150967.png"   style="zoom:50%;" /></p>
+<p>最后是softmax：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184212826.png"   style="zoom:50%;" /></p>
+<p>整体结构图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303184251972.png"   style="zoom:30%;" /></p>
+<h2 id="mte">MTE</h2>
+<p><strong>Relation-based multi-type aware knowledge graph embedding</strong> Neurocomputing 2021</p>
+<p>这篇文章将本体（ontology）考虑到了GNN当中，从而学习KGE。ontology是描述entity的类型的语法树。</p>
+<p>作者将ontology树使用bi-directional transformer model获得关于type的embedding。其中的输入是从root到leaf的序列。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303202610179.png"   style="zoom:40%;" /></p>
+<p>获得type的embedding之后，对于某个具体实体<span class="math inline">\(e\)</span>，不同type的比重应该不同。作者认为如果实体<span class="math inline">\(e\)</span>链接的triples中，关系<span class="math inline">\(r\)</span>属于某个type <span class="math inline">\(t\)</span>的数量越多，则比重越大。比如在上图，对于实体<em>Ang_Lee</em>，类型<em>director</em>的比重应该比<em>actor</em>更大，因为属于<span class="math inline">\(director\)</span>的triple数量更多。</p>
+<p>实体<span class="math inline">\(e\)</span>的type embedding应该是：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203115074.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203130712.png"   style="zoom:50%;" /></p>
+<p>上面第二个公式的含义就是统计属于某个type <span class="math inline">\(t\)</span>的triples的数量占比。</p>
+<p>之后，作者提出一种基于relation的attention聚合方法。</p>
+<p>单个relation下的实体聚合：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203413691.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203428588.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203449437.png"   style="zoom:50%;" /></p>
+<p>多个relation的聚合：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203516612.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203532350.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303203547104.png"   style="zoom:50%;" /></p>
+<h2 id="revgnn">RevGNN</h2>
+<p><strong>Training Graph Neural Networks with 1000 Layers</strong> ICML 2021</p>
+<a href="/gnn/GNN-1000-layers/" title="[个人详细博客]">[个人详细博客]</a>
+<p>这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323192539787.png"   style="zoom:50%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/GNN-Collection/" title="GNN-Collection">https://liuxiyang641.github.io/collection/GNN-Collection/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ml/batchnorm/" rel="prev" title="BatchNorm">
+                  <i class="fa fa-chevron-left"></i> BatchNorm
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/kge/NSCaching/" rel="next" title="NSCaching">
+                  NSCaching <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"b1925a1b95cf81ae332c8dbc3670a0b2"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

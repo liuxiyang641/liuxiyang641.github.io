@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="KGAT: Knowledge Graph Attention Network for Recommendation 在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="KGAT">
+<meta property="og:url" content="https://liuxiyang641.github.io/recommendation/KGAT/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="KGAT: Knowledge Graph Attention Network for Recommendation 在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229105855957-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214103645598-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214110411611-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110432499-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229111040431-8557739.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110623067-8557739.png">
+<meta property="article:published_time" content="2021-04-16T07:21:24.000Z">
+<meta property="article:modified_time" content="2022-09-02T12:00:27.666Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/recommendation/KGAT/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/recommendation/KGAT/","path":"recommendation/KGAT/","title":"KGAT"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KGAT | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kgat-knowledge-graph-attention-network-for-recommendation"><span class="nav-number">1.</span> <span class="nav-text">KGAT: Knowledge Graph Attention Network for Recommendation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%B0%E5%9C%A8%E7%BB%93%E5%90%88%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E7%9A%84%E6%8E%A8%E8%8D%90%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">1. 现在结合知识图谱的推荐存在的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E5%87%BA%E7%8E%B0%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 知识图谱出现解决的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8gnn%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 使用GNN的思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%BB%93%E6%9E%84"><span class="nav-number">1.2.</span> <span class="nav-text">2 模型结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#embedding-layer"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Embedding layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#attentive-embeding-propagation-layers"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Attentive Embeding Propagation Layers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E6%96%B9%E5%BC%8F"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 训练方式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.3.</span> <span class="nav-text">3 Experiments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.4.</span> <span class="nav-text">4 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/recommendation/KGAT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="KGAT | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KGAT<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/recommendation/KGAT.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-16 15:21:24" itemprop="dateCreated datePublished" datetime="2021-04-16T15:21:24+08:00">2021-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-02 20:00:27" itemprop="dateModified" datetime="2022-09-02T20:00:27+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/RS/" itemprop="url" rel="index"><span itemprop="name">RS</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="kgat-knowledge-graph-attention-network-for-recommendation">KGAT: Knowledge Graph Attention Network for Recommendation</h1>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<span id="more"></span>
+<h2 id="现在结合知识图谱的推荐存在的问题">1. 现在结合知识图谱的推荐存在的问题</h2>
+<h3 id="知识图谱出现解决的问题">1.1 知识图谱出现解决的问题</h3>
+<p>推荐算法中的协同过滤考虑的根据某个用户的历史数据，寻找可能兴趣相投的群体，来推荐物品。比如在下图中，要给用户推荐物品，那么但从交互的物品来看，都与有交互，那么就可以认为是兴趣相投的用户，根据他们的历史数据来给推荐物品。但如果表示某部电影，的导演也是这部电影的演员，与之间是存在属性上的联系的，这种联系是单纯协同过滤无法解决的。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214102753089-8557739.png" style="zoom:50%;" /></p>
+<p>为了解决这个问题，加入知识图谱(knowledge graph)，形成了下面的结构。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229105855957-8557739.png" style="zoom:50%;" /></p>
+<p>在这样的图中，与就关联起来了。同样给推荐物品，就能够找到更多的相似用户来进行推荐。</p>
+<p>考虑之前的用户和物品交互矩阵，矩阵当中只存在一种关系，就是用户和物品的交互，并且物品和物品之间是没有直接交互的，如果结合了知识图谱，物品和物品之间就出现了直接的关系，增加了新的实体，矩阵中的关系也就由一个变为了多个。</p>
+<p>在这样的条件下，就可以继续利用GNN来进行propagation。</p>
+<h3 id="使用gnn的思路">1.2 使用GNN的思路</h3>
+<p>在结合了知识图谱之后，就形成了一个关系更加丰富的graph neural network，使用GNN的方法来进行最后的预测。这篇论文就是在结合了知识图谱的基础上使用作者之前(2019)发表的neural graph collaborative filtering(ngcf)算法。理解了ngcf这篇论文就很好理解。</p>
+<h2 id="模型结构">2 模型结构</h2>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214103645598-8557739.png" style="zoom:50%;" /></p>
+<p>主要包括三层：</p>
+<ol type="1">
+<li>Embedding layer</li>
+<li>Attentive embedding propaggation layer</li>
+<li>Prediction layer</li>
+</ol>
+<h3 id="embedding-layer">2.1 Embedding layer</h3>
+<p>对于用户-物品可以表示为， <span class="math display">\[
+G_1 = \{(u, y_{ui}, i)|u\in U, i\in I, y_{ui}=1\}
+\]</span> 知识图谱使用下面的三元组来表示， <span class="math display">\[
+G_2 = \{(h, r, t)|h,t\in \epsilon , r\in R\}
+\]</span> 这样整个结构也就都成为了一个三元组， <span class="math display">\[
+G = \{(h, r, t)|h,t\in \epsilon^{&#39;} , r\in R^{&#39;}\}
+\]</span> 在新的结构当中，由于每一个物品都对应到了知识图谱中的实体。所以现在的矩阵变为了<span class="math inline">\(N用户\times\ M^{&#39;}实体\)</span>。</p>
+<p>在embeding layer这一层，存在一个loss，知识图谱embeding表示的loss。论文里使用了TransR，来获得知识图谱的embeding。</p>
+<p>TransR的原理是实体使用d维embeding，关系表示使用k为embeding，一个连接<span class="math inline">\(&lt;h, r, t&gt;\)</span>在数学上的含义可以是h投影到关系r的k维空间上，加上r的k维表示，得到t的k维投影： <span class="math display">\[
+W_re_h+e_r\approx W_re_t,\\ e_h, e_t\in R^d, e_r\in R^k, W_r\in R^{k\times d}
+\]</span> <span class="math inline">\(W_r\)</span>是关系r的转换矩阵。这个等式两边越接近越好，这样可以定义一个相似性得分的函数： <span class="math display">\[
+g(h,r,t)={\lVert W_re_h+e_r-W_re_t \rVert}^2_2
+\]</span> 在整个的矩阵上，对于有关系的<span class="math inline">\(&lt;h, t&gt;\)</span>score越小越好，对于没有关系的<span class="math inline">\(&lt;h, t^{&#39;}&gt;\)</span>score越大越好。</p>
+<p>因此可以得到一个损失函数： <span class="math display">\[
+L_{KG}=\sum_{(h,r,t,t^{&#39;})}{-ln\sigma (g(h,r,t^{&#39;})-g(h,r,t)) }
+\]</span> 在论文的代码实现当中，对于每一个head，取了1个positive，1个negative来计算loss。</p>
+<h3 id="attentive-embeding-propagation-layers">2.2 Attentive Embeding Propagation Layers</h3>
+<p>实质是在ngcf上加上了attention机制。</p>
+<p>对于一个实体<span class="math inline">\(h\)</span>，对于和 <span class="math inline">\(h\)</span> 有关系 <span class="math inline">\(r\)</span> 的集合 <span class="math inline">\(N_h=\{ (h,r,t)|(h,r,t)\in G \}\)</span> 使用propagation： <span class="math display">\[
+e_{N_h}=\sum_{(h,r,t)\in N_h} \pi (h,r,t)e_t
+\]</span> Attention: <span class="math display">\[
+\pi (h,r,t)=(W_re_t)^Ttanh(W_re_h+e_r) \\
+\pi (h,r,t)=\frac{exp(\pi (h,r,t))}{\sum_{(h,r^{&#39;},t^{&#39;})\in N_h} \pi (h,r,t)e_t}
+\]</span> 理解：</p>
+<p><span class="math inline">\(W_re_t\)</span>是实体<span class="math inline">\(e_t\)</span>在关系<span class="math inline">\(r\)</span>空间内的投影，<span class="math inline">\(W_re_h+e_r\)</span>是<span class="math inline">\(e_h\)</span>投影到关系<span class="math inline">\(r\)</span>的k维空间上，加上r的k维表示。如果这两个embeding点积越大，表示这两个向量越相似，对应的权重应该更大。</p>
+<p>之后的propagation和aggregation具体方式参考ngcf。</p>
+<h3 id="训练方式">2.3 训练方式</h3>
+<p>具体的，在训练之前，因为加入知识图谱相当于增加了新的物品，增加了大量的待训练参数，为了加快训练过程，首先利用BPR-MF的方式预训练好用户、物品的embeding，之后再进行kgat的训练。</p>
+<p>在训练的时候，在一个epoch里，</p>
+<ol type="1">
+<li>分batch(1024)训练完embeding propagation，更新所有实体的embeding</li>
+<li>分batch‘(2048)训练TransR，更新关系的转换矩阵<br />
+</li>
+<li>更新attentive embeding</li>
+</ol>
+<h2 id="experiments">3 Experiments</h2>
+<p>研究问题：</p>
+<ol type="1">
+<li>KGAT和其它模型的比较</li>
+<li>KGAT不同模型设置对结果的影响</li>
+<li>KGAT对于用户偏好解释性的影响</li>
+</ol>
+<p>可以发现，这三个问题与NGCF中探究的问题一致。</p>
+<p>数据集：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191214110411611-8557739.png" alt="image-20191229105855957" style="zoom:50%;" /></p>
+<p>可以发现，如果加入知识图谱，物品的数量就会极大的增加，这也是为什么建议预训练好用户和物品的embeding。</p>
+<p>评估指标： <span class="math display">\[
+recall@K,\ ndcg@K,\ K=20
+\]</span> 超参数设置：</p>
+<ul>
+<li>embeding size：64</li>
+<li>batch size：1024</li>
+<li>early stopping</li>
+<li>KGAT layer size：[64, 32, 16]</li>
+</ul>
+<p>比较结果：</p>
+<p>效果比较：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110432499-8557739.png" alt="image-20191229110432499" style="zoom:50%;" /></p>
+<p>不同模型结构设置的影响：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229111040431-8557739.png" alt="image-20191229110623067" style="zoom:50%;" /></p>
+<p>对于用户偏好的解释：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191229110623067-8557739.png" alt="image-20191229111040431" style="zoom:50%;" /></p>
+<p>从这张图上可以看出来通过加入知识图谱，获得了更多的额外信息。</p>
+<h2 id="总结">4 总结</h2>
+<p>加入知识图谱导致了更加丰富的物品信息</p>
+<p>缺点：</p>
+<p>在知识图谱中，存在一些常见的属性，例如图4中的English，这些属性有很多物品都具备，但是在attention的计算中，attention的计算仅在当前用户的交互实体下进行，没有考虑全局的情况。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/recommendation/KGAT/" title="KGAT">https://liuxiyang641.github.io/recommendation/KGAT/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/recommendation/NGCF/" rel="prev" title="NGCF">
+                  <i class="fa fa-chevron-left"></i> NGCF
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/nlp/Transformer/" rel="next" title="Transformer">
+                  Transformer <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"0b55079336dd77d79c5f105be7d90bef"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

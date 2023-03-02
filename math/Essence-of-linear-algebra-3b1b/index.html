@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Essence of linear algebra 这篇文章是3blue1brown的Essence of linear algebra系列视频的笔记  Vectors Linear combinations, span and basis vectors Linear transformations and matrices Matrix multiplication The Determina">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Essence-of-linear-algebra-3b1b">
+<meta property="og:url" content="https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Essence of linear algebra 这篇文章是3blue1brown的Essence of linear algebra系列视频的笔记  Vectors Linear combinations, span and basis vectors Linear transformations and matrices Matrix multiplication The Determina">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929190419825.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929190523369.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210926105607256.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210926105059810.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210927101847889.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928104234148.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928104342827.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928153905266.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154121351.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154143886.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154205327.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154221033.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154422622.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154512960.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928155247793.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928155521866.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928161330460.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928161613839.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928163229116.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928163737132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928170025088.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928190814830.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928190944152.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928193801179.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929100441396.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929102903240.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103010269.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103031185.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103848552.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103911585.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103944245.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929104136552.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929104925700.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110503345.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110547707.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110633803.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929112852029.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929112826908.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929113141083.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929121210291.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929163607041.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183502322.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183650226.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183711783.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929184851866.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929185244924.png">
+<meta property="article:published_time" content="2021-09-26T01:52:31.000Z">
+<meta property="article:modified_time" content="2022-03-07T03:04:56.213Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Math">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929190419825.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/","path":"math/Essence-of-linear-algebra-3b1b/","title":"Essence-of-linear-algebra-3b1b"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Essence-of-linear-algebra-3b1b | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#essence-of-linear-algebra"><span class="nav-number">1.</span> <span class="nav-text">Essence of linear algebra</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#vectors"><span class="nav-number">1.1.</span> <span class="nav-text">1 Vectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-combinations-span-and-basis-vectors"><span class="nav-number">1.2.</span> <span class="nav-text">2 Linear combinations, span and basis vectors</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#linear-transformations-and-matrices"><span class="nav-number">1.3.</span> <span class="nav-text">3 Linear transformations and matrices</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#matrix-multiplication"><span class="nav-number">1.4.</span> <span class="nav-text">4 Matrix multiplication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-determinant"><span class="nav-number">1.5.</span> <span class="nav-text">5 The Determinant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#inverse-matrices-column-space-and-null-space"><span class="nav-number">1.6.</span> <span class="nav-text">6 Inverse Matrices, column space and null space</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nonsquare-matrices-as-transformation-between-dimensions"><span class="nav-number">1.7.</span> <span class="nav-text">7 Nonsquare matrices as transformation between dimensions</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dot-products-and-duality"><span class="nav-number">1.8.</span> <span class="nav-text">8 Dot products and Duality</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cross-products"><span class="nav-number">1.9.</span> <span class="nav-text">9 Cross products</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#change-of-basis"><span class="nav-number">1.10.</span> <span class="nav-text">10 Change of basis</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eignvectors-and-eigenvalues"><span class="nav-number">1.11.</span> <span class="nav-text">11 Eignvectors and eigenvalues</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#abstract-vector-spaces"><span class="nav-number">1.12.</span> <span class="nav-text">12 Abstract vector spaces</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Essence-of-linear-algebra-3b1b | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Essence-of-linear-algebra-3b1b<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/math/Essence-of-linear-algebra-3b1b.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-09-26 09:52:31" itemprop="dateCreated datePublished" datetime="2021-09-26T09:52:31+08:00">2021-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-07 11:04:56" itemprop="dateModified" datetime="2022-03-07T11:04:56+08:00">2022-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Class/" itemprop="url" rel="index"><span itemprop="name">Class</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="essence-of-linear-algebra">Essence of linear algebra</h1>
+<p>这篇文章是3blue1brown的Essence of linear algebra系列视频的笔记</p>
+<ol type="1">
+<li>Vectors</li>
+<li>Linear combinations, span and basis vectors</li>
+<li>Linear transformations and matrices</li>
+<li>Matrix multiplication</li>
+<li>The Determinant</li>
+<li>Inverse Matrices, column space and null space</li>
+<li>Nonsquare matrices as transformation between dimensions</li>
+<li>Dot products and Duality</li>
+<li>Cross products</li>
+<li>Change of basis</li>
+<li>Eignvectors and eigenvalues</li>
+<li>Abstract vector spaces</li>
+</ol>
+<span id="more"></span>
+<h2 id="vectors">1 Vectors</h2>
+<p>如何认识向量？</p>
+<p>从一个物理学生的角度来看，一个向量是长度一定，角度一定，在空间中可以任意的移动。</p>
+<p>从一个计算机学生的角度来看，一个向量是一系列数字的list，这些数字可能具有独特的现实含义，比如房子的面积、单位售价等。</p>
+<p>从一个数学学家的角度来看，向量可以代表任何事物，只要能够保证向量相加和向量数乘有意义即可。</p>
+<p>如果尝试从几何的角度来看，可以看做坐标系下的箭头，起始点是原点，向量是坐标系下的不同数轴的坐标，这些坐标说明了如何从原点到达箭头的终点。</p>
+<p>向量的加法，可以看做是先沿着向量<span class="math inline">\(x\)</span>运动，然后沿着向量<span class="math inline">\(y\)</span>运动。</p>
+<p>向量的数乘，就是长度的缩放操作。</p>
+<h2 id="linear-combinations-span-and-basis-vectors">2 Linear combinations, span and basis vectors</h2>
+<p>向量可以看做是基向量的线性组合，不同坐标，表示缩放不同数轴上的基向量。</p>
+<p>span的定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929190419825.png" alt="image-20210929190419825" style="zoom:33%;" /></p>
+<p>basis vector的定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929190523369.png" alt="image-20210929190523369" style="zoom:33%;" /></p>
+<h2 id="linear-transformations-and-matrices">3 Linear transformations and matrices</h2>
+<p>Linear transformation：</p>
+<ul>
+<li>transformation就是一种函数，用在线代领域是为了强调对于向量的变换操作</li>
+<li>前面的linear有两个限制：转换后的直线仍然是直线，并且原点保持固定</li>
+</ul>
+<p>原点固定，是因为任何矩阵与0向量相乘，都是0向量，原点始终固定。</p>
+<p>线性变换的重要性质是，所有的变换的网格线（网格是想象中的一些向量的终点）是保持平行且等距分布的。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210926105607256.png" alt="image-20210926105607256" style="zoom:50%;" /></p>
+<p>所有变换后的新向量，都可以通过基向量的变换进行相同的转换操作。</p>
+<p>在一个二维转换中，我们可以把矩阵的列完全看做是变换后的基向量</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210926105059810.png" alt="image-20210926105059810" style="zoom:50%;" /></p>
+<p>向量<span class="math inline">\([a,c]\)</span>是变换后的基向量<span class="math inline">\(\hat{i}\)</span>，<span class="math inline">\([b,d]\)</span>是变换后的基向量<span class="math inline">\(\hat{j}\)</span>。</p>
+<p>因此，linear transformation可以看做是空间的一种变换，即基向量的变换。因此，我们可以直观上把矩阵看做是对空间的变换。</p>
+<h2 id="matrix-multiplication">4 Matrix multiplication</h2>
+<p>矩阵相乘可以看做是连续的空间变换，这也解释了为什么矩阵位置互换，结果不能保证一样。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210927101847889.png" alt="image-20210927101847889" style="zoom: 33%;" /></p>
+<p>上面的矩阵<span class="math inline">\(M_2\)</span>把矩阵<span class="math inline">\(M_1\)</span>的列向量进行变换，矩阵<span class="math inline">\(M_1\)</span>的列向量可以看做是新的基向量<span class="math inline">\(\hat{i}\)</span>。</p>
+<h2 id="the-determinant">5 The Determinant</h2>
+<p>行列式determinate的几何含义，以二维平面为例，就是以单位basis向量组成的单位正方形的面积的变化。比如：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928104234148.png" alt="image-20210928104234148" style="zoom: 33%;" /></p>
+<p>特殊的情况是determine为0：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928104342827.png" alt="image-20210928104342827" style="zoom:33%;" /></p>
+<p>此时整个空间被压缩为一条直线，甚至是一个点。因此，如果我们计算某个matrix的行列式是否为0，我们就知道这个矩阵是否表示把空间压缩到更小的维度上。</p>
+<p>此时还有另外的问题，那就是行列式是可以为负数的，此时，行列式代表矩阵会把空间翻转（fliping），行列式的绝对值仍然是面积的变化。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928153905266.png" alt="image-20210928153905266" style="zoom:33%;" /></p>
+<p>对于行列式的变换，假设<span class="math inline">\(\hat{i}\)</span>逐渐接近<span class="math inline">\(\hat{j}\)</span>，看下面一系列的动画：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154121351.png" alt="image-20210928154121351" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154143886.png" alt="image-20210928154143886" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154205327.png" alt="image-20210928154205327" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154221033.png" alt="image-20210928154221033" style="zoom:33%;" /></p>
+<p>出现了负数的行列式。</p>
+<p>如果在三维空间中，那么矩阵行列式就是单位体积的变化：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154422622.png" alt="image-20210928154422622" style="zoom: 33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928154512960.png" alt="image-20210928154512960" style="zoom:33%;" /></p>
+<p>因为矩阵的列向量可以看做是新的基向量，如果行列式为0，就表示出现了列向量线性相关的情况，某个或者多个列向量可以由其它列向量表示。</p>
+<p>行列式的计算过程，实际就是在计算这个面积/体积的变化，比如：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928155247793.png" alt="image-20210928155247793" style="zoom:33%;" /></p>
+<p>懂了行列式的几何意义，可以很轻松的理解下面的定理：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928155521866.png" alt="image-20210928155521866" style="zoom:33%;" /></p>
+<p>对空间进行<span class="math inline">\(M_1M_2\)</span>然后的变换后的面积变化=先进行<span class="math inline">\(M_2\)</span>变换，然后进行<span class="math inline">\(M_1\)</span>变换后的面积变化。本质是一样的。</p>
+<h2 id="inverse-matrices-column-space-and-null-space">6 Inverse Matrices, column space and null space</h2>
+<p>我们都知道，对于多元一次的方程组，求解未知变量，可以用矩阵的角度来看：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928161330460.png" alt="image-20210928161330460" style="zoom:33%;" /></p>
+<p>从矩阵是空间变换的角度来看，我们已知变换后的向量<span class="math inline">\(v\)</span>，只要逆着矩阵<span class="math inline">\(A\)</span>的变换，就能够找到空间变换前的向量<span class="math inline">\(x\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928161613839.png" alt="image-20210928161613839" style="zoom:33%;" /></p>
+<p>这就是矩阵的逆矩阵<span class="math inline">\(A^{-1}\)</span>，逆矩阵乘以矩阵，表示的是什么都不做的变换，即一个单位矩阵。</p>
+<p>只要行列式不为0，就存在对应的逆矩阵。</p>
+<p>如果行列式为0，表示矩阵<span class="math inline">\(A\)</span>将空间的维度进行了压缩，我们此时无法还原原来没有压缩的空间，它对应的解有无数种。</p>
+<p>如果矩阵表示的变化，最后把空间压缩为直线，就叫做此时矩阵的秩是1。如果压缩为二维平面，矩阵的秩就是2。</p>
+<p>rank表示变化空间后的空间维数，因此，一个矩阵最大的rank就是它本身的维数。</p>
+<p>矩阵的列空间：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928163229116.png" alt="image-20210928163229116" style="zoom:33%;" /></p>
+<p>矩阵的列空间也就是变换后的空间，rank就是指列空间的维数。</p>
+<p>矩阵的零空间null space：</p>
+<p>矩阵进行空间变换时，所有变换后落在原点的向量集合，组成了null space。</p>
+<p>在线性方程组上，就是变换后的向量是0向量：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928163737132.png" alt="image-20210928163737132" style="zoom:33%;" /></p>
+<h2 id="nonsquare-matrices-as-transformation-between-dimensions">7 Nonsquare matrices as transformation between dimensions</h2>
+<p>前面讨论的都是方阵，如果是一个非方阵，那么表示的是维度的变化，比如从二维变换为三维，三维变化为二维。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928170025088.png" alt="image-20210928170025088" style="zoom:33%;" /></p>
+<p>上面的矩阵就是从三维，变化到二维，列表示的基向量，从三维被表示为二维的向量，但是由于原来是三维空间，所有仍然有三个基向量。</p>
+<h2 id="dot-products-and-duality">8 Dot products and Duality</h2>
+<p>向量的点积就是所有维度的元素相乘然后相加。</p>
+<p>如果希望从几何角度来理解，可以把左边的向量<span class="math inline">\(u\)</span>转置，变为矩阵的形式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928190814830.png" alt="image-20210928190814830" style="zoom:33%;" /></p>
+<p>此时，从几何角度来看1维矩阵的变换，因为对称性，新的基向量<span class="math inline">\(\hat{i}\)</span>刚好是<span class="math inline">\(u_x\)</span>，新的基向量<span class="math inline">\(\hat{j}\)</span>刚好是<span class="math inline">\(u_y\)</span>。使用新的变换矩阵作用在向量<span class="math inline">\([x, y]^T\)</span>上，就是对其进行和对投影的变化操作。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928190944152.png" alt="image-20210928190944152" style="zoom:33%;" /></p>
+<h2 id="cross-products">9 Cross products</h2>
+<p>差积的定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210928193801179.png" alt="image-20210928193801179" style="zoom:33%;" /></p>
+<p>一个新的向量，长度是<span class="math inline">\(v\)</span>和<span class="math inline">\(w\)</span>组成的平行四边形的面积，方向垂直于该平行四边形。</p>
+<p>该平行四边形面积的计算，可以使用<span class="math inline">\(v\)</span>和<span class="math inline">\(w\)</span>组成矩阵，然后求该矩阵的行列式。</p>
+<h2 id="change-of-basis">10 Change of basis</h2>
+<p>当我们定义了不同的基向量来描述空间中的同一个向量时，即使是同一个向量，也会使用不同的坐标来描述。</p>
+<p>一个矩阵的列向量可以看做是新的基向量，它描述的是另一个坐标系的基向量，在我们想象当中的坐标系中的表示，</p>
+<p>比如下面的形式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929100441396.png" alt="image-20210929100441396" style="zoom:33%;" /></p>
+<p><span class="math inline">\([2,1]\)</span>和<span class="math inline">\([-1, 1]\)</span>是另外的坐标系的基向量，但是如果在另外的坐标系中，它实际表示的是<span class="math inline">\([1,0]\)</span>和<span class="math inline">\([0,1]\)</span>。我们使用自己的语言/坐标系来描述另一个坐标系的基向量。坐标<span class="math inline">\([-1,2]\)</span>是在另一个坐标系下的坐标。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929102903240.png" alt="image-20210929102903240" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103010269.png" alt="image-20210929103010269" style="zoom:33%;" /></p>
+<p>如果我们是希望自己坐标系下的<span class="math inline">\([-1,2]\)</span>，被转换到另一个坐标系中，那么我们可以用逆矩阵进行转化。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103031185.png" alt="image-20210929103031185" style="zoom:33%;" /></p>
+<p>接下来，如果我们在自己的坐标系下，使用矩阵，进行了一个空间变化/基向量的线性转换，那么在另一个坐标系下，进行相同的转化的矩阵应该是什么？</p>
+<p>实际上，我们只需要首先，把另一个坐标系下的基向量变换到自己的坐标系下，然后进行要求的空间变换，最后通过逆矩阵再变换到另一个坐标系下。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103848552.png" alt="image-20210929103848552" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103911585.png" alt="image-20210929103911585" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929103944245.png" alt="image-20210929103944245" style="zoom:33%;" /></p>
+<p>因此，如果我们看到下面的形式，我们可以直接从中间矩阵<span class="math inline">\(M\)</span>来看发生了什么变化，左右两侧的矩阵表示空间基向量坐标的转化：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929104136552.png" alt="image-20210929104136552" style="zoom:33%;" /></p>
+<h2 id="eignvectors-and-eigenvalues">11 Eignvectors and eigenvalues</h2>
+<p>如何从几何角度理解特征值和特征向量？</p>
+<p>还是假设在一个空间坐标中，进行了空间变换。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929104925700.png" alt="image-20210929104925700" style="zoom:33%;" /></p>
+<p>在进行这个空间变换中，大多数的向量都会发生一个角度的偏移，即和原来的向量不在一条直线上。但是有一些向量是和原来的向量还在一条直线上，对于这些向量来说，空间的变换仅仅是发生了长度的缩放，比如说对于所有在x轴上的向量来说，仅仅是长度增长三倍。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110503345.png" alt="image-20210929110503345" style="zoom:33%;" /></p>
+<p>还存在其它的向量，也是类似的只会进行长度的缩放</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110547707.png" alt="image-20210929110547707" style="zoom:33%;" /></p>
+<p>这些向量就叫做特征向量，需要进行的长度缩放就叫做特征值。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929110633803.png" alt="image-20210929110633803" style="zoom:33%;" /></p>
+<p>求解特征向量与特征值的一般过程：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929112852029.png" alt="image-20210929112852029" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929112826908.png" alt="image-20210929112826908" style="zoom:33%;" /></p>
+<p>根据前面的矩阵是空间变换可知，如果希望把一个向量通过矩阵空间变化，压缩为0向量，那么只有可能是行列式为0。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929113141083.png" alt="image-20210929113141083" style="zoom:33%;" /></p>
+<p>当然，这样的性质表明了不是所有的矩阵都会有特征值，有的矩阵会把所有的向量都进行旋转操作，也就不存在特征向量了。</p>
+<p>对应特征值的特征向量不一定就在一条直线上，最简单的，考虑一个矩阵是将所有向量都扩放到2倍。那么对于特征值2的特征向量就是整个空间下的所有向量。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929121210291.png" alt="image-20210929121210291" style="zoom:33%;" /></p>
+<p>接下来，看一下由特征向量为基，组成的特征空间的作用。</p>
+<p>对于一个矩阵，如果它的特征向量有多个，可以组成一个全空间，那么以这些特征向量作为新的基向量，如果我们将这个新的特征基组成的basis change矩阵作用在原始矩阵上：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929163607041.png" alt="image-20210929163607041" style="zoom:33%;" /></p>
+<p>我们知道，这样得到的新矩阵，和之前的矩阵对于空间中的向量来说是同一种变换，但是是从新的特征空间下看的。这样得到的新的变换矩阵 ，在特征空间下，一定是对角矩阵，对角值是特征值。</p>
+<p>这是因为，整个原始矩阵的空间变换，对于新的特征空间下的作为基向量的特征向量来说，仅仅是起到了缩放的作用，所以新的特征空间下的矩阵变换，就是对角矩阵，只有长度进行了缩放。</p>
+<h2 id="abstract-vector-spaces">12 Abstract vector spaces</h2>
+<p>线性转换的概念不仅局限在向量上，对于函数同样存在这样的定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183502322.png" alt="image-20210929183502322" style="zoom:33%;" /></p>
+<p>求导运算，实际就是一种线性运算。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183650226.png" alt="image-20210929183650226" style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929183711783.png" alt="image-20210929183711783" style="zoom:33%;" /></p>
+<p>实际上，向量的很多概念是可以应用到函数上的。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929184851866.png" alt="image-20210929184851866" style="zoom:33%;" /></p>
+<p>向量的类似概念是可以推广到进行了任意定义的对象的，只要定义的数乘运算和相加运算，能够满足下面的checklist，就可以认为此时定义的新的运算，可以组成一个向量空间，可以使用向量的各种相关概念去思考，定义。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210929185244924.png" alt="image-20210929185244924" style="zoom:33%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/" title="Essence-of-linear-algebra-3b1b">https://liuxiyang641.github.io/math/Essence-of-linear-algebra-3b1b/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Math/" rel="tag"><i class="fa fa-tag"></i> Math</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/collection/hypernetworks-collection/" rel="prev" title="hypernetworks-collection">
+                  <i class="fa fa-chevron-left"></i> hypernetworks-collection
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/algorithm-note/6-stl/" rel="next" title="6-stl">
+                  6-stl <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"25f6147ceb80cb77c8720eae38046980"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

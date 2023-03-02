@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Language Models are Few-Shot Learners GPT-3，NIPS 2020 技术报告63页，不是投稿的论文，OpenAI，2020-05  Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="GPT-3">
+<meta property="og:url" content="https://liuxiyang641.github.io/nlp/GPT-3/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Language Models are Few-Shot Learners GPT-3，NIPS 2020 技术报告63页，不是投稿的论文，OpenAI，2020-05  Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194903403.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512193531024.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512195107205.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194115923.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194411891.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513160142526.png">
+<meta property="article:published_time" content="2022-05-12T11:18:09.000Z">
+<meta property="article:modified_time" content="2022-05-13T08:23:05.613Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194903403.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/nlp/GPT-3/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/nlp/GPT-3/","path":"nlp/GPT-3/","title":"GPT-3"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GPT-3 | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#language-models-are-few-shot-learners"><span class="nav-number">1.</span> <span class="nav-text">Language Models are Few-Shot Learners</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#approach"><span class="nav-number">1.2.</span> <span class="nav-text">2 Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#model-and-architectures"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Model and Architectures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training-dataset"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Training Dataset</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#results"><span class="nav-number">1.3.</span> <span class="nav-text">3 Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#limitations"><span class="nav-number">1.4.</span> <span class="nav-text">5 Limitations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#broader-impacts"><span class="nav-number">1.5.</span> <span class="nav-text">6 Broader Impacts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conclusion"><span class="nav-number">1.6.</span> <span class="nav-text">Conclusion</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/nlp/GPT-3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GPT-3 | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GPT-3<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/nlp/GPT-3.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-05-12 19:18:09" itemprop="dateCreated datePublished" datetime="2022-05-12T19:18:09+08:00">2022-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-05-13 16:23:05" itemprop="dateModified" datetime="2022-05-13T16:23:05+08:00">2022-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/Pretrain/" itemprop="url" rel="index"><span itemprop="name">Pretrain</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="language-models-are-few-shot-learners">Language Models are Few-Shot Learners</h1>
+<p>GPT-3，NIPS 2020 技术报告63页，不是投稿的论文，OpenAI，2020-05</p>
+<blockquote>
+<p>Recent work has demonstrated substantial gains on many NLP tasks and benchmarks by pre-training on a large corpus of text followed by ﬁne-tuning on a speciﬁc task. While typically task-agnostic in architecture, this method still requires task-speciﬁc ﬁne-tuning datasets of thousands or tens of thousands of examples. By contrast, humans can generally perform a new language task from only a few examples or from simple instructions – something which current NLP systems still largely struggle to do. <strong>Here we show that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art ﬁne-tuning approaches.</strong> Speciﬁcally, we train GPT-3, an autoregressive language model with 175 billion parameters, 10x more than any previous non-sparse language model, and test its performance in the few-shot setting. For all tasks, GPT-3 is applied without any gradient updates or ﬁne-tuning, with tasks and few-shot demonstrations speciﬁed purely via text interaction with the model. GPT-3 achieves strong performance on many NLP datasets, including translation, question-answering, and cloze tasks, as well as several tasks that require on-the-ﬂy reasoning or domain adaptation, such as unscrambling words, using a novel word in a sentence, or performing 3-digit arithmetic. At the same time, we also identify some datasets where GPT-3’s few-shot learning still struggles, as well as some datasets where GPT-3 faces methodological issues related to training on large web corpora. Finally, we ﬁnd that GPT-3 can generate samples of news articles which human evaluators have difﬁculty distinguishing from articles written by humans. We discuss broader societal impacts of this ﬁnding and of GPT-3 in general.</p>
+</blockquote>
+<p>GPT-3比GPT-2强调的zero-shot的设置，稍微回退了一点，变为强调few-shot的设置。</p>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>最近NLP领域热衷于研究pre-trained的语言表示，寻找能够实现task-agnostic的方法。</p>
+<p>一开始研究者学习word的表示，然后作为task-specific的模型的输入。</p>
+<p>最近出现了预训练+fine-tunning的模式，取得了很大的进展。</p>
+<p><strong>问题</strong>：进行任务相关的微调，可能带来下面几个缺点：</p>
+<ol type="1">
+<li><p>fine-tuning需要为不同的任务收集有监督的数据。每一个新任务都需要收集新的数据，这当然限制了模型的表达能力</p></li>
+<li><p>fine-tuning的操作，会使得之前pre-training好的model向着一个狭隘的训练分布拟合，导致实际上更大的模型不一定会在训练分布之外表现出更好的泛化性，也就没有办法真正的评估出预训练模型的好坏</p></li>
+<li><p>从人类的角度来看，学习特定的语言任务并不需要太多的数据，比如一个简单的描述就可以让人类进行对应的行为。这使得人类可以很快的学会大量不同的任务，并且同时无缝的执行不同的语言任务。我们期望语言模型也能够拥有这样的易变性（ﬂuidity）和普遍性（generality）</p></li>
+</ol>
+<p><strong>解决思路</strong>：</p>
+<p>一方面近期出现了一些在NLP上进行元学习的方法，比如“in-context learning”，把预训练模型的输入，构造出不同task的形式，让模型能够在训练的时候学习到广泛的模式识别能力。</p>
+<blockquote>
+<p>Recent work [RWC +19] attempts to do this via what we call “in-context learning”, using the text input of a pretrained language model as a form of task speciﬁcation: the model is conditioned on a natural language instruction and/or a few demonstrations of the task and is then expected to complete further instances of the task simply by predicting what comes next.</p>
+</blockquote>
+<p>下面这张图是对于语言模型可能在进行潜在的元学习的说明，并不是GPT-3真正的训练过程。比如不同的document有不同的context，是在讨论不同的领域。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194903403.png" style="zoom:50%;" /></p>
+<p>但是这一方向的元学习方法效果还远远不够好。</p>
+<p>另一方面，最近出现了一系列基于transformer的大模型，随着规模增大，效果逐渐提升。</p>
+<p>那么作者的思路就是结合两者：</p>
+<p>如果也将元学习的模型规模扩大，可能它的能力也会得到提高。</p>
+<blockquote>
+<p>Since in-context learning involves absorbing many skills and tasks within the parameters of the model, it is plausible that in-context learning abilities might show similarly strong gains with scale.</p>
+</blockquote>
+<p>虽然作者提到了元学习的概念，但是这里的n-shot的example，并不会像一般的元学习方法一样去更新参数，在GPT-3的n-shot的example仅仅是作为输入，用来提示必要的信息。</p>
+<p>这篇文章作者进行了以下的探究和贡献：</p>
+<ul>
+<li>提出了拥有1750亿参数量的GPT-3，重点在于探究它的元学习能力。参数量是GPT-2的116倍；GPT-1的1600倍左右。</li>
+<li>对GPT-3的性能，分别在zero-shot、one-shot和few-shot的设置下进行了大量的实验。讨论了GPT-3表现优越的地方，和表现不好的情况。</li>
+<li>研究了在大规模语料中出现的数据污染问题（data contamination），即测试集中的内容可能在训练集中出现，特别是因为很多数据是收集于web上。发展出一套评估数据污染情况和后果的工具。</li>
+</ul>
+<h2 id="approach">2 Approach</h2>
+<p>GPT-3使用的几种不同的实验设置：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512193531024.png" style="zoom:40%;" /></p>
+<p>最终效果显示，GPT-3在少次任务下表现相对最好，甚至在某些情况下超过了SOTA的模型；在one-shot和zero-shot的情况下，很多的任务表示promising，没有达到SOTA。</p>
+<blockquote>
+<p>Broadly, on NLP tasks GPT-3 achieves promising results in the zero-shot and one-shot settings, and in the the few-shot setting is sometimes competitive with or even occasionally surpasses state-of-the-art (despite state-of-the-art being held by ﬁne-tuned models).</p>
+</blockquote>
+<p>在一个移除随机符号的NLP任务下，不同设置的GPT-3的性能：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512195107205.png" style="zoom:40%;" /></p>
+<p>作者也发现，GPT-3在一些任务，比如自然语言推理以及阅读理解的部分数据集下表现不好。</p>
+<blockquote>
+<p>At the same time, we also ﬁnd some tasks on which few-shot performance struggles, even at the scale of GPT-3. This includes natural language inference tasks like the ANLI dataset, and some reading comprehension datasets like RACE or QuAC.</p>
+</blockquote>
+<h3 id="model-and-architectures">2.1 Model and Architectures</h3>
+<p>沿用GPT-2的架构。区别是使用了Sparse Transformer中的一些机制：</p>
+<blockquote>
+<p>we use alternating dense and locally banded sparse attention patterns in the layers of the transformer, similar to the Sparse Transformer.</p>
+</blockquote>
+<p>实现的不同大小的模型：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194115923.png" style="zoom:50%;" /></p>
+<p>更大的模型，使用了更大的batch size和更小的学习率。猜测是大模型拟合能力更强，容量更大，因此扩大batch size、减小learning rate都是避免模型拟合太快</p>
+<h3 id="training-dataset">2.2 Training Dataset</h3>
+<p>大规模语料，来自多个不同的数据集，由于规模大，整个语料基本上一个sequence只需要训练一次即可。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220512194411891.png" style="zoom:50%;" /></p>
+<p>这里需要特别注意Common Crawl，原始版本包括了万亿级别单词，但是数据质量比较低。因此作者对它进行了一系列的数据清洗，最后得到了大概4100亿token，大小570 GB。</p>
+<ol type="1">
+<li>把Common Crawl数据集下载下来，然后使用一个简单的线性回归分类器，正类是高质量的数据集，比如GPT-2的WebText里的数据；负类是Common Crawl中原始的数据。然后对所有的Common Crawl中数据进行预测，如果分类到了正，就认为质量还可以，否则的话就过滤掉。</li>
+<li>去重，使用LSH算法判断两个document是不是重合的。</li>
+<li>把多个高质量的数据集加进去</li>
+</ol>
+<p>在训练的时候，根据数据集的质量来采样，而不是根据数据集的大小。</p>
+<p>在训练大规模model的时候，大规模语料可能在无意间包含了下游任务的测试信息，因此作者根据所有测试任务的验证和测试集，对训练语料进行了数据清洗。</p>
+<blockquote>
+<p>To reduce such contamination, we searched for and attempted to remove any overlaps with the development and test sets of all benchmarks studied in this paper.</p>
+</blockquote>
+<p>但是GPT-3的初始版本训练的数据集没有完全过滤掉污染的数据，并且由于训练代价，没法再次进行训练。</p>
+<blockquote>
+<p>Unfortunately, a bug in the ﬁltering caused us to ignore some overlaps, and due to the cost of training it was not feasible to retrain the model.</p>
+</blockquote>
+<h2 id="results">3 Results</h2>
+<p>不同大小的模型，计算量和验证集上的损失下降的趋势。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220513160142526.png" style="zoom:50%;" /></p>
+<p>可以看到，对于单个模型，最好的方案是在每个loss和计算量相对平衡的点，继续进行运算，loss基本处于收敛的情况。如果把各个模型的平衡点相连，大致上是一个power-law的分布。也就是说，找到一个合适的模型，不过度训练的情况下，随着计算量呈指数增长，模型精度大概是线性下降的趋势。</p>
+<h2 id="limitations">5 Limitations</h2>
+<ol type="1">
+<li>虽然效果比GPT-2要好很多，但是在文本生成任务上还是较弱。GPT-3擅长描述一段的文本，但是不擅长写更多、更长的文本。</li>
+<li>结构和算法上的局限性，比如只能从前向后看。然后比如是在预测的时候，对于每一个token都是一样的处理，没有提取最重要的token。并且也只能学习文本的信息，并没有对物理世界的各种其它信息的感知。</li>
+<li>样本有效性不够，使用了过多过大的语料。</li>
+<li>不确定性，不确定GPT-3到底是在推理的时候真的从头学习到了怎么进行新的任务，还是说只是识别出了之前在预训练的时候见过的模式。</li>
+<li>训练代价昂贵。</li>
+<li>无法解释。</li>
+</ol>
+<h2 id="broader-impacts">6 Broader Impacts</h2>
+<ol type="1">
+<li>可能会被用来做坏事，假新闻造谣、论文造假等等</li>
+<li>公平、偏见（性别、种族、宗教等等）。比如GPT-3更可能认为某个角色是男性</li>
+<li>能耗</li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<blockquote>
+<p>We presented a 175 billion parameter language model which shows strong performance on many NLP tasks and benchmarks in the zero-shot, one-shot, and few-shot settings, in some cases nearly matching the performance of state-of-the-art ﬁne-tuned systems, as well as generating high-quality samples and strong qualitative performance at tasks deﬁned on-the-ﬂy. We documented roughly predictable trends of scaling in performance without using ﬁne-tuning. We also discussed the social impacts of this class of model. Despite many limitations and weaknesses, these results suggest that very large language models may be an important ingredient in the development of adaptable, general language systems.</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/nlp/GPT-3/" title="GPT-3">https://liuxiyang641.github.io/nlp/GPT-3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/NLP/" rel="tag"><i class="fa fa-tag"></i> NLP</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/nlp/GPT-2/" rel="prev" title="GPT-2">
+                  <i class="fa fa-chevron-left"></i> GPT-2
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/ml/Attention-survey-2021/" rel="next" title="Attention-survey-2021">
+                  Attention-survey-2021 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"4d63eb7fbc5158c25e25ca5026d70173"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

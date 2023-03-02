@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="HAKE">
+<meta property="og:url" content="https://liuxiyang641.github.io/kge/HAKE/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction 2019-12-15 AAAI 2020 Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。 HAKE为了区分所有的实体，将实体嵌入分为两部分：  不同的语义层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173938559.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614174230314.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614175049088.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614181125392.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614180811928.png">
+<meta property="article:published_time" content="2021-04-15T08:35:28.000Z">
+<meta property="article:modified_time" content="2022-09-02T12:00:27.641Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/kge/HAKE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/kge/HAKE/","path":"kge/HAKE/","title":"HAKE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>HAKE | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#learning-hierarchy-aware-knowledge-graph-embeddings-for-link-prediction"><span class="nav-number">1.</span> <span class="nav-text">Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-proposed-hake"><span class="nav-number">1.2.</span> <span class="nav-text">2 The Proposed HAKE</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-modulus-part"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 The modulus part</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#the-phase-part"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 The phase part</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#loss-function"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Loss Function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments-and-analysis"><span class="nav-number">1.3.</span> <span class="nav-text">3 Experiments and Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#main-results"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Main Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-on-relation-embeddings"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Analysis on Relation Embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#analysis-on-entity-embeddings"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Analysis on Entity Embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ablation-studies"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Ablation Studies</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/kge/HAKE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="HAKE | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          HAKE<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/kge/HAKE.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-15 16:35:28" itemprop="dateCreated datePublished" datetime="2021-04-15T16:35:28+08:00">2021-04-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-02 20:00:27" itemprop="dateModified" datetime="2022-09-02T20:00:27+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/KGE/" itemprop="url" rel="index"><span itemprop="name">KGE</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="learning-hierarchy-aware-knowledge-graph-embeddings-for-link-prediction">Learning Hierarchy-Aware Knowledge Graph Embeddings for Link Prediction</h1>
+<p>2019-12-15 AAAI 2020</p>
+<p>Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。</p>
+<p>HAKE为了区分所有的实体，将实体嵌入分为两部分：</p>
+<ul>
+<li>不同的语义层级下的实体，使用极坐标的模长/极径（modulus）表示</li>
+<li>同一语义层级下的不同实体，使用极坐标的相位/极角（phase）表示</li>
+</ul>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>问题：目前的模型大多没有对于语义层级关系（semantic hierarchy）进行建模</p>
+<p>解决方案：引入极坐标系（polar coordinate system），</p>
+<ul>
+<li>具有更高语义层级的实体具有更小的半径</li>
+<li>同一语义层级的实体具有不同的角度</li>
+</ul>
+<p>知识图谱在是一系列的事实的集合，是语义网络的拓展。</p>
+<p>现在的知识图谱可以包含数以亿计的事实（fact），但是知识图谱不可能包含所有实际中存在的事实。因此，链路预测（link prediction）/知识图谱补全（knowledge base completion）成为了研究的一个方向。即如何根据已有的事实，预测可能存在的事实。</p>
+<p>受到词嵌入的启发，知识图谱嵌入（knowgraph graph embedding）——将知识图谱映射到离散的表示形式，就成为了研究热点。</p>
+<blockquote>
+<ul>
+<li>知识图谱嵌入的应用方向很多，不只是链路预测，还包括实体分类等等。</li>
+<li>知识图谱嵌入也只是图嵌入的一个方向</li>
+<li>链路预测对于其它的图（社交网络等），同样成立</li>
+</ul>
+</blockquote>
+<p>之前的知识图嵌入的工作主要集中在建模关系的特性：</p>
+<ul>
+<li>对称/不对称</li>
+<li>可逆/不可逆</li>
+<li>组合</li>
+</ul>
+<p>在知识图谱当中存在语义的层级，比如在wordnet知识图谱里，[arbor/cassia/palm, hypernym, tree]，tree的语义层级要高于[hypernym, tree]。对于如何利用知识图谱的语义特性的工作较少，并且很多要求要增加额外的信息，例如额外的文本描述，来建模知识图谱的层级关系。</p>
+<p>Hierarchy-Aware Knowledge Graph Embeddings（HAKE）就是不增加额外的信息，利用知识图谱的语义层级建模。</p>
+<p>HAKE为了区分所有的实体，将实体嵌入分为两部分：</p>
+<ul>
+<li>不同的语义层级下的实体，使用极坐标的模长/极径（modulus）表示</li>
+<li>同一语义层级下的不同实体，使用极坐标的相位/极角（phase）表示</li>
+</ul>
+<h2 id="the-proposed-hake">2 The Proposed HAKE</h2>
+<p>HAKE的模型图：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173832367.png" alt="image-20200614173832367" /><figcaption>image-20200614173832367</figcaption>
+</figure>
+<h3 id="the-modulus-part">2.1 The modulus part</h3>
+<p>极坐标的极径建模实体的语义层级。</p>
+<p>知识图谱中的实体可以组成一棵树，越往上的实体语义层级越高，越往下的语义层级越低。使用模量/极径表示实体在语义树中的深度，具有越高的语义层级的实体有更小的深度，更小的模量。</p>
+<p>使用<span class="math inline">\(e_m\)</span>表示嵌入的模量部分modulus part，则有： <span class="math display">\[
+h_m\circ r_m=t_m,\  where\ h_m,\ t_m\in R^k,\ r_m \in R^k_{+}
+\]</span> 距离函数为： <span class="math display">\[
+d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2
+\]</span> 要注意这里限制了<span class="math inline">\(r_m\)</span>必须在正数域下，这是因为正数的<span class="math inline">\(r_m\)</span>不会改变<span class="math inline">\(h_m\)</span>的符号，这是因为对于正样本<span class="math inline">\((h,r,t)\)</span>，<span class="math inline">\(h_m\)</span>与<span class="math inline">\(t_m\)</span>倾向于有相同的符号，<span class="math display">\[d_{r,m}(h_m,t_m)\]</span>更小，而负样本<span class="math inline">\((h,r,t^{&#39;})\)</span>更难保证同一纬度下的<span class="math inline">\(h_m\)</span>与<span class="math inline">\(t_m\)</span>倾向有相同的符号，导致<span class="math inline">\(d_{r,m}(h_m,t_m^{&#39;})\)</span>更大。</p>
+<p>这样的<span class="math inline">\(r_m\)</span>成为了一个缩放操作，对于<span class="math inline">\((h,r,t)\)</span>，</p>
+<ol type="1">
+<li>如果h的层级比t更大，r倾向于&gt;1</li>
+<li>如果h的层级与t一样，r倾向于=1</li>
+<li>如果h的层级比t更小，r倾向于&lt;1</li>
+</ol>
+<h3 id="the-phase-part">2.2 The phase part</h3>
+<p>进一步区分同一层级下的不同实体。</p>
+<p>使用<span class="math inline">\(e_p\)</span>表示相位部分， <span class="math display">\[
+(h_p+r_p)\ mod\ 2\pi = t_p,\ where\ h_p,t_p,r_p\in [0, 2\pi)^k
+\]</span> 距离函数： <span class="math display">\[
+d_{r,p}(h_p,t_p)=|| \sin{((h_p + r_p - t_p)/2)} ||_1
+\]</span> 除以2是保证<span class="math inline">\((h_p + r_p - t_p)/2\in [0, 2\pi)^k\)</span>，上面的式子和pRotatE中的一样。</p>
+<h3 id="loss-function">2.3 Loss Function</h3>
+<p>经过上面的两部分，获得总的嵌入： <span class="math display">\[
+e=[e_m;e_p]
+\]</span> 之后计算<span class="math inline">\((h,r,t)\)</span>存在概率的得分： <span class="math display">\[
+f_r(h,t)=-(d_{r,m}(h,t)+\lambda d_{r,p}(h,t))
+\]</span> 使用负采样的损失函数： <span class="math display">\[
+L=-log\sigma(\gamma-f_r(h,t))-\sum_{i=1}^n p(h^{&#39;}_i, r, t^{&#39;}_i) log\sigma(f_r(h^{&#39;}_i,t^{&#39;}_i)-\gamma) \\
+p(h^{&#39;}_j, r, t^{&#39;}_j) =\frac{exp\alpha f_r(h^{&#39;}_j, t^{&#39;}_j)}{\sum_i f_r(h^{&#39;}_i, t^{&#39;}_i)}
+\]</span></p>
+<h2 id="experiments-and-analysis">3 Experiments and Analysis</h2>
+<h3 id="main-results">3.1 Main Results</h3>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614173938559.png" alt="image-20200614173938559" /><figcaption>image-20200614173938559</figcaption>
+</figure>
+<p>三个数据集：WN18RR, FB15k-237, YAGO3-10</p>
+<p>为了说明phase part部分的作用，只保留modulus part，作为模型<strong>ModE</strong>： <span class="math display">\[
+d_{r,m}(h_m, t_m)=||h_m\circ r_m - t_m||_2\  where\ h_m,\ t_m\ r_m \in R^k
+\]</span></p>
+<h3 id="analysis-on-relation-embeddings">3.2 Analysis on Relation Embeddings</h3>
+<p>首先，说明HAKE能否捕获不同语义层级的信息。</p>
+<p>只使用modulus part，下图是表示不同语义层级的关系embedding的直方图，横轴是大小，纵轴是密度</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614174230314.png" /></p>
+<p>其中，</p>
+<ul>
+<li>a和b是尾实体比头实体的关系语义层级高，结果显示关系embedding大部分元素&lt;1</li>
+<li>c和d是尾实体比头实体的关系语义层级一样，结果显示关系embedding大部分元素=1</li>
+<li>e和f是尾实体比头实体的关系语义层级低，结果显示关系embedding大部分元素&gt;1</li>
+</ul>
+<p>同样可以看出HAKE比ModE的方差更小，说明HAKE的建模更准确。</p>
+<p>之后，说明phase part的作用，比较c和d的关系embedding的phase part</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614175049088.png" /></p>
+<p>上述结果说明有很多关系嵌入的phase part元素分布在<span class="math inline">\(\pi\)</span>，导致<span class="math inline">\(h_p\)</span>和<span class="math inline">\(t_p\)</span>不一样，可以区分同一语义层级的不同实体。</p>
+<h3 id="analysis-on-entity-embeddings">3.3 Analysis on Entity Embeddings</h3>
+<p>因为是使用极坐标来表示语义层级，可以把实体embedding在极坐标中可视化。</p>
+<p>实体embedding大小为1000，选500个维度画在二维极坐标中，对原始的极径使用对数函数，来更好的展示结果。由于所有模的值都小于1，因此在图中，更大的直径表示更小的模值，即更高的语义层级。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614181125392.png" /></p>
+<p>图中显示的结果说明HAKE比RotatE能够更好的捕获层级关系。</p>
+<h3 id="ablation-studies">3.4 Ablation Studies</h3>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20200614180811928.png" alt="image-20200614181125392" /><figcaption>image-20200614181125392</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/kge/HAKE/" title="HAKE">https://liuxiyang641.github.io/kge/HAKE/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/kge/R-GCN/" rel="prev" title="R-GCN">
+                  <i class="fa fa-chevron-left"></i> R-GCN
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/gnn/InteractE/" rel="next" title="InteratE">
+                  InteratE <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"5a173480f030026c59c8128a1d6491f3"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

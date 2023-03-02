@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="The intuitions behind Tree-structured Parzen estimator TPE：一种基于贝叶斯推断的超参数调优方法。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="TPE">
+<meta property="og:url" content="https://liuxiyang641.github.io/ml/TPE/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="The intuitions behind Tree-structured Parzen estimator TPE：一种基于贝叶斯推断的超参数调优方法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110144728090.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110161036552.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110145710920.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163042989.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163827025.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163935502.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191535439.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191405221.png">
+<meta property="article:published_time" content="2021-04-16T07:10:05.000Z">
+<meta property="article:modified_time" content="2022-09-02T12:00:27.676Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110144728090.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/ml/TPE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/ml/TPE/","path":"ml/TPE/","title":"TPE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TPE | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#the-intuitions-behind-tree-structured-parzen-estimator"><span class="nav-number">1.</span> <span class="nav-text">The intuitions behind Tree-structured Parzen estimator</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">1.1.</span> <span class="nav-text">Reference</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-hyper-parameter-optimization"><span class="nav-number">1.2.</span> <span class="nav-text">1. Bayesian hyper-parameter optimization</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sequential-model-based-global-optimization-smbo"><span class="nav-number">1.3.</span> <span class="nav-text">2. Sequential model-based global optimization (SMBO)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="nav-number">1.3.1.</span> <span class="nav-text">2.1 伪代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E7%B2%97%E6%B5%85%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.2 一些粗浅的理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E8%A6%81%E7%B4%A0"><span class="nav-number">1.3.3.</span> <span class="nav-text">2.4 核心要素</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#domain"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">2.4.1 Domain</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#objective-function"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">2.4.2 Objective Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#surrogate-function"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">2.4.3 Surrogate Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#selection-function"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">2.4.4 Selection Function</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tree-structured-parzen-estimatortpe"><span class="nav-number">1.4.</span> <span class="nav-text">3 Tree-structured Parzen estimator(TPE)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%86"><span class="nav-number">1.4.1.</span> <span class="nav-text">3.1 基础认识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E8%BF%87%E7%A8%8B%E6%8E%A8%E6%BC%94"><span class="nav-number">1.4.2.</span> <span class="nav-text">3.2 具体过程推演</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#expected-improvement-ei"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">3.2.1 Expected Improvement (EI)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%B0%E8%AE%A1%E8%B6%85%E5%8F%82%E6%95%B0%E7%9A%84%E5%88%86%E5%B8%83"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">3.2.2 估计超参数的分布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B1%82%E8%A7%A3%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">1.4.2.3.</span> <span class="nav-text">3.2.3 求解的过程</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/TPE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TPE | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TPE<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/ml/TPE.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-16 15:10:05" itemprop="dateCreated datePublished" datetime="2021-04-16T15:10:05+08:00">2021-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-02 20:00:27" itemprop="dateModified" datetime="2022-09-02T20:00:27+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="the-intuitions-behind-tree-structured-parzen-estimator">The intuitions behind Tree-structured Parzen estimator</h1>
+<p>TPE：一种基于贝叶斯推断的超参数调优方法。</p>
+<span id="more"></span>
+<h2 id="reference">Reference</h2>
+<p>[1] Frazier P I. A tutorial on bayesian optimization[J]. arXiv preprint arXiv:1807.02811, 2018.</p>
+<p>[2] Bergstra J S, Bardenet R, Bengio Y, et al. Algorithms for hyper-parameter optimization[C]//Advances in neural information processing systems. 2011: 2546-2554.</p>
+<p>[3] Xia Y, Liu C, Li Y Y, et al. A boosted decision tree approach using Bayesian hyper-parameter optimization for credit scoring[J]. Expert Systems with Applications, 2017, 78: 225-241.</p>
+<p>[4] <a target="_blank" rel="noopener" href="https://towardsdatascience.com/a-conceptual-explanation-of-bayesian-model-based-hyperparameter-optimization-for-machine-learning-b8172278050f">A Conceptual Explanation of Bayesian Hyperparameter Optimization for Machine Learning</a></p>
+<h2 id="bayesian-hyper-parameter-optimization">1. Bayesian hyper-parameter optimization</h2>
+<p>贝叶斯超参数优化是一种为序列模式的模型提供的求全局优化的方法。</p>
+<p>针对的问题：求解object function：</p>
+<p><span class="math display">\[ min_{x\in A} f(x) \]</span></p>
+<p>主要适用的情景：</p>
+<ul>
+<li>x的维度不是太大，一般会限制在<span class="math inline">\(d\lt20\)</span>，x可以理解为一个超参数序列</li>
+<li><span class="math inline">\(f(x)\)</span>是一个计算起来很消耗时间的函数，例如损失函数</li>
+<li>对<span class="math inline">\(f(x)\)</span>很难求导</li>
+<li>......</li>
+</ul>
+<p>举例：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110144728090.png" style="zoom:50%;" /></p>
+<p>纵坐标是<span class="math inline">\(f(x)\)</span>，很明显如果是我们人工去选择下一组超参数的话，会在左下角score=20的这几个点中间去搜索，而不会还是进行一个全局的抽样。这实际就是一个贝叶斯优化过程。</p>
+<p>但是对于Random search，grid search这些方法，并不会利用到历史的信息来进行选择。</p>
+<h2 id="sequential-model-based-global-optimization-smbo">2. Sequential model-based global optimization (SMBO)</h2>
+<h3 id="伪代码">2.1 伪代码</h3>
+<p>序列化模型全局优化(SMBO)是把贝叶斯优化的一个形式化的定义。具体的伪代码如下：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110161036552.png" style="zoom:50%;" /></p>
+<p>伪代码中出现的符号含义：</p>
+<ul>
+<li><span class="math inline">\(\lambda\)</span>：超参数</li>
+<li><p><span class="math inline">\(L\)</span>：object function，通常是损失函数</p></li>
+<li><p><span class="math inline">\(H\)</span>：记录了所有(超参数<span class="math inline">\(\lambda\)</span>, <span class="math inline">\(L\)</span>)的历史集合</p></li>
+<li><p>$ S_{t} <span class="math inline">\(：一个从超参数\)</span>L $的映射概率模型</p></li>
+</ul>
+<p>循环一共进行T次：</p>
+<ol type="1">
+<li>每次先根据已有的历史试验集合找出一个更可能拥有更小objective function的超参数集合<span class="math inline">\(\lambda\)</span></li>
+<li>之后计算实际的object function的值</li>
+<li>加入历史集合</li>
+<li>更新<span class="math inline">\(S\)</span></li>
+</ol>
+<h3 id="一些粗浅的理解">2.2 一些粗浅的理解</h3>
+<ol type="1">
+<li><p>不断的利用历史试验(trial)记录，构建出了一个下面的概率模型：</p>
+<p><span class="math display">\[ P(objective\ function\ score\quad |\quad hyperparameters) \]</span></p></li>
+<li><p>叫做贝叶斯的原因是出现了先验概率的思想</p></li>
+<li><p>核心想法是<strong>在更有可能得到更好结果的超参数范围内选择新的超参数</strong></p></li>
+</ol>
+<h3 id="核心要素">2.4 核心要素</h3>
+<h4 id="domain">2.4.1 Domain</h4>
+<p>不同的超参数有自己的取值范围，以及先验分布，例如均匀分布，log均匀分布等</p>
+<h4 id="objective-function">2.4.2 Objective Function</h4>
+<p>Objective Function是我们想要优化的目标。接受超参数作为输入，输出的值可以是超参数实例化后拟合了训练集的经验风险函数，如均方误差。</p>
+<p>我们不会直接拿这个作为优化目标，而是使用下面的替代函数Surrogate Function。</p>
+<h4 id="surrogate-function">2.4.3 Surrogate Function</h4>
+<p>替代函数，也叫做响应面(response surface)，是基于之前的历史记录的一种关于objective function的概率表示。</p>
+<p>叫做响应面是因为它是在高维层次的objective function score的关于超参数的概率。如下图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110145710920.png" style="zoom:50%;" /></p>
+<p>存在几种不同的替代函数，如：</p>
+<ul>
+<li>Gaussian Processes</li>
+<li>Random Forest regression</li>
+<li><strong>Tree-structured Parzen Estimator</strong></li>
+</ul>
+<h4 id="selection-function">2.4.4 Selection Function</h4>
+<p>选择函数是如何根据前面的Surrogate Function，来选择新的超参数集合进行试验。</p>
+<p>关于选择函数也有不同的表示，例如：</p>
+<ul>
+<li><strong>Expected Improvement (EI)</strong></li>
+<li>Probability of Improvement</li>
+</ul>
+<h2 id="tree-structured-parzen-estimatortpe">3 Tree-structured Parzen estimator(TPE)</h2>
+<h3 id="基础认识">3.1 基础认识</h3>
+<ol type="1">
+<li><p>Tree：超参数优化问题可以理解为在图结构的参数空间上不断寻找objective function最优解的问题。所谓tree，是提出TPE的作者将该优化问题限制在了树状结构上，例如：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163042989.png" style="zoom:50%;" /></p>
+<p>一些超参数只有在其它的超参数确定后才能够进行确认，例如网络的层数与每一层的节点数量，当然这不意味着这两个超参数是相关的。<strong>实际上在TPE中，要求所估计的超参数必须是相互独立的</strong>。</p></li>
+<li><p>Parzen：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Parzen–Rosenblatt window</a>是在核密度估计问题中，由 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Emanuel_Parzen">Emanuel Parzen</a> 和 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Murray_Rosenblatt">Murray Rosenblatt</a>提出的能够根据当前的观察值和先验分布类型，估计估计值的概率密度。一般的函数如下：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163827025.png" style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110163935502.png" style="zoom:50%;" /></p>
+<p><strong>在TPE中，假设了核函数都是高斯核函数</strong></p></li>
+</ol>
+<h3 id="具体过程推演">3.2 具体过程推演</h3>
+<h4 id="expected-improvement-ei">3.2.1 Expected Improvement (EI)</h4>
+<p>对于选择一组新的超参数后的objective function的提升可以表示为：</p>
+<p><span class="math display">\[ I(\lambda) = max(c^{*}-c(\lambda), 0) \tag{1}\]</span></p>
+<p><span class="math inline">\(c^{*}\)</span>是当前记录的H中所有c的一个分割点，我们这里直接认为c表示的就是风险函数。</p>
+<p>通过这样的转换，我们就把原来的objective function最优问题转换成了一个新的问题。</p>
+<p>如果新的<span class="math inline">\(\lambda\)</span>对应的<span class="math inline">\(c(\lambda)\)</span>更小，则它是更好的超参数设置，但是这需要训练，然后求出风险函数，并不是我们想要的。</p>
+<p>那么如果一个新的<span class="math inline">\(\lambda\)</span>对应的提升的期望是大于0的，那么可认为这个<span class="math inline">\(\lambda\)</span>是有较大可能使得风险减小的。故有：</p>
+<p><span class="math display">\[ \begin{split}EI(\lambda) &amp;= \int\limits_{-\infty}^{c^{*}}(c^{*}-c)P_{S_{t-1}}(c|\lambda)dc \\ &amp;= \int\limits_{-\infty}^{c^{*}}(c^{*}-c)\frac{p(\lambda|c)p(c)}{p(\lambda)}dc \end{split} \tag{2} \]</span></p>
+<p>式子中的<span class="math inline">\(p(\lambda|c)\)</span>定义为：</p>
+<p><span class="math display">\[ p(\lambda|c) = \left\{ \begin{aligned} &amp;l(\lambda) \quad c \lt c^{*} \\ &amp;g(\lambda) \quad c \ge c^{*} \end{aligned} \right. \tag{3} \]</span></p>
+<p><span class="math inline">\(c^{*}\)</span>是一个阈值，通常是在H所有的c中，满足<span class="math inline">\(p(c&lt;c^{*})=\gamma\)</span>，<span class="math inline">\(\gamma\)</span>默认可设置为0.15。这样所有的历史记录就分成了两部分，即风险较小的那部分和风险相对较大的那部分，<span class="math inline">\(l(\lambda)\)</span>是由所有的风险较小的那部分的超参数集合形成的分布，<span class="math inline">\(g(\lambda)\)</span>是由所有的风险较大的那部分的超参数集合形成的分布。如下图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191535439.png" style="zoom: 33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20191110191405221.png" style="zoom:33%;" /></p>
+<p>直觉上我们从风险较小的分布中抽样新的超参数，应该是比较合理的，下面的数学推理也证明了这一点。</p>
+<p>继续推导公式2：</p>
+<p><span class="math display">\[\begin{split} p(\lambda) &amp;= \int_{R}p(\lambda|c)p(c)dc \\ &amp;= \int_{-\infty}^{c^{*}}p(\lambda|c)p(c)dc + \int_{c^{*}}^{+\infty}p(\lambda|c)p(c)dc \\ &amp;= \gamma l(\lambda)+(1-\gamma) g(\lambda) \end{split}\]</span></p>
+<p><span class="math display">\[\begin{split} \int_{-\infty}^{c*} (c^{*}-c)p(\lambda|c)p(c)dc &amp;= l(\lambda)\int_{-\infty}^{c*}(c^{*}-c)p(\lambda|c)p(c)dc \\ &amp;=\gamma c^{*}l(\lambda) -l(\lambda) \int_{-\infty}^{c*} cp(c)dc \end{split}\]</span></p>
+<p>最终得到：</p>
+<p><span class="math display">\[\begin{split} EI(\lambda) &amp;= \frac{\gamma c^{*}l(\lambda) -l(\lambda) \int_{-\infty}^{c*} cp(c)dc}{\gamma l(\lambda)+(1-\gamma) g(\lambda)} \\ &amp; \propto \big( \gamma+\frac{g(\lambda)}{l(\lambda)}(1-\gamma) \big)^{-1} \end{split}\]</span></p>
+<p>这说明在<span class="math inline">\(l(\lambda)\)</span>的分布下取样得到的参数更有可能让<span class="math inline">\(EI(\lambda)\)</span>有更大的值。</p>
+<h4 id="估计超参数的分布">3.2.2 估计超参数的分布</h4>
+<p>由 <span class="math inline">\(c^{*}\)</span>将历史记录分为了两部分，以 $ c c^{*} $ 的那部分超参数集合为例。</p>
+<p>假设存在n个取值 $ (x_1,x_2, , x_n) $ ，那么概率密度的估计是</p>
+<p><span class="math display">\[ \hat{p}(x) = \frac{1}{nh}\sum\limits_{i=1}^{n}K\big( \frac{x-x_i}{h} \big) \]</span></p>
+<p>其中</p>
+<p><span class="math display">\[ K\big( \frac{x-x_i}{h} \big) = \frac{1}{\sqrt{2\pi}} exp\big( -\frac{1}{2}(\frac{x-x_i}{h})^2 \big) \]</span></p>
+<h4 id="求解的过程">3.2.3 求解的过程</h4>
+<p>利用TPE，首先对于所有的超参数形成的那棵树进行设置，因为TPE要求所有的超参数要相互独立，即一种正交的概念，即效果不能相互影响，例如学习率，提升树方法的迭代次数，和树的最大深度就存在一个权衡，所以需要先固定一些不能一起用于优化的超参数，如固定学习率和迭代次数。</p>
+<p>由树从根结点从上而下的利用Parzen estimator，对某一个节点，在 <span class="math inline">\(l(\lambda)\)</span>分布下采样，比如采样100次。</p>
+<p>每一次的采样得到的超参数集合可以分别得到它们的概率，然后相乘得到联合概率，算出 $ l()$和 <span class="math inline">\(g(\lambda)\)</span>。选取其中 <span class="math inline">\(l(\lambda)/g(\lambda)\)</span> 的最大值，作为这一次迭代选取的超参数。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/ml/TPE/" title="TPE">https://liuxiyang641.github.io/ml/TPE/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/gnn/How-Powerful-of-GNN/" rel="prev" title="How-Powerful-of-GNN">
+                  <i class="fa fa-chevron-left"></i> How-Powerful-of-GNN
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/recommendation/ONN/" rel="next" title="ONN">
+                  ONN <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"3f06ad8510afda629afac78f54ce8588"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

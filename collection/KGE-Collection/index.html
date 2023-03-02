@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Collection of KGE Papers Volume 1 Collection of KGE papers, volume 1. Now it contains models of:  HoLE (AAAI 2016) TACT(AAAI 2021) TransF(ICPR 2018) TransCoRe(JCST 2018) Interpreting-KGE(ICLR 2021) Tu">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="KGE-Collection">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/KGE-Collection/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Collection of KGE Papers Volume 1 Collection of KGE papers, volume 1. Now it contains models of:  HoLE (AAAI 2016) TACT(AAAI 2021) TransF(ICPR 2018) TransCoRe(JCST 2018) Interpreting-KGE(ICLR 2021) Tu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102258964.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102445139.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110706718.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110904912.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210518225522673.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170730416.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520160757408.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220226480.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223201288.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223130667.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193736657.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223607761.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193757495.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215137325.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530213931363.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215101906.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221208885.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221647609.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222104512.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222043286.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154018301.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154108887.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154328117.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png">
+<meta property="article:published_time" content="2021-04-17T11:32:13.000Z">
+<meta property="article:modified_time" content="2022-09-11T00:55:54.365Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/KGE-Collection/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/KGE-Collection/","path":"collection/KGE-Collection/","title":"KGE-Collection"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>KGE-Collection | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#collection-of-kge-papers-volume-1"><span class="nav-number">1.</span> <span class="nav-text">Collection of KGE Papers Volume 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hole"><span class="nav-number">1.1.</span> <span class="nav-text">HoLE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tact"><span class="nav-number">1.2.</span> <span class="nav-text">TACT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transf"><span class="nav-number">1.3.</span> <span class="nav-text">TransF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transcore"><span class="nav-number">1.4.</span> <span class="nav-text">TransCoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#interpreting-kge"><span class="nav-number">1.5.</span> <span class="nav-text">Interpreting-KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tucker"><span class="nav-number">1.6.</span> <span class="nav-text">TuckER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mlp-for-kge"><span class="nav-number">1.7.</span> <span class="nav-text">MLP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transh"><span class="nav-number">1.8.</span> <span class="nav-text">TransH</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transa"><span class="nav-number">1.9.</span> <span class="nav-text">TransA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transr"><span class="nav-number">1.10.</span> <span class="nav-text">TransR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transd"><span class="nav-number">1.11.</span> <span class="nav-text">TransD</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#transg"><span class="nav-number">1.12.</span> <span class="nav-text">TransG</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cp-for-kge"><span class="nav-number">1.13.</span> <span class="nav-text">CP for KGE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#simple"><span class="nav-number">1.14.</span> <span class="nav-text">SimplE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#complex"><span class="nav-number">1.15.</span> <span class="nav-text">Complex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reinceptione"><span class="nav-number">1.16.</span> <span class="nav-text">REInceptionE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#r-men"><span class="nav-number">1.17.</span> <span class="nav-text">R-MeN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hyper"><span class="nav-number">1.18.</span> <span class="nav-text">HypER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rsn"><span class="nav-number">1.19.</span> <span class="nav-text">RSN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nscaching"><span class="nav-number">1.20.</span> <span class="nav-text">NSCaching</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#structure"><span class="nav-number">1.21.</span> <span class="nav-text">StructurE</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/KGE-Collection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="KGE-Collection | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          KGE-Collection<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/KGE-Collection.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-04-17 19:32:13" itemprop="dateCreated datePublished" datetime="2021-04-17T19:32:13+08:00">2021-04-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-11 08:55:54" itemprop="dateModified" datetime="2022-09-11T08:55:54+08:00">2022-09-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/KGE/" itemprop="url" rel="index"><span itemprop="name">KGE</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>8.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="collection-of-kge-papers-volume-1">Collection of KGE Papers Volume 1</h1>
+<p>Collection of KGE papers, volume 1.</p>
+<p>Now it contains models of:</p>
+<ul>
+<li>HoLE (AAAI 2016)</li>
+<li>TACT(AAAI 2021)</li>
+<li>TransF(ICPR 2018)</li>
+<li>TransCoRe(JCST 2018)</li>
+<li>Interpreting-KGE(ICLR 2021)</li>
+<li>TuckER(EMNLP 2019)</li>
+<li>MLP for KGE(KDD 2014)</li>
+<li>TransH(AAAI 2014)</li>
+<li>TransA(arXiv 2015)</li>
+<li>TransR(AAAI 2015)</li>
+<li>TransD(IJNLP 2015)</li>
+<li>TransG(ACL 2016)</li>
+<li>CP for KGE(ICML 2018)</li>
+<li>SimplE(NIPS 2018)</li>
+<li>Complex(ICML 2016)</li>
+<li>REInceptionE(AAAI 2020)</li>
+<li>R-MeN(ACL 2020)</li>
+<li>HypER(ICANN 2019)</li>
+<li>RSN(ICML 2019)</li>
+<li>NSCaching(ICDE 2019)</li>
+</ul>
+<span id="more"></span>
+<h2 id="hole">HoLE</h2>
+<p><strong>Holographic Embeddings of Knowledge Graphs</strong> AAAI 2016</p>
+<p>这篇文章提出了holographic embeddings (HOLE)，来学习KG的compositional vector space representations。</p>
+<p><strong>motivation</strong>：However, existing embedding models that can capture rich interactions in relational data are often limited in their scalability. Vice versa, models that can be computed efficiently are often considerably less expressive.</p>
+<p><strong>methods</strong>：直接从subject entity embedding和object entity embedding中，使用circular correlation获得新的embedding，称作holograph embedding，然后使用这个holograph embedding与relation embedding做点积，得到预测概率。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418184909978.png" style="zoom:50%;" /></p>
+<p>一个图示：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102258964.png" style="zoom:50%;" /></p>
+<p>从这个图能够看出来，Circular Correlation可以看做是tensor dot的一种压缩方式，它的输出结果的每一维都是tensor dot结果的一部分。</p>
+<h2 id="tact">TACT</h2>
+<p><strong>Topology-Aware Correlations Between Relations for Inductive Link Prediction in Knowledge Graphs</strong> AAAI 2021</p>
+<a href="/kge/TACT/" title="[个人详细博客]">[个人详细博客]</a>
+<p><a target="_blank" rel="noopener" href="https://github.com/MIRALab-USTC/KG-TACT">TACT</a>，作者主要考虑的是inductive link prediction，使用gnn，捕获relation之间的语义上的关联性，即semantic correlation。作者认为relation之间的关联性通过relation的拓扑结构得到体现，因此，作者将所有的relation之间相连的拓扑结构分为7种，在relation形成的graph中进行学习，提出了RCN。</p>
+<p>然后看一下整体结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102445139.png" style="zoom:50%;" /></p>
+<h2 id="transf">TransF</h2>
+<p><strong>Knowledge Graph Embedding with Multiple Relation Projections</strong> ICPR 2018</p>
+<p>基于翻译的方法，在TransR的思想上的改进。考虑了每个relation不是独立的，而是具有Correlation，比如关系<em>/people/person/place_of_birth</em>和<em>/people/person/nationality</em>就有较强的相关性，比如居住在纽约的人大概率是美国人。为了解决这个问题，作者直接将每个relation独立的matrix分为一系列的basis space的组合，对于不同relation有不同的组合系数。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511102512774.png" style="zoom:50%;" /></p>
+<p>公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210418181121701.png" style="zoom:50%;" /></p>
+<p>在实验中，在FB15k-237数据集上，作者使用了维度100，s数量5；在WN18RR数据集上，维度50，s数量5。最后使用TransR的方法投影：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110706718.png" style="zoom:50%;" /></p>
+<h2 id="transcore">TransCoRe</h2>
+<p><strong>Modeling the Correlations of Relations for Knowledge Graph Embedding</strong> JCST</p>
+<p>作者考虑了关系之间的correlation，首先利用SVD和PCC方法分析了TransE这些方法学习到的relation embedding之间的相关性，然后发现在所有relation组成的matrix中，存在low-rank的structure。因此，作者直接将relation matrix拆分为两个矩阵的乘积，一个是通用矩阵，一个是关系矩阵，每一列对应不同的relation。 <span class="math display">\[
+\mathbf{R}=\mathbf{U}\mathbf{V}
+\]</span> <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110904912.png" style="zoom:50%;" /></p>
+<p>在这种情况下，矩阵<span class="math inline">\(\mathbf{U}\)</span>的列是关系空间的basis</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210511110958068.png" style="zoom:50%;" /></p>
+<p>最后</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210518225522673.png" style="zoom:50%;" /></p>
+<h2 id="interpreting-kge">Interpreting-KGE</h2>
+<p><strong>INTERPRETING KNOWLEDGE GRAPH RELATION REPRESENTATION FROM WORD EMBEDDINGS</strong> ICLR 2021</p>
+<p>从最新的基于PMI（pointwise mutual information (PMI)）的对于word embedding的理解角度出发，尝试从relation描述的subject和object entity的语义关联性角度进行解释；将所有的relation分为3类，并且解释了为了捕获它们的特征需要如何学习。</p>
+<p><strong>很多地方没看懂。</strong></p>
+<p>三个不同的分类：</p>
+<ul>
+<li>highly related (R);</li>
+<li>generalised specialisation (S);</li>
+<li>and generalised context-shift (C).</li>
+</ul>
+<p>三者是包含关系，C&gt;S&gt;R</p>
+<p>在WN18RR下不同关系的分类，</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210510170730416.png" style="zoom:50%;" /></p>
+<p>FB15k-237的relation大多是type C，也就是说该数据集中的relation没有特别明显的结构联系。</p>
+<h2 id="tucker">TuckER</h2>
+<p><strong>TuckER: Tensor Factorization for Knowledge Graph Completion</strong> EMNLP 2019</p>
+<p>这篇文章使用1996年就被提出来的分解方法 Tucker decomposition，提出了TuckER，TuckER的主要结构如下：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520160757408.png" style="zoom:50%;" /></p>
+<p>其中的参数<span class="math inline">\(W\)</span>是所有关系共享的，<span class="math inline">\(e_s,w_r,e_o\)</span>是subject, relation和object entity的embedding，都是向量化的表示。</p>
+<p>具体计算公式是，沿着不同维度（mode）进行乘法运算</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/v2-930f8a5f6ef0dd9db35e1e6f5a7f112f_1440w.png" style="zoom:50%;" /></p>
+<p>这篇文章可以考虑用来简化R-GCN中的<span class="math inline">\(W_r\)</span>。</p>
+<h2 id="mlp-for-kge">MLP for KGE</h2>
+<p><strong>Knowledge Vault: A Web-Scale Approach to Probabilistic Knowledge Fusion</strong> KDD 2014</p>
+<p>这篇文章介绍了Knowledge Vault</p>
+<blockquote>
+<p>a Web-scale probabilistic knowledge base that combines extractions from Web content (obtained via analysis of text, tabular data, page structure, and human annotations)</p>
+</blockquote>
+<p>在文章中，使用了MLP来获得KGE，主要用于评估构造的KG中的edge存在的概率，主要方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520193708498.png" style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(\beta \in \mathbb{R}^{L\times 1}\)</span>，<span class="math inline">\(u_s, w_p, v_o\)</span>是subject、relation和object。</p>
+<h2 id="transh">TransH</h2>
+<p><strong>Knowledge Graph Embedding by Translating on Hyperplanes</strong> AAAI 2014</p>
+<p>这篇文章的贡献有两点</p>
+<ul>
+<li>在TransE的基础上，提出了TransH，将subject和object entity投影到不同relation的超平面上，该超平面由一个法向量<span class="math inline">\(w_r\)</span>决定，超平面上有一个偏移向量<span class="math inline">\(d_r\)</span>，用于算头实体和尾实体投影之间的偏移。</li>
+<li>使用了一个简单基于统计的，能够减小负采样错误率的方法。原理是one-to-many的relation应该倾向于替换head entity；many-to-one的relation倾向于替换tail entity。直接统计number of tail entities per head entity和number of head entities per tail entity，然后使用二元分布，计算替换head或者tail entity的概率。这种方法区别于以前的uniform的采样，可以叫做Bernoulli采样。</li>
+</ul>
+<p>TransH的结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220253182.png" style="zoom:50%;" /></p>
+<p>数学公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524162955001.png" style="zoom:50%;" /></p>
+<p>在训练中，保证<span class="math inline">\(||w_r||_2=1\)</span>，同时<span class="math inline">\(w_r \perp d_r\)</span>。</p>
+<h2 id="transa">TransA</h2>
+<p><strong>TransA: An Adaptive Approach for Knowledge Graph Embedding</strong> arxiv 2015</p>
+<p>这篇文章提出了一个新的计算loss的方法，将计算欧氏距离，换为计算马氏距离。</p>
+<p>作者认为对于以前的loss形式过于简单</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524163344113.png" style="zoom:50%;" /></p>
+<p>缺点两个：</p>
+<ul>
+<li>这个loss metric实际是在计算一个球面等位超面spherical equipotential hyper-surfaces，这种方式过于简单，不够灵活，泛化</li>
+</ul>
+<blockquote>
+<p>Firstly, due to the inflexibility of loss metric, current translation-based methods apply spherical equipotential hyper-surfaces with different plausibilities, where more near to the centre, more plausible the triple is.</p>
+</blockquote>
+<ul>
+<li>它实际是假设embedding的不同entry的weight在计算最终loss的时候一样</li>
+</ul>
+<blockquote>
+<p>Secondly, because of the oversimplified loss metric, current translation-based methods treat each dimension identically.</p>
+</blockquote>
+<p>作者提出的新指标，将计算欧氏距离，换为计算马氏距离：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520220226480.png" style="zoom:50%;" /></p>
+<h2 id="transr">TransR</h2>
+<p><strong>Learning Entity and Relation Embeddings for Knowledge Graph Completion</strong> AAAI 2015</p>
+<p>这篇文章改进了TransE和TransH认为embedding都在相同的semantic space中。TransR认为不同关系具有不同的space，实体在entity space下，提出了TransR。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223201288.png" style="zoom:50%;" /></p>
+<p>数学公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223130667.png" style="zoom:50%;" /></p>
+<p>能够看到，还是有单独的relation embedding。</p>
+<p>作者还提出了一个改进版，CTransR（Cluster-based TransR）。它对于一个单独的relation r，将不同的(head, tail)对分成几个不同的clusters，不同的clusters拥有自己的relation vector <span class="math inline">\(r_c\)</span>，整个relation下的所有clusters有一个共同的relation vector <span class="math inline">\(r\)</span>，此时的scoring function为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193736657.png" style="zoom:50%;" /></p>
+<h2 id="transd">TransD</h2>
+<p><strong>Knowledge Graph Embedding via Dynamic Mapping Matrix </strong> IJCNLP 2015</p>
+<p>作者将所有的entities和relations都赋予了两个vectors，一个vectors和以前的embedding一样，作为实体和关系的向量化embedding；一个vectors用来构件转换矩阵：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210520223607761.png" style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210524193757495.png" style="zoom:50%;" /></p>
+<h2 id="transg">TransG</h2>
+<p><strong>TransG : A Generative Model for Knowledge Graph Embedding</strong> ACL 2016</p>
+<p>这是第一篇在KGE上使用generative model的论文，第一次明确提出并且讨论<strong>multiple relation semantics</strong>，即一个relation可能有不同的语义含义，这个语义含义是由它链接的头/尾实体决定的。</p>
+<blockquote>
+<p>In spite of the success of these models, none of the previous models has formally discussed the issue of multiple relation semantics that a relation may have multiple meanings revealed by the entity pairs associated with the corresponding triples.</p>
+</blockquote>
+<p>为了让relation有更多不同的表示，作者使用Bayesian non-parametric inﬁnite mixture embedding model [1]的思路，为每个relation都学习多个不同的component。</p>
+<p>[1] The indian buffet process: An introduction and review.</p>
+<p>对生成模型不了解，这篇文章没有细读。</p>
+<h2 id="cp-for-kge">CP for KGE</h2>
+<p><strong>Canonical tensor decomposition for knowledge base completion</strong> ICML 2018</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/facebookresearch/kbc" class="uri">https://github.com/facebookresearch/kbc</a></p>
+<p>作者集中在使用canonical decomposition of tensors (also called CANDECOMP/PARAFAC or CP)来学习KGE。对于CP的改进集中在两方面：</p>
+<ul>
+<li>引入关系的逆关系，分别具有不同的表示，显示使用这种办法能够很好的提升效果</li>
+<li>使用tensor nuclear p-norms正则化CP，虽然最后结果显示没有很显著的提升CP效果</li>
+</ul>
+<p>最终效果没有超越ComplEX，但是提升CP效果很多。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215137325.png" style="zoom:50%;" /></p>
+<p>CP分解：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530213931363.png" style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(\mathbf{X}\)</span>是整个KG张量。</p>
+<p>后续调研张量分解的方法可以从这篇文章出发。</p>
+<h2 id="simple">SimplE</h2>
+<p><strong>SimplE Embedding for Link Prediction in Knowledge Graphs</strong> NIPS 2018</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Mehran-k/SimplE">SimplE</a> 使用CP分解，改进了一般的CP分解，与一般的CP分解一样，每个entity有两种表示对于head和tail，每个relation有唯一的表示。在预测triple是否成立时，同时用原关系和逆关系是否成立进行平均打分。在论文中，作者证明了SimplE是fully expressivene的。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210530214019324.png" style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(&lt;&gt;\)</span>函数是向量内积，定义为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210526215101906.png" style="zoom:67%;" /></p>
+<h2 id="complex">Complex</h2>
+<p><strong>Complex Embeddings for Simple Link Prediction</strong> ICML 2016</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ttrouill/complex">Complex</a>应该是首个将KGE中的embedding从实数域扩展到复数域的方法，它的思想还是基于矩阵分解的思路，但是在RESCAL和DistMult这些方法的基础上，通过引入复数域，能够建模关系的对称/不对称关系，同时还能保证参数的有效性。因为在复数域的向量内积就变为了Hermitian (or sesquilinear) dot product，拥有了一个共轭的转置表示conjugate-transpose</p>
+<p>具体公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626220840153.png" style="zoom:50%;" /></p>
+<p>其中的，<span class="math inline">\(Re\)</span>是实数部分，<span class="math inline">\(Im\)</span>是虚数部分。</p>
+<p>之后，预测概率</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210626221427316.png" style="zoom:50%;" /></p>
+<h2 id="reinceptione">REInceptionE</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/JuneTse/ReInceptionE."><strong>ReInceptionE: Relation-Aware Inception Network with Joint Local-Global Structural Information for Knowledge Graph Embedding</strong></a> AAAI 2020</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210707181438099.png" style="zoom:40%;" /></p>
+<p>使用Inception网络学习对所有的<span class="math inline">\((h,r,?)\)</span>都可以编码为一个embedding。</p>
+<p>如果要查询<span class="math inline">\((h,r,?)\)</span>，<span class="math inline">\(h,r\)</span>可以通过inception网络变为为一个查询embedding。</p>
+<p>对于头实体<span class="math inline">\(h\)</span>的邻居，都可以通过inception网络变为邻居embedding，之后使用查询embedding去计算邻居embedding注意力，然后进行聚合。</p>
+<p>对于要查询的关系<span class="math inline">\(r\)</span>，对于图中所有属于<span class="math inline">\(r\)</span>的头尾实体应该可以提供某种特定的特征，因此，利用查询embedding，计算所有属于<span class="math inline">\(r\)</span>的头实体的注意力然后聚合；同样，聚合特定的尾实体的信息。</p>
+<p>最后，融合三方面的信息，通过一个MLP，进行预测。</p>
+<h2 id="r-men">R-MeN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/daiquocnguyen/%20R-MeN"><strong>A Relational Memory-based Embedding Model for Triple Classiﬁcation and Search Personalization</strong></a> R-MeN ACL 2020</p>
+<p>为了能够记忆KG中的三元组之间可能存在的潜在依赖，提出了R-MeN方法，模型图</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221208885.png" style="zoom:50%;" /></p>
+<p>在一个三元组<span class="math inline">\((s,r,o)\)</span>中，首先编码为三个不同的embedding</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709221647609.png" style="zoom:50%;" /></p>
+<p>模仿Transformer加入了位置embedding。然后，设计了一个记忆力单元<span class="math inline">\(M\)</span>，设计中<span class="math inline">\(M\)</span>应该拥有<span class="math inline">\(N\)</span>个memory slot，每一行是一个记忆力插槽。但是在实现的时候发现只有一个记忆力插槽的时候效果最好。</p>
+<p>之后，依次输入<span class="math inline">\(x_t\)</span>，使用transformer的注意力机制聚合<span class="math inline">\(x_t\)</span>和<span class="math inline">\(M\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222104512.png" style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210709222043286.png" style="zoom:50%;" /></p>
+<p>在这个之后，加入了MLP，残差，gate。实际从结果来看，没有特别大的提升。</p>
+<h2 id="hyper">HypER</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/ibalazevic/HypER"><strong>Hypernetwork Knowledge Graph Embeddings</strong></a> ICANN 2019</p>
+<p>这篇文章在ConvE的基础上改进，提出了HypER，使用relation embedding通过一个hypernetwork（Hypernetworks. In: International Conference on Learning Representations.）为每个关系都产生一个1D卷积核。和ConvE有的区别是不使用2D的卷积，不需要reshape entity embedding和relation embedding。作者另外证明了这种1D卷积的方法最终可以归类到tensor factorization中。</p>
+<blockquote>
+<p>A hypernetwork is an approach by which one network generates weights for another network, that can be used to enable weight-sharing across layers and to dynamically synthesize weights given an input.</p>
+</blockquote>
+<p>结构图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154018301.png" style="zoom:50%;" /></p>
+<p>核心公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154108887.png" style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(vec^{-1}\)</span>是重新将向量转化为矩阵形式。<span class="math inline">\(w_r\)</span>就是relation embedding，它的实际维度与entity embedding维度一致。</p>
+<p>从tensor operation的角度看HypER。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719154328117.png" style="zoom:50%;" /></p>
+<h2 id="rsn">RSN</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/nju-websoft/RSN"><strong>Learning to Exploit Long-term Relational Dependencies in Knowledge Graphs</strong></a> ICML 2019</p>
+<p>使用带残差的RNN的方法建模KG的relational path，预测实体对齐和链路预测两个任务。</p>
+<p>核心的模型结构，首先提出了一种Biased random walk sampling，偏好采用更深的实体路径，输出relational path。</p>
+<p>然后使用RSN(Recurrent skipping network)建模这个path，核心思想在于强调relational path中triple的重要性。将subject entity的hidden state作为残差输出到object entity的上一步hidden state中。一个relational path元素个数为奇数，头尾都是实体，<span class="math inline">\((x_1,\dots,x_{odd})\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200737571.png"   style="zoom:50%;" /></p>
+<p>然后，对实体和关系做区别对待：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719200912943.png"   style="zoom:50%;" /></p>
+<p>模型结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210719201218600.png"   style="zoom:50%;" /></p>
+<p>使用Type-based noise contrastive estimation(NCE)进行优化，对这个优化方法没有很了解。</p>
+<h2 id="nscaching">NSCaching</h2>
+<p><a target="_blank" rel="noopener" href="https://github.com/yzhangee/NSCaching"><strong>NSCaching: Simple and Efﬁcient Negative Sampling for Knowledge Graph Embedding</strong></a> ICDE 2019</p>
+<a href="/kge/NSCaching/" title="[个人详细博客]">[个人详细博客]</a>
+<p>提出了一种针对KGE的动态负采样方法<a target="_blank" rel="noopener" href="https://github.com/yzhangee/NSCaching">NSCaching</a>，核心思想是得分高的负样本很重要但是数量少，因此，作者直接使用cache来保存得分高的负样本，同时随着训练动态更新cache，可以看做是基于GAN的负采样方法的distilled版本。</p>
+<p>在训练KGE的时候，负样本的质量很重要，也就是说那些越难与正样本区分的负样本可能越重要。<em>high-quality negative triplets should have large scores</em>，因为基于embedding的model实际上对于大多数负样本不敏感，给出的都是比较低的打分。如果使用random采样，采样得到的负样本，激活函数如果是sigmoid函数，那么如果负样本得分在&lt;&lt;0的区间内，那么梯度会很小，造成梯度消失的问题。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173128966.png" style="zoom:40%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20210722173851214.png"   style="zoom:40%;" /></p>
+<h2 id="structure">StructurE</h2>
+<p><strong>Structural context-based knowledge graph embedding for link prediction</strong> Neurocomputing 2022</p>
+<p>这篇文章是基于trans的KGE方法，它对于两个预测任务<span class="math inline">\(&lt;h, t, ?&gt;\)</span>和<span class="math inline">\(&lt;?, r, t&gt;\)</span>分别设计了不同的score function。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152549137.png"   style="zoom:50%;" /></p>
+<p>核心是两个公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152702651.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220303152749096.png"   style="zoom:50%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/KGE-Collection/" title="KGE-Collection">https://liuxiyang641.github.io/collection/KGE-Collection/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/kge/Re-eval-KGC/" rel="prev" title="Re-eval-KGC">
+                  <i class="fa fa-chevron-left"></i> Re-eval-KGC
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/gnn/MAGNN/" rel="next" title="MAGNN">
+                  MAGNN <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"850b48ddb5b280b5e28a17f563203af2"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

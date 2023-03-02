@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion SIGIR 2022，代码，Zhejiang University。 作者提出了一种基于Transformer的能够适用于不同多模态知识图谱预测任务的方法，MKGformer。对于不同的预测任务，作者通过定义输入数据和输出数据拥有">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MKGformer">
+<meta property="og:url" content="https://liuxiyang641.github.io/mmml/MKGformer/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion SIGIR 2022，代码，Zhejiang University。 作者提出了一种基于Transformer的能够适用于不同多模态知识图谱预测任务的方法，MKGformer。对于不同的预测任务，作者通过定义输入数据和输出数据拥有">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902145750837.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902153930132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902154509283.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902154627839.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155007744.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155227398.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155249701.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155307966.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155348746.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155427336.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155825058.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902161732093.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902161833850.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163451512.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163506163.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163525975.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165320438.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221118160223529.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165357479.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165501174.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165640257.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165544824.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165723859.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165850066.png">
+<meta property="article:published_time" content="2022-09-02T06:28:25.000Z">
+<meta property="article:modified_time" content="2022-11-18T08:12:51.872Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="KG">
+<meta property="article:tag" content="multimodal">
+<meta property="article:tag" content="Transformer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902145750837.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/mmml/MKGformer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/mmml/MKGformer/","path":"mmml/MKGformer/","title":"MKGformer"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MKGformer | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#hybrid-transformer-with-multi-level-fusion-for-multimodal-knowledge-graph-completion"><span class="nav-number">1.</span> <span class="nav-text">Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#approach"><span class="nav-number">1.2.</span> <span class="nav-text">2 Approach</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#unified-multimodal-kgc-framework"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Unified Multimodal KGC Framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hybrid-transformer-architecture"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Hybrid Transformer Architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#insights-of-m-encoder"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Insights of M-Encoder</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#pgi"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">2.3.1 PGI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#caf"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">2.3.2 CAF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.3.</span> <span class="nav-text">3 Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#experimental-setup"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Experimental Setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#overall-performance"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Overall Performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#low-resource-evaluation"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Low-Resource Evaluation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ablation-study"><span class="nav-number">1.3.4.</span> <span class="nav-text">3.4 Ablation Study</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#case-analysis-for-image-text-relevance"><span class="nav-number">1.3.5.</span> <span class="nav-text">3.5 Case Analysis for Image-text Relevance</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MKGformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MKGformer | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MKGformer<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/mmml/MKGformer.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-09-02 14:28:25" itemprop="dateCreated datePublished" datetime="2022-09-02T14:28:25+08:00">2022-09-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-11-18 16:12:51" itemprop="dateModified" datetime="2022-11-18T16:12:51+08:00">2022-11-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.3k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="hybrid-transformer-with-multi-level-fusion-for-multimodal-knowledge-graph-completion">Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion</h1>
+<p>SIGIR 2022，<a target="_blank" rel="noopener" href="https://github.com/zjunlp/MKGformer">代码</a>，Zhejiang University。</p>
+<p>作者提出了一种基于Transformer的能够适用于不同多模态知识图谱预测任务的方法，MKGformer。对于不同的预测任务，作者通过定义输入数据和输出数据拥有相同的格式，从而到达不改变模型结构，还能够同时用于不同预测任务；其次，作者提出了一种在text和image模态之间，进行multi-level混合的Transformer结构。</p>
+<p>作者在多模态KG补全、多模态关系抽取和多模态命名实体识别三个任务的有监督学习和低资源学习的场景上进行了实验。</p>
+<blockquote>
+<p>Multimodal Knowledge Graphs (MKGs), which organize visualtext factual knowledge, have recently been successfully applied to tasks such as information retrieval, question answering, and recommendation system. Since most MKGs are far from complete, extensive knowledge graph completion studies have been proposed focusing on the multimodal entity, relation extraction and link prediction. However, different tasks and modalities require changes to the model architecture, and not all images/objects are relevant to text input, which hinders the applicability to diverse real-world scenarios. In this paper, we propose a hybrid transformer with multi-level fusion to address those issues. Specifically, we leverage a hybrid transformer architecture with unified input-output for diverse multimodal knowledge graph completion tasks. Moreover, we propose multi-level fusion, which integrates visual and text representation via coarse-grained prefix-guided interaction and fine-grained correlation-aware fusion modules. We conduct extensive experiments to validate that our MKGformer can obtain SOTA performance on four datasets of multimodal link prediction, multimodal RE, and multimodal NER.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="introduction">1 Introduction</h2>
+<p>作者认为目前的多模态KGC任务存在以下问题：</p>
+<ol type="1">
+<li>Architecture universality：不同的KGC任务，对于不同模态需要设计不同的编码器，从而限制了模型的通用性和易用性。</li>
+<li>Modality contradiction：大多的multimodal KGC的方法很大程度上忽略了图像信息可能带来的噪音问题，因为在多模态KG中，一个实体可能会关联到多个不同的image，实际上只有部分的图像信息可能才是所需的。</li>
+</ol>
+<p>为了解决上述问题，作者提出了：</p>
+<ol type="1">
+<li>之前有研究者发现，预训练模型能够在Transformer的self-attention层和feed-forward层激活和输入数据相关的knowledge。因此，作者尝试基于Transformer架构，同时学习textual和visual的信息。</li>
+<li>作者提出的MKGformer，有两个核心结构，prefix-guided interaction module (PGI)和correlation-aware fusion module (CAF)。前者用于pre-reduce不同模态的heterogeneity，后者用来进一步降低模型对于irrelevant image/text的错误敏感性。</li>
+</ol>
+<h2 id="approach">2 Approach</h2>
+<p>总体结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902145750837.png"  style="zoom:40%;" /></p>
+<h3 id="unified-multimodal-kgc-framework">2.1 Unified Multimodal KGC Framework</h3>
+<p>对于文本，使用BERT进行编码（T-Encoder）；对于图像，使用ViT (<em>An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale</em>)进行编码（V-Encoder）。先分别独立进行几层的学习之后，在最后<span class="math inline">\(M\)</span>层，利用作者提出的M-Encoder进行模态混合。需要注意的是，这里的M-Encoder并不是额外的层，而是作者在BERT和ViT的架构基础上，直接进行了改进，让不同模态模型之间能够进行信息流通。</p>
+<p>模型对于输入和输入数据格式的变形，首先是有三个预测任务：</p>
+<ol type="1">
+<li><p>Multimodal Link Prediction is the most popular task for multimodal KGC, which focuses on predicting the tail entity given the head entity and the query relation, denoted by <span class="math inline">\((𝑒_ℎ ,𝑟, ?)\)</span>. 预测未知fact。多模态带来的新条件是，每个实体可能拥有多个image <span class="math inline">\(I_h\)</span>。</p></li>
+<li>Multimodal Relation Extraction aims at linking relation mentions from text to a canonical relation type in a knowledge graph. 给定一段描述文本<span class="math inline">\(T\)</span>，已知其中的头尾实体<span class="math inline">\((e_h,e_t)\)</span>，预测实体间的关系<span class="math inline">\(r\)</span>。多模态带来的新条件是，描述文本有对应的image <span class="math inline">\(I\)</span>。</li>
+<li><p>Multimodal Named Entity Recognition is the task of extracting named entities from text sequences and corresponding images. 从一个token序列中<span class="math inline">\(T=\{w_1,\dots,w_n\}\)</span>，预测对应的标签序列<span class="math inline">\(y={y_1,\dots,y_n}\)</span>。多模态带来的条件是，描述文本有对应的image <span class="math inline">\(I\)</span>。</p></li>
+</ol>
+<p>对于输入数据和预测数据的变形：</p>
+<ol type="1">
+<li><p>对于多模态链路预测，作者首先设计了特别的一步操作，Image-text Incorporated Entity Modeling，具体而言，在保持整个模型参数不动的情况下，只训练学习新出现的entity embedding。这样是的文本信息和视觉信息都能够融合到entity embedding上。对于实体<span class="math inline">\(e_i\)</span>关联的图像，输入到V-Encoder；对于实体<span class="math inline">\(e_i\)</span>的文本描述<span class="math inline">\(d_{e_i}=(w_1,\dots,w_n)\)</span>，改造为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902153930132.png" style="zoom:50%;" /></p>
+<p>然后预测<span class="math inline">\([mask]\)</span>是实体<span class="math inline">\(e_i\)</span>的概率。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902154509283.png"   style="zoom:50%;" /></p>
+<p>随后，正式开始预测missing entity，将<span class="math inline">\((𝑒_ℎ ,𝑟, ?)\)</span>变形为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902154627839.png"   style="zoom:50%;" /></p></li>
+<li><p>对于多模态命名实体识别，作者利用CRF函数（<em>Neural Architectures for Named Entity Recognition.</em>）进行预测（这个没看过..）</p></li>
+<li><p>对于多模态关系抽取，作者在原来的文本描述上，加入<span class="math inline">\([CLS]\)</span> token，最后预测<span class="math inline">\([CLS]\)</span>是目标关系的概率：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155007744.png"   style="zoom:50%;" /></p></li>
+</ol>
+<p>对于MNER和MRE任务，使用<em>A Fast and Accurate One-Stage Approach to Visual Grounding. ICCV 2019</em> 导出前<span class="math inline">\(m\)</span>个visual objects。</p>
+<p>对于MMKGC任务，直接使用整个图像。</p>
+<h3 id="hybrid-transformer-architecture">2.2 Hybrid Transformer Architecture</h3>
+<p>首先是原始的Transformer结构，MHA表示多头注意力，FFN表示前馈网络。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155227398.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155249701.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155307966.png"   style="zoom:50%;" /></p>
+<p>V-Encoder，ViT：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155348746.png"   style="zoom:50%;" /></p>
+<p>T-Encoder，BERT：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155427336.png"   style="zoom:50%;" /></p>
+<p>M-Encoder，在V-Encoder和T-Encoder之间，先PGI，再CAF：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902155825058.png"   style="zoom:50%;" /></p>
+<h3 id="insights-of-m-encoder">2.3 Insights of M-Encoder</h3>
+<h4 id="pgi">2.3.1 PGI</h4>
+<p>对于PGI（Prefix-guided Interaction Module），作者是受到了前面研究的影响（<em>Prefix-Tuning: Optimizing Continuous Prompts for Generation</em>和<em>Towards a Unified View of Parameter-Efficient Transfer Learning.</em>）。</p>
+<p>作者在自注意力层，让visual Transformer侧考虑聚合textual信息，通过让visual query和textual key，textual value进行操作。实际上是询问当前的patch image和哪些token更接近，然后聚合token embedding。视觉侧的query，文本侧和视觉侧的key，文本侧和视觉侧的value：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902161732093.png"   style="zoom:50%;" /></p>
+<p>很简单的操作，应该是直接拼接。作者进一步推算公式为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902161833850.png"   style="zoom:50%;" /></p>
+<p>这里我没有直接推算出来。但是从作者推算出的可以看出来，实质上它是降低了原来单纯的visual attention，增加了文本-图像的跨模态注意力。</p>
+<h4 id="caf">2.3.2 CAF</h4>
+<p>对于CAF（Correlation-aware Fusion Module），作者受到前面研究的影响，之前有人发现Transformer中的FFN层能够学习到task-specific textual pattern（<em>Transformer Feed-Forward Layers Are Key-Value Memories</em>）。因此作者通过计算token embedding和patch embedding之间的相似性矩阵来衡量视觉信息的重要性。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163451512.png" alt="image-20220902163451512" style="zoom:50%;" /></p>
+<p>然后聚合视觉信息，文本侧的query，视觉侧的key，视觉侧的value：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163506163.png" alt="image-20220902163506163" style="zoom:50%;" /></p>
+<p>上述过程实际和自注意力的过程是一样的。最后把聚合的视觉信息和原来的文本信息拼接到一起：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902163525975.png"   style="zoom:50%;" /></p>
+<p>回顾下上述两个过程，作者都是没有直接创建新的layer进行信息融合，而是通过让信息在dual Transformer之间进行流通。因为作者提出图像的信息噪音很大，对自注意力层和全连接层的改造都是围绕这一点来的。先在注意力层让文本信息流通到视觉信息上，让V-Encoder侧能够考虑文本信息，而不是单纯在patch之间聚合信息。试想下，如果让视觉信息流通到文本信息上，那么就意味着视觉的噪音直接加入到了文本侧，不太合适。随后，在全连接层让已经考虑了文本信息的视觉信息，再流通回文本侧，进一步降低视觉噪音。</p>
+<h2 id="experiments">3 Experiments</h2>
+<h3 id="experimental-setup">3.1 Experimental Setup</h3>
+<p>数据集：</p>
+<ul>
+<li>链路预测：WN18-IMG和FB15k-237-IMG，都是原来的数据集的实体分别关联到了10个image。</li>
+<li>关系抽取：MNRE数据集，人工构造，来源Twitter。</li>
+<li>命名实体识别：Twitter-2017，包括了2016-2017年间用户的多模态posts。</li>
+</ul>
+<p>训练设置：</p>
+<p>在所有的情况下，M-Encoder保持3层，基于BERT_base和ViT-B/32。</p>
+<h3 id="overall-performance">3.2 Overall Performance</h3>
+<p>链路预测（作者提到了，原来的论文中对于FB15k-237-IMG的结果由于作者代码对于数据处理错误，因此出现了错误的性能提升，作者在arxiv上上传了更新后的结果）：</p>
+<p>原论文结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165320438.png"   style="zoom:40%;" /></p>
+<p>更新后的结果，可以看出来结果变化挺大</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221118160223529.png" alt="image-20221118160223529" /><figcaption>image-20221118160223529</figcaption>
+</figure>
+<p>关系抽取和命名实体识别：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165357479.png"   style="zoom:40%;" /></p>
+<h3 id="low-resource-evaluation">3.3 Low-Resource Evaluation</h3>
+<p>作者认为对文本和图像，使用类似的网络结构进行处理，降低了差异性，在低资源预测任务中这种作用更加突出。在数据量更少的情况下，需要想办法更好的处理数据模态之间的差异性，因此模型对于不同模态的差异性的处理能力可能需要更加突出。</p>
+<p>在低资源的设置下，作者发现直接把视觉-语言预训练模型应用到KGC任务上，并没有表现出特别优越的性能。作者认为可能是原来的预训练数据和KGC任务相关性不是特别相关的原因。</p>
+<p>低资源链路预测：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165501174.png"  style="zoom:40%;" /></p>
+<p>低资源关系抽取：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165640257.png"   style="zoom:40%;" /></p>
+<p>低资源命名实体识别：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165544824.png"   style="zoom:40%;" /></p>
+<h3 id="ablation-study">3.4 Ablation Study</h3>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165723859.png"   style="zoom:40%;" /></p>
+<h3 id="case-analysis-for-image-text-relevance">3.5 Case Analysis for Image-text Relevance</h3>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220902165850066.png"   style="zoom:50%;" /></p>
+<p>从这个实际案例可以看出，图像确实和整个描述文本是相关的，但是图像不一定能够对应到所需要的实体。并且，一个图像中存在很多不需要的噪音。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/mmml/MKGformer/" title="MKGformer">https://liuxiyang641.github.io/mmml/MKGformer/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/KG/" rel="tag"><i class="fa fa-tag"></i> KG</a>
+              <a href="/tags/multimodal/" rel="tag"><i class="fa fa-tag"></i> multimodal</a>
+              <a href="/tags/Transformer/" rel="tag"><i class="fa fa-tag"></i> Transformer</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/kge/T-GAP/" rel="prev" title="T-GAP">
+                  <i class="fa fa-chevron-left"></i> T-GAP
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tutorial/multimodal-cmu-2022/1-intro/" rel="next" title="1-intro">
+                  1-intro <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"2c4c076502a0254ad66fc104442a45ce"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

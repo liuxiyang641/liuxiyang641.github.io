@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts MNRE，ICME 2021。作者创建了首个用于multimodal relation extraction的数据集MNRE，地址。 数据来源于Twitter posts，关注点">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MNRE-dataset">
+<meta property="og:url" content="https://liuxiyang641.github.io/mmml/MNRE-dataset/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts MNRE，ICME 2021。作者创建了首个用于multimodal relation extraction的数据集MNRE，地址。 数据来源于Twitter posts，关注点">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210628691.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/20221017115553.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210820441.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012211312936.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012211533605.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_9_14.jpg">
+<meta property="article:published_time" content="2022-10-12T12:11:28.000Z">
+<meta property="article:modified_time" content="2023-01-07T05:36:48.142Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="MMKG">
+<meta property="article:tag" content="MRE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/mmml/MNRE-dataset/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/mmml/MNRE-dataset/","path":"mmml/MNRE-dataset/","title":"MNRE-dataset"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MNRE-dataset | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#mnre-a-challenge-multimodal-dataset-for-neural-relation-extraction-with-visual-evidence-in-social-media-posts"><span class="nav-number">1.</span> <span class="nav-text">MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mnre-dataset"><span class="nav-number">1.2.</span> <span class="nav-text">2. MNRE Dataset</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#dataset-collection"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Dataset Collection</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#twitter-name-tagging"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Twitter Name Tagging</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#human-annotation"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Human Annotation</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dataset-statistics"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Dataset Statistics</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experimental-results"><span class="nav-number">1.3.</span> <span class="nav-text">3. Experimental Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#thoughts"><span class="nav-number">1.4.</span> <span class="nav-text">Thoughts</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MNRE-dataset/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MNRE-dataset | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MNRE-dataset<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/mmml/MNRE-dataset.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-10-12 20:11:28" itemprop="dateCreated datePublished" datetime="2022-10-12T20:11:28+08:00">2022-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-01-07 13:36:48" itemprop="dateModified" datetime="2023-01-07T13:36:48+08:00">2023-01-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/MRE/" itemprop="url" rel="index"><span itemprop="name">MRE</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="mnre-a-challenge-multimodal-dataset-for-neural-relation-extraction-with-visual-evidence-in-social-media-posts">MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts</h2>
+<p>MNRE，ICME 2021。作者创建了首个用于multimodal relation extraction的数据集MNRE，<a target="_blank" rel="noopener" href="https://github.com/thecharm/MNRE">地址</a>。</p>
+<p>数据来源于Twitter posts，关注点是文本中的上下文信息不够充分时，通过post中的image，来补充上下文信息。</p>
+<blockquote>
+<p>Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then ﬁltered by crowdworkers. All the relations are identiﬁed manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difﬁculties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.</p>
+</blockquote>
+<span id="more"></span>
+<h3 id="introduction">1. Introduction</h3>
+<p>relation extraction（RE）是预测一个句子中两个命名实体之间的关系relation。</p>
+<p><strong>challenges</strong>:之前大多数的RE模型关注的是文本信息很充分的场景下的关系抽取，比如newswire domain。但是，一旦文本很短，并且缺少必要的上下文信息的时候，RE模型效果会出现严重的下降。即便是使用了pretrained modal来进行关系抽取，效果也很糟糕。</p>
+<p><strong>solution</strong>: 作者认为，对于在推特post这样很可能文本中缺乏足够充分的上下文信息的场景，可以使用image的visual information来补充上下文信息。</p>
+<p>比如在下面的图中，如果只有文本，那么可能会判断出来JFK和Obama和Harvard的关系是residence；但是如果能够识别图像中的信息，比如校园、学位帽等，可以判断出来JFK和Obama和Harvard的关系应该是graduated_at。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png"   style="zoom:50%;" /></p>
+<p>但是目前并没有这样满足文本+图像的数据集存在，因此作者就希望能够解决这一点，主要贡献如下：</p>
+<ul>
+<li>创建了在社交媒体posts上的数据集Multimodal dataset for Neural Relation Extraction（MNRE）</li>
+<li>在MNRE数据集基础上，构建了几个不同的baseline方法</li>
+</ul>
+<h3 id="mnre-dataset">2. MNRE Dataset</h3>
+<h4 id="dataset-collection">2.1 Dataset Collection</h4>
+<p>数据来源有三个：</p>
+<ul>
+<li>Twitter 2015：有8357个候选实例（指一个完整的post和对应image、named entities和relations）</li>
+<li>Twitter 2017：有4819个候选实例</li>
+<li>Crawled Twitter data：爬取了Twitter 2019年1月到2月的post和对应图片，不限制具体的领域；如果一个post有多张图片，就随机选择一张。最终获取了20000候选实例</li>
+</ul>
+<h4 id="twitter-name-tagging">2.2 Twitter Name Tagging</h4>
+<p>使用预训练的<a target="_blank" rel="noopener" href="https://allennlp.org/elmo">NER tagging tool</a>在爬取的Twitter data上标注实体和对应的实体类型entity type。</p>
+<p>大多数的RE数据集没有对应的实体类型标注；但是作者认为实体类型是很重要的。</p>
+<h4 id="human-annotation">2.3 Human Annotation</h4>
+<p>众包。让4个受到过良好教育的标注者过滤掉错误标注的句子，并且标注实体之间的关系；</p>
+<p>每个标注者需要判断是否能够从text和image中判断出对应的relation；同时，需要给选择的relation打confidence score；</p>
+<p>最后，汇总4个标注者的标注结果，根据候选relation的总的confidence score来作为标注的relation。</p>
+<h4 id="dataset-statistics">2.4 Dataset Statistics</h4>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210628691.png"   style="zoom:50%;" /></p>
+<p>最终包含了10k的实例，31种关系；平均句子的长度是11.62，远远小于之前文本上下文信息丰富的RE数据集中的句子平均长度。 作者在后续更新了数据集，得到了MNRE-2：</p>
+<blockquote>
+<p>2021.6.22 We provide MNRE-2, a refined version which merges several ambigious categories with much more support samples. The original version has been moved to <a target="_blank" rel="noopener" href="https://github.com/thecharm/MNRE/blob/main/Version-1">Version-1</a></p>
+</blockquote>
+<p>MNRE-2的统计： <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/20221017115553.png" /></p>
+<p>下图是不同关系类型的统计：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png"   style="zoom:50%;" /></p>
+<p>经过检查发现，实际的训练集还包括了关系<code>None</code>。上面的统计图没有展现出None关系的分布。</p>
+<p>作者的MNRE-2数据集从32变为了23种关系，发现大部分的关系还是和人相关的。MNRE-2训练集有12247、验证集1624和测试集1614实例。</p>
+<p>查看下具体的数据集内容，在一个训练实例中，包括</p>
+<ul>
+<li><p><code>token</code>: <code>['The', 'latest', 'Arkham', 'Horror', 'LCG', 'deluxe', 'expansion', 'the', 'Circle', 'Undone', 'has', 'been', 'released', ':']</code></p></li>
+<li><p><code>h</code>: <code>&#123;'name': 'Circle Undone', 'pos': [8, 10]&#125;</code></p></li>
+<li><p><code>t</code>: <code>&#123;'name': 'Arkham Horror LCG', 'pos': [2, 5]&#125;</code>，这个<code>Arkham Horror LCG</code>应该是一种卡牌游戏</p></li>
+<li><p><code>img_id</code>: <code>'twitter_19_31_16_6.jpg'</code>，所有的图片下载完后是1.2GB，下图是对应的图片</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg"   style="zoom:40%;" /></p></li>
+<li><p><code>relation</code>: <code>/misc/misc/part_of</code></p></li>
+</ul>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210820441.png" alt="image-20221012210820441" /><figcaption>image-20221012210820441</figcaption>
+</figure>
+<p>上图是数据集中的实例。可以看到，需要同时结合视觉和文本信息，才能够做出准确的关系预测。</p>
+<h3 id="experimental-results">3. Experimental Results</h3>
+<p>作者试验了几个已有的方法，Glove+CNN、BertNRE、Bert+CNN、PCNN。并且尝试了几种加入视觉信息的方法，包括拼接image label的embedding、拼接通过一个pretrained object detector导出的视觉特征embedding和利用visual-text的bi-linear注意力层。</p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012211312936.png"   style="zoom:50%;" /></p>
+<p>几个需要引入视觉信息，才能实现正确预测relation的实例：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012211533605.png"  style="zoom:50%;" /></p>
+<h3 id="thoughts">Thoughts</h3>
+<ol type="1">
+<li><p>感觉每个post对应一个image，然后单纯的从图像中抽取视觉信息来辅助关系抽取，所能够获得信息和覆盖范围还是比较受限。可能更理想的还是要有多张图片，从多张关联图片中进行信息抽取；或者说要从单个图片出发，进行信息拓展（图片搜索，寻找更多的相似/关联图片？图片进行场景识别后，转化为text，然后再从文本信息出发进行搜索？）</p></li>
+<li><p>另外的一个问题是，如果随机检查图像信息和对应的文本，发现有不少的实例还是可能不需要图像信息就能够预测关系的，比如：</p>
+<ul>
+<li><p><code>token</code>: <code>['(', 'UPDATE', 'CHARA', ')', 'Baejoohyunews', ':', '[', 'PHOTO', ']', '190130', '#', &quot;REDVELVET'REDMARE&quot;, ':', 'Japan', 'Arena', 'Tour', 'in', 'Yokohama', &quot;'&quot;, 'Day2', 'RVsmtown']</code></p></li>
+<li><code>h</code>: <code>&#123;'name': 'Japan Arena Tour', 'pos': [13, 16]&#125;</code></li>
+<li><code>t</code>: <code>&#123;'name': 'Yokohama', 'pos': [17, 18]&#125;</code></li>
+<li><code>img_id</code>: <code>twitter_19_31_9_14.jpg</code></li>
+<li><p><code>relation</code>: <code>/misc/loc/held_on</code></p></li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_9_14.jpg"  style="zoom:50%;" /></p>
+<p>实际上通过文本中的单词<code>in</code>就能够判断出来关系可能是<code>held_on</code></p></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/mmml/MNRE-dataset/" title="MNRE-dataset">https://liuxiyang641.github.io/mmml/MNRE-dataset/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/MMKG/" rel="tag"><i class="fa fa-tag"></i> MMKG</a>
+              <a href="/tags/MRE/" rel="tag"><i class="fa fa-tag"></i> MRE</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/ml/entropy-softmax/" rel="prev" title="entropy-softmax">
+                  <i class="fa fa-chevron-left"></i> entropy-softmax
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/mmml/FL-MSRE/" rel="next" title="FL-MSRE">
+                  FL-MSRE <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"74670443f0a2b0fc0b8bb292e0fbe205"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

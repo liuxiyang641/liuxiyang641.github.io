@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="C语言基础要点 《算法笔记》第二章 C&#x2F;C++快速入门。这里记录些要点。 C语言常包括头文件&lt;stdio.h&gt;，stdio是标准输入输出的意思。实际上，在c++标准中，推荐使用&lt;cstdio&gt;，cmath和cstring等头文件，和.h结尾的头文件是等价的。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="2-basic">
+<meta property="og:url" content="https://liuxiyang641.github.io/algorithm-note/2-basic/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="C语言基础要点 《算法笔记》第二章 C&#x2F;C++快速入门。这里记录些要点。 C语言常包括头文件&lt;stdio.h&gt;，stdio是标准输入输出的意思。实际上，在c++标准中，推荐使用&lt;cstdio&gt;，cmath和cstring等头文件，和.h结尾的头文件是等价的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-12-04T09:08:38.000Z">
+<meta property="article:modified_time" content="2022-03-07T03:04:56.225Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="book">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/algorithm-note/2-basic/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/algorithm-note/2-basic/","path":"algorithm-note/2-basic/","title":"2-basic"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>2-basic | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#c%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E8%A6%81%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">C语言基础要点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">基本数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scanf%E4%B8%8Eprintf"><span class="nav-number">1.2.</span> <span class="nav-text">scanf与printf</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8math%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.</span> <span class="nav-text">常用math函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.4.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E8%88%AC%E6%95%B0%E7%BB%84"><span class="nav-number">1.4.1.</span> <span class="nav-text">一般数组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E6%95%B0%E7%BB%84"><span class="nav-number">1.4.2.</span> <span class="nav-text">字符数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.5.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.6.</span> <span class="nav-text">结构体的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">1.7.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="nav-number">1.8.</span> <span class="nav-text">黑盒测试</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/algorithm-note/2-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="2-basic | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          2-basic<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/algorithm-note/2-basic.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2021-12-04 17:08:38" itemprop="dateCreated datePublished" datetime="2021-12-04T17:08:38+08:00">2021-12-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-03-07 11:04:56" itemprop="dateModified" datetime="2022-03-07T11:04:56+08:00">2022-03-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="c语言基础要点">C语言基础要点</h1>
+<p>《算法笔记》第二章 C/C++快速入门。这里记录些要点。</p>
+<p>C语言常包括头文件<code>&lt;stdio.h&gt;</code>，<code>stdio</code>是标准输入输出的意思。实际上，在c++标准中，推荐使用<code>&lt;cstdio&gt;</code>，<code>cmath</code>和<code>cstring</code>等头文件，和<code>.h</code>结尾的头文件是等价的。</p>
+<span id="more"></span>
+<h2 id="基本数据类型">基本数据类型</h2>
+<p>int的取值范围在<span class="math inline">\(10^9\)</span>范围内，long long的范围在<span class="math inline">\(10^{18}\)</span>。如果要给int定义一个表示无穷大的数，推荐取值为<span class="math inline">\(2^{30}-1\)</span>，这样能够避免相加后超出int取值范围，一般定义是<code>int INF=(1&lt;&lt;30)-1</code>。</p>
+<p>浮点数float的精度是6-7位，double是15-16位，推荐一般使用double。</p>
+<p>单个char赋值的时候，字符常量只有单个字符，要使用<code>''</code>单引号。字符编码记住小写字母&gt;大写字母&gt;数字，大写字母+32就是对应的小写字母ASCII码。</p>
+<p>字符串可以使用char数组，<code>char str[24]</code>，输入和输出可以直接使用<code>%s</code>。字符串一定不能赋值给char。</p>
+<p>条件运算符是c语言中的唯一三母运算符，<code>int c = a&gt;b ? a : b;</code>。</p>
+<h2 id="scanf与printf">scanf与printf</h2>
+<p>scanf和printf比c++中的cin和cout要快，在某些要求时间约束的题目中好用。</p>
+<p>输入和输出long long，都使用<code>%lld</code>。字符是<code>%c</code>，输入float是<code>%f</code>，输入double是<code>%lf</code>，输入字符串是<code>%s</code>。记住<code>%c</code>可以直接获得空格和换行符，<code>%s</code>遇到空格和换行符就会停止输入。</p>
+<p>scanf的格式：<code>scanf(&quot;格式控制&quot;,  变量地址)</code>。注意除了<code>%s</code>由于是数组首元素地址，其它变量都需要使用<code>&amp;</code>获得变量地址。</p>
+<p>printf的格式：<code>printf(&quot;格式控制&quot;，变量名)</code>。printf输出变量时，除了double和float一样都使用<code>%f</code>即可，其它都和scanf一样。几个特殊的控制输出的格式：</p>
+<ul>
+<li><code>%md</code>：<code>m</code>是控制输出整型以m位右对齐，如果整型变量本身超出m位，就保持原样。</li>
+<li><code>%0md</code>：对于左边不够m位的，使用<code>0</code>补齐</li>
+<li><code>%.mf</code>：浮点数保留m位，保留的规则不是简单的四舍五入，而是四舍六入五成双。</li>
+<li><code>%%</code>和<code>//</code>：输出<code>%</code>和<code>/</code>。</li>
+</ul>
+<p><code>getchar()</code>和<code>putchar(char)</code>可以方便的获取单个字符。</p>
+<h2 id="常用math函数">常用math函数</h2>
+<p>下面提到的math函数，输入都是<code>double</code>。</p>
+<ul>
+<li><code>fabs(double x)</code>：double取绝对值</li>
+<li><code>floor(double x)</code>和<code>ceil(double x)</code>：向下和向上取整，注意负数的向下取整是取更负的值。</li>
+<li><code>pow(double r, double p)</code>：计算<span class="math inline">\(r^p\)</span>。</li>
+<li><code>sqrt(double x)</code>：返回算术平方根</li>
+<li><code>log(double x)</code>：返回<span class="math inline">\(e\)</span>为底的对数值，如果要计算非<span class="math inline">\(e\)</span>为底的对数，利用换底公式<span class="math inline">\(log_ab=log_eb/log_ea\)</span>。</li>
+<li><code>sin(double x), cos(), tan()</code>：输入的<code>x</code>是弧度，不是角度，注意<code>弧度=角度 x pi/180</code>。</li>
+<li><code>asin(double x), acos(), atan()</code>：反三角函数，返回弧度值</li>
+<li><code>round(double x)</code>：四舍五入</li>
+</ul>
+<h2 id="数组">数组</h2>
+<h3 id="一般数组">一般数组</h3>
+<p>数组的一般定义形式</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">数据类型 数组名[数量]</span><br></pre></td></tr></table></figure>
+<p><em>注意数组传入函数时，如果是二维数组，需要指定第二维的长度，如果是一维数组不要求指定；在函数中修改数组元素，会直接修改原数组的值</em>。</p>
+<p>定义的时候初始化：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一维数组</span></span><br><span class="line"><span class="keyword">int</span> a[<span class="number">45</span>] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>&#125;;</span><br><span class="line"><span class="comment">// 二维数组</span></span><br><span class="line"><span class="keyword">int</span> b[<span class="number">2</span>][<span class="number">3</span>] = &#123;&#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>&#125;, &#123;&#125;, &#123;<span class="number">2</span>, <span class="number">4</span>&#125;&#125;;</span><br><span class="line"><span class="comment">// 字符数组</span></span><br><span class="line"><span class="keyword">char</span> c[<span class="number">2</span>] = &#123;<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;c&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">char</span> c[<span class="number">2</span>] = <span class="string">&quot;ac&quot;</span>; <span class="comment">// 注意只有定义的时候可以这样用&quot;&quot;定义</span></span><br></pre></td></tr></table></figure>
+<p>注意，如果定义的数组较大（元素数量&gt;<span class="math inline">\(10^6\)</span>），由于函数内部的局部变量来自系统栈，允许的空间较小，需要移到函数外，函数外的全局变量来自静态存储区，允许申请的空间比较大。</p>
+<p>利用函数初始化数组，有两种函数：</p>
+<ul>
+<li><code>memset(数组名, 值, sizeof(数组名)</code>：按照<em>字节</em>依据所给的值赋值给数组元素，因此为了避免错误，一般是使用<code>0</code>或者<code>-1</code>初始化。该函数执行速度较快。需要<code>#include&lt;string&gt;</code></li>
+<li><code>fill(数组开始地址, 数组结束地址, 值)</code>：需要包括<code>#include&lt;algorithm&gt;</code>，便于利用其他值初始化数组，不会出错，执行速度更慢。</li>
+</ul>
+<h3 id="字符数组">字符数组</h3>
+<p>字符数组的输入与输出：</p>
+<ol type="1">
+<li>使用<code>scanf</code>和<code>printf</code></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%s&quot;</span>, str); <span class="comment">// 遇到空格或者换行停止</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%s&quot;</span>, str);</span><br></pre></td></tr></table></figure>
+<p>注意，使用scanf输入时，编译器会自动在字符串末尾添加<code>\0</code>，因此字符串数组大小至少要比规定的大小大1。使用printf输出时，识别<code>\0</code>作为中断输出，如果没有该字符，会输出乱码。</p>
+<ol start="2" type="1">
+<li>使用<code>getchar</code>和<code>putchar</code></li>
+</ol>
+<p>输入输出单个字符，注意该方法无法自动识别字符串尾端，需要人工增加<code>\0</code>避免出错。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> c = getchar();</span><br><span class="line"><span class="built_in">putchar</span>(c);</span><br></pre></td></tr></table></figure>
+<ol start="3" type="1">
+<li>使用<code>gets</code>和<code>puts</code></li>
+</ol>
+<p>用来直接输入和输出字符串，记住<code>gets(str)</code>是以<code>\n</code>作为输入结束标志，因此<code>gets()</code>可以用来输入有空格的字符串，它也会自动添加<code>\0</code>。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> str1[<span class="number">100</span>];</span><br><span class="line">gets(str1);</span><br><span class="line"><span class="built_in">puts</span>(str1);</span><br></pre></td></tr></table></figure>
+<p><code>string.h</code>头文件包含了很多有用的处理字符串的函数：</p>
+<ul>
+<li><code>strlen(str)</code> ：返回字符个数，<code>int len=strlen(str);</code>。</li>
+<li><p><code>strcmp(str1, str2)</code>：按照字典序比较字符串，<code>str1&lt;str2</code>返回负数，<code>str1==str2</code>返回<code>0</code>，<code>str1&gt;str2</code>返回正数。</p></li>
+<li><code>strcpy(str1, str2)</code>：拷贝str1给str2。</li>
+<li><p><code>strcat(str1, str2)</code>：把str2连接到str1后面，<code>strcat(str1, str2);</code>。</p></li>
+</ul>
+<p>介绍两个在<code>strio.h</code>中就包含的函数，<code>sscanf</code>和<code>sprintf</code>。<code>sscanf</code>用来把一个字符串按照要求的格式赋值给其它变量，<code>sprintf</code>用来把其它变量按照要求的格式赋值给字符串。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> str[<span class="number">50</span>]=<span class="string">&quot;12345&quot;</span>;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="comment">// sscanf用法</span></span><br><span class="line"><span class="built_in">sscanf</span>(str, <span class="string">&quot;%d&quot;</span>, &amp;n);</span><br><span class="line"><span class="keyword">char</span> str1[<span class="number">50</span>]=<span class="string">&quot;2048:3.14,hello&quot;</span>;</span><br><span class="line"><span class="keyword">double</span> b;</span><br><span class="line"><span class="keyword">char</span> s[<span class="number">10</span>];</span><br><span class="line"><span class="built_in">sscanf</span>(str1, <span class="string">&quot;%d:%lf,%s&quot;</span>, &amp;n, &amp;b, s);</span><br><span class="line"><span class="comment">// sprintf用法</span></span><br><span class="line"><span class="built_in">sprintf</span>(str, <span class="string">&quot;%d:%.1lf&quot;</span>, n, b); <span class="comment">// 此时str由12345变为2018:3.1</span></span><br></pre></td></tr></table></figure>
+<h2 id="指针">指针</h2>
+<p>在c语言中，指针是指向变量首个字节地址的变量，由于不同类型的变量有不同的字节，因此还需要确定变量的类型。<code>int *p = &amp;a;</code>。指针本身都是一个unsigned的int。</p>
+<p>如果定义多个指针，都需要包括<code>*</code>，<code>int *p1, *p2, *p3;</code>。</p>
+<p>指针变量支持自增和自减操作。</p>
+<p>c语言中的数组名就代表首个数组元素的地址，也可以直接看做是个指针。因此</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line"><span class="keyword">int</span> *p = a;</span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">// 会直接赋值给a[0]</span></span><br><span class="line"><span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>, a+<span class="number">1</span>); <span class="comment">// 会直接赋值给a[1]</span></span><br></pre></td></tr></table></figure>
+<p>指针作为函数参数传入时，指针参数本身是值传递，但是通过指针操作被指向的变量可以直接修改。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> *p)</span> </span>&#123;</span><br><span class="line">  *p = <span class="number">1</span>; <span class="comment">// 会修改被指向变量的值</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>c++提供了引用的语法，用在函数的形式参数中，用来表示该形式参数只是传入变量的一个别名，不会拷贝和复制，这样不需要指针也能够直接修改传入的原参数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> &amp;a, <span class="keyword">int</span> &amp;b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> c = a;</span><br><span class="line">  a = b;</span><br><span class="line">  b = c;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> x = <span class="number">0</span>, y = <span class="number">1</span>;</span><br><span class="line">swap(x, y); <span class="comment">// 注意，x和y不能再加&amp;</span></span><br></pre></td></tr></table></figure>
+<h2 id="结构体的使用">结构体的使用</h2>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">studentInfo</span> &#123;</span></span><br><span class="line">  <span class="comment">// 基本数据类型</span></span><br><span class="line">  <span class="keyword">int</span> age;</span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  studentInfo * nextStu;</span><br><span class="line">&#125; stu, *stuP, students[<span class="number">20</span>];</span><br></pre></td></tr></table></figure>
+<p>注意，定义的时候，结构体内不能有自身类型，但是可以有指向自身的指针。</p>
+<p>访问结构体元素：</p>
+<ul>
+<li><p>非指针：<code>stu.age; stu.name</code></p></li>
+<li><p>指针：<code>stuP-&gt;age; stuP-&gt;name</code></p></li>
+</ul>
+<p>构造函数，为了方便直接利用已有的基本数据类型变量生成一个结构体实例，c语言提供了结构体的构造函数，没有返回类型，构造函数命名就是本身。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">studentInfo</span> &#123;</span></span><br><span class="line">  <span class="comment">// 基本数据类型</span></span><br><span class="line">  <span class="keyword">int</span> age;</span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">10</span>];</span><br><span class="line">  studentInfo * nextStu;</span><br><span class="line">  <span class="comment">// 构造函数</span></span><br><span class="line">  <span class="comment">// 默认构造函数，可以设计多个应用与不同场景，只要形参不同即可</span></span><br><span class="line">  studentInfo() &#123;&#125; <span class="comment">// 便于不初始化也能定义结构体变量</span></span><br><span class="line">  studentInfo(<span class="keyword">int</span> _age, <span class="keyword">char</span> _name[]) &#123;</span><br><span class="line">    age = _age;</span><br><span class="line">    <span class="built_in">strcpy</span>(name, _name);</span><br><span class="line">  &#125;</span><br><span class="line">  studentInfo(<span class="keyword">int</span> _age) &#123;</span><br><span class="line">    age = _age;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">studentInfo stu; <span class="comment">// 如果没有默认构造函数就无法这样定义</span></span><br><span class="line">studentInfo stu2 = studentInfo(<span class="number">18</span>, <span class="string">&quot;alexpp&quot;</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="补充">补充</h2>
+<p>cin读入字符串数组的时候，直接<code>cin&gt;&gt;str</code>即可，但是如果希望读入一整行的话，使用<code>getline</code>，比如<code>getline(cin, str)</code>，这个方法对于STL中的string同样适用。</p>
+<p>cout的输出，如果需要指定浮点数的精度，需要包括<code>&lt;iomanip&gt;</code>，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cout</span>&lt;&lt;setiosflags(ios::fixed)&lt;&lt;setprecision(<span class="number">2</span>)&lt;&lt;<span class="number">123.456</span>&lt;&lt;<span class="built_in">endl</span>;</span><br></pre></td></tr></table></figure>
+<p>浮点数的比较，在进行了可能影响小数点的精度的运算之后，本来两个从原理上应该相等的浮点数，结果由于舍弃了部分小数位，导致不相等，这时候需要考虑误差允许范围内的比较操作。</p>
+<p>定义一个小数，<code>const double eps = 1e-8</code>，<code>1e</code>代表的是<code>10</code>。</p>
+<p>重新定义<code>==, !=,&lt;,&gt;,&gt;=,&lt;=</code>。</p>
+<p>举例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">equ</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">fabs</span>(a - b) &lt; eps;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">large</span><span class="params">(<span class="keyword">double</span> a, <span class="keyword">double</span> b)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (a - b) &gt; eps;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">less</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (b - a) &gt; eps;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">largeEqu</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a &gt; (b - eps);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">lessEqu</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a &lt; (b + eps);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>计算<span class="math inline">\(\pi\)</span>，使用<code>const double pi = acos(-1.0);</code>即可。</p>
+<h2 id="黑盒测试">黑盒测试</h2>
+<p>单点测试就是OJ对于每组输入都重新启动文件，程序运行一次只需要处理一组测试数据，即程序只需要保证单次运行成功即可。</p>
+<p>多点测试就是要求程序必须一次运行所有组测试数据，根据题目不同有不同写法。</p>
+<p>由于OJ是把所有测试数据放在一个文件中，因此只要判断测试文件是否已经输入完毕即可。<code>scanf</code>函数会返回成功读入的参数的个数，如果读到文件末尾就会返回<code>-1</code>，在c语言中使用<code>EOF</code>代表-1。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;d&quot;</span>, &amp;n)!=EOF) &#123;</span><br><span class="line">  <span class="comment">// pass</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 如果是在读入字符串</span></span><br><span class="line"><span class="keyword">while</span>(<span class="built_in">scanf</span>(<span class="string">&quot;s&quot;</span>, str)!=EOF) &#123;</span><br><span class="line">  <span class="comment">// pass</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span>(gets(str)!=<span class="literal">NULL</span>) &#123;</span><br><span class="line">    <span class="comment">// pass</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当然根据题目，可能还有其它合适的循环读入的方法。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/algorithm-note/2-basic/" title="2-basic">https://liuxiyang641.github.io/algorithm-note/2-basic/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/book/" rel="tag"><i class="fa fa-tag"></i> book</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/algorithm-note/12-string/" rel="prev" title="12-string">
+                  <i class="fa fa-chevron-left"></i> 12-string
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/algorithm-note/5-math/" rel="next" title="5-math">
+                  5-math <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"43f4926dea1efcc362a8aed23dad9a7d"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

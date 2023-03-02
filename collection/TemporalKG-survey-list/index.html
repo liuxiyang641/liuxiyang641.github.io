@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Temporal Knowledge Graph 对目前出现的temporal KG相关论文和资源的调研文献list。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="TemporalKG-survey-list">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/TemporalKG-survey-list/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Temporal Knowledge Graph 对目前出现的temporal KG相关论文和资源的调研文献list。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-21T02:43:11.000Z">
+<meta property="article:modified_time" content="2022-09-05T07:08:15.054Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
+<meta property="article:tag" content="TKG">
+<meta property="article:tag" content="Reading-list">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/TemporalKG-survey-list/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/TemporalKG-survey-list/","path":"collection/TemporalKG-survey-list/","title":"TemporalKG-survey-list"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>TemporalKG-survey-list | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">25</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">33</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">112</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#temporal-knowledge-graph"><span class="nav-number">1.</span> <span class="nav-text">Temporal Knowledge Graph</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">112</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/TemporalKG-survey-list/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="TemporalKG-survey-list | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TemporalKG-survey-list<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/TemporalKG-survey-list.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2022-06-21 10:43:11" itemprop="dateCreated datePublished" datetime="2022-06-21T10:43:11+08:00">2022-06-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-05 15:08:15" itemprop="dateModified" datetime="2022-09-05T15:08:15+08:00">2022-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Reading-list/" itemprop="url" rel="index"><span itemprop="name">Reading-list</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Reading-list/TKG/" itemprop="url" rel="index"><span itemprop="name">TKG</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="temporal-knowledge-graph">Temporal Knowledge Graph</h1>
+<p>对目前出现的temporal KG相关论文和资源的调研文献list。</p>
+<span id="more"></span>
+<table>
+<colgroup>
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 17%" />
+<col style="width: 14%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>标题</th>
+<th>任务</th>
+<th>解决问题</th>
+<th>主要技术</th>
+<th>数据集</th>
+<th>参考价值</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>RotateQVS: Representing Temporal Information as Rotations in Quaternion Vector Space for Temporal Knowledge Graph Completion. (ACL 22)</td>
+<td>知识图谱补全</td>
+<td>认为之前的方法无法很好的建模时空relation以及relation之间的联系</td>
+<td>Trans系列</td>
+<td>ICEWS14、ICEWS05-15、YAGO11k、 GDELT</td>
+<td>参考如何在复杂的向量空间下建模时空信息</td>
+</tr>
+<tr class="even">
+<td>Improving Time Sensitivity for Question Answering over Temporal Knowledge Graphs (ACL 22)</td>
+<td>QA</td>
+<td>针对一个问题可能涉及多个不同时间片进行了探究</td>
+<td>通过引入一个time-order学习的任务改进了TCompLEx方法</td>
+<td>CRONQUESTIONS （目前出现的最大的利用TKG的QA数据集）</td>
+<td>可以参考改进的学习任务</td>
+</tr>
+<tr class="odd">
+<td>Search from History and Reason for Future: Two-stage Reasoning on Temporal Knowledge Graphs (ACL 21)</td>
+<td>知识图谱补全</td>
+<td>作者任务在TKG下的推理，需要两个步骤，首先是线索搜集，然后是具体的推理。大多数的方法忽略了第一步</td>
+<td>RL和GNN</td>
+<td>ICE14、ICE05-15、ICE18、 GDELT</td>
+<td>可以参考第二步，利用GNN建模时空信息</td>
+</tr>
+<tr class="even">
+<td>TTAGN: Temporal Transaction Aggregation Graph Network for Ethereum Phishing Scams Detection (WWW 22)</td>
+<td>Ethereum Phishing Scams Detection</td>
+<td></td>
+<td>GCN</td>
+<td>作者从Etherscan上爬取的数据集</td>
+<td>搞清楚GCN在时序信息建模中的作用</td>
+</tr>
+<tr class="odd">
+<td>Time-aware Entity Alignment using Temporal Relational Attention. （WWW 22）</td>
+<td>Entity Alignment</td>
+<td>之前没有探究过在TKG和Open KG之间的实体对齐</td>
+<td>GCN</td>
+<td></td>
+<td>GCN用于表示学习，在实体对齐任务下进行了评估</td>
+</tr>
+<tr class="even">
+<td>TREND: TempoRal Event and Node Dynamics for Graph Representation Learning （WWW 22）</td>
+<td>Temporal Graph Representation Learning</td>
+<td>之前的方法没有探究过如何处理新出现的节点</td>
+<td>GCN</td>
+<td>CollegeMsg、cit-HepTh、Wikipedia、Taobao</td>
+<td>GCN建模时序信息</td>
+</tr>
+<tr class="odd">
+<td>Element-guided Temporal Graph Representation Learning for Temporal Sets Prediction （WWW 22）</td>
+<td>Temporal Sets Prediction</td>
+<td>之前的方法无法建模不同set之间的协同信息</td>
+<td>GCN</td>
+<td>DC、TaoBao、JingDong、TMS</td>
+<td>GCN建模时序信息</td>
+</tr>
+<tr class="even">
+<td>STAM: A Spatiotemporal Aggregation Method for Graph Neural Network-based Recommendation （WWW 22）</td>
+<td>Recommendation</td>
+<td>之前利用GNN进行推荐的方法没有考虑时序的信息</td>
+<td>GNN</td>
+<td>MovieLens、Amazon、Taobao</td>
+<td>GCN获取的邻居信息加入了时序信息</td>
+</tr>
+<tr class="odd">
+<td>HINTS: Citation Time Series Prediction for New Publications via Dynamic Heterogeneous Information Network Embedding （WWW 21）</td>
+<td>作者提出了一个新的问题，预测一篇论文的引用时间序列</td>
+<td>之前的方法大多是根据已有的leading citation value来进行预测，无法处理冷启动问题</td>
+<td>GNN</td>
+<td>AMiner、APS</td>
+<td>HGNN结合时序信息，并且尝试解决冷启动问题</td>
+</tr>
+<tr class="even">
+<td>TLogic: Temporal Logical Rules for Explainable Link Forecasting on Temporal Knowledge Graphs (AAAI 22)</td>
+<td>Link Forecasting</td>
+<td>作者认为之前对于时序知识图谱的建模缺少可解释性，也缺少对于推理逻辑链的研究</td>
+<td>随机游走</td>
+<td>ICEWS14、ICEWS18、ICEWS0515</td>
+<td>一个可解释的建模方法</td>
+</tr>
+<tr class="odd">
+<td>Temporal Knowledge Graph Completion using Box Embeddings （AAAI 22）</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的方法都没有从时空推理的角度进行研究</td>
+<td>在BoxE方法基础上进行了拓展</td>
+<td>ICEWS14、 ICEWS05-15、 GDELT</td>
+<td>作者对时空知识图谱的各种性质进行了验证</td>
+</tr>
+<tr class="even">
+<td>Neural Latent Space Model for Dynamic Networks and Temporal Knowledge Graphs （AAAI 21）</td>
+<td>Link Forecasting</td>
+<td>作者这项工作能够同时处理同构网络和异构网络</td>
+<td>GRU</td>
+<td>UCI、Enron、Yelp、ML-10M、WIKI、YAGO</td>
+<td>作者从概率分布的角度分析出发，逐步建立一个使用神经网络的模型</td>
+</tr>
+<tr class="odd">
+<td>Dynamic Knowledge Graph Alignment （AAAI 21）</td>
+<td>Knowledge Graph Alignment</td>
+<td>之前在知识图谱对齐中的方法通常假设KG是静态的</td>
+<td>GCN</td>
+<td>DBP15K</td>
+<td>GCN用于时序知识图谱对齐</td>
+</tr>
+<tr class="even">
+<td>Learning from History: Modeling Temporal Knowledge Graphs with Sequential Copy-Generation Networks （AAAI 21）</td>
+<td>知识图谱补全</td>
+<td>之前对于时序知识图谱建模的方法忽略了在过去的fact当中常常存在重复性的知识</td>
+<td>copy-generation</td>
+<td>ICEWS18、ICEWS14、GDELT、WIKI、YAGO</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>ChronoR: Rotation Based Temporal Knowledge Graph Embedding （AAAI 21）</td>
+<td>知识图谱补全</td>
+<td></td>
+<td>基于向量空间旋转操作的方法</td>
+<td>ICEWS14、ICEWS05-15、YAGO15K</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Relational Learning to Capture the Dynamics and Sparsity of Knowledge Graphs （AAAI 21）</td>
+<td>知识图谱补全</td>
+<td>作者希望能够同时解决时序问题和数据稀疏的问题</td>
+<td></td>
+<td>-</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Diachronic Embedding for Temporal Knowledge Graph Completion （AAAI 2020）</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的方法大多会给TKG上的实体都赋予一个静态的表示，但是实体的特征会随着时间而改变。因此，作者提出将实体和对应的时间点作为特征，得到随时间改变的向量</td>
+<td></td>
+<td>ICEWS14、ICEWS05-15、GDELT</td>
+<td>一个model agnostic的方法</td>
+</tr>
+<tr class="even">
+<td>Learning to Walk across Time for Interpretable Temporal Knowledge Graph Completion (KDD 21)</td>
+<td>Temporal Knowledge Graph Completion</td>
+<td>作者认为之前出现的很多建模TKG的方法是将静态的KGE方法进行拓展，这导致它们往往无法：1. 考虑相关的邻居信息 2. 进行基于路径的解释</td>
+<td>GNN</td>
+<td>ICEWS14、ICEWS05-15、Wikidata11k</td>
+<td>GNN建模时空知识图谱</td>
+</tr>
+<tr class="odd">
+<td>Temporal Knowledge Graph Reasoning Based on Evolutional Representation Learning （SIGIR 21）</td>
+<td>知识图谱补全</td>
+<td>作者尝试对之前利用evolutional learning的方法进行改进，作者认为之前的方法无法处理出现在同一时间片下的facts</td>
+<td>GNN</td>
+<td>ICEWS18、ICEWS14、ICEWS05-15、WIKI、YAGO、GDELT</td>
+<td>GNN建模时空知识图谱</td>
+</tr>
+<tr class="even">
+<td>TIE: A Framework for Embedding-based Incremental Temporal Knowledge Graph Completion （SIGIR 21）</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的方法存在以下问题：1. 信息的遗忘 2. 对于改变的fact的不稳定性 3. 训练效率低</td>
+<td>Incremental learning</td>
+<td>YAGO11k、Wikidata12k</td>
+<td>增量学习，之前没有接触过</td>
+</tr>
+<tr class="odd">
+<td>Time-dependent Entity Embedding is not All You Need: A Re-evaluation of Temporal Knowledge Graph Completion Models under a Unified Framework （EMNLP 21）</td>
+<td>知识图谱补全</td>
+<td>作者对于六种现存的TKG建模的方法的实现策略进行了全面的评估。作者发现通过实验，不同的方法在不同数据集上的性能并不和论文中声称的一致</td>
+<td>-</td>
+<td>ICEWS14、 ICEWS11-14、 GDELT-m10</td>
+<td>对目前的KGE方法可能存在的问题进行了解，便于后续的学习</td>
+</tr>
+<tr class="even">
+<td>TimeTraveler: Reinforcement Learning for Temporal Knowledge Graph Forecasting （EMNLP 21）</td>
+<td>Knowledge Graph Forecasting</td>
+<td>作者提出了首个利用强化学习实现知识图谱forecasting的方法</td>
+<td>强化学习</td>
+<td>ICEWS14、ICEWS18、WIKI、YAGO</td>
+<td>强化学习用于时序知识图谱建模</td>
+</tr>
+<tr class="odd">
+<td>Learning Neural Ordinary Equations for Forecasting Future Links on Temporal Knowledge Graphs （EMNLP 21）</td>
+<td>Knowledge Graph Forecasting</td>
+<td>作者认为之前的方法大多将TKG建模到离散的状态空间下。作者提出将GCN和神经微分方程（neural ordinary differential equations）结合。</td>
+<td>GCN</td>
+<td>ICEWS14、ICEWS18、 ICEWS05-15、YAGO、WIKI</td>
+<td>GCN的拓展版本，用于建模时序知识图谱</td>
+</tr>
+<tr class="even">
+<td>Time-aware Graph Neural Network for Entity Alignment between Temporal Knowledge Graphs （EMNLP 21）</td>
+<td>TKG对齐</td>
+<td>作者认为之前的知识图谱对齐方法忽略了很多知识图谱中存在的时序信息</td>
+<td>GNN</td>
+<td>DICEWS-1K、DICEWS-200、YAGO-WIKI50K-5K、YAGO-WIKI50K-1K、YAGO-WIKI20K</td>
+<td>GCN用于TKG对齐</td>
+</tr>
+<tr class="odd">
+<td>TeMP: Temporal Message Passing for Temporal Knowledge Graph Completion (EMNLP 20)</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的方法没有能够显式地利用多跳的邻居信息</td>
+<td>GNN</td>
+<td>ICEWS、ICEWS05-15、GDELT</td>
+<td>GNN建模时空知识图谱</td>
+</tr>
+<tr class="even">
+<td>Recurrent Event Network: Autoregressive Structure Inference over Temporal Knowledge Graphs （EMNLP 20）</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的方法只能够预测发生在过去的fact，而无法预测要连续发生在未来的fact（类似外推）</td>
+<td>GNN</td>
+<td>ICEWS18、GDELT、 ICEWS14、WIKI、 YAGO</td>
+<td>GNN建模时空知识图谱，并且尝试进行外推</td>
+</tr>
+<tr class="odd">
+<td>Temporal Knowledge Base Completion: New Algorithms and Evaluation Protocols (EMNLP 20)</td>
+<td>知识图谱补全</td>
+<td>作者提出了一个建模时序知识图谱的新方法 TIMEPLEX。更重要的是，作者发现了在之前的评估策略中可能出现的不正确的评估方式</td>
+<td>复数域下的建模方法</td>
+<td>WIKIDATA12k、YAGO11k、ICEWS14、ICEWS05-15</td>
+<td>评估策略的影响很关键</td>
+</tr>
+<tr class="even">
+<td>Domain Knowledge Empowered Structured Neural Net for End-to-End Event Temporal Relation Extraction （EMNLP 20）</td>
+<td>关系抽取</td>
+<td>作者在神经网络中加入了分布约束来避免之前的方法常估计的硬约束条件</td>
+<td>Bert-based</td>
+<td>TimeBank-Dense、I2B2-TEMPORAL</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>DyERNIE: Dynamic Evolution of Riemannian Manifold Embeddings for Temporal Knowledge Graph Completion (EMNLP 20)</td>
+<td>知识图谱补全</td>
+<td>作者认为之前的TKG建模方法大多是在欧式空间下的建模方法，而作者尝试基于黎曼流形对实体进行建模</td>
+<td>基于语义匹配</td>
+<td>ICEWS14、ICEWS05-15、GDELT</td>
+<td>非欧式空间下的TKG建模方法</td>
+</tr>
+<tr class="even">
+<td>HIP Network: Historical Information Passing Network for Extrapolation Reasoning on Temporal Knowledge Graph （IJCAI 21）</td>
+<td>Extrapolation reasoning</td>
+<td>作者认为之前的TKG方法，对于时序信息的利用不够充分。</td>
+<td>GNN</td>
+<td>ICEWS14、ICEWS18、GDELT、WIKI、YAGO</td>
+<td>GNN用于时序知识图谱</td>
+</tr>
+<tr class="odd">
+<td>Temporal Attribute Prediction via Joint Modeling of Multi-Relational Structure Evolution (IJCAI 20)</td>
+<td>时序知识图谱推理</td>
+<td>之前没有人把temporally evolving graphs和 time series prediction结合到一起</td>
+<td>RNN</td>
+<td>ATG、CAC、MTG、GDELT</td>
+<td>-</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/TemporalKG-survey-list/" title="TemporalKG-survey-list">https://liuxiyang641.github.io/collection/TemporalKG-survey-list/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
+              <a href="/tags/TKG/" rel="tag"><i class="fa fa-tag"></i> TKG</a>
+              <a href="/tags/Reading-list/" rel="tag"><i class="fa fa-tag"></i> Reading-list</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/collection/MMML-survey-list/" rel="prev" title="MMML-survey-list">
+                  <i class="fa fa-chevron-left"></i> MMML-survey-list
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/kge/T-GAP/" rel="next" title="T-GAP">
+                  T-GAP <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">375k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:41</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"b8ff7a47994df4e29eb7cb936dbf586f"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>
