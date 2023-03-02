@@ -35,7 +35,7 @@ RNN等模型已经取得了很大的成功，但是计算循环网络的代价�
 
 整体堆叠6层encoder，然后经过6层的decoder。6层encoder的最终输入会输入到每一层的decoder中。
 
-每一层encoder包括两个sublayer，一个接受input的输入，然后经过$h$个多头注意力，加上原来的输入，之后norm，第二层经过一个前馈网络，还是加上原来的输入，经过norm。encoder的初始输入是全部的原始输入。
+每一层encoder包括两个sublayer，一个接受input的输入，然后经过$h$个多头注意力，残差加上原来的输入，之后norm（这叫做post-normalization，指layernorm放在残差之后，实际上后来很多工作使用的是pre-normalization，也就是先norm，再经过attention或FFN，最后残差，可参考ViT的结构），第二层经过一个前馈网络，还是残差加上原来的输入，经过norm。encoder的初始输入是全部的原始输入。
 
 每一层的decoder包括三个sublayer，有两个与encoder一样，但是多了一层会接受encoder的输出作为keys和values。decoder的初始输入是$t-1$时刻的预测结果以及encoder的输出。
 
@@ -53,11 +53,16 @@ $$
 
 > 4 To illustrate why the dot products get large, assume that the components of q and k are independent random variables with mean 0 and variance 1. Then their dot product, $q\cdot k=\sum^{d_k}_{i=1}q_ik_i$ , has mean 0 and variance$d_k$ .
 
-计算完成单个attention之后，再计算多头注意力，拼接起来之后再乘以一个权值矩阵。
+除以$\sqrt{d_k}$是为了防止在d_k特别大的时候，也就是hidden embedding维度比较大的时候，计算出来的注意力weight呈现出只有一个值非常靠近$1$，其它值靠近$0$的情况，这会导致bp的时候的梯度就很小，几乎是0。
+
+除以$\sqrt{d_k}$能够把输入softmax的absolute attention weight的值都scale的小一点；
+减低指数函数$e(\cdot)$带来的放大效应/马太效应。详细的数学解释可以参考[Transformer Networks: A mathematical explanation why scaling the dot products leads to more stable gradients](https://towardsdatascience.com/transformer-networks-a-mathematical-explanation-why-scaling-the-dot-products-leads-to-more-stable-414f87391500)
+
+计算完成单个attention之后，再计算多头注意力，拼接起来之后再乘以一个权值矩阵：
 $$
 MultiHead(Q,K,V)=Concat(head_1,\dots,head_h)W^O
 $$
-在实践中，使用了8个头，每个维度64，一共维度512。
+在实践中，使用了8个头，每个维度64，一共维度512。每一个头都可以看做是好比CNN中的不同的卷积通道，每个head独立训练，有自己的参数，期望每个head能够学习到不同的pattern。高层和底层、同一层的不同head有可能学习到不同的知识（这一点有相关文章探讨，发现不同注意力层会捕获不同层次的信息，但是每一层的不同head可能只有几个会学习到不同的pattern，比如不同的attention分布）。
 
 decoder的结构与encoder类似，但是它多了一层encoder和decoder。
 
@@ -83,11 +88,11 @@ decoder的结构与encoder类似，但是它多了一层encoder和decoder。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/transformer_decoder_output_softmax.png" style="zoom:50%;" />
 
-### Encoder and Decoder
+### 2.3 Encoder and Decoder
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/transformer_self_attention_vectors.png" style="zoom:50%;" />
 
-### The Final Linear and Softmax Layer
+### 2.4 The Final Linear and Softmax Layer
 
 decoder的输出，经过一个全连接层，然后得到logits vector，其中每一维度对应一个word；再经过softmax，取出score最大的word。
 
