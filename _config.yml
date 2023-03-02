@@ -65,7 +65,7 @@ ignore: null
 theme: next
 deploy:
   type: git
-  repo: https://github.com/liuxiyang641/liuxiyang641.github.io
+  repo: git@github.com:liuxiyang641/liuxiyang641.github.io.git
   branch: main
 search:
   path: search.xml
