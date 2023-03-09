@@ -3,6 +3,6 @@ title: {{ title }}
 date: {{ date }}
 categories:
 tags:
-notshow: false
+published: true
 ---
 

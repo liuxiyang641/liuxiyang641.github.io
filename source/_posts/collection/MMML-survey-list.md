@@ -1,6 +1,6 @@
 ---
 title: MMML-survey-list
-notshow: true
+published: false
 date: 2022-06-19 16:07:15
 categories:
 - Reading-list
