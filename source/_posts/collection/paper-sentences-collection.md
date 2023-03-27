@@ -72,4 +72,5 @@ tags:
 59. For Protypical Networks, we conjecture this is primarily due to cosine distance not being a Bregman divergence（我们猜测某种现象/结果可能是因为...）
 60. While suggestive as a research result, in terms of practical applications, the zero-shot performance of GPT-2 is still far from use-able.（作为实验结果有启发性）
 61. We **hold that** the poor performance of the pre-trained multimodal model may be attributed to the fact that the pre-training datasets and objects have gaps in information extraction tasks. (我们认为/我们假设)
+62. **To steer our models towards appropriate behaviour** at a more fine-grained level, we rely heavily on our models themselves as tools.（为了使模型更能够…）
 
