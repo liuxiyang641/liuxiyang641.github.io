@@ -9,7 +9,7 @@ tags:
 - ML
 ---
 
-# Product-of-Experts and Mix-of-Experts
+# Product-of-Experts and Mixture-of-Experts
 
 这篇博客主要记录PoE和MoE的一些调研笔记。
 
