@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="A Survey of Large Language Models 人大，arXiv 2023.05，代码。  Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essent">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="LLM-survey-renmin">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/LLM-survey-renmin/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="A Survey of Large Language Models 人大，arXiv 2023.05，代码。  Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essent">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522220527055.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230604175331744.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522211632104.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522211913510.png">
+<meta property="article:published_time" content="2023-05-22T07:07:41.000Z">
+<meta property="article:modified_time" content="2023-06-04T10:55:28.649Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Survey">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522220527055.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/LLM-survey-renmin/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/LLM-survey-renmin/","path":"llm/LLM-survey-renmin/","title":"LLM-survey-renmin"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LLM-survey-renmin | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">123</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-survey-of-large-language-models"><span class="nav-number">1.</span> <span class="nav-text">A Survey of Large Language Models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.2.</span> <span class="nav-text">2. Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#background-for-llms"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Background for LLMs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#technical-evolution-of-gpt-series-models"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Technical Evolution of GPT-series Models</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaption-tuning-of-llms"><span class="nav-number">1.3.</span> <span class="nav-text">5. Adaption Tuning of LLMs</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#instruction-tuning"><span class="nav-number">1.3.1.</span> <span class="nav-text">5.1 Instruction Tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#alignment-tuning"><span class="nav-number">1.3.2.</span> <span class="nav-text">5.2 Alignment Tuning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#efficient-tuning"><span class="nav-number">1.3.3.</span> <span class="nav-text">5.3 Efficient Tuning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#utilization"><span class="nav-number">1.4.</span> <span class="nav-text">6. Utilization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#in-context-learning"><span class="nav-number">1.4.1.</span> <span class="nav-text">6.1 In-Context Learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#chain-of-thought-prompting"><span class="nav-number">1.4.2.</span> <span class="nav-text">6.2 Chain-of-Thought Prompting</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/LLM-survey-renmin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LLM-survey-renmin | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM-survey-renmin<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/LLM-survey-renmin.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-22 15:07:41" itemprop="dateCreated datePublished" datetime="2023-05-22T15:07:41+08:00">2023-05-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-06-04 18:55:28" itemprop="dateModified" datetime="2023-06-04T18:55:28+08:00">2023-06-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Survey/" itemprop="url" rel="index"><span itemprop="name">Survey</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="a-survey-of-large-language-models">A Survey of Large Language Models</h1>
+<p>人大，arXiv 2023.05，<a target="_blank" rel="noopener" href="https://github.com/RUCAIBox/LLMSurvey">代码</a>。</p>
+<blockquote>
+<p>Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essentially a complex, intricate system of human expressions governed by grammatical rules. It poses a signiﬁcant challenge to develop capable artiﬁcial intelligence (AI) algorithms for comprehending and grasping a language. As a major approach, language modeling has been widely studied for language understanding and generation in the past two decades, evolving from statistical language models to neural language models. Recently, pre-trained language models (PLMs) have been proposed by pretraining Transformer models over large-scale corpora, showing strong capabilities in solving various natural language processing (NLP) tasks. Since the researchers have found that model scaling can lead to an improved model capacity, they further investigate the scaling effect by increasing the parameter scale to an even larger size. Interestingly, when the parameter scale exceeds a certain level, these enlarged language models not only achieve a signiﬁcant performance improvement, but also exhibit some special abilities (e.g., incontext learning) that are not present in small-scale language models (e.g., BERT). To discriminate the language models in different parameter scales, the research community has coined the term large language models (LLM) for the PLMs of signiﬁcant size (e.g., containing tens or hundreds of billions of parameters). Recently, the research on LLMs has been largely advanced by both academia and industry, and a remarkable progress is the launch of ChatGPT (a powerful AI chatbot developed based on LLMs), which has attracted widespread attention from society. The technical evolution of LLMs has been making an important impact on the entire AI community, which would revolutionize the way how we develop and use AI algorithms. Considering this rapid technical progress, in this survey, we review the recent advances of LLMs by introducing the background, key ﬁndings, and mainstream techniques. In particular, we focus on four major aspects of LLMs, namely pre-training, adaptation tuning, utilization, and capacity evaluation. Besides, we also summarize the available resources for developing LLMs and discuss the remaining issues for future directions. This survey provides an up-to-date review of the literature on LLMs, which can be a useful resource for both researchers and engineers.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="introduction">1. Introduction</h2>
+<p>语言是人类从小开始学习，终身都在使用的工具。让机器能够像人一样的读、写和交流是人工智能领域一直以来的追求。</p>
+<p>语言建模language modeling（LM）是指能够生成词序列概率似然的技术手段，能够实现预测下一个或者确实的token。其对应模型的发展经历了四个阶段：</p>
+<ol type="1">
+<li>Statistical language models (SLM). 根据固定范围的context来预测下一个词，比如n-gram models。</li>
+<li>Neural language models (NLM). 利用神经网络来预测word sequence probabilities。每一个word被建模为distributed representations [<em>A neural probabilistic language model 2003</em>]，最出名的有word2vec方法。</li>
+<li>Pre-trained language models (PLM). 先在语料上预训练，之后在具体任务上微调。早期的尝试包括ELMo（基于biLSTM），后续出现了BERT，GPT1,2（基于Transformer）等方法。</li>
+<li>Large language models (LLM). 简单的讲LLM就是large-scaled PLM，比如GPT-3，PaLM等。</li>
+</ol>
+<p>LLM和PLM（之前看到也有研究把PLM对应的方法叫做SLM）的区别，作者分出3点：</p>
+<ul>
+<li>LLM比起SLM涌现出了新的能力（emergent abilities [<em>Emergent abilities of large language models 2022</em>]），比如GPT-3比起GPT-2，能够通过in-context learning进行few-shot任务。</li>
+<li>LLM改变了人们使用和发展AI算法的方式。对LLM的应用更多的是通过改变输入，然后利用API进行访问。</li>
+<li>LLM使得科研和工程之间的界限变得模糊。预训练LLM可能模型架构本身不再是问题，问题是工程实践（如何处理和选择数据、如何并行训练、如何细微地调整模型的细节）</li>
+</ul>
+<p>由于现在对于LLM模型最小scale并没有统一的认识（特别是LLM的性能和训练数据以及模型本身的大小有关），因此在这篇论文里，作者简单的把10B以上参数量的PLM叫做LLM。</p>
+<p>发展LLM面临的问题，作者总结了3个大的方面：</p>
+<ul>
+<li>LLM出现能力涌现的原因到底是什么？</li>
+<li>学术界较难从头训练一个LLM，特别是很多LLM由大公司开发，实现细节不公开（这就是为什么我们要发展open LLM）</li>
+<li>如何让LLM和人类偏好对齐？特别是如何阻止生成有毒的、虚假编造的输出。</li>
+</ul>
+<h2 id="overview">2. Overview</h2>
+<h3 id="background-for-llms">2.1 Background for LLMs</h3>
+<p>scaling law是指随着模型大小，数据集大小以及计算次数等的增加，LLM性能变化的形式化的变化趋势。作者介绍了两个有代表性的scaling law：</p>
+<ol type="1">
+<li>KM scaling law：2020年OpenAI提出的[<em>Scaling laws for neural language models 2020</em>]，表示模型的性能和三个因素成power-law：model size（模型大小），dataset size（训练数据大小）和training compute（训练计算FP）。KM scaling law更强调在一定的计算负担情况下，增大model size而不是dataset size。</li>
+<li>Chinchilla scaling law：2022年Google DeepMind提出的，强调在一定的计算负担情况下，更好的选择是同时增加dataset size和model size。</li>
+</ol>
+<p>利用scaling law可以帮助我们选择预训练模型大小和数据集大小。</p>
+<p>但是，存在一些LLM能力不符合scaling law，当模型大小较小的情况下无法显示，然而在大模型中突然表现出来的能力，这就是LLM的涌现能力（Emergent Abilities）。下面是3个典型的涌现能力：</p>
+<ul>
+<li>In-context learning：在GPT-3中正式提出（虽然在GPT-2中实际已经使用），是指模型在提供了自然语言描述的指令instruction和几个demonstrations之后，无需训练和梯度更新，就能够生成期望的输出的能力。</li>
+<li>Instruction following：通过在预训练数据集中加入指令instruction，进行instruction tuning，模型能够学会仅仅通过指令，不需要demonstration，就能够准确执行任务的能力。</li>
+<li>Step-by-step reasoning：通过chain-of-thought (CoT) prompting，LLM模型能够一步步的解决复杂任务，这一点在之前的PLM是无法做到的。</li>
+</ul>
+<h3 id="technical-evolution-of-gpt-series-models">2.2 Technical Evolution of GPT-series Models</h3>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522220527055.png" alt="image-20230522220527055" /><figcaption>image-20230522220527055</figcaption>
+</figure>
+<p>作者简要的介绍了GPT家族的发展过程。</p>
+<ol type="1">
+<li>Early Explorations. GPT-1和GPT-2。GPT-1（Generative Pre-Training）2017年提出，follow了Transformer的工作，使用Transformer的decoder部分进行单向的next word预测。GPT-2在2019年提出，参数量达到了1.5B，在更大的数据集上进行训练，通过把各类NLP任务建模为word prediction任务，实现无需训练的通用多任务学习器。</li>
+<li>Capacity Leap. GPT-3在2020年提出，是OpenAI的里程碑，参数量达到了175B。GPT-3不仅仅能够适用于很多NLP任务，还能够适用于很多复杂的需要推理的任务上。</li>
+<li>Capacity Enhancement. 对GPT-3能力的增强，主要包括代码预训练（Training on code data）和人类对齐（Human alignment）。通过加入代码数据，增强GPT-3的推理能力，代表工作是2021年7月提出的Codex。人类对齐是指从人类偏好中进行学习，代表工作是2022年1月提出的InstructGPT，利用了RLHF人类反馈强化学习（reinforcement learning from human feedback）。RLHF不仅能够提升LLM对于人类指令的理解，更能够用来缓解有害输出的生成（比如询问GPT怎么样制作爆炸物）。这些对于GPT-3的提升产生了GPT-3.5系列模型。</li>
+<li>The Milestones of Language Models. ChatGPT在2022年11月推出，ChatGPT和InstructGPT可以看做是双胞胎，只不过ChatGPT的预训练数据集中加入了对话数据，让ChatGPT格外擅长和人类交互。随后在2023年3月推出了多模态GPT-4。</li>
+</ol>
+<h2 id="adaption-tuning-of-llms">5. Adaption Tuning of LLMs</h2>
+<p>作者主要介绍了instruction tuning、alignment tuning和efficient tuning。</p>
+<h3 id="instruction-tuning">5.1 Instruction Tuning</h3>
+<p>指令微调主要用来激发/加强LLM对于人类指令的执行能力（个人感觉像是LLM本身经过预训练后已经拥有了解决各种任务的能力，只不过还没有学会到底怎么样按照人类的指令去输出人类期望的结果。指令微调就是告诉LLM人类到底是期望各种task以什么样的结果输出的）。</p>
+<p>指令微调就是一种有监督的训练，和多任务学习等都是相关的。</p>
+<p>首先是怎么样构造带有指令的数据集。来源有三种：</p>
+<ul>
+<li>现有的数据集（Formatting Existing Datasets）：将已有的各种任务的数据集收集起来，加入人工的任务描述。PromptSource是一个可以为不同数据集构造合适的描述的众包平台。</li>
+<li>基于人类输入构造的数据（Formatting Human Needs）：现有的NLP数据集不能够全面的、准确的满足实际的人类需要。InstructGPT就将真实用户的查询作为instruction。GPT-4进一步人工构造危险的有毒的指令，让模型学会拒绝这样的指令。</li>
+<li>自动构造的数据：类似于Self-instruct，一些半自动的方法被提出来以减小人类标注指令的负担。</li>
+</ul>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230604175331744.png" alt="image-20230604175331744" /><figcaption>image-20230604175331744</figcaption>
+</figure>
+<p>构造的指令数据集有以下几个关键因素</p>
+<ul>
+<li>task的数量。效果的提升在task数量增加到一定数量时会逐渐达到一个确定的层级。</li>
+<li>task descriptions的差异性（长度、结构、创新性等）。</li>
+<li>每个task不需要有很多对应的instance，通常较少数量的instances就足够了。</li>
+<li>具体输入到LLM的prompt格式，比如要不要加入推理步骤、要不要加入demonstrations等。</li>
+</ul>
+<p>总体上来说，似乎指令的多样性要比数量更重要。</p>
+<p>在训练的时候，由于指令数据集要远远小于预训练的语料，因此训练起来更快。除了一般的要关注的有监督训练的各种超参设置外，还有几个额外需要关注的策略：</p>
+<ul>
+<li>Balancing the Data Distribution.
+<ul>
+<li>直接混合不同task dataset的数据，然后随机选择；</li>
+<li>增大高质量dataset数据的被采样的概率；</li>
+<li>设置单个dataset最大采样的次数，避免过大的dataset过于影响instruction tuning效果；</li>
+</ul></li>
+<li>Combining Instruction Tuning and Pre-Training.
+<ul>
+<li>在instruction tuning加入pre-training的数据，让模型在指令微调过程中保持在预训练过程中学习到的能力和知识。OPT-IML incorporates pre-training data during instruction tuning, which can be regarded as regularization for model tuning.</li>
+<li>使用多任务学习同时预训练和指令微调。some studies attempt to train a model from scratch with a mixture of pre-training data (i.e., plain texts) and instruction tuning data (i.e., formatted datasets) using multi-task learning.</li>
+<li>将指令微调数据集直接作为预训练数据中的一部分。GLM-130B [83] and Galactica [35] integrate instruction-formatted datasets as a small proportion of the pre-training corpora to pre-train LLMs, which potentially achieves the advantages of pre-training and instruction tuning at the same time.</li>
+</ul></li>
+</ul>
+<p>经过instruction tuning之后，模型一般会取得性能提升：</p>
+<ul>
+<li>the models of different scales can all beneﬁt from instruction tuning [64, 217], yielding improved performance as the parameter scale increases [84].</li>
+<li>instruction tuning demonstrates consistent improvements in various model architectures, pre-training objectives, and model adaptation methods [64].</li>
+</ul>
+<p>并且会获得更好的任务泛化性：</p>
+<ul>
+<li>A large number of studies have conﬁrmed the effectiveness of instruction tuning to achieve superior performance on both seen and unseen tasks [85, 217].</li>
+<li>instruction tuning has been shown to be useful in alleviating several weaknesses of LLMs (e.g., repetitive generation or complementing the input without accomplishing a certain task) [61, 64].</li>
+<li>LLMs trained with instruction tuning can generalize to related tasks across languages.</li>
+</ul>
+<h3 id="alignment-tuning">5.2 Alignment Tuning</h3>
+<h3 id="efficient-tuning">5.3 Efficient Tuning</h3>
+<h2 id="utilization">6. Utilization</h2>
+<p>作者主要简单介绍了两种利用LLM进行下游任务的prompt方法：ICL（in-context learning）和CoT（chain-of-thought）。CoT可看做是ICL的拓展，在ICL的输入中加入了中间推理步骤。下图是ICL和CoT的示意：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522211632104.png" alt="image-20230522211632104" /><figcaption>image-20230522211632104</figcaption>
+</figure>
+<h3 id="in-context-learning">6.1 In-Context Learning</h3>
+<p>ICL的prompt主要有3部分：task description <span class="math inline">\(I\)</span>, demonstrations <span class="math inline">\(D_k = \{ f(x_1,y_1),\dots,f(x_k,y_k) \}\)</span>和query <span class="math inline">\(x_{k+1}\)</span>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230522211913510.png"   style="zoom:50%;" /></p>
+<p>如果按照GPT-3中的定义，demonstrations不是必须的（尽管常常可以提升性能），只有任务描述的prompt也可以叫做ICL。</p>
+<p>ICL和instruction tuning有很深的联系，只不过instruction tuning需要在有instruction的数据集上进行微调，而ICL只是改变LLM的输入。通过instruction tuning能够有效提升LLM的ICL能力。</p>
+<p>在ICL中，怎么样选择合适的demonstrations是很关键的，有下面几种思路可以参考：</p>
+<ul>
+<li>Heuristic approaches. 有些研究通过利用k-NN算法选择和当前样本相似的demonstrations [<em>Does GPT-3 generate empathetic dialogues? A novel in-context example selection method and automatic evaluation metric for empathetic dialogue generation. COLING 2022</em>]。还有的研究进一步考虑了demonstrations内部的差异性[<em>Complementary explanations for effective in-context learning. 2022</em>]。</li>
+<li>LLM-based approaches. 还有的研究使用LLM来选择合适的demonstrations [<em>Learning to retrieve prompts for in-context learning. NAACL 2022</em>]。还有的研究直接使用LLM来生成对应的demonstrations，无需人工干预 [<em>What can transformers learn in-context? A case study of simple function classes. 2022</em>]。</li>
+</ul>
+<p>另外，demonstration的顺序也可能是一个影响性能的因素。有研究发现LLM有时候会倾向于重复demonstrations最后一个例子的答案 [<em>Calibrate before use: Improving few-shot performance of language models. ICML 2021</em>]。</p>
+<p>对ICL背后的原理，作者主要介绍了两个问题：</p>
+<ul>
+<li>How Pre-Training Affects ICL?
+<ul>
+<li>在预训练的时候，预训练任务可能会影响ICL。有研究者发现通过设计合适的预训练任务可以让SLM也获得ICL能力 [<em>Metaicl: Learning to learn in context. NAACL 2022</em>]。</li>
+<li>ICL还可能和预训练语料的来源有关 [<em>On the effect of pretraining corpora on in-context learning by a largescale language model. NAACL 2022</em>]。有研究者发现ICL出现在预训练语料聚类出现很多不频繁类的情况下 [<em>Data distributional properties drive emergent in-context learning in transformers. 2022</em>]。</li>
+</ul></li>
+<li>How LLMs Perform ICL?
+<ul>
+<li>部分研究者将ICL看做是隐式的梯度下降，将demonstrations在前馈过程中对应的计算看做是产生meta-gradient [<em>Transformers learn in-context by gradient descent. 2022</em>]。</li>
+<li>还有的人将ICL抽象为算法学习过程。有研究发现LLM在预训练过程中实际上编码了隐式的模型 [<em>What learning algorithm is in-context learning? investigations with linear models. 2022</em>]。</li>
+</ul></li>
+</ul>
+<h3 id="chain-of-thought-prompting">6.2 Chain-of-Thought Prompting</h3>
+<p>研究者发现，如果能够利用多个不同的推理路径能够提升LLM推理能力 [<em>On the advance of making language models better reasoners. 2022</em>]。同时，如果涉及更加复杂的推理步骤，似乎能够进一步激发LLM的推理潜力 [<em>Complexity-based prompting for multi-step reasoning. 2022</em>]。</p>
+<p>CoT的不同推理路径可能提供了不同的答案，self-consistency方法就是通过集成多个推理路径的答案取得更好的效果 [<em>Self-consistency improves chain of thought reasoning in language models. 2022</em>]。</p>
+<p>另一个关键的CoT工作是AuToCoT [<em>Automatic chain of thought prompting in large language models. 2022</em>]，它通过利用Zero-shot-CoT [<em>Large language models are zero-shot reasoners. 2022</em>]来自动选择合适的CoT。</p>
+<p>对于CoT，作者也介绍了两个原理性问题：</p>
+<ul>
+<li>When CoT works for LLMs?
+<ul>
+<li>CoT能力通常出现在模型参数量大于10B的情况下 [<em>Chain of thought prompting elicits reasoning in large language models. 2022</em>]。</li>
+<li>CoT通常是对于一般的ICL无法很好的完成的复杂推理任务能够起到提升作用。对于不需要复杂推理的任务，甚至可能会带来性能下降 [<em>Rationale-augmented ensembles in language. 2022</em>]。</li>
+</ul></li>
+<li>Why LLMs Can Perform CoT Reasoning?
+<ul>
+<li>CoT能力的来源常常被广泛认为是在code data上进行了训练（尽管现在缺乏具体的实验验证这一点）。instruction tuning似乎对LLM的CoT能力没有提升。</li>
+<li>CoT中，patterns (equations in arithmetic reasoning)和text (the rest of tokens that are not symbols or patterns)是更加关键的要素，消融掉这两个部分都会导致性能的下降，甚至patterns是否正确都没有特别大的影响。</li>
+</ul></li>
+</ul>
+<p>除去上面两点外，作者还简单提及了利用LLM的另一个思路模型定制（model specialization）[<em>Specializing smaller language models towards multistep reasoning. 2023</em>]。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/LLM-survey-renmin/" title="LLM-survey-renmin">https://liuxiyang641.github.io/llm/LLM-survey-renmin/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Survey/" rel="tag"><i class="fa fa-tag"></i> Survey</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/mmml/PromptMNER/" rel="prev" title="PromptMNER">
+                  <i class="fa fa-chevron-left"></i> PromptMNER
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/nlp/cross-domain-IE/" rel="next" title="cross-domain-IE">
+                  cross-domain-IE <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">392k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:56</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"4330204b68ca504c8920bc5eaeb0c090"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

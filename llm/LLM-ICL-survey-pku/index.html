@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="A Survey on In-context Learning arXiv 2023.05，北大。ICL首个survey。  With the increasing ability of large language models (LLMs), in-context learning (ICL) has become a new paradigm for natural language pro">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="LLM-ICL-survey-pku">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="A Survey on In-context Learning arXiv 2023.05，北大。ICL首个survey。  With the increasing ability of large language models (LLMs), in-context learning (ICL) has become a new paradigm for natural language pro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531231352388.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531233847239.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531234701083.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531234752644.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531235353921.png">
+<meta property="article:published_time" content="2023-05-31T14:18:32.000Z">
+<meta property="article:modified_time" content="2023-05-31T16:01:14.499Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="ICL">
+<meta property="article:tag" content="Survey">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531231352388.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/","path":"llm/LLM-ICL-survey-pku/","title":"LLM-ICL-survey-pku"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LLM-ICL-survey-pku | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">123</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#a-survey-on-in-context-learning"><span class="nav-number">1.</span> <span class="nav-text">A Survey on In-context Learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model-warmup"><span class="nav-number">1.2.</span> <span class="nav-text">2. Model Warmup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#demonstration-designing"><span class="nav-number">1.3.</span> <span class="nav-text">3. Demonstration Designing</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#demonstration-organization"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Demonstration Organization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#demonstration-formatting"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Demonstration Formatting</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scoring-function"><span class="nav-number">1.4.</span> <span class="nav-text">4. Scoring Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#analysis"><span class="nav-number">1.5.</span> <span class="nav-text">5. Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#what-influences-icl-performance"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 What Influences ICL Performance</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#understanding-why-icl-works"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 Understanding Why ICL Works</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluation-and-resources"><span class="nav-number">1.6.</span> <span class="nav-text">6. Evaluation and Resources</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#challenges-and-future-directions"><span class="nav-number">1.7.</span> <span class="nav-text">7. Challenges and Future Directions</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LLM-ICL-survey-pku | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM-ICL-survey-pku<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/LLM-ICL-survey-pku.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-05-31 22:18:32" itemprop="dateCreated datePublished" datetime="2023-05-31T22:18:32+08:00">2023-05-31</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-06-01 00:01:14" itemprop="dateModified" datetime="2023-06-01T00:01:14+08:00">2023-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/ICL/" itemprop="url" rel="index"><span itemprop="name">ICL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="a-survey-on-in-context-learning">A Survey on In-context Learning</h1>
+<p>arXiv 2023.05，北大。ICL首个survey。</p>
+<blockquote>
+<p>With the increasing ability of large language models (LLMs), in-context learning (ICL) has become a new paradigm for natural language processing (NLP), where LLMs make predictions only based on contexts augmented with a few examples. It has been a new trend to explore ICL to evaluate and extrapolate the ability of LLMs. In this paper, we aim to survey and summarize the progress and challenges of ICL. We first present a formal definition of ICL and clarify its correlation to related studies. Then, we organize and discuss advanced techniques, including training strategies, demonstration designing strategies, as well as related analysis. Finally, we discuss the challenges of ICL and provide potential directions for further research. We hope that our work can encourage more research on uncovering how ICL works and improving ICL.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="introduction">1. Introduction</h2>
+<p>这篇survey中对于in-context learning的定义和在GPT-3中给出的正式定义有所区别。这篇survey认为ICL必须要有demonstrations，但是GPT-3的原始定义则不是：</p>
+<blockquote>
+<p>Recent work [GPT-2] attempts to do this via what we call “in-context learning”, using the text input of a pretrained language model as a form of task specification: the model is conditioned on a natural language instruction and/or a few demonstrations of the task and is then expected to complete further instances of the task simply by predicting what comes next.</p>
+</blockquote>
+<p>下面图是作者划分的一个分类：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531231352388.png" alt="image-20230531231352388" /><figcaption>image-20230531231352388</figcaption>
+</figure>
+<p>ICL最吸引人的点就在于在inference的时候，完全无需训练，并且在某些task下已经达到了SOTA的结果 （当然在很多任务下还有差距）。作者指出了三个ICL优势点：</p>
+<ol type="1">
+<li>since the demonstration is written in natural language, it provides an interpretable interface to communicate with LLMs</li>
+<li>in-context learning is similar to the decision process of human beings by learning from analogy</li>
+<li>compared with supervised training, ICL is a training-free learning framework.</li>
+</ol>
+<h2 id="model-warmup">2. Model Warmup</h2>
+<p>在LLM的预训练任务是语言建模，这和ICL的任务形式是有gap的。因此很多研究讨论通过在pre-training和ICL之间加入一个额外的训练过程以进一步提升ICL的效果。作者称为warmup training。</p>
+<p>比如MetaICL就是在一系列加入了demonstrations的ICL的训练数据中进行Supervised In-context Training。</p>
+<p>另一个能够提升ICL的训练方法是instruction tuning。</p>
+<blockquote>
+<p>Compared to MetaICL, which constructs several demonstration examples for each task, instruction tuning mainly considers an explanation of the task and is more easier to scale up.</p>
+</blockquote>
+<p>instruction tuning对于构造训练数据的要求更小，更容易构造一系列不同task的训练数据。</p>
+<p>加入一个额外的训练过程已经在很多研究中发现效果提升很明显，并且发现一直增加相应的训练数据不会带来持续的性能提升，可能数据的分布、task的覆盖范围和差异性这些因素是更关键的。</p>
+<h2 id="demonstration-designing">3. Demonstration Designing</h2>
+<h3 id="demonstration-organization">3.1 Demonstration Organization</h3>
+<p>Demonstration Organization指如何选择合适的examples和排序？</p>
+<p><strong>Demonstration Selection</strong>. 又可以分为无监督和有监督的方法。无监督的方法比如使用kNN这些方法，选择和当前测试的instance最相似的demonstrations；比如使用互信息，perplexity等；比如选择的时候还要考虑demonstrations的差异性；还有的直接使用LLM自己生成的demonstrations。</p>
+<p>有监督的选择方法比如先无监督的检索，再用一个打分函数进行选择；比如可以使用强化学习不断更新检索的模型。</p>
+<p><strong>Demonstration Ordering</strong>. 已经有研究发现demonstrations的顺序对于结果有影响。比如可能LLM倾向于输出最靠近测试样例的demonstration一样的结果。如果有<span class="math inline">\(k\)</span>个demonstrations，会有<span class="math inline">\(k!\)</span>种排列组合。（个人认为这种情况属于LLM的一个不稳定、不鲁棒的缺陷。需要想办法去解决，而不是利用…）</p>
+<h3 id="demonstration-formatting">3.2 Demonstration Formatting</h3>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531233847239.png" alt="image-20230531233847239" /><figcaption>image-20230531233847239</figcaption>
+</figure>
+<p>怎么样设计具体的输入模板。</p>
+<p><strong>Instruction Formatting</strong>. instruction需要准确的描述任务，依赖于人工设计。</p>
+<ul>
+<li>Instruction induction: From few examples to natural language task descriptions. 使用LLM自动从几个demonstrations中生成task instruction。</li>
+<li>Large language models are human-level prompt engineers. 提出自动生成和选择instruction。</li>
+</ul>
+<p><strong>Reasoning Steps Formatting</strong>. survey这里提到的是将CoT加入到ICL进一步提升LLM对于复杂task的推理能力。</p>
+<h2 id="scoring-function">4. Scoring Function</h2>
+<p>是指怎么样将LLM的输出转化为一个恰当的概率估计。</p>
+<blockquote>
+<p>The scoring function decides how we can transform the predictions of a language model into an estimation of the likelihood of a specific answer.</p>
+</blockquote>
+<p>作者提及了三种方法：</p>
+<ol type="1">
+<li>A direct estimation method (Direct) adopts the conditional probability of candidate answers that can be represented by tokens in the vocabulary of language models. 直接使用预测的答案在LLM中的条件概率，但是这要求预测的答案出现在模板的最后，作为要续写的token进行输出。</li>
+<li>Perplexity (PPL) is another commonly-used metric, which computes the sentence perplexity of the whole input sequence. 对模板没有要求</li>
+<li>Min et al. (2022a) proposed to utilize channel models (Channel) to compute the conditional probability in a reversed direction, i.e., estimating the likelihood of input query given the label. 反过来让模型decode加入了label之后的query。</li>
+</ol>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531234701083.png"   style="zoom:50%;" /></p>
+<h2 id="analysis">5. Analysis</h2>
+<h3 id="what-influences-icl-performance">5.1 What Influences ICL Performance</h3>
+<p>有哪些因素会影响ICL的效果？</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531234752644.png"   style="zoom:40%;" /></p>
+<p><strong>Pre-training Stage</strong>：</p>
+<ul>
+<li>Putting multiple corpora together may give rise to emergent ICL ability, pretraining on corpora related to the downstream tasks does not always improve the ICL performance.</li>
+<li>a pretrained model suddenly acquires some emergent ICL abilities when it achieves a large scale of pre-training steps or model parameters.</li>
+</ul>
+<p><strong>Inference Stage</strong>:</p>
+<ul>
+<li>Min et al. (2022c) investigated that the inﬂuence of demonstration samples comes from four aspects: the input-label pairing format, the label space, the input distribution, and the input-label mapping. They prove that all of the input-label pairing formats, the exposure of label space, and the input distribution contribute substantially to the ICL performance.</li>
+<li>Lu et al. (2022) indicated that the demonstration sample order is also an important factor.</li>
+</ul>
+<h3 id="understanding-why-icl-works">5.2 Understanding Why ICL Works</h3>
+<p>ICL原理分析</p>
+<ul>
+<li>Distribution of Training Data. Chan et al. (2022) showed that the ICL ability is driven by data distributional properties. They found that the ICL ability emerges when the training data have examples appearing in clusters and have enough rare classes. 发现ICL能力的出现需要训练数据的分布多样性足够。</li>
+<li>Learning Mechanism.
+<ul>
+<li>Garg et al. (2022) proved that Transformers could encode effective learning algorithms to learn unseen linear functions according to the demonstration samples. 认为Transformer能够从demonstration samples学习没有见过的linear functions。</li>
+<li>Dai et al. (2022) figured out a dual form between Transformer attention and gradient descent and further proposed to understand ICL as implicit fine tuning. 将ICL和梯度下降对齐，认为ICL是在进行一种隐式的梯度下降。</li>
+</ul></li>
+<li>Functional Modules. Olsson et al. (2022) found that there exist some induction heads in Transformers that copy previous patterns to complete the next token. 发现Transformer中可能有可以实现归纳功能的induction head。</li>
+</ul>
+<h2 id="evaluation-and-resources">6. Evaluation and Resources</h2>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531235353921.png"   style="zoom:50%;" /></p>
+<h2 id="challenges-and-future-directions">7. Challenges and Future Directions</h2>
+<p>一些新的挑战：</p>
+<ul>
+<li>New Pre-training Strategies. 比如instruction-tuning</li>
+<li>Distill the ICL Ability to Smaller Models. Transferring the ICL ability to smaller models could facilitate the model deployment greatly.</li>
+<li>Knowledge Augmentation and Updating
+<ul>
+<li>Knowledge Augmentation. Retrieving correct knowledge and integrating the correct knowledge with the context in a lightweight manner is possibly promising for ICL.</li>
+<li>Knowledge Updating. Updating the wrong or out-of-date knowledge for ICL is worth further exploration.</li>
+<li>Robustness to Demonstration. Previous studies have shown that ICL performance is extremely unstable, from random guess to SOTA, and can be sensitive to many factors.</li>
+<li>ICL for Data Engineering. How to use ICL for data annotation remains an open question. For example, Ding et al. (2022) performed a comprehensive analysis and found that generation-based methods are more cost-effective in using GPT-3 than annotating unlabeled data via ICL.</li>
+</ul></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/" title="LLM-ICL-survey-pku">https://liuxiyang641.github.io/llm/LLM-ICL-survey-pku/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/ICL/" rel="tag"><i class="fa fa-tag"></i> ICL</a>
+              <a href="/tags/Survey/" rel="tag"><i class="fa fa-tag"></i> Survey</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/LLM-PEFT/" rel="prev" title="LLM-PEFT">
+                  <i class="fa fa-chevron-left"></i> LLM-PEFT
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/llm/LLM-ICL/" rel="next" title="LLM-ICL">
+                  LLM-ICL <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">392k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">5:56</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"11ec341d8d9ccb664bce83e9fd80f032"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>
