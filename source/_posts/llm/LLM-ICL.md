@@ -11,7 +11,7 @@ tags:
 - ICL
 ---
 
-# LLM的in-context learning相关论文
+# LLM的in-context learning和prompt相关论文
 
 <!--more-->
 
@@ -61,7 +61,7 @@ Self-Generated In-Context Learning: Leveraging Auto-regressive Language Models a
 
 NAACL 2022 Workshop，首尔大学
 
-> Large-scale pre-trained language models (PLMs) are well-known for being capable of solving a task simply by conditioning a few input-label pairs dubbed demonstrations on a prompt without being explicitly tuned for the desired downstream task. Such a process (i.e., in-context learning), however, naturally leads to high reliance on the demonstrations which are usually selected from external datasets. In this paper, **we propose self-generated in-context learning (SG-ICL), which generates demonstrations for in-context learning from PLM itself to minimize the reliance on the external demonstration.** We conduct experiments on four different text classiﬁcation tasks and show SG-ICL signiﬁcantly outperforms zero-shot learning and is generally worth approximately 0.6 gold training samples. Moreover, our generated demonstrations show more consistent performance with low variance compared to randomly selected demonstrations from the training dataset.
+> Large-scale pre-trained language models (PLMs) are well-known for being capable of solving a task simply by conditioning a few input-label pairs dubbed demonstrations on a prompt without being explicitly tuned for the desired downstream task. Such a process (i.e., in-context learning), however, naturally leads to high reliance on the demonstrations which are usually selected from external datasets. In this paper, **we propose self-generated in-context learning (SG-ICL), which generates demonstrations for in-context learning from PLM itself to minimize the reliance on the external demonstration.** We conduct experiments on four different text classification tasks and show SG-ICL significantly outperforms zero-shot learning and is generally worth approximately 0.6 gold training samples. Moreover, our generated demonstrations show more consistent performance with low variance compared to randomly selected demonstrations from the training dataset.
 
 利用LLM自动生成demonstrations来增强zero-shot ICL的能力（作者声称是首个这么做的工作）。
 
@@ -132,3 +132,93 @@ ACL 2023，华盛顿大学，[代码](https://github.com/ yizhongw/self-instruct
 
 SuperNI数据集大多是已有的NLP任务，为了进一步评估模型在实际使用场景下的价值，作者人工创建了一个包括252 task的新数据集。
 
+## Discrete prompt for different SLM
+
+Can discrete information extraction prompts generalize across language models?
+
+ICLR 2023，[代码](https://github.com/ncarraz/prompt_ generalization)。
+
+作者探究了不同小参数量语言模型对于discrete prompt的泛化性的情况，并且提出了mixed-training autoprompt。也就是在AutoPrompt的方法基础上，用一个LM进行候选prompt生成，另一个LM进行评估。
+
+> We study whether automatically-induced prompts that effectively extract information from a language model can also be used, out-of-the-box, to probe other language models for the same information. After confirming that discrete prompts induced with the AutoPrompt algorithm outperform manual and semi-manual prompts on the slot-filling task, we demonstrate a drop in performance for AutoPrompt prompts learned on a model and tested on another. We introduce a way to induce prompts by mixing language models at training time that results in prompts that generalize well across models. We conduct an extensive analysis of the induced prompts, finding that the more general prompts include a larger proportion of existing English words and have a less order-dependent and more uniform distribution of information across their component tokens. Our work provides preliminary evidence that it’s possible to generate discrete prompts that can be induced once and used with a number of different models, and gives insights on the properties characterizing such prompts.
+
+作者对比了三种方法产生的prompt：
+
+- LPAQA：使用预先定义好的几个prompt，通过mining和paraphrasing发现更多的prompt
+- AutoPrompt：让LM自动生成prompt
+- OptiPrompt：使用了soft prompt
+
+作者在下面一系列的小LM上进行了实验：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614215935769.png"   style="zoom:50%;" />
+
+在LAMA数据集上的对比效果如下，表格中LAMA是指该数据集本身提供的人工写的prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614215904682.png"   style="zoom:50%;" />
+
+作者发现使用了soft prompt的OptiPrompt方法效果最好，而AutoPrompt这种自动生成discrete prompt的方法效果次之，但也是好于人工写的prompt。
+
+soft prompt虽然在自动生成prompt和使用prompt的LM是一致的情况下效果最好，但是泛化性很差：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614220633652.png"   style="zoom:50%;" />
+
+同时soft prompt还要求能够访问LM的内部结构，能够使用它的embeddings。
+
+作者进而测试了在使用AutoPrompt的情况下，这些生成的prompt在source LM和target LM不一致的情况下的效果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614220800480.png"   style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614220826142.png"   style="zoom:50%;" />
+
+可以看出来，当两个LM是一样的情况下，效果最好。如果target LM和source LM不一致的情况下，基本上效果都会下降。中间GPT-2的一系列变种变化不大，作者解释原因是GPT-2本身效果已经比较差了，再差点也没有什么太大变化了。
+
+为了解决这一问题，作者提出了AutoPrompt的一个简单改动：
+
+> Recall that the AutoPrompt algorithm involves two phases: one in which candidate prompts are generated, and one in which the prompts are evaluated. Rather than relying on the same model for the two phases, we now use two different LMs. **The first model, which we call the generator, proposes a set of candidates. Then, the second model, that we call the evaluator, evaluates the candidates and chooses the best one.**
+
+下面是作者的实验：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614221621275.png"   style="zoom:50%;" />
+
+可以看到，不同架构的LM混合在一起，是可能生成具有更好泛化性的prompt的。但是作者在论文中也指出，这种更好的泛化性的生成和哪两个LM组合到一起有关，不是说只要组合在一起，就能够生成泛化性更好的prompt。
+
+在最后，作者尝试从4个方面对找到的泛化性更好的prompt进行定量分析：
+
+1. Semantic overlap with English: We thus hypothesize that prompts that generalize better will have a larger semantic overlap with manually crafted English prompts.
+   - 作者的观察：对于作者提出的mixed-training AutoPrompt方法来说，泛化性更强的prompt和人类实际语言之间的相似度有很强的相关性。但是这种相似度，和泛化性更弱的单个模型比如BERT-base产生的prompt对比的话，相似度耕地（说明这个假设还有待验证）。
+2. Real-word ratio: We thus conjecture that prompts that generalize better will contain a larger proportion of real English words.
+   - 作者的观察：进行了混合策略的方法总是自动产生了更多real world的单词；但是不一定能够带来更好的泛化性。
+3. Shuffling: We thus conjecture that a “bag-of-token” prompt sequence that does not require the tokens to be in any special order will be more general than one where order matters and, consequently, generalizing prompts will be more robust to token shuffling.
+   - 作者的观察：更加泛化的prompt确实对于token的顺序更加不敏感
+4. Token deletion: We thus conjecture that generalizing prompts will distribute information more evenly across tokens and thus they will be more robust to single-token deletion.
+   - 作者的观察：随机去掉prompt上不同位置token，测试prompt不同位置上，LM的关注程度是不是不同的。发现总是对于prompt最后一个位置的token有最大的关注。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230614221822454.png"  style="zoom:50%;" />
+
+## Wang et al.
+
+Large Language Models Are Implicitly Topic Models: Explaining and Finding Good Demonstrations for In-Context Learning
+
+arXiv 2023, [代码](https://github.com/WANGXinyiLinda/concept-based-demonstration-selection)。
+
+> In recent years, pre-trained large language models have demonstrated remarkable efficiency in achieving an inference-time few-shot learning capability known as incontext learning. However, existing literature has highlighted the sensitivity of this capability to the selection of few-shot demonstrations. The underlying mechanisms by which this capability arises from regular language model pretraining objectives remain poorly understood. In this study, we aim to examine the in-context learning phenomenon through a Bayesian lens, viewing large language models as topic models that implicitly infer task-related information from demonstrations. On this premise, we propose an algorithm for selecting optimal demonstrations from a set of annotated data and demonstrate a significant 12.5% improvement relative to the random selection baseline, averaged over eight GPT2 and GPT3 models on eight different real-world text classification datasets. Our empirical findings support our hypothesis that large language models implicitly infer a latent concept variable.
+
+作者提出了一种看待ICL中的demonstration的作用的角度，认为LLM可以从demonstrations中学习到隐式的任务相关的信息。并且给出了一些理论上的分析。
+
+基于此假设，作者提出一种新的找demonstrations的方法，整体流程如下：
+
+![image-20230615203143639](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203143639.png)
+
+首先是利用prompt-tuning的思想，固定LM，学习和task相关的soft prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203205166.png"   style="zoom:50%;" />
+
+然后，作者认为最佳的demonstrations就是能够在给定样例的情况下，使得输出上一步学习到的soft prompt的概率最大的样例。直观上的理解就是说最能够“体现”任务的demonstrations就是最佳的找到的demonstrations。demonstrations的候选集应该是各种数量、各种排序的组合，但是为了减小搜索空间，作者简化到了假设最佳的单个demonstration的采样是相互独立的，然后再排序：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203224510.png"   style="zoom:50%;" />
+
+最后，找到的这种最佳的demonstrations，可以用于其它的LM。
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203308965.png"  style="zoom:50%;" />
