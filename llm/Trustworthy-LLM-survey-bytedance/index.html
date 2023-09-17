@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Trustworthy LLMs: a Survey and Guideline for Evaluating Large Language Models&#39; Alignment 2023-08 字节的关于可信LLM的survey。  Ensuring alignment, which refers to making models behave in accordance with human i">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Trustworthy-LLM-survey-bytedance">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Trustworthy LLMs: a Survey and Guideline for Evaluating Large Language Models&#39; Alignment 2023-08 字节的关于可信LLM的survey。  Ensuring alignment, which refers to making models behave in accordance with human i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822162550709.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822162756249.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822163345545.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822165425971.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822165445056.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823161352142.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823162053377.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823162133936.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823163522465.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823164215662.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823164648913.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823165632655.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823235141549.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903170720715.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903170810152.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903171003813.png">
+<meta property="article:published_time" content="2023-08-22T08:16:40.000Z">
+<meta property="article:modified_time" content="2023-09-03T09:21:05.482Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Survey">
+<meta property="article:tag" content="Trustworthy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822162550709.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/","path":"llm/Trustworthy-LLM-survey-bytedance/","title":"Trustworthy-LLM-survey-bytedance"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Trustworthy-LLM-survey-bytedance | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#trustworthy-llms-a-survey-and-guideline-for-evaluating-large-language-models-alignment"><span class="nav-number">1.</span> <span class="nav-text">Trustworthy LLMs: a Survey and Guideline for Evaluating Large Language Models&#39; Alignment</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reliability"><span class="nav-number">1.2.</span> <span class="nav-text">2. Reliability</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#misinformation"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Misinformation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hallucination"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Hallucination</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#inconsistency"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Inconsistency</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#miscalibration"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Miscalibration</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sycophancy"><span class="nav-number">1.2.5.</span> <span class="nav-text">2.5 Sycophancy</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#explainability-and-reasoning"><span class="nav-number">1.3.</span> <span class="nav-text">6. Explainability and Reasoning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lack-of-interpretability"><span class="nav-number">1.3.1.</span> <span class="nav-text">6.1 Lack of Interpretability</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#limited-general-reasoning"><span class="nav-number">1.3.2.</span> <span class="nav-text">6.2 Limited General Reasoning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#limited-causal-reasoning"><span class="nav-number">1.3.3.</span> <span class="nav-text">6.3 Limited Causal Reasoning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#robustness"><span class="nav-number">1.4.</span> <span class="nav-text">8. Robustness</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#prompt-attacks"><span class="nav-number">1.4.1.</span> <span class="nav-text">8.1 Prompt Attacks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#paradigm-and-distribution-shifts"><span class="nav-number">1.4.2.</span> <span class="nav-text">8.2 Paradigm and Distribution Shifts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#interventional-effect"><span class="nav-number">1.4.3.</span> <span class="nav-text">8.3 Interventional Effect</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poisoning-attacks"><span class="nav-number">1.4.4.</span> <span class="nav-text">8.4 Poisoning Attacks</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Trustworthy-LLM-survey-bytedance | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Trustworthy-LLM-survey-bytedance<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/Trustworthy-LLM-survey-bytedance.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-22 16:16:40" itemprop="dateCreated datePublished" datetime="2023-08-22T16:16:40+08:00">2023-08-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-03 17:21:05" itemprop="dateModified" datetime="2023-09-03T17:21:05+08:00">2023-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Survey/" itemprop="url" rel="index"><span itemprop="name">Survey</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="trustworthy-llms-a-survey-and-guideline-for-evaluating-large-language-models-alignment">Trustworthy LLMs: a Survey and Guideline for Evaluating Large Language Models' Alignment</h1>
+<p>2023-08 字节的关于可信LLM的survey。</p>
+<blockquote>
+<p>Ensuring alignment, which refers to making models behave in accordance with human intentions [1, 2], has become a critical task before deploying large language models (LLMs) in real-world applications. For instance, OpenAI devoted six months to iteratively aligning GPT-4 before its release [3]. However, a major challenge faced by practitioners is the lack of clear guidance on evaluating whether LLM outputs align with social norms, values, and regulations. This obstacle hinders systematic iteration and deployment of LLMs. To address this issue, this paper presents a comprehensive survey of key dimensions that are crucial to consider when assessing LLM trustworthiness. <strong>The survey covers seven major categories of LLM trustworthiness: reliability, safety, fairness, resistance to misuse, explainability and reasoning, adherence to social norms, and robustness.</strong> Each major category is further divided into several sub-categories, resulting in a total of 29 sub-categories. Additionally, a subset of 8 sub-categories is selected for further investigation, where corresponding measurement studies are designed and conducted on several widely-used LLMs. The measurement results indicate that, in general, more aligned models tend to perform better in terms of overall trustworthiness. However, the effectiveness of alignment varies across the different trustworthiness categories considered. This highlights the importance of conducting more fine-grained analyses, testing, and making continuous improvements on LLM alignment. By shedding light on these key dimensions of LLM trustworthiness, this paper aims to provide valuable insights and guidance to practitioners in the field. Understanding and addressing these concerns will be crucial in achieving reliable and ethically sound deployment of LLMs in various applications.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="introduction">1. Introduction</h2>
+<p>LLM已经引起了学界和企业界的深刻变革。ChatGPT是目前历史上用户数量增长速度最快的应用，超过了TikTok和instagram。</p>
+<p>妨碍LLM进一步得到应用的关键是LLM可能产生不可信的输出，比如有毒的、歧视性的、虚假的、不符合人类道德观的输出。</p>
+<p>LLM无法保证生成可信的结果的最重要的原因可能是预训练数据本身就包含了大量的噪音。大多数LLM的数据都要依赖从Internet上爬取，无论如何这些大规模的数据中会包含各种和人类主流价值观不符的数据。同时，在预训练过程中，并没有针对这些有害数据进行额外的设计。</p>
+<p>通过想办法让LLM和人类价值对齐，可以促使LLM的输出更加reliable, safe, and attuned to human values：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822162550709.png"  style="zoom:30%;" /></p>
+<p>之前的研究工作提出了一个针对LLM对齐任务的3H原则：Helpful, Honest, and Harmless [<em>A general language assistant as a laboratory for alignment.</em>]。</p>
+<p>目前主流的将LLM对齐的技术：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822162756249.png"   style="zoom:40%;" /></p>
+<p>两个关键方法是SFT (supervised fine-tune)和RLHF (reinforcement learning from human feedback)。SFT首先用来训练经过预训练的原始LLM，让其在一定程度上能够和人类价值观对齐。之后训练过的LLM对于同一问题产生不同的输出，让人类去排序，训练一个reward model。最后就是利用RLHF结合LLM和reward model进行迭代的更新。</p>
+<p>当然，目前也有很多研究讨论RLHF算法是否合适。</p>
+<p>除去LLM对齐技术本身外，用来对齐的数据可能需要重点关注。比如在Anthropic发布的对齐数据中，各种有害情况的分布是不平衡的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822163345545.png"   style="zoom:20%;" /></p>
+<p>作者在这篇论文了提出了关于可信LLM的7个方面，包括29个小方面：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822165425971.png" alt="image-20230822165425971" /><figcaption>image-20230822165425971</figcaption>
+</figure>
+<p>划分的依据主要是根据不同方面所关系的问题和目标：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230822165445056.png" alt="image-20230822165445056" /><figcaption>image-20230822165445056</figcaption>
+</figure>
+<h2 id="reliability">2. Reliability</h2>
+<p>可靠性作者进一步细分了5个方面，misinformation、hallucination、inconsistency、miscalibration、sycophancy。</p>
+<h3 id="misinformation">2.1 Misinformation</h3>
+<p>作者认为的misinformation是非用户本意的，由LLM生成的错误信息。</p>
+<blockquote>
+<p>We define misinformation here as wrong information not intentionally generated by malicious users to cause harm, but unintentionally generated by LLMs because they lack the ability to provide factually correct information.</p>
+</blockquote>
+<p>下图是ChatGPT生成错误事实的例子：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823161352142.png" alt="image-20230823161352142" /><figcaption>image-20230823161352142</figcaption>
+</figure>
+<p>错误信息产生的几个可能原因：</p>
+<ul>
+<li><p>训练数据（特别是从网络上爬取的数据）就存在错误事实。这些错误事实被LLM记录。</p></li>
+<li><p>Elazar et al. 发现常常共同出现的实体对，可能会导致LLM产生错误的输出。[<em>Measuring causal effects of data statistics on language model’sfactual’predictions.</em>]</p>
+<blockquote>
+<p>Elazar et al. [55] find that a large number of co-occurrences of entities (e.g. , Obama and Chicago) is one reason for incorrect knowledge (e.g. Obama was born in Chicago) extracted from LLMs</p>
+</blockquote></li>
+<li><p>LLM对于不常见的知识可能更会生成错误信息，有研究人员认为不对不常见的事实应该从其它类型的非参数化外部知识库中获取。[<em>When not to trust language models: Investigating effectiveness and limitations of parametric and non-parametric memories.</em>]</p>
+<blockquote>
+<p>Mallen et al. [56] discover that LLMs are less precise in memorizing the facts that include unpopular entities and relations. They propose to leverage retrieved external non-parametric knowledge for predictions regarding unpopular facts as retrieval models.</p>
+</blockquote></li>
+<li><p>有研究人员发现，当在prompt中提供了新的信息时，不是所有的LLM都能够利用prompt中的新信息更新自己的答案。[<em>Prompting gpt-3 to be reliable</em>]</p>
+<blockquote>
+<p>Si et al. [58] evaluate whether LLMs can update their memorized facts by information provided in prompts. They find that, while code-davinci-002 can update its knowledge around 85% of the time for two knowledge-intensive QA datasets, other models including T5 [59] and text-davinci-001 have much lower capability to update their knowledge to ensure factualness.</p>
+</blockquote></li>
+</ul>
+<h3 id="hallucination">2.2 Hallucination</h3>
+<p>幻觉（Hallucination）属于misinformation的一种，但是有自己独特的特点。misinformation可能是由于输入的信息错误引起的。而hallucination是指生成完全虚构的答案，并且通常还非常自信。</p>
+<blockquote>
+<p>LLMs can generate content that is nonsensical or unfaithful to the provided source content with appeared great confidence, known as hallucinations in LLMs.</p>
+</blockquote>
+<p>Hallucination对应在心理学上的概念叫做虚构（confabulation），是指非故意的虚假记忆。</p>
+<p>作者提出有两类的幻觉：</p>
+<ul>
+<li><p>intrinsic hallucination: hallucination may consist of fabricated contents that conflict with the source content. 和用户输入的信息矛盾，LLM内部就存在的虚构事实。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823162053377.png" alt="image-20230823162053377" /><figcaption>image-20230823162053377</figcaption>
+</figure></li>
+<li><p>extrinsic hallucination: hallucination may consist of fabricated contents cannot be verified from the existing sources. 对于用户输入的虚构事实，进一步进行虚构。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823162133936.png" alt="image-20230823162133936" /><figcaption>image-20230823162133936</figcaption>
+</figure></li>
+</ul>
+<p>产生幻觉的可能原因：</p>
+<ul>
+<li>训练数据和测试数据之间的偏移</li>
+<li>LLM相关技术，比如生成next token的随机性、在编码和解码阶段的错误、不平衡分布的training bias</li>
+</ul>
+<p>探测幻觉的几种手段：</p>
+<ul>
+<li>常用的评测任务是text summarization，比较LLM输出和reference text之间的差异</li>
+<li>QA任务，比如TruthfulQA数据</li>
+<li>训练能够评估truthfulness的分类器来评估LLM的输出</li>
+<li>人工</li>
+</ul>
+<p>目前消除幻觉的方法还比较少：</p>
+<ul>
+<li>数据清洗，提高训练数据质量</li>
+<li>The other aspect is using different rewards in RLHF. 通过改进RLHF的奖励过程，让LLM的输出更加和输入相符，而不是自己虚构事实。</li>
+</ul>
+<h3 id="inconsistency">2.3 Inconsistency</h3>
+<p>对于相同的/实质上一样的问题，有不同的回答，特别是考虑到对于本质上没有区别的提问方式，仅仅是简单的改变提问格式，就会输出正确/错误的回答。</p>
+<blockquote>
+<p>It is shown that the models could fail to provide the same and consistent answers to different users, to the same user but in different sessions, and even in chats within the sessions of the same conversation.</p>
+</blockquote>
+<p>示例：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823163522465.png" alt="image-20230823163522465" /><figcaption>image-20230823163522465</figcaption>
+</figure>
+<p>不一致性的原因还不清楚：</p>
+<ul>
+<li>和LLM本身的随机性有关（randomness in sampling tokens, model updates, hidden operations within the platform, or hardware specs）</li>
+<li>预训练数据中存在的令人疑惑的和互相矛盾的事实可能是一个原因。The confusing and conflicting information in training data can certainly be one cause.</li>
+</ul>
+<p>可能改善不一致性的技术：</p>
+<ul>
+<li>consistency loss [<em>Measuring and improving consistency in pretrained language models.</em>]。[91] regulates the model training using a consistency loss defined by the model’s outputs across different input representations.</li>
+<li>Another technique of enforcing the LLMs to self-improve consistency is via “chain-of-thought&quot; (COT) [29], which encourages the LLM to offer step-by-step explanations for its final answer.</li>
+</ul>
+<h3 id="miscalibration">2.4 Miscalibration</h3>
+<p>LLM对于输出的过度自信。</p>
+<blockquote>
+<p>LLMs have been identified to exhibit over-confidence in topics where objective answers are lacking, as well as in areas where their inherent limitations should caution against LLMs’ uncertainty (e.g. not as accurate as experts)</p>
+</blockquote>
+<p>过度自信的原因：</p>
+<ul>
+<li>训练数据中存在很极端的观点，可能会导致LLM过度自信。This problem of overconfidence partially stems from the nature of the training data, which often encapsulates polarized opinions inherent in Internet data [95].</li>
+</ul>
+<p>示例：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823164215662.png" alt="image-20230823164215662" /><figcaption>image-20230823164215662</figcaption>
+</figure>
+<p>有两种方法获取LLM的自信/不确定性。一个是直接让LLM输出confidence；一个是获取LLM的下一个token的logits，这要求LLM提供了获取logits的渠道。这两种方法获得的confidence之间是可能存在差异的。</p>
+<p>下面是让LLM直接输出confidence的例子：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823164648913.png" alt="image-20230823164648913" /><figcaption>image-20230823164648913</figcaption>
+</figure>
+<p>目前缓解LLM过度自信的研究相对多一点：</p>
+<ul>
+<li>Mielke et al. [96] proposed a calibration method for “chit-chat&quot; models, encouraging these models to express lower confidence when they provide incorrect responses.</li>
+<li>Guo et al. [97] offered a method for rescaling the softmax output in standard neural networks to counter overconfidence.</li>
+<li>LLM的对齐阶段可能会导致over-confidence。有研究提出让模型能够学会进行不确定性的表达，如“Answers contain uncertainty. Option A is preferred 80% of the time, and B 20%.&quot;。但是这需要人工能够构造出更加smooth的训练数据。</li>
+<li>另一类方法是让LLM尝试回避回答不确定的问题，如让LLM生成答案：“I do not know the answer&quot; or “As an AI model, I am not able to answer&quot;。</li>
+</ul>
+<h3 id="sycophancy">2.5 Sycophancy</h3>
+<p>阿谀奉承，拍马屁（Sycophancy）指LLM会承认用户输入的错误信息。</p>
+<blockquote>
+<p>LLM might tend to flatter users by reconfirming their misconceptions and stated beliefs [24, 122, 123]. This is a particularly evident phenomenon when users challenge the model’s outputs or repeatedly force the model to comply.</p>
+</blockquote>
+<p>示例：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823165632655.png" alt="image-20230823165632655" /><figcaption>image-20230823165632655</figcaption>
+</figure>
+<p>Sycophancy和前面的inconsistency是不一样的，Sycophancy是指强迫LLM承认/顺从用户的错误指令。而inconsistency通常是由于LLM内部存在缺陷，无法对于同样的问题给出一致的回答。</p>
+<p>Sycophancy出现的可能原因：</p>
+<ul>
+<li>It is possibly due to existing sycophantic comments and statements in the training data.</li>
+<li>It can also be attributed to sometimes excessive instructions for the LLM to be helpful and not offend human users.</li>
+<li>It is possible that the RLHF stage could promote and enforce confirmation with human users.</li>
+</ul>
+<p>因此，在对齐阶段，可能要在LLM顺从人类指令和坚持自身的回答之间做权衡。过于服从人类指令会导致LLM拍马屁；过于不服从人类指令，那么LLM的存在意义都没有了。</p>
+<h2 id="explainability-and-reasoning">6. Explainability and Reasoning</h2>
+<p>对某些高风险场景来说，能够解释输出背后的原因，是必要且核心的。比如在金融、教育、健康等领域。</p>
+<h3 id="lack-of-interpretability">6.1 Lack of Interpretability</h3>
+<p>对于ML的可解释性已经受到了很多的关注，比如下面的几种提供解释的方法：</p>
+<ul>
+<li>removal-based explanations</li>
+<li>counterfactual explanations</li>
+<li>concept-based explanations</li>
+<li>saliency maps</li>
+</ul>
+<p>而针对LLM的可解释，存在了集中新的思路：</p>
+<ul>
+<li>retrieval-augmented models。通过提供LLM进行归纳信息来源，让用户选择是否相信LLM的输出结果。比如用在web browser、search engine等场景中。</li>
+<li>Bills et al.提出可以使用LLM来解释LLM [<em>Language models can explain neurons in language models.</em>]。</li>
+<li>让LLM提供结果的解释，也就是提供自己的thought step。chain-of-thought (CoT)方法。这可能是目前讨论的让LLM提供结果的解释最多的研究，下面的两个部分都是在讨论CoT [<em>Chain of thought prompting elicits reasoning in large language models.</em>]。</li>
+</ul>
+<h3 id="limited-general-reasoning">6.2 Limited General Reasoning</h3>
+<p>一般的逻辑推理能力。</p>
+<blockquote>
+<p>Reasoning is an essential skill for various NLP tasks including question answering, natural language inference (NLI), and commonsense reasoning.</p>
+</blockquote>
+<p>让LLM自己生成解释，是属于LLM出现后的全新研究领域。在很多任务中，利用prompt让LLM生成解释能够提高任务的性能。目前已经有了很多的关于CoT的工作，比如self-consistent CoT，tree-of-thoughts等方法。</p>
+<p>然而LLM到底是不是依据它自己给出的解释进行推理的？这个问题目前看来不一定。</p>
+<ul>
+<li>研究人员发现LLM有时候给出的解释，并不是它自己真正进行推理决策的过程。他们在上下文的样例中将正确答案总是放在option A的位置上，然后让LLM对于新的样例为什么选择A给出解释，然后发现LLM没有回答这种明显的bias。[<em>Language models don’t always say what they think: Unfaithful explanations in chain-of-thought prompting.</em>]</li>
+<li>有工作指出，LLM在给出不正确的推理过程情况下，也可以生成最终正确的答案。[<em>Mathematical capabilities of chatgpt.</em>]</li>
+</ul>
+<p>下面是几个对LLM在需要逻辑推理能力任务上的研究，进一步讨论了LLM推理能力的缺陷：</p>
+<ul>
+<li>[384] found performance of ChatGPT and GPT-4 dropped significantly on new datasets requiring logical reasoning, even though they performed relatively well on most existing benchmarks. This suggests current success may rely on exploiting dataset-specific quirks rather than robust human-like reasoning.</li>
+<li>LLMs are known to exploit superficial spurious patterns in logical reasoning tasks rather than meaningful logic [385].</li>
+</ul>
+<p>目前的提高LLM推理能力的技术：</p>
+<ul>
+<li>prompt engineering: 各种不涉及参数更新的方法。prompt engineering techniques such as CoT, instruction tuning, and in-context learning can enhance LLMs’ reasoning abilities. For example, Zhou et al. [389] propose Least-to-most prompting that results in improved reasoning capabilities.</li>
+<li>pretraining: 从头预训练LLM，设计更加需要推理能力的预训练任务。[392, 393] show the effectiveness of pretraining an LLM from scratch with data curated for tasks that require complex reasoning abilities.</li>
+<li>continual training: 对于经过了预训练的LLM，进一步在新的数据上进行训练。In [390, 391], results show that continuing to train pretrained LLMs on the same objective function using high-quality data from specific domains (e.g., Arxiv papers and code data) can improve their performance on down-stream tasks for these domains.</li>
+<li>supervised fine-tuning: Chung et al. [30] propose to add data augmented by human-annotated CoT in multi-task fine-tuning. Fu et al. [394] show that LLMs’ improvement of reasoning ability can be distilled to smaller models by model specialization, which utilizes specialization data partially generated by larger models (e.g. code-davinci-002) to fine-tune smaller models. [<em>Specializing Smaller Language Models towards Multi-Step Reasoning</em>]</li>
+<li>reinforcement learning: 利用强化学习提升LLM的推理能力，比如让LLM不仅仅关注最后推理结果是否正确，也让LLM去关注中间步骤是否正确。</li>
+</ul>
+<h3 id="limited-causal-reasoning">6.3 Limited Causal Reasoning</h3>
+<p>LLM的因果推理能力。和前面的逻辑推理能力比较起来，因果推理能力强调捕获状态/时间的cause-effect relationship。</p>
+<blockquote>
+<p>Unlike logical reasoning, which derives conclusions based on premises, causal reasoning makes inferences about the relationships between events or states of the world, mostly by identifying cause-effect relationships.</p>
+<p>Causal reasoning tasks specifically examine various aspects regarding LLMs’ understanding of causality, including inferring causal relationships among random variables (e.g. temperature and latitude) [399] and events (e.g. a person bumped against a table and a beer fell to the group) [358], answering counterfactual questions, and understanding rules of structural causal models [400] (e.g. d-separation).</p>
+</blockquote>
+<p>有研究工作发现，GPT-4擅长推理必要条件，不擅长找充分条件。研究者认为可能的一个原因是寻找充分条件需要考虑更大范围的情况。[<em>Causal reasoning and large language models: Opening a new frontier for causality.</em>]</p>
+<p>Jin et al.提出了一个新的因果推理数据集，CORR2CAUSE。在给定了一些变量和变量之间的correlation之后，让LLM判断假设的因果关系是否成立。作者发现LLM对于这种因果推理的能力还是比较弱的。[<em>Can large language models infer causation from correlation?</em>]</p>
+<p>作者进行了一个case study，测试LLM是否理解了必要条件（Necessary Cause）这个概念：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230823235141549.png"   style="zoom:50%;" /></p>
+<p>在这个case study中的task 1中，GPT-3.5给出的情感和event之间的因果关系是正确的。“fans feeling disappointed” ← “canceled baseball game” ← “storm”. 然后LLM也能够识别出是哪个event引起了对应的情感的。但是它修改event来改变情感的时候，修改的event和最后的sentiment是不匹配的。</p>
+<h2 id="robustness">8. Robustness</h2>
+<p>验证LLM的性能是很重要的，而保证在部署前/运行中评估LLM的robustness也同等重要。</p>
+<h3 id="prompt-attacks">8.1 Prompt Attacks</h3>
+<p>LLMs are sensitive to the engineering of prompts. 前面的2.3的inconsistency已经证明了对于同一个question，不同的提法可能会导致完全不同的答案。更糟糕的是，一些小的偏差比如语法/拼写错误，也可以导致LLM有不同的答案：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903170720715.png"   style="zoom:50%;" /></p>
+<p>prompt attacks，通过修改prompt，可以诱导LLM回答原本不应该回答的问题，比如：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903170810152.png"   style="zoom:50%;" /></p>
+<p>不过这种prompt也可以被反过来用于增强LLM的训练数据，构造更加安全的LLM，这叫做adversarial prompt engineering。</p>
+<h3 id="paradigm-and-distribution-shifts">8.2 Paradigm and Distribution Shifts</h3>
+<p>Paradigm and Distribution Shifts是指knowledge会随着时间而改变。LLM如果无法及时的学习到这种改变的话，它的回答也是不可信的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230903171003813.png"   style="zoom:50%;" /></p>
+<h3 id="interventional-effect">8.3 Interventional Effect</h3>
+<p>干预效应是指算法的算法可能会导致data distribution发生变化。</p>
+<p>举例：对于LLM来说，由于训练数据中的分布不一样。如果LLM使用用户的个人反馈/信息，来为不同用户提供差异化服务，这可能进一步导致未来的数据分布发生变化。比如说某个用户群体由于LLM提供的服务不好，选择不再使用LLM，那么LLM在未来就更不能够收集到足够的信息，导致未来LLM对于该特定用户群体的服务进一步变差。</p>
+<p>再比如如果用户总是对某些不道德的输出选择赞同，那么这部分反馈可能会被用到将来的预训练/微调，导致LLM输出的bias进一步增强。</p>
+<h3 id="poisoning-attacks">8.4 Poisoning Attacks</h3>
+<p>Poisoning Attacks通常是指通过修改训练数据，让模型特别是判别/分类模型的行为产生偏差。</p>
+<blockquote>
+<p>Traditional poisoning attacks on general machine learning models aim to fool the model by manipulating the training data, usually performed on classification models. One of the most common ways of data poisoning is to alter the label of training samples.</p>
+</blockquote>
+<p>比如有研究发现污染极少一部分的training data（0.1%），就可以让model完全丧失判别能力[<em>Poisoning the unlabeled dataset of semi-supervised learning.</em>]。</p>
+<p>对于LLM来说，由于大多数训练数据来源于Internet，要污染training data更加容易。比如有研究发现通过构造域名/众包，可以污染LAION-400M [455], COYO-700M [456], and Wikipedia这些大规模数据集[<em>Poisoning web-scale training datasets is practical.</em>]。</p>
+<p>更糟糕的威胁是，如果污染code LLM，那么这些LLM在自动生成代码的时候也会生成错误/有风险的代码，如果这些code LLM被广泛的应用于代码补全/代码建议，那么这些有风险的代码会不断传播。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/" title="Trustworthy-LLM-survey-bytedance">https://liuxiyang641.github.io/llm/Trustworthy-LLM-survey-bytedance/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Survey/" rel="tag"><i class="fa fa-tag"></i> Survey</a>
+              <a href="/tags/Trustworthy/" rel="tag"><i class="fa fa-tag"></i> Trustworthy</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/nlp/Demonstration-based-NER/" rel="prev" title="Demonstration-based-NER">
+                  <i class="fa fa-chevron-left"></i> Demonstration-based-NER
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/llm/When-not-to-trust-LLM-entity-knowledge/" rel="next" title="When-not-to-trust-LLM-entity-knowledge">
+                  When-not-to-trust-LLM-entity-knowledge <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"9a5a1c1e36ca0f74004b6b848a486010"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

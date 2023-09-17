@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Product-of-Experts and Mixture-of-Experts 这篇博客主要记录PoE和MoE的一些调研笔记。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="PoE-MoE">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/PoE-MoE/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Product-of-Experts and Mixture-of-Experts 这篇博客主要记录PoE和MoE的一些调研笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321202223632.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321203113591.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326194254000.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326194444098.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321204741180.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205100939.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205533961.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205644555.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205719003.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325154431988.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325154756254.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325155210675.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325155330742.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321233908500.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321234503035.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321234646794.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321235034587.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325215048012.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325215243677.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142555633.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142806356.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142930731.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324143143898.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230323175101552.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230323175337558.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104045137.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104351284.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104753399.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325105122419.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326164558508.png">
+<meta property="article:published_time" content="2023-03-21T12:08:42.000Z">
+<meta property="article:modified_time" content="2023-04-23T08:31:02.133Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="ML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321202223632.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/PoE-MoE/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/PoE-MoE/","path":"collection/PoE-MoE/","title":"PoE-MoE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>PoE-MoE | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#product-of-experts-and-mixture-of-experts"><span class="nav-number">1.</span> <span class="nav-text">Product-of-Experts and Mixture-of-Experts</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#products-of-experts"><span class="nav-number">1.1.</span> <span class="nav-text">Products of Experts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#generalized-product-of-experts-for-learning-multimodal-representations-in-noisy-environments"><span class="nav-number">1.2.</span> <span class="nav-text">Generalized Product-of-Experts for Learning Multimodal Representations in Noisy Environments</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adaptive-mixtures-of-local-experts"><span class="nav-number">1.3.</span> <span class="nav-text">Adaptive Mixtures of Local Experts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer"><span class="nav-number">1.4.</span> <span class="nav-text">Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-of-experts"><span class="nav-number">1.5.</span> <span class="nav-text">Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding"><span class="nav-number">1.6.</span> <span class="nav-text">GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity"><span class="nav-number">1.7.</span> <span class="nav-text">Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multimodal-contrastive-learning-with-limoe-the-language-image-mixture-of-experts"><span class="nav-number">1.8.</span> <span class="nav-text">Multimodal Contrastive Learning with LIMoE: the Language-Image Mixture of Experts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#using-mixture-of-expert-models-to-gain-insights-into-semantic-segmentation"><span class="nav-number">1.9.</span> <span class="nav-text">Using Mixture of Expert Models to Gain Insights into Semantic Segmentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#moe%E4%B8%8Epoe%E5%AF%B9%E6%AF%94"><span class="nav-number">1.10.</span> <span class="nav-text">MoE与PoE对比</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/PoE-MoE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="PoE-MoE | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          PoE-MoE<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/PoE-MoE.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-03-21 20:08:42" itemprop="dateCreated datePublished" datetime="2023-03-21T20:08:42+08:00">2023-03-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-04-23 16:31:02" itemprop="dateModified" datetime="2023-04-23T16:31:02+08:00">2023-04-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="product-of-experts-and-mixture-of-experts">Product-of-Experts and Mixture-of-Experts</h1>
+<p>这篇博客主要记录PoE和MoE的一些调研笔记。</p>
+<span id="more"></span>
+<h2 id="products-of-experts">Products of Experts</h2>
+<p>Hinton 1999年 ICANN</p>
+<blockquote>
+<p>It is possible to combine multiple probabilistic models of the same data by multiplying the probabilities together and then renormalizing. This is a very efficient way to model high-dimensional data which simultaneously satisfies many different low dimensional constraints. Each individual expert model can focus on giving high probability to data vectors that satisfy just one of the constraints. Data vectors that satisfy this one constraint but violate other constraints will be ruled out by their low probability under the other expert models. Training a product of models appears difficult because, in addition to maximizing the probabilities that the individual models assign to the observed data, it is necessary to make the models disagree on unobserved regions of the data space. However, if the individual models are tractable there is a fairly efficient way to train a product of models. This training algorithm suggests a biologically plausible way of learning neural population codes.</p>
+</blockquote>
+<p>PoE实际就是一种融合多个不同分布的方法，大致上可以理解为一种分布求和（&amp;）的操作，具体公式为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321202223632.png" style="zoom:50%;" /></p>
+<p>其中，<span class="math inline">\(\mathbf{d}\)</span>是指一个特定的vector，<span class="math inline">\(\theta_m\)</span>是指第<span class="math inline">\(m\)</span>个expert network的参数。上面的公式实质就是多个分布相乘，然后重新归一化。在这篇原始论文中，expert可以理解为一个弱一点的互不相同的model，比如在识别手写数字的任务中，有的expert可以用来识别数字的整体形状，有的expert可以用来关注更小的patch细节。通过融合多个experts，就可能获得一个更加强大的model。</p>
+<p>上述公式对<span class="math inline">\(\theta_m\)</span>进行求导：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321203113591.png" style="zoom:50%;" /></p>
+<h2 id="generalized-product-of-experts-for-learning-multimodal-representations-in-noisy-environments">Generalized Product-of-Experts for Learning Multimodal Representations in Noisy Environments</h2>
+<p>ICMI 2022，一个拓展PoE并且应用到multimodal VAE上的工作。核心是通过动态评估每个模态预测隐藏state <span class="math inline">\(z\)</span>的weight，然后多个模态预测结果相乘：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326194254000.png"  style="zoom:40%;" /></p>
+<p>模型图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326194444098.png" style="zoom:50%;" /></p>
+<p>不同模态编码的隐藏状态<span class="math inline">\(z_i\)</span>的同一维度的weight和是1。</p>
+<p>个人感觉这个方法和MoE的最大区别就是使用了相乘操作，而不是相加。</p>
+<h2 id="adaptive-mixtures-of-local-experts">Adaptive Mixtures of Local Experts</h2>
+<p>MoE，混合专家系统（mixture of experts），1991年，Neural Computation</p>
+<blockquote>
+<p>We present a new supervised learning procedure for systems composed of many separate networks, each of which learns to handle a subset of the complete set of training cases. The new procedure can be viewed either as a modular version of a multilayer supervised network, or as an associative version of competitive learning. It therefore provides a new link between these two apparently different approaches. We demonstrate that the learning procedure divides up a vowel discrimination task into appropriate subtasks, each of which can be solved by a very simple expert network.</p>
+</blockquote>
+<p>这篇论文比较早，它提出混合专家系统的出发点是，如果说使用单个网络来执行多个不同的小的子任务，这些子任务之间的互相干扰可能使得学习过程变慢，泛化性也变差。</p>
+<p><em>当然，上面这个观点也不总是成立的，随着网络越来越强大，很多之前认为会互相干扰的任务现在不再互相干扰了，反而能互相促进。当然从另一方面讲，这种任务会互相干扰，需要拆分的思想到现在也是随处可见的，只不过是人们对于在哪一个level的任务需要拆分的认识发生了变化。</em></p>
+<p>那么，很自然的思路是，如果我们可以提前把数据集进行划分，让不同的model去学习对应的不同的数据bias，最后融合到一起是不是效果能更好，训练更简单？这种尝试学习不同bias的model被称作“expert”。</p>
+<p>之前研究者提出过混合expert思路，那就是使用gating network来控制不同expert的权重：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321204741180.png"  style="zoom:50%;" /></p>
+<p><span class="math inline">\(\mathbf{d}\)</span>是目标vector，<span class="math inline">\(p_i\)</span>是第<span class="math inline">\(i\)</span>个expert的权重，<span class="math inline">\(o\)</span>是第<span class="math inline">\(i\)</span>个expert的输出。</p>
+<p>仔细看一下这个公式，它直接融合多个expert的输出拿到一个总的输出，然后计算这个总的输出和<span class="math inline">\(\mathbf{d}\)</span>之间的差距。它实际上鼓励每个expert去减小其它expert残留的error，这样的耦合程度比较重。如果一个expert发生了改变，那么其它所有的expert也需要发生相应的改变。</p>
+<p>上面的做法是鼓励不同expert互相协作。那这篇论文中作者提出不要互相协作，而是互相竞争，每次只选择一个expert进行预测。仅仅通过简单的改变loss function就能够达到这一目的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205100939.png"  style="zoom:50%;" /></p>
+<p>这一个改变的核心是，让每一个expert都单独去靠近<span class="math inline">\(\mathbf{d}\)</span>，因此，不同expert是相对独立的优化和<span class="math inline">\(\mathbf{d}\)</span>之间的差距，而不需要优化其它expert的residual error。</p>
+<p>试想下，在这种情况中，如果某个expert的error更小，那么它的权重<span class="math inline">\(p_i\)</span>会被优化得更大；如果某个expert的error更大，那么它的权重<span class="math inline">\(p_i\)</span>会被优化得更小。也就是互相竞争，哪个expert表现更好，模型会直接倾向于完全使用这个expert来解决问题，而不是总需要所有的expert参与。</p>
+<p>下面是核心的思路图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205533961.png" style="zoom:40%;" /></p>
+<p>在实际中，作者使用了另一种改进版，能够更快速更好的进行梯度优化：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205644555.png" style="zoom:50%;" /></p>
+<p>梯度的改变：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321205719003.png"  style="zoom:50%;" /></p>
+<div class="note info"><p>下面的解释是Hinton的CSC321课件上的说明，感觉更清晰。</p>
+</div>
+<p>如果输入和输出之间存在不同的映射关系，那么用把输入划分到不同的分区，然后让不同的模型来预测可能更合适。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325154431988.png"  style="zoom:50%;" /></p>
+<p>这样子做的核心思想是让expert集中在表现比其它expert都要好的特定情况下。</p>
+<blockquote>
+<p>The key idea is to make each expert focus on predicting the right answer for the cases where it is already doing better than the other experts.</p>
+</blockquote>
+<p>但是如果我们直接平均的混合多个预测器，可能使得expert被用来缓解其它expert的残留错误：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325154756254.png"  style="zoom:40%;" /></p>
+<p>在上图中，为了让<span class="math inline">\(expert_i\)</span>弥补其它<span class="math inline">\(expert\)</span>的错误error，会导致<span class="math inline">\(expert_i\)</span>的预测<span class="math inline">\(y_i\)</span>反而远离真正的目标<span class="math inline">\(d\)</span>。</p>
+<p>因此，作者鼓励不同的expert互相竞争而不是互相合作（如同上文提到的）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325155210675.png"  style="zoom:50%;" /></p>
+<p>从另一角度，最小化平方误差可以等价的看做是最大化正确答案的log概率：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325155330742.png"  style="zoom:50%;" /></p>
+<p>MoE可以看做是决策树，每个expert看做是叶子节点，通过gating network将输入划分到不同的expert节点上：</p>
+<blockquote>
+<p>A mixture of experts can be viewed as a probabilistic way of viewing a decision stump so that the tests and leaf functions can be learned by maximum likelihood.</p>
+</blockquote>
+<h2 id="outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer">Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</h2>
+<p>ICLR 2017，Google brain</p>
+<blockquote>
+<p>The capacity of a neural network to absorb information is limited by its number of parameters. Conditional computation, where parts of the network are active on a per-example basis, has been proposed in theory as a way of dramatically increasing model capacity without a proportional increase in computation. In practice, however, there are significant algorithmic and performance challenges. In this work, we address these challenges and finally realize the promise of conditional computation, achieving greater than 1000x improvements in model capacity with only minor losses in computational efficiency on modern GPU clusters. <strong>We introduce a Sparsely-Gated Mixture-of-Experts layer (MoE), consisting of up to thousands of feed-forward sub-networks.</strong> A trainable gating network determines a sparse combination of these experts to use for each example. We apply the MoE to the tasks of language modeling and machine translation, where model capacity is critical for absorbing the vast quantities of knowledge available in the training corpora. <strong>We present model architectures in which a MoE with up to 137 billion parameters</strong> is applied convolutionally between stacked LSTM layers. On large language modeling and machine translation benchmarks, these models achieve significantly better results than state-of-the-art at lower computational cost.</p>
+</blockquote>
+<p>这篇论文提出了稀疏的MoE方法，使得基于RNN架构的模型参数量也可以以达到上千亿的规模，从而在机器翻译这些需要处理大量数据的任务上取得了较好的效果。</p>
+<p>模型结构：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321233908500.png" style="zoom:50%;" /></p>
+<p>核心在于MoE，作者使用了上千个expert network，每个expert network是<span class="math inline">\(512\times 1024\)</span>+<span class="math inline">\(ReLU\)</span>+<span class="math inline">\(1024\times 512\)</span>+<span class="math inline">\(sigmoid\)</span>总计<span class="math inline">\(1M\)</span>参数量的FFN。最后所有的expert输出相加（这里更像是前面MoE论文中作者改进前的融合形式）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321234503035.png"  style="zoom:50%;" /></p>
+<p><span class="math inline">\(G_i(x)\)</span>是权重，<span class="math inline">\(E_i(x)\)</span>是第<span class="math inline">\(i\)</span>个expert的输出。</p>
+<p>这么多的expert如果都需要参加计算的话计算负担太大，因此作者提出了Sparsely-Gated MoE。</p>
+<p>稀疏是通过只选择少数的<span class="math inline">\(K\)</span>个expert参与最后的输出，在论文中<span class="math inline">\(K\)</span>取值在<span class="math inline">\(2-4\)</span>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321234646794.png"  style="zoom:50%;" /></p>
+<p>为了让所有的expert都能够在总体样本范围内起作用，加入了高斯noise。其中的<span class="math inline">\(Softplus=log(1+e^x)\)</span>激活函数可以看做是ReLU函数的平滑。</p>
+<p>最后，为了避免总是只有少数的expert会起作用，作者加入了额外的loss，希望每个expert在一个batch样本范围内，都能够起作用：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230321235034587.png" style="zoom:50%;" /></p>
+<p><span class="math inline">\(X\)</span>是指一个batch的所有样本，<span class="math inline">\(w_{importance}\)</span>是人工超参，<span class="math inline">\(CV\)</span>是指coefficient of variation变异系数。<span class="math inline">\(CV=标准差/均值\)</span>，用来衡量数据的离散/变异程度，消除了量纲的影响。</p>
+<p>上述公式的实质是减小不同expert在一个batch内权重和的偏差程度。</p>
+<h2 id="modeling-task-relationships-in-multi-task-learning-with-multi-gate-mixture-of-experts">Modeling Task Relationships in Multi-task Learning with Multi-gate Mixture-of-Experts</h2>
+<p>谷歌公司，KDD 2018</p>
+<blockquote>
+<p>Neural-based multi-task learning has been successfully used in many real-world large-scale applications such as recommendation systems. For example, in movie recommendations, beyond providing users movies which they tend to purchase and watch, the system might also optimize for users liking the movies afterwards. With multi-task learning, we aim to build a single model that learns these multiple goals and tasks simultaneously. However, the prediction quality of commonly used multi-task models is often sensitive to the relationships between tasks. It is therefore important to <strong>study the modeling tradeoffs between task-specific objectives and inter-task relationships.</strong></p>
+<p>In this work, <strong>we propose a novel multi-task learning approach, Multi-gate Mixture-of-Experts (MMoE), which explicitly learns to model task relationships from data. We adapt the Mixture-ofExperts (MoE) structure to multi-task learning by sharing the expert submodels across all tasks, while also having a gating network trained to optimize each task.</strong> To validate our approach on data with dierent levels of task relatedness, we rst apply it to a synthetic dataset where we control the task relatedness. We show that the proposed approach performs better than baseline methods when the tasks are less related. We also show that the MMoE structure results in an additional trainability benet, depending on different levels of randomness in the training data and model initialization. Furthermore, we demonstrate the performance improvements by MMoE on real tasks including a binary classification benchmark, and a large-scale content recommendation system at Google.</p>
+</blockquote>
+<p>将MoE应用到多任务学习上的工作，提出了MMoE方法，在推荐任务上进行了验证：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325215048012.png" /></p>
+<p>最大的改进点有两个：</p>
+<ul>
+<li>不同task之间的底层共享网络使用<span class="math inline">\(n\)</span>个expert网络代替</li>
+<li>每个task有独立的gating network，这样就让每个task可以自由选择底层共享的网络结构部分</li>
+</ul>
+<p>核心数学公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325215243677.png"  style="zoom:50%;" /></p>
+<p>其中<span class="math inline">\(h^k\)</span>代表task <span class="math inline">\(k\)</span>的上层tower network，<span class="math inline">\(f^k\)</span>是MMoE选择的experts，<span class="math inline">\(g^k\)</span>是task <span class="math inline">\(k\)</span>的gating network，<span class="math inline">\(f_i\)</span>是第<span class="math inline">\(i\)</span>个expert网络。</p>
+<p>如果两个task关联性比较大，那么它们选择的experts会重叠的比较多；如果关联性较弱，那么选择experts重叠的就比较少。</p>
+<h2 id="gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding">GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding</h2>
+<p>谷歌公司，ICLR 2021</p>
+<blockquote>
+<p>Neural network scaling has been critical for improving the model quality in many real-world machine learning applications with vast amounts of training data and compute. Although this trend of scaling is affirmed to be a sure-ﬁre approach for better model quality, there are challenges on the path such as the computation cost, ease of programming, and efficient implementation on parallel devices. In this paper we demonstrate conditional computation as a remedy to the above mentioned impediments, and demonstrate its efficacy and utility. We make extensive use of GShard, a module composed of a set of lightweight annotation APIs and an extension to the XLA compiler to enable large scale models with up to trillions of parameters. GShard and conditional computation enable us to scale up multilingual neural machine translation Transformer model with Sparsely-Gated Mixture-ofExperts. We demonstrate that such a giant model with 600 billion parameters can efficiently be trained on 2048 TPU v3 cores in 4 days to achieve far superior quality for translation from 100 languages to English compared to the prior art.</p>
+</blockquote>
+<p>首个将MoE应用到Transformer的模型，使用MoE来构建了一个用于机器翻译6千亿参数量的Transformer模型，同时保证计算效率。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142555633.png" /></p>
+<p>MoE在Transformer中的几点设计：</p>
+<ul>
+<li>MoE是设计在FFN层，每隔一个Transformer block，替换FFN为MoE</li>
+<li>MoE是稀疏的，只选择top-2的experts</li>
+<li>每个expert network是个两层MLP<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142806356.png" style="zoom:50%;" /></li>
+<li>gating network是个简单的softmax<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324142930731.png" style="zoom:50%;" /></li>
+<li>为了让expert负载均衡，每个expert都能够充分训练，给每个expert设计了容量上限，如果某个输入token选择的expert超过了容量上限，这个expert不会处理输入的token</li>
+<li>加入了一个辅助的loss来进一步平衡expert负载<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230324143143898.png" style="zoom:50%;" /></li>
+<li>对于选择的第2重要expert，如果它的weight过于低可能没有太大必要让它继续处理，因此作者直接让top-2 expert依据weight大小随机决定是否要让top-2 expert网络处理。</li>
+</ul>
+<h2 id="switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity">Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity</h2>
+<p>谷歌公司，JMLR 2022</p>
+<blockquote>
+<p>In deep learning, models typically reuse the same parameters for all inputs. Mixture of Experts (MoE) models defy this and instead select different parameters for each incoming example. The result is a sparsely-activated model—with an outrageous number of parameters—but a constant computational cost. However, despite several notable successes of MoE, widespread adoption has been hindered by complexity, communication costs, and training instability. We address these with the introduction of the Switch Transformer. <strong>We simplify the MoE routing algorithm and design intuitive improved models with reduced communication and computational costs.</strong> Our proposed training techniques mitigate the instabilities, and we show large sparse models may be trained, for the ﬁrst time, with lower precision (bfloat16) formats. We design models based off T5-Base and T5-Large (Raﬀel et al., 2019) to obtain up to 7x increases in pre-training speed with the same computational resources. These improvements extend into multilingual settings where we measure gains over the mT5-Base version across all 101 languages. Finally, we advance the current scale of language models by pre-training up to trillion parameter models on the “Colossal Clean Crawled Corpus”, and achieve a 4x speedup over the T5-XXL model.</p>
+</blockquote>
+<p>作者通过简化MoE实现了在保持computing efficiency的情况下增大模型参数量，最终实现了上万亿参数量的模型。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230323175101552.png" /></p>
+<p>这里最大的简化就是仅仅激活top-1的expert。作者把只选择1个expert的做法称为switch，类比了电路开关，一个开关只能够有一个触点让一个灯泡亮。</p>
+<p>另一个有趣的设计是考虑expert负载均衡，通过加入一个loss：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230323175337558.png" style="zoom:50%;" /></p>
+<p>上面这个auxiliary loss在每个<span class="math inline">\(f_i\)</span>也就是分配给expert <span class="math inline">\(i\)</span>的token数量不变的情况下，会尝试让<span class="math inline">\(p_i\)</span>减小，那么也会逐渐的让<span class="math inline">\(f_i\)</span>变小，最终让所有expert分配的<span class="math inline">\(f_i\)</span>比较均匀。</p>
+<h2 id="multimodal-contrastive-learning-with-limoe-the-language-image-mixture-of-experts">Multimodal Contrastive Learning with LIMoE: the Language-Image Mixture of Experts</h2>
+<p>谷歌大脑，NeurIPS 2022，使用MoE构建的大规模多模态预训练模型LIMoE。</p>
+<blockquote>
+<p>Large sparsely-activated models have obtained excellent performance in multiple domains. However, such models are typically trained on a single modality at a time. We present the Language-Image MoE, LIMoE, a sparse mixture of experts model capable of multimodal learning. LIMoE accepts both images and text simultaneously, while being trained using a contrastive loss. MoEs are a natural fit for a multimodal backbone, since expert layers can learn an appropriate partitioning of modalities. However, new challenges arise; in particular, training stability and balanced expert utilization, for which we propose an entropy-based regularization scheme. Across multiple scales, we demonstrate remarkable performance improvement over dense models of equivalent computational cost. LIMoE-L/16 trained comparably to CLIP-L/14 achieves 78.6% zero-shot ImageNet accuracy (vs. 76.2%), and when further scaled to H/14 (with additional data) it achieves 84.1%, comparable to state-of-the-art methods which use larger custom per-modality backbones and pre-training schemes. We analyse the quantitative and qualitative behavior of LIMoE, and demonstrate phenomena such as differing treatment of the modalities and the organic emergence of modality-specific experts.</p>
+</blockquote>
+<p>下图是LIMoE的结构，单纯从结构图上还不能看出有什么大的特点：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104045137.png"  style="zoom:30%;" /></p>
+<p>LIMoE使用了单塔Transformer同时处理图像和文本，使用对比学习对齐image-language pair：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104351284.png" style="zoom:50%;" /></p>
+<p>LIMoE除了使用一般的expert负载均衡loss外，还额外考虑了当MoE应用到多模态时遇到的新问题。由于不同模态的数据量不平衡，数据量少的模态可能无法均匀分配到不同expert上，但是从整体上来看experts仍然是负载均衡的。</p>
+<p>因此LIMoE对于单个模态<span class="math inline">\(m\)</span>引入了额外的两个loss：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325104753399.png"  style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230325105122419.png" style="zoom:50%;" /></p>
+<p>其中<span class="math inline">\(\mathcal{H}\)</span>表示熵，<span class="math inline">\(x_i\)</span>是模态<span class="math inline">\(m\)</span>输入的一个token。local loss是每个token对应的expert概率熵的平均，global loss是每个expert在所有输入token范围内的总体概率熵的平均的负值。</p>
+<p>local loss迫使每个token对应的expert概率预测分布更加集中；</p>
+<p>global loss迫使expert在输入范围内分布更加分散；</p>
+<h2 id="using-mixture-of-expert-models-to-gain-insights-into-semantic-segmentation">Using Mixture of Expert Models to Gain Insights into Semantic Segmentation</h2>
+<p>CVPR 2020</p>
+<p>MoE应用在CV领域的一篇论文，通过将图片划分为不同的子集，然后让两个expert分别去处理，让expert学习不同的映射关系，最后集成两个expert网络的预测输出：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230326164558508.png" /></p>
+<p>expert网络的CNN架构一样，中间的gating network接收的是expert网络第42层的feature map输出。作者使用MoE，然后对比expert 1、2和MoE融合的预测label，尝试给一些可解释理由。</p>
+<h2 id="moe与poe对比">MoE与PoE对比</h2>
+<p>PoE的一个坏处是会让某个过分confident的expert起作用，比如一个expert的概率预测过于低，会导致最后整个融合的概率也低，相比较之下，MoE就更加温和：</p>
+<blockquote>
+<p>When employing PoE, each expert holds the power of veto—in the sense that the joint distribution will have low density for a given set of observations if just one of the marginal posteriors has low density.</p>
+<p>By contrast, MoE does not suffer from potentially overconfident experts, since it effectively takes a vote amongst the experts, and spreads its density over all the individual experts.</p>
+<p><em>Variational Mixture-of-Experts Autoencoders for Multi-Modal Deep Generative Models NeurIPS 19</em></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/PoE-MoE/" title="PoE-MoE">https://liuxiyang641.github.io/collection/PoE-MoE/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/ML/" rel="tag"><i class="fa fa-tag"></i> ML</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/GPT-4/" rel="prev" title="GPT-4">
+                  <i class="fa fa-chevron-left"></i> GPT-4
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/mmml/PromptMNER/" rel="next" title="PromptMNER">
+                  PromptMNER <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"9c91da11607ca5695b7023caf4a21eb1"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

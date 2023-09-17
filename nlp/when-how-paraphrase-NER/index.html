@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="When and how to paraphrase for named entity recognition? ACL 2023  While paraphrasing is a promising approach for data augmentation in classification tasks, its effect on named entity recognition (NER">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="when-how-paraphrase-NER">
+<meta property="og:url" content="https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="When and how to paraphrase for named entity recognition? ACL 2023  While paraphrasing is a promising approach for data augmentation in classification tasks, its effect on named entity recognition (NER">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214706736.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214723114.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214754741.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916215718419.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220444026.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220458842.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220723109.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220923007.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220940162.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916221617132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223039664.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223212876.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223735026.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223753805.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223834430.png">
+<meta property="article:published_time" content="2023-09-16T13:37:02.000Z">
+<meta property="article:modified_time" content="2023-09-17T09:14:00.751Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Data Augment">
+<meta property="article:tag" content="NER">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/","path":"nlp/when-how-paraphrase-NER/","title":"when-how-paraphrase-NER"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>when-how-paraphrase-NER | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#when-and-how-to-paraphrase-for-named-entity-recognition"><span class="nav-number">1.</span> <span class="nav-text">When and how to paraphrase for named entity recognition?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#datasets-and-paraphrasers"><span class="nav-number">1.1.</span> <span class="nav-text">Datasets and Paraphrasers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.2.</span> <span class="nav-text">Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#using-gold-paraphrasing-data-for-training-ner"><span class="nav-number">1.2.1.</span> <span class="nav-text">Using gold &amp; paraphrasing data for training NER</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#experimental-setup"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">Experimental setup</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#results"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">Results</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#using-only-paraphrases-for-training-ner"><span class="nav-number">1.2.2.</span> <span class="nav-text">Using only paraphrases for training NER</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#entity-memorization"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Entity Memorization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#results-1"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Results</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="when-how-paraphrase-NER | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          when-how-paraphrase-NER<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/nlp/when-how-paraphrase-NER.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-16 21:37:02" itemprop="dateCreated datePublished" datetime="2023-09-16T21:37:02+08:00">2023-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-17 17:14:00" itemprop="dateModified" datetime="2023-09-17T17:14:00+08:00">2023-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/NER/" itemprop="url" rel="index"><span itemprop="name">NER</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/NER/Data-Augment/" itemprop="url" rel="index"><span itemprop="name">Data Augment</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="when-and-how-to-paraphrase-for-named-entity-recognition">When and how to paraphrase for named entity recognition?</h1>
+<p>ACL 2023</p>
+<blockquote>
+<p>While paraphrasing is a promising approach for data augmentation in classification tasks, its effect on named entity recognition (NER) is not investigated systematically due to the difficulty of <strong>span-level label preservation</strong>. In this paper, <strong>we utilize simple strategies to annotate entity spans in generations and compare established and novel methods of paraphrasing in NLP such as back translation, specialized encoder-decoder models such as Pegasus, and GPT-3 variants for their effectiveness in improving downstream performance for NER</strong> across different levels of gold annotations and paraphrasing strength on 5 datasets. We thoroughly explore the influence of paraphrasers, dynamics between paraphrasing strength and gold dataset size on the NER performance with visualizations and statistical testing. We find that the choice of the paraphraser greatly impacts NER performance, with one of the <strong>larger GPT-3 variants exceedingly capable of generating high quality paraphrases, yielding statistically significant improvements in NER performance with increasing paraphrasing strength,</strong> while other paraphrasers show more mixed results. Additionally, inline auto annotations generated by larger GPT-3 are strictly better than heuristic based annotations. We also find diminishing benefits of paraphrasing as gold annotations increase for most datasets. Furthermore, while most paraphrasers promote entity memorization in NER, the proposed GPT-3 configuration performs most favorably among the compared paraphrasers when tested on unseen entities, with memorization reducing further with paraphrasing strength. Finally, we explore mention replacement using GPT-3, which provides additional benefits over base paraphrasing for specific datasets.</p>
+</blockquote>
+<p>系统的分析了不同设置，不同的模型，用改写sentence的方式来做NER任务的data augmentation。</p>
+<span id="more"></span>
+<h2 id="datasets-and-paraphrasers">Datasets and Paraphrasers</h2>
+<p>作者选择了5个不同领域的NER数据集。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221.png"   style="zoom:40%;" /></p>
+<p>作者先对比两个已有的Paraphrasers工具：</p>
+<ul>
+<li>基于Back-translation（BT）：For our experiments we use pre-trained English-German and German-English models (∼738M parameters) available from Huggingface model hub via Tiedemann and Thottingal (2020) and the model architecture used is BART (Lewis et al., 2019).</li>
+<li>基于PEGASUS：We use an off-the-shelf version of PEGASUS fine-tuned for paraphrasing released on Huggingface model hub. 3</li>
+</ul>
+<p>然后，作者利用两个GPT-3模型：<code>text-ada-001</code> (∼350M parameters), and <code>text-davinci-002</code> (∼175B parameters)。使用的temperature为0.8。</p>
+<p>采用了两种prompt，一种是没有指定保留entity label的；一种是指定改写后的句子要保留entity mention和label的：</p>
+<p>Prompt A：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214706736.png"   style="zoom:40%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214723114.png"   style="zoom:40%;" /></p>
+<p>Prompt B：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214754741.png"   style="zoom:40%;" /></p>
+<p>对于改写后的句子，需要经过处理。首先是使用原来的entity mention进行case insensitive exact match标注entity span label。然后要过滤掉一些明显错误的句子：</p>
+<ul>
+<li>remove paraphrases for gold sentences shorter than 15 characters</li>
+<li>remove paraphrases that are a duplicate of the gold sentence or of another paraphrase</li>
+<li>remove paraphrases that generation contains an entity not present in entity space of the dataset</li>
+</ul>
+<p>对于不同改写方法的能力，除了可以用训练实验性能来评估外，作者还从两个方面进行评估：</p>
+<ul>
+<li>entity preservation：有多少原来句子中的entity mention会准确的出现在改写后的句子里？自动计算entity recall</li>
+<li>paraphrase quality：人工给改写后的句子质量打分，既要多样性，又要preserving the meaning faithfully 保持原来句子的语义</li>
+</ul>
+<p>评估结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916215718419.png"   style="zoom:50%;" /></p>
+<p>综合来看，基于GPT-3的改写能力是最好的。</p>
+<h2 id="experiments">Experiments</h2>
+<h3 id="using-gold-paraphrasing-data-for-training-ner">Using gold &amp; paraphrasing data for training NER</h3>
+<h4 id="experimental-setup">Experimental setup</h4>
+<p>同时使用原有的gold data和改写后的data进行训练。下面是一些基础的实验设置：</p>
+<ul>
+<li>the corresponding dataset is used to fine-tune a distilbert-base-cased base (66M parameters) model (Sanh et al., 2019)</li>
+<li>作者详细对比了两种不同的data占比：
+<ul>
+<li>gold ratio (G-ratio) what percentage of gold data is used in a particular configuration 是指gold samples占全部training set的比例，<span class="math inline">\(G=0.01\)</span>表示使用<span class="math inline">\(1\)</span>%的原有所有训练样本作为gold data。</li>
+<li>paraphrase ratio (P-ratio) what is the ratio of number of paraphrases compared to number of gold samples 是指gold samples的倍数，<span class="math inline">\(P=0.25\)</span>表示改写的数据是gold data的<span class="math inline">\(1/4\)</span>，<span class="math inline">\(P=0.0\)</span>代表不经过改写。</li>
+</ul></li>
+</ul>
+<p>然后，为了调查训练好的NER模型的性能的变化受哪些因素影响。作者使用一些简单的统计特征，基于线性回归分析这些特征是否会导致NER F1指标的变化：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220444026.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220458842.png"   style="zoom:50%;" /></p>
+<h4 id="results">Results</h4>
+<p>先来看不同改写方法的效果。下面图中：</p>
+<ul>
+<li>一个方格表示一种改写方法</li>
+<li>方格里的数值score的计算：如果某个方法在1个数据集上通过改写数据增强方法获得了效果提升，那么<span class="math inline">\(score+1\)</span>。如果效果下降，<span class="math inline">\(score-1\)</span>。一共有5个实验dataset，所以最低是<span class="math inline">\(-5\)</span>，最高是<span class="math inline">\(+5\)</span>。</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220723109.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>GPT-3 DaV-B consistently outperforms, or matches other paraphrasers and is a safe default choice for paraphrasing across domains. GPT-3总是有效果的，可以考虑总是使用GPT-3来改写句子</li>
+<li>数据增强在low-resource的情况下比较有效；当NER gold data逐渐增加的情况下，数据增强的效果逐渐减小</li>
+</ul>
+<p>线性回归分析的结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220923007.png"   style="zoom:25%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916220940162.png"   style="zoom:30%;" /></p>
+<p>观察：</p>
+<ul>
+<li>Table 4中<span class="math inline">\(P\)</span>表示gold rate，而<span class="math inline">\(P\)</span>的影响系数<span class="math inline">\(\hat{\beta}=0.0148&gt;0\)</span>，<span class="math inline">\(P\)</span>和生成数据的比值<span class="math inline">\(G\)</span>的交互变量<span class="math inline">\(P:G\)</span>的影响系数<span class="math inline">\(\hat{\beta}=-0.0032&lt;0\)</span>。这说明更多的改写后生成的data能够有效的提升模型效果。但是当有更多gold data的时候，这种提升的趋势有一定程度的减弱；</li>
+<li>有更少样例的entity class更容易从基于改写的数据增强策略中收益；</li>
+<li>越长的entity mention有可能越难被预测，改写数据增强带来的提升越小；</li>
+<li>大小写这种surface level的feature，对最终效果的变化没有特别大的影响；</li>
+</ul>
+<h3 id="using-only-paraphrases-for-training-ner">Using only paraphrases for training NER</h3>
+<p>完全使用生成的数据来训练一个NER模型来评估生成数据的质量。</p>
+<p>使用原来的测试集进行测试，测试结果发现还是GPT-3效果最好：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916221617132.png"   style="zoom:30%;" /></p>
+<h4 id="entity-memorization">Entity Memorization</h4>
+<p>作者关注数据增强可能带来的一个问题Entity Memorization。即目前基于改写的数据增强方法，没有改变entity mention，生成的data中出现了entity的重复。因此作者想检查模型是不是直接记住了entity和它对应的label，而不是学会从feature推测label。</p>
+<p>如果是记忆，那么model意味着模型走了捷径shortcut learning [<em>Shortcut learning in deep neural networks. Nature 2020</em>]，那么此时model应该无法准确处理没有见过的entity。</p>
+<p>因此，作者又进行了在test set中，不同entity type里，没有在训练集里出现过的entity作为新的测试集unseen entity (UE) test sets。</p>
+<p>作者认为，如果entity memorization现象加重了，那么在UE测试集里，model的指标F1会出现下降：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223039664.png"   style="zoom:50%;" /></p>
+<p>和前面类似，作者同样基于线性回归分析对这一现象出现的原因进行了调研。</p>
+<h4 id="results-1">Results</h4>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223212876.png"  style="zoom:30%;" /></p>
+<p>观察：</p>
+<ul>
+<li><p>GPT-3 Davichi相对来说能够缓解模型Entity Memorization问题</p></li>
+<li>对于有很多样例的entity class，改写可能加重了对相应entity的记忆</li>
+<li><p>带有数字的entity似乎更加容易被model记住</p></li>
+</ul>
+<p>为了缓解entity memorization问题，作者提出了一种解决方法Mention replacement（MR）。那就是不要重复entity mention，用GPT生成新的entity mention，然后去替换生成句子中的entity mention：</p>
+<blockquote>
+<p>In particular, for every entity mention in the gold set, we prompt GPT-3 DaVinci model to generate entity mentions that are similar to the gold entity mention, while also providing a phrase level definition of the entity type being replaced.</p>
+</blockquote>
+<p>使用到的prompt：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223735026.png"  style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223753805.png"   style="zoom:50%;" /></p>
+<p>进行了entity mention后的效果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223834430.png"  style="zoom:30%;" /></p>
+<p>不是所有数据集上，直接替换entity mention都是有效果的。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/" title="when-how-paraphrase-NER">https://liuxiyang641.github.io/nlp/when-how-paraphrase-NER/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Data-Augment/" rel="tag"><i class="fa fa-tag"></i> Data Augment</a>
+              <a href="/tags/NER/" rel="tag"><i class="fa fa-tag"></i> NER</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/GenRead/" rel="prev" title="GenRead">
+                  <i class="fa fa-chevron-left"></i> GenRead
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/collection/IE-data-augment-collection1/" rel="next" title="IE-data-augment-collection1">
+                  IE-data-augment-collection1 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"6a2baf598ca969c986367ba0335f823b"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

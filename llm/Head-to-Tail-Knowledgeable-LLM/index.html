@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Head-to-Tail: How Knowledgeable are Large Language Models (LLM)? A.K.A. Will LLMs Replace Knowledge Graphs? Meta Reality Labs，arXiv 2023-08  Since the recent prosperity of Large Language Models (LLMs)">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Head-to-Tail-Knowledgeable-LLM">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Head-to-Tail: How Knowledgeable are Large Language Models (LLM)? A.K.A. Will LLMs Replace Knowledge Graphs? Meta Reality Labs，arXiv 2023-08  Since the recent prosperity of Large Language Models (LLMs)">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211635764.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211817649.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211928286.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828212407043.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828212850775.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828213445040.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828213324020.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214146540.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214612131.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214743175.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828215126675.png">
+<meta property="article:published_time" content="2023-08-28T13:00:12.000Z">
+<meta property="article:modified_time" content="2023-08-28T14:01:30.853Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Knowledge">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211635764.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/","path":"llm/Head-to-Tail-Knowledgeable-LLM/","title":"Head-to-Tail-Knowledgeable-LLM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Head-to-Tail-Knowledgeable-LLM | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#head-to-tail-how-knowledgeable-are-large-language-models-llm-a.k.a.-will-llms-replace-knowledge-graphs"><span class="nav-number">1.</span> <span class="nav-text">Head-to-Tail: How Knowledgeable are Large Language Models (LLM)? A.K.A. Will LLMs Replace Knowledge Graphs?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-head-to-tail-benchmark"><span class="nav-number">1.1.</span> <span class="nav-text">The Head-to-Tail Benchmark</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#qa-pair-generation"><span class="nav-number">1.1.1.</span> <span class="nav-text">QA pair generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#metrics"><span class="nav-number">1.1.2.</span> <span class="nav-text">Metrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#evaluation-methodology"><span class="nav-number">1.1.3.</span> <span class="nav-text">Evaluation methodology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experimental-analysis"><span class="nav-number">1.2.</span> <span class="nav-text">Experimental Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#rq1-how-reliable-are-llms-in-answering-factual-questions"><span class="nav-number">1.2.1.</span> <span class="nav-text">RQ1: How reliable are LLMs in answering factual questions?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rq2-do-llms-perform-equally-well-on-head-torso-and-tail-facts"><span class="nav-number">1.2.2.</span> <span class="nav-text">RQ2: Do LLMs perform equally well on head, torso, and tail facts?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rq3-does-normal-methods-that-improve-llms-increase-the-factuality"><span class="nav-number">1.2.3.</span> <span class="nav-text">RQ3: Does normal methods that improve LLMs increase the factuality?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#robustness-of-our-evaluation-methodology"><span class="nav-number">1.2.4.</span> <span class="nav-text">Robustness of our evaluation methodology</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-future-of-knowledge-graphs"><span class="nav-number">1.3.</span> <span class="nav-text">The future of knowledge graphs</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Head-to-Tail-Knowledgeable-LLM | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Head-to-Tail-Knowledgeable-LLM<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/Head-to-Tail-Knowledgeable-LLM.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-08-28 21:00:12 / 修改时间：22:01:30" itemprop="dateCreated datePublished" datetime="2023-08-28T21:00:12+08:00">2023-08-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Knowledge/" itemprop="url" rel="index"><span itemprop="name">Knowledge</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="head-to-tail-how-knowledgeable-are-large-language-models-llm-a.k.a.-will-llms-replace-knowledge-graphs">Head-to-Tail: How Knowledgeable are Large Language Models (LLM)? A.K.A. Will LLMs Replace Knowledge Graphs?</h1>
+<p>Meta Reality Labs，arXiv 2023-08</p>
+<blockquote>
+<p>Since the recent prosperity of Large Language Models (LLMs), there have been interleaved discussions regarding how to reduce hallucinations from LLM responses, how to increase the factuality of LLMs, and whether Knowledge Graphs (KGs), which store the world knowledge in a symbolic form, will be replaced with LLMs. In this paper, <strong>we try to answer these questions from a new angle: How knowledgeable are LLMs?</strong></p>
+<p>To answer this question, <strong>we constructed Headto-Tail, a benchmark that consists of 18K question-answer (QA) pairs regarding head, torso, and tail facts in terms of popularity.</strong> We designed an automated evaluation method and a set of metrics that closely approximate the knowledge an LLM confidently internalizes. Through a comprehensive evaluation of 14 publicly available LLMs, we show that existing LLMs are still far from being perfect in terms of their grasp of factual knowledge, especially for facts of torso-to-tail entities.</p>
+</blockquote>
+<p>这篇工作是探究LLM在记忆knowledge问题上的又一篇工作。与前面的PopQA数据集有点类似，都是分析entity-related knowledge随着entity popularity变化的趋势。这篇工作分析了更多的开源LLM和不同领域下不同popularity的knowledge的回答准确性。</p>
+<span id="more"></span>
+<h2 id="the-head-to-tail-benchmark">The Head-to-Tail Benchmark</h2>
+<h3 id="qa-pair-generation">QA pair generation</h3>
+<p>先来看作者的benchmark是如何构造的。</p>
+<p>作者的数据源来自下面四个方面：</p>
+<ul>
+<li>Open domain: DBpedia knowledge graph，English snapshot from December 1, 2022</li>
+<li>Movie domain: IMDb from May 21, 2023</li>
+<li>Book domain: Goodreads scraped in 2017</li>
+<li>Academics domain: MAG from September 13, 2021 and DBLP from May 10, 2023</li>
+</ul>
+<p>然后是如何定义popularity。作者从traffic和density两个维度评估popularity。如果有traffic信息，比如votes次数/浏览次数等，就使用traffic作为popularity；如果没有traffic相关信息，就使用density信息，比如一个entity有多少相关事实/工作。具体来说各个数据集的评估依据如下：</p>
+<ul>
+<li>IMDb (traffic): The number of votes (i.e., numVotes)</li>
+<li>Goodreads (traffic): The count of ratings (i.e., ratings_count)</li>
+<li>MAG (traffic): The number of citations (i.e., CitationCount)</li>
+<li>DBLP (density): The number of works the scholar has authored.</li>
+<li>DBpedia (density): The number of relational triples in DBPedia that contain the entity.</li>
+</ul>
+<p>接下来，作者按照流行程度把不同的knowledge划分为3个部分：head、torso和tail。注意这里的head/tail不要和一般KG三元组描述常用的head/tail混淆。这篇paper中的head/tail只是表示流行程度。</p>
+<p>具体的实体划分方法：计算top-1流行实体的累积popularity score，然后popularity score能够达到这个最大得分1/3的实体作为head实体，以此类推划分出torso entity和tail entity。</p>
+<p>这种划分方法同样可以用在划分三元组的predicates上。作者将DBpedia中包括了对应predicate的三元组数量看做是predicate的popularity，然后按照相同的流程进行划分。</p>
+<p>然后作者为了避免最新的knowledge对于LLM的影响，只截取了比较靠前年份的知识：</p>
+<blockquote>
+<p>For IMDb, MAG, DBLP, and Goodreads, we kept only entities by the years 2020, 2020, 2020, and 2015, respectively.</p>
+</blockquote>
+<p>这样保证了保留的knowledge都在LLM预训练数据的涉及时间范围之内。</p>
+<p>下面的表格是作者构造的各类entity分布：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211635764.png"   style="zoom:50%;" /></p>
+<p>可以看到大部分的entity都是在tail分组中。</p>
+<p>然后为了能够prompt LLM去回答相应的knowledge，需要构造prompt模板。For each specific domain (Movie, Book, Academics), we manually designed the question template for each attribute. DBpedia contains a large set of attributes, so we first employed ChatGPT to draft the templates (using Prompt 1 in Appendix A.1), then proofread them manually and made necessary edits.</p>
+<p>让ChatGPT去生成prompt template的方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211817649.png"   style="zoom:30%;" /></p>
+<p>用entity去填充prompt模板就能够得到相应的问题，作者最后构造出来的数据集question的分布如下：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828211928286.png"   style="zoom:30%;" /></p>
+<p>最终，作者构造的整个数据集都是形式简单的关于事实的问题。无法探究LLM的理解能力、推理能力等。</p>
+<h3 id="metrics">Metrics</h3>
+<p>使用什么指标？作者定义了3类指标：</p>
+<blockquote>
+<p>accuracy (A), hallucination rate (H), and missing rate (M), measuring the percentage of questions that an LLM gives the correct answer, gives a wrong or partially incorrect answer, or admits it cannot answer, respectively; by definition, A + H + M = 100%.</p>
+</blockquote>
+<p>这里出现了一个missing rate指标，是因为作者允许LLM回答不知道/不确定。</p>
+<p>如何计算指标？</p>
+<p>LLM-Based. <span class="math inline">\(A_{LM}\)</span>, <span class="math inline">\(H_{LM}\)</span>判断回答的答案到底是否正确，由于缩写等原因，通过完全匹配的评价方式不一定合适。因此作者给定ground truth和prediction，让LLM判断这两个是否一致。根据LLM的判断结果来计算指标。作者发现，这种方法，98%的情况下LLM的判断是可靠的。下面是作者用LLM判断结果是否和正确答案匹配的prompt：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828212407043.png"   style="zoom:30%;" /></p>
+<p>Rule-Based. 就是最常见的直接计算指标，作者用了3种具体指标，exact match (EM) <span class="math inline">\(A_{EM}\)</span>, token F1 (F1) <span class="math inline">\(A_{F1}\)</span>, and ROUGE-L (RL) <span class="math inline">\(A_{RL}\)</span>。</p>
+<p>作者发现上面两种计算指标方法的评估结果在很大程度上是一致的。</p>
+<h3 id="evaluation-methodology">Evaluation methodology</h3>
+<p>作者使用few-shot in-context learning去查询LLM。下面是具体：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828212850775.png"   style="zoom:30%;" /></p>
+<p>few-shot的设置应该是搞了两个固定的不在数据集中的example，一个回答正确的答案；一个回答不确定。让LLM学会follow。</p>
+<p>上面的prompt有两点可以借鉴：</p>
+<ul>
+<li>让LLM的回复进行可能简洁，能够降低不确定性</li>
+<li>让LLM回复不知道/不确定，能够减小LLM捏造事实的概率</li>
+</ul>
+<h2 id="experimental-analysis">Experimental Analysis</h2>
+<h3 id="rq1-how-reliable-are-llms-in-answering-factual-questions">RQ1: How reliable are LLMs in answering factual questions?</h3>
+<p>下面是部分的LLM回答准确率，全部统计可以参考paper的附录A.3：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828213445040.png"  style="zoom:50%;" /></p>
+<p>下面是ChatGPT和开源LLM表现相对最好的LLaMA 33B的对比：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828213324020.png"   style="zoom:50%;" /></p>
+<p>有下面的观察：</p>
+<ul>
+<li>对于GPT-3.5和各类开源LLM，表现最好的GPT-3.5总体上只有20%左右的问题能够被准确回答</li>
+<li>LLaMA的幻觉率<span class="math inline">\(H_{LM}\)</span>很高，这表明LLaMA更喜欢强硬的给出答案，即使是错误的答案，也不愿意承认自己不知道/不会。ChatGPT就好很多，更加习惯承认自己不知道。这可能是因为ChatGPT的人类对齐/指令微调过程的效果。经过了指令微调Vicuna会比原始的LLaMA更愿意承认自己不知道，但是回答准确性同样下降了</li>
+<li>LLaMA和ChatGPT在open domain（DBpedia knowledge）的回答准确率比较接近，在不同领域下的回答效果不同。在不太常见的领域如Academics的回答准确率只有个位数</li>
+</ul>
+<h3 id="rq2-do-llms-perform-equally-well-on-head-torso-and-tail-facts">RQ2: Do LLMs perform equally well on head, torso, and tail facts?</h3>
+<p>下面是不同popularity entity的实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214146540.png"  style="zoom:30%;" /></p>
+<p>有以下的观察：</p>
+<ul>
+<li>很明显的，随着popularity的降低，回答准确率也降低了</li>
+<li>在head entity里，能够被正确回答的比例即使是GPT-3.5也只有30%左右，在比较不常见的domain里可能回答的准确率只有不到10%。而即使是在popular domain里的popular entity回答准确性也就在50%左右（如Movie domain的head entity）。不过，一个好的迹象是，ChatGPT出现幻觉hallucination的比例并没有随着popularity降低而提升。说明ChatGPT还是比较清楚自己不知道什么知识的</li>
+</ul>
+<p>下面的实验结果是针对不同popularity的predicates：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214612131.png"   style="zoom:30%;" /></p>
+<p>有如下的观察：</p>
+<ul>
+<li>对于predicates的预测没有明显的随着popularity变化的趋势</li>
+<li>不同LLM对于predicates的回答准确率没有特别显著的差别</li>
+</ul>
+<h3 id="rq3-does-normal-methods-that-improve-llms-increase-the-factuality">RQ3: Does normal methods that improve LLMs increase the factuality?</h3>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828214743175.png"   style="zoom:50%;" /></p>
+<p>有下面的观察：</p>
+<ul>
+<li>增大model参数量可以在一定程度上增加记忆效果，但在参数量到达一定程度时，继续增加参数量不一定总是能够带来更好的记忆效果，比如LLaMA-65B没有比LLaMA-33B表现更好</li>
+<li>经过了指令微调的LLM回答更加保守，因此幻觉率会下降，同时回答的准确率也下降了</li>
+</ul>
+<h3 id="robustness-of-our-evaluation-methodology">Robustness of our evaluation methodology</h3>
+<p>首先是LLM-based和rule-based的metric计算方法的对比：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230828215126675.png"   style="zoom:30%;" /></p>
+<p>能够看出两种计算方法的相关性是很强的，rule-based metrics are good alternatives for lower-cost or faster evaluation。</p>
+<p>然后是作者设计的prompt的robustness。作者让LLM对相同的问题重复产生答案，发现</p>
+<ul>
+<li>如果不要求回答尽可能的简洁，18%的问题会有新答案</li>
+<li>如果不允许LLM回答unsure，幻觉率会增大13%</li>
+</ul>
+<p>这说明prompt LLM去尽可能回答简单的回复可能能够减小LLM重复回答的不确定性。 prompt LLM去回答不知道/不确定，能够有效的减低答案里存在hallucination。 在两个措施都使用的情况下，ChatGPT只对1%的问题重复回答有不同的结果。</p>
+<h2 id="the-future-of-knowledge-graphs">The future of knowledge graphs</h2>
+<p>尽管LLM不能够准确的回答很多事实问题，但是它已经改革了人们寻找信息的方式。因此有必要仔细考虑knowledge的表示/表达/存储方法。显式表示知识的三元组形式（KG）和隐式表示知识的参数化形式（LLM）应该可以协作。</p>
+<blockquote>
+<p>The symbolic form caters to human understanding and explainability</p>
+<p>The neural form benefits machine comprehension and seamless conversations</p>
+</blockquote>
+<p>同一knowledge可能同时在两者中都存在，但是哪一种形式是最合理的，可能没有最优解，依赖于任务场景/需求（个人见解）。</p>
+<p>作者指出两个研究方向的必要性：</p>
+<ul>
+<li>尽管popular entity/knowledge的预训练数据应该比较充分，但是LLM仍然不能够很好的记忆。有必要考虑如何提升LLM对于knowledge的记忆能力。比如knowledge infusion技术[<em>A survey on knowledge-enhanced pre-trained language models</em>]。</li>
+<li>对于less popular的knowledge，可能用triple这种形式化的方法储存比较合理。然后把这种形式化的知识想办法增强LLM的回答。比如knowledge-augmented LLMs [<em>Retrieval-based language models and applications</em>]。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/" title="Head-to-Tail-Knowledgeable-LLM">https://liuxiyang641.github.io/llm/Head-to-Tail-Knowledgeable-LLM/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Knowledge/" rel="tag"><i class="fa fa-tag"></i> Knowledge</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/When-not-to-trust-LLM-entity-knowledge/" rel="prev" title="When-not-to-trust-LLM-entity-knowledge">
+                  <i class="fa fa-chevron-left"></i> When-not-to-trust-LLM-entity-knowledge
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/mmml/MoRe/" rel="next" title="MoRe">
+                  MoRe <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"5f8e79bc4c9b79d725cdff0258e89dcc"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

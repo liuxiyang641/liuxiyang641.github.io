@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="使用LLM的推理方法 使用LLM进行推理的相关论文总结">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="LLM-reason">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/LLM-reason/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="使用LLM的推理方法 使用LLM进行推理的相关论文总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906164647259.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906164755714.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906202533743.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906203043968.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906213813563.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906214012916.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906214258541.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907163907919.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907164128950.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165024823.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165419259.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165857365.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165944830.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907215210863.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230908105201421.png">
+<meta property="article:published_time" content="2023-09-06T08:22:15.000Z">
+<meta property="article:modified_time" content="2023-09-08T03:00:47.987Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Reason">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906164647259.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/LLM-reason/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/LLM-reason/","path":"collection/LLM-reason/","title":"LLM-reason"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LLM-reason | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8llm%E7%9A%84%E6%8E%A8%E7%90%86%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">使用LLM的推理方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cot"><span class="nav-number">1.1.</span> <span class="nav-text">CoT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-verification"><span class="nav-number">1.2.</span> <span class="nav-text">Self-Verification</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-consistency-cot"><span class="nav-number">1.3.</span> <span class="nav-text">Self-Consistency CoT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maieutic-prompting"><span class="nav-number">1.4.</span> <span class="nav-text">Maieutic Prompting</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pal"><span class="nav-number">1.5.</span> <span class="nav-text">PAL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#least-to-most"><span class="nav-number">1.6.</span> <span class="nav-text">Least-to-Most</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/LLM-reason/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LLM-reason | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM-reason<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/LLM-reason.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-06 16:22:15" itemprop="dateCreated datePublished" datetime="2023-09-06T16:22:15+08:00">2023-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-08 11:00:47" itemprop="dateModified" datetime="2023-09-08T11:00:47+08:00">2023-09-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Reason/" itemprop="url" rel="index"><span itemprop="name">Reason</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>12k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>11 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="使用llm的推理方法">使用LLM的推理方法</h1>
+<p>使用LLM进行推理的相关论文总结</p>
+<span id="more"></span>
+<h2 id="cot">CoT</h2>
+<p>Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</p>
+<p>Google Research，NeurIPS 2022</p>
+<blockquote>
+<p>We explore how generating <strong>a chain of thought—a series of intermediate reasoning steps—significantly improves the ability of large language models to perform complex reasoning.</strong> In particular, we show how such reasoning abilities emerge naturally in sufficiently large language models via a simple method called <strong>chain-of-thought prompting, where a few chain of thought demonstrations are provided as exemplars in prompting.</strong></p>
+<p>Experiments on three large language models show that chain-of-thought prompting improves performance on a range of arithmetic, commonsense, and symbolic reasoning tasks. The empirical gains can be striking. For instance, prompting a PaLM 540B with just eight chain-of-thought exemplars achieves state-of-the-art accuracy on the GSM8K benchmark of math word problems, surpassing even finetuned GPT-3 with a verifier.</p>
+</blockquote>
+<p>首次提出了chain-of-thought思路的论文。简单说就是在上下文学习中，对于每个输出输出样例examplar，加入中间的推理步骤，格式为<code>&lt;input, chain of thought, output&gt;</code>：</p>
+<blockquote>
+<p>A chain of thought is a series of intermediate natural language reasoning steps that lead to the final output, and we refer to this approach as chain-of-thought prompting.</p>
+</blockquote>
+<p>CoT灵感的来源是两个：</p>
+<ul>
+<li>First, techniques for arithmetic reasoning can benefit from generating natural language rationales that lead to the final answer. 之前的rationale-augmented training的方法发现通过利用自然语言描述的中间步骤rationales可以帮助解决数学推理问题；但是这种方法需要获得大量的rationales，实际上是很难获得的。</li>
+<li>Second, large language models offer the exciting prospect of in-context few-shot learning via prompting. LLM已经通过上下文学习模拟样例，可以解决很多问题，无需训练。但是在需要推理能力的任务上表现很差</li>
+</ul>
+<p>作者CoT的思想就是融合了这两种思路，如果能够获得中间推理的步骤，可以帮助解决推理问题；而上下文学习又能够让LLM模拟少数几个样例，无训练的快速学习；那么如果让LLM学会模拟几个样例中的推理步骤，是不是就可以让LLM也迅速学会模拟推理？</p>
+<p>方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906164647259.png"   style="zoom:40%;" /></p>
+<p>思考和推理的过程像是一个chain，因此叫做chain of thought。即使出现的prompt样例中的中间step看起来只是一段话，但它本质上仍然表达了思维链的过程。</p>
+<p>实验结果显示，通过无训练的CoT prompting方法，可以让PaLM 540B在数学问题上达到sota：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906164755714.png"   style="zoom:25%;" /></p>
+<p>CoT有个潜在的假设/前提，某个任务的输入到输出过程，是可以用自然语言的形式进行描述的。</p>
+<p>CoT的几个好处：</p>
+<ul>
+<li>First, chain of thought, in principle, allows models to decompose multi-step problems into intermediate steps, which means that additional computation can be allocated to problems that require more reasoning steps.</li>
+<li>Second, a chain of thought provides an interpretable window into the behavior of the model, <strong>suggesting how it might have arrived at a particular answer and providing opportunities to debug where the reasoning path went wrong</strong> (although fully characterizing a model’s computations that support an answer remains an open question).</li>
+<li>Third, chain-of-thought reasoning can be used for tasks such as math word problems, commonsense reasoning, and symbolic manipulation, and is potentially <strong>applicable (at least in principle) to any task that humans can solve via language</strong>.</li>
+<li>Finally, chain-of-thought reasoning can be readily elicited in sufficiently large off-the-shelf language models simply by including examples of chain of thought sequences into the exemplars of few-shot prompting.</li>
+</ul>
+<h2 id="self-verification">Self-Verification</h2>
+<p>Large Language Models are Better Reasoners with Self-Verification</p>
+<p>arXiv 2013</p>
+<blockquote>
+<p>Recently, with the chain of thought (CoT) prompting, large language models (LLMs), e.g., GPT-3, have shown strong reasoning ability in several natural language processing tasks such as arithmetic, commonsense, and logical reasoning. However, LLMs with CoT require multi-step prompting and multi-token prediction, which is highly sensitive to individual mistakes and vulnerable to error accumulation. The above issues make the LLMs need the ability to verify the answers. In fact, after inferring conclusions in some thinking decision tasks, <strong>people often check them by re-verifying steps to avoid some mistakes. In this paper, we propose and prove that LLMs also have similar self-verification abilities.</strong> We take the conclusion obtained by CoT as one of the conditions for solving the original problem. By taking turns masking the original conditions and predicting their results, <strong>we calculate an explainable answer verification score based on whether the re-predicted conditions are correct.</strong> Experimental results demonstrate that the proposed method can improve the reasoning performance on various arithmetic, commonsense, and logical reasoning datasets. Our code is publicly available at: https://github.com/WENGSYX/Self-Verification.</p>
+</blockquote>
+<p>使用CoT能够提升LLM的推理能力，但是CoT prompting方法对于个别的小的mistake很敏感从而会出现错误的结果。另外考虑到多次输入相同的prompt，LLM也可能出现不同的推理结果。因此如何从LLM的推理结果中找出正确的答案是很重要的。</p>
+<p>之前修正多步推理过程中出现的错误的方法，是training一个额外的验证器verifier。这种做法一方面要求有对应的标注数据；另一方面训练出来的验证器本身又是难以解释的，可靠性难以评估。 因此作者提出了自我验证Self-Verification，无需训练的思路。即让LLM自己验证自己的推理结果。这种做法实际人类也经常做，humans often perform self-verification of inferred conclusions to mitigate mistakes。</p>
+<p>作者的方法有两步：</p>
+<ul>
+<li>Forward Reasoning：通过CoT prompting让LLM生成candidate answers，即从conditions推导出conclusions，<span class="math inline">\(X\rightarrow Y\)</span></li>
+<li>Backward Verification：验证上一步的多个候选答案，mask原来的condition，根据LLM推理出的答案，推导被mask掉的condition。准确预测出来的condition越多，验证得分越高。最后选择验证得分最大的答案。<span class="math inline">\(Y\rightarrow X\)</span></li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906202533743.png"   style="zoom:40%;" /></p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906203043968.png"  style="zoom:30%;" /></p>
+<h2 id="self-consistency-cot">Self-Consistency CoT</h2>
+<p>Self-Consistency Improves Chain of Thought Reasoning in Language Models</p>
+<p>ICLR 2023，Google research</p>
+<blockquote>
+<p>Chain-of-thought prompting combined with pre-trained large language models has achieved encouraging results on complex reasoning tasks. In this paper, we propose a new decoding strategy, <strong>self-consistency</strong>, to replace the naive greedy decoding used in chain-of-thought prompting. It ﬁrst samples a diverse set of reasoning paths instead of only taking the greedy one, and then selects the most consistent answer by marginalizing out the sampled reasoning paths. <strong>Self-consistency leverages the intuition that a complex reasoning problem typically admits multiple different ways of thinking leading to its unique correct answer.</strong> Our extensive empirical evaluation shows that self-consistency boosts the performance of chain-of-thought prompting with a striking margin on a range of popular arithmetic and commonsense reasoning benchmarks, including GSM8K (+17.9%), SVAMP (+11.0%), AQuA (+12.2%), StrategyQA (+6.4%) and ARC-challenge (+3.9%).</p>
+</blockquote>
+<p>原始的CoT prompting方法是直接生成唯一的推理路径和对应的答案，这种策略可以叫做是greedy decoding strategy，即取推理路径中概率最大的策略。</p>
+<p>这篇论文提出一种新的decoding策略 Self-Consistency，它的直觉是一个复杂的推理任务，可能有多种推理路径能够得到最终的答案。越复杂的问题，能够获得最终答案的推理路径可能多样性越大。正确的推理路径不是唯一的。</p>
+<p>Self-Consistency的方法很简单，就是让LLM生成多个可能的推理路径和答案，然后选择其中最consistent的答案。作者采用了majority vote的策略，因此最终选择候选答案中出现次数最多的那个答案：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906213813563.png"   style="zoom:40%;" /></p>
+<p>方法很简单，不过论文中有一些发现值得思考：</p>
+<ul>
+<li><p>这是一种类似于self-ensemble的方法，集成一个model的多个预测结果</p></li>
+<li><p>推理路径的出现概率，可以通过每个位置上token的出现概率之和进行估计：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906214012916.png"   style="zoom:50%;" /></p>
+<p>作者发现这样子计算出来的各个推理路径的概率值互相之间很接近，没有太大差距。这证明了LLM实际上没有能力评估出不同solution之间有什么差异。因此，使用这种推理路径的概率去选择最后的答案，和直接认为每个推理路径的权重是1的效果差别不大</p></li>
+<li><p>直观的说，self-consistency能够适应的推理任务是答案唯一的情况。不过也可以考虑拓展，比如比较生成的文本之间是否矛盾或者冲突，然后选择互相之间最不冲突的文本</p></li>
+</ul>
+<p>部分实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230906214258541.png"   style="zoom:30%;" /></p>
+<h2 id="maieutic-prompting">Maieutic Prompting</h2>
+<p>Maieutic Prompting: Logically Consistent Reasoning with Recursive Explanations</p>
+<p>华盛顿大学，EMNLP 2022，<a target="_blank" rel="noopener" href="https://github.com/jaehunjung1/Maieutic-Prompting">代码</a>。</p>
+<blockquote>
+<p>Pre-trained language models (LMs) struggle with consistent reasoning; recently, prompting LMs to generate explanations that self-guide the inference has emerged as a promising direction to amend this. However, these approaches are fundamentally bounded by the correctness of explanations, which themselves are often noisy and inconsistent. In this work, <strong>we develop Maieutic Prompting, which aims to infer a correct answer to a question even from the unreliable generations of LM.</strong> Maieutic Prompting induces a tree of explanations abductively (e.g. X is true, because . . .) and recursively, then frames the inference as a satisﬁability problem over these explanations and their logical relations. We test Maieutic Prompting for true/false QA on three challenging benchmarks that require complex commonsense reasoning. Maieutic Prompting achieves up to 20% better accuracy than state-of-the-art prompting methods, and as a fully unsupervised approach, performs competitively with supervised models. We also show that M AIEUTIC PROMPTING improves robustness in inference while providing interpretable rationales.</p>
+</blockquote>
+<p>虽然之前的paper常常假设LLM可以模拟人类的推理能力。但是实际上目前还做不到。LLM的推理是常常自相矛盾的，不可依赖的：</p>
+<ul>
+<li>the explanation does not logically lead to the inferred answer 解释和答案不一致</li>
+<li>the model infers the same label for a statement and its negation 相反的解释有相同的答案</li>
+<li>falsiﬁes its own generated explanation 篡改/伪造自己的解释</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907163907919.png"   style="zoom:25%;" /></p>
+<p>作者是受到了maieutic method的启发，逐步的确认和消除有矛盾的假设：</p>
+<blockquote>
+<p>Maieutic method brings out deﬁnitions implicit in the interlocutor’s beliefs, ... is a method of hypothesis elimination, steadily identifying and eliminating those that lead to contradictions (Vlastos, 1991).</p>
+</blockquote>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907164128950.png"   style="zoom:50%;" /></p>
+<p>一般的CoT prompting的方法对于某个答案是True/False的问题，通常让LLM先给出解释，再给出答案/预测标签（这称为ad-hoc approach，事前解释）。这种方法生成的explanation是a discriminative explanation that helps in choosing one label over the other。</p>
+<p>相反，作者让LLM对True/False给出事后解释。也就是先给定True/False，让LLM给出对应的explanation。这种Abductive generation的方式能够让LLM分别考虑不同的答案的可能性，而不是直接做选择。另外一个好处是，给定的True/False的label information，能够诱导LLM给出更加具体specific的解释。</p>
+<p>作者提出的一个重要观点是验证LLM生成的propositions的逻辑完整性/完备性logically integral：</p>
+<blockquote>
+<p>We formalize this idea as logical integrity: a proposition <span class="math inline">\(Q\)</span> is logically integral when the LM consistently infers the truth value of <span class="math inline">\(Q\)</span> and <span class="math inline">\(\neg Q\)</span> (i.e. <span class="math inline">\(Q\)</span> as True and <span class="math inline">\(\neg Q\)</span> as False, or vice versa)</p>
+</blockquote>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165024823.png"   style="zoom:40%;" /></p>
+<p>也就是说对于某个LLM生成的proposition <span class="math inline">\(Q\)</span>，LLM不能认为<span class="math inline">\(Q\)</span>和<span class="math inline">\(\neg Q\)</span>同时成立。</p>
+<p>满足logically integral的解释，作者认为是更加可靠的解释。只有满足logically integral的解释会被保留，然后用于最终的逻辑推理。不满足logically integral的解释，会被继续溯因，迭代的让LLM解释，直至获得logically integral的解释。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165419259.png"   style="zoom:50%;" /></p>
+<p>对于最后生成的逻辑树，作者评估LLM对于叶子节点解释成立的belief：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165857365.png"   style="zoom:50%;" /></p>
+<p>以及不同解释之间的关系，作者使用了额外的一个NLI model（RoBERTa fine-tuned on MNLI dataset）去判断任意两个不同explanation之间的关系，权重<span class="math inline">\(w\)</span>固定为1：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907165944830.png"   style="zoom:50%;" /></p>
+<p>最后使用MAX-SAT去最大程度的满足各种带有权重的条件。</p>
+<h2 id="pal">PAL</h2>
+<p>PAL: Program-aided Language Models</p>
+<p>ICML 2023，CMU，<a target="_blank" rel="noopener" href="https://github.com/reasoning-machines/pal">代码</a>。</p>
+<blockquote>
+<p>Large language models (LLMs) have demonstrated an impressive ability to perform arithmetic and symbolic reasoning tasks, when provided with a few examples at test time (“few-shot prompting”). Much of this success can be attributed to prompting methods such as “chainof-thought”, which employ LLMs for both understanding the problem description by decomposing it into steps, as well as solving each step of the problem. <strong>While LLMs seem to be adept at this sort of step-by-step decomposition, LLMs often make logical and arithmetic mistakes in the solution part, even when the problem is decomposed correctly.</strong> In this paper, we present ProgramAided Language models (PA L): a novel approach that uses the LLM to read natural language problems and <strong>generate programs as the intermediate reasoning steps, but offloads the solution step to a runtime such as a Python interpreter.</strong> With PAL, decomposing the natural language problem into runnable steps remains the only learning task for the LLM, while solving is delegated to the interpreter. We demonstrate this synergy between a neural LLM and a symbolic interpreter across 13 mathematical, symbolic, and algorithmic reasoning tasks from BIG-Bench Hard and others. In all these natural language reasoning tasks, generating code using an LLM and reasoning using a Python interpreter leads to more accurate results than much larger models. For example, PAL using CODEX achieves state-of-the-art few-shot accuracy on GSM8K, surpassing PaLM-540B which uses chain-of-thought by absolute 15% top-1.</p>
+</blockquote>
+<p>这篇文章主要是解决虽然LLM能够理解问题，并且把问题的推理过程分别为不同步骤，但是在最后根据推理过程计算答案的时候出现错误的问题。有时候即便是推理过程是正确的，LLM最后的计算答案是错误的。</p>
+<p>因此作者提出对问题的理解，以及推理步骤的拆分和规划让LLM完成。计算答案、根据推理过程推导答案由外部工具完成。这样就能够缓解推理链正确，最后对应的推理结果错误的问题。让LLM做自己擅长的部分，不擅长的部分让其它工具完成。</p>
+<p>让LLM生成推理答案的时候同时生成编程语言，最后使用外部的工具如python interpreter计算答案：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230907215210863.png"  style="zoom:40%;" /></p>
+<h2 id="least-to-most">Least-to-Most</h2>
+<p>Least-to-Most Prompting Enables Complex Reasoning in Large Language Models</p>
+<p>ICLR 2023, Google research</p>
+<blockquote>
+<p>Chain-of-thought prompting has demonstrated remarkable performance on various natural language reasoning tasks. <strong>However, it tends to perform poorly on tasks which requires solving problems harder than the exemplars shown in the prompts.</strong> To overcome this challenge of easy-to-hard generalization, we propose a novel prompting strategy, <strong>least-to-most prompting</strong>. <strong>The key idea in this strategy is to break down a complex problem into a series of simpler subproblems and then solve them in sequence.</strong> Solving each subproblem is facilitated by the answers to previously solved subproblems. Our experimental results on tasks related to symbolic manipulation, compositional generalization, and math reasoning reveal that least-to-most prompting is capable of generalizing to more difﬁcult problems than those seen in the prompts. A notable ﬁnding is that when the GPT-3 code-davinci-002 model is used with least-to-most prompting, it can solve the compositional generalization benchmark SCAN in any split (including length split) with an accuracy of at least 99% using just 14 exemplars, compared to only 16% accuracy with chain-of-thought prompting. This is particularly noteworthy because neural-symbolic models in the literature that specialize in solving SCAN are trained on the entire training set containing over 15,000 examples. We have included prompts for all the tasks in the Appendix.</p>
+</blockquote>
+<p>前面的CoT prompting方法会面临的问题是，如果要解决的问题比CoT中样例的问题更难的话，效果就很差：</p>
+<blockquote>
+<p>However, chain-of-thought prompting has a key limitation—it often performs poorly on tasks that require generalization of solving problems harder than the demonstration examples, such as compositional generalization (Lake &amp; Baroni, 2018; Keysers et al., 2020).</p>
+</blockquote>
+<p>因此，作者提出了一种从简单到复杂，先把问题分解为几个子问题，然后逐步的解决子问题的方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230908105201421.png"   style="zoom:40%;" /></p>
+<p>第一步是通过给定几个样例，让LLM把问题分解成几个子问题Decomposition；</p>
+<p>第二步是逐步的解决子问题，子问题的答案又附加到prompt上，作为解决下一个子问题的上下文。</p>
+<ul>
+<li><strong>Decomposition.</strong> The prompt in this stage contains constant examples that demonstrate the decomposition, followed by the speciﬁc question to be decomposed.</li>
+<li><strong>Subproblem solving.</strong> The prompt in this stage consists of three parts: (1) constant examples demonstrating how subproblems are solved; (2) a potentially empty list of previously answered subquestions and generated solutions, and (3) the question to be answered next.</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/LLM-reason/" title="LLM-reason">https://liuxiyang641.github.io/collection/LLM-reason/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Reason/" rel="tag"><i class="fa fa-tag"></i> Reason</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/LLM-too-positive-negative-comm-know/" rel="prev" title="LLM-too-positive-negative-comm-know">
+                  <i class="fa fa-chevron-left"></i> LLM-too-positive-negative-comm-know
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/nlp/ENTDA/" rel="next" title="ENTDA">
+                  ENTDA <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"d7521179e19788d693d627e2d70ffeef"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

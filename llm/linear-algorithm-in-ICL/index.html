@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="What learning algorithm is in-context learning? Investigations with linear models ICLR 2023, Google Research and MIT, 地址。  Neural sequence models, especially transformers, exhibit a remarkable capacit">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="linear-algorithm-in-ICL">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="What learning algorithm is in-context learning? Investigations with linear models ICLR 2023, Google Research and MIT, 地址。  Neural sequence models, especially transformers, exhibit a remarkable capacit">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233831897.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233844389.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233900476.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904234304259.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904234627050.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235141390.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235157113.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235213253.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235226816.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235306938.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235543973.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235613542.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000053236.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000131555.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000359930.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000413623.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000457521.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000636258.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000930170.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001044377.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001639044.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001659159.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001725225.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001907105.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905002812516.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905002221813.png">
+<meta property="article:published_time" content="2023-09-04T15:25:31.000Z">
+<meta property="article:modified_time" content="2023-09-04T16:30:20.522Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="ICL">
+<meta property="article:tag" content="Theory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233831897.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/","path":"llm/linear-algorithm-in-ICL/","title":"linear-algorithm-in-ICL"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linear-algorithm-in-ICL | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#what-learning-algorithm-is-in-context-learning-investigations-with-linear-models"><span class="nav-number">1.</span> <span class="nav-text">What learning algorithm is in-context learning? Investigations with linear models</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#preliminary"><span class="nav-number">1.2.</span> <span class="nav-text">2. Preliminary</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#the-transformer-architecture"><span class="nav-number">1.2.1.</span> <span class="nav-text">The Transformer architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#training-for-in-context-learning"><span class="nav-number">1.2.2.</span> <span class="nav-text">Training for in-context learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linear-regression"><span class="nav-number">1.2.3.</span> <span class="nav-text">Linear regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-learning-algorithms-can-a-transformer-implement"><span class="nav-number">1.3.</span> <span class="nav-text">3. What learning algorithms can a transformer implement?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preliminaries"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 preliminaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#gradient-descent"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Gradient descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#closed-form-regression"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 Closed-form regression</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#what-computation-does-an-in-context-learner-perform"><span class="nav-number">1.4.</span> <span class="nav-text">4. What computation does an in-context learner perform?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#behavioral-metrics"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Behavioral metrics</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experimental-setup"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Experimental Setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#results"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 Results</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#does-icl-encode-meaningful-intermediate-quantities"><span class="nav-number">1.5.</span> <span class="nav-text">5. Does ICL encode meaningful intermediate quantities?</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linear-algorithm-in-ICL | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linear-algorithm-in-ICL<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/linear-algorithm-in-ICL.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-04 23:25:31" itemprop="dateCreated datePublished" datetime="2023-09-04T23:25:31+08:00">2023-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-05 00:30:20" itemprop="dateModified" datetime="2023-09-05T00:30:20+08:00">2023-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LLM/ICL/" itemprop="url" rel="index"><span itemprop="name">ICL</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>5.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="what-learning-algorithm-is-in-context-learning-investigations-with-linear-models">What learning algorithm is in-context learning? Investigations with linear models</h1>
+<p>ICLR 2023, Google Research and MIT, <a target="_blank" rel="noopener" href="https://github.com/ekinakyurek/google-research/tree/master/incontext">地址</a>。</p>
+<blockquote>
+<p>Neural sequence models, especially transformers, exhibit a remarkable capacity for in-context learning. They can construct new predictors from sequences of labeled examples (x, f(x)) presented in the input without further parameter updates. <strong>We investigate the hypothesis that transformer-based in-context learners implement standard learning algorithms implicitly, by encoding smaller models in their activations, and updating these implicit models as new examples appear in the context.</strong> Using linear regression as a prototypical problem, we offer three sources of evidence for this hypothesis. First, we prove by construction that transformers can implement learning algorithms for linear models based on gradient descent and closed-form ridge regression. Second, we show that trained in-context learners closely match the predictors computed by gradient descent, ridge regression, and exact least-squares regression, transitioning between different predictors as transformer depth and dataset noise vary, and converging to Bayesian estimators for large widths and depths. Third, we present preliminary evidence that in-context learners share algorithmic features with these predictors: learners’ late layers non-linearly encode weight vectors and moment matrices. These results suggest that in-context learning is understandable in algorithmic terms, and that (at least in the linear case) learners may rediscover standard estimation algorithms.</p>
+</blockquote>
+<span id="more"></span>
+<h2 id="introduction">1. Introduction</h2>
+<p>这篇工作的研究问题：How can a neural network with fixed parameters to learn a new function from a new dataset on the ﬂy?</p>
+<p>作者做了这样的假设，上下文学习过程中，Transformer潜在的学习到了一个映射函数，并且上下文中的样例起到了对这样的潜在函数进行训练的作用。</p>
+<blockquote>
+<p>This paper investigates the hypothesis that some instances of ICL can be understood as implicit implementation of known learning algorithms: in-context learners encode an implicit, context-dependent model in their hidden activations, and train this model on in-context examples in the course of computing these internal activations.</p>
+</blockquote>
+<h2 id="preliminary">2. Preliminary</h2>
+<h3 id="the-transformer-architecture">The Transformer architecture</h3>
+<p>作者研究的是Transformer的decoder，下面是self-attention定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233831897.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233844389.png"   style="zoom:50%;" /></p>
+<p>下面是feed-forward transformation的定义：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904233900476.png"   style="zoom:50%;" /></p>
+<p>其中的<span class="math inline">\(\lambda\)</span>是layer normalization，<span class="math inline">\(\sigma\)</span>是GeLU等激活函数。</p>
+<p>Transformer的computational capacity与depth，hidden size <span class="math inline">\(h\)</span>, number of heads <span class="math inline">\(m\)</span>有关。</p>
+<h3 id="training-for-in-context-learning">Training for in-context learning</h3>
+<p>作者在论文中讨论的Transformer，是针对ICL objective进行优化的模型。不是目前更多的单纯优化language objective的LM：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904234304259.png"   style="zoom:50%;" /></p>
+<p>单纯的看这个loss，感觉是先输入上下文exemplar 1，预测exemplar 1，计算loss；然后输入exemplar 1和exemplar 2，预测exemplar 2，计算loss。</p>
+<h3 id="linear-regression">Linear regression</h3>
+<p>作者对比的learning algorithm是linear regression，原因之一是linear regression相对简单，人们对于它的理解比较充分。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904234627050.png"   style="zoom:50%;" /></p>
+<p>当<span class="math inline">\(\lambda=0\)</span>，上面的回归称为ordinary least squares regression (OLS)；</p>
+<p>当<span class="math inline">\(\lambda&gt;0\)</span>，上面的回归称为ridge regression岭回归。</p>
+<p>其中的<span class="math inline">\(w^*\)</span>表示线性回归的最优解。</p>
+<h2 id="what-learning-algorithms-can-a-transformer-implement">3. What learning algorithms can a transformer implement?</h2>
+<p>这一部分，作者证明从理论上，通过固定Transformer中self-attention层和FFN层的一些参数，可以让Transformer实现linear regression。</p>
+<blockquote>
+<p>for <span class="math inline">\(d\)</span>-dimensional regression problems, with <span class="math inline">\(O(d)\)</span> hidden size and constant depth, a transformer can implement a single step of gradient descent; and with <span class="math inline">\(O(d^2)\)</span> hidden size and constant depth, a transformer can update a ridge regression solution to include a single new observation. Intuitively, <span class="math inline">\(n\)</span> steps of these algorithms can be implemented with <span class="math inline">\(n\)</span> times more layers.</p>
+</blockquote>
+<h3 id="preliminaries">3.1 preliminaries</h3>
+<p>作者定义了下面的几种变化操作，然后证明Transformer可以实现这些操作：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235141390.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235157113.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235213253.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235226816.png"   style="zoom:50%;" /></p>
+<p>证明过程在附录。</p>
+<p>下面是作者的引理：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235306938.png"   style="zoom:50%;" /></p>
+<p>下面两个部分，是作者讨论的两种学习linear model参数的方法。作者从理论上证明Transformer能够学习这样的映射函数。</p>
+<h3 id="gradient-descent">3.2 Gradient descent</h3>
+<p>通过梯度下降的形式学习linear model的参数：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235543973.png"   style="zoom:50%;" /></p>
+<p>然后，作者证明从理论上，在最后输出的对应<span class="math inline">\(x_n\)</span>（测试样例）的结果，某一个元素可以等于线性回归的计算结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230904235613542.png"   style="zoom:50%;" /></p>
+<h3 id="closed-form-regression">3.3 Closed-form regression</h3>
+<p>直接计算最优解<span class="math inline">\(w^*\)</span>需要计算<span class="math inline">\(X^TX+\lambda I\)</span>的逆矩阵，这种计算比较复杂。</p>
+<p>然后作者利用Sherman–Morrison formula [<em>Adjustment of an inverse matrix corresponding to a change in one element of a given matrix. 1950</em>]可以将这种求方阵<span class="math inline">\(A\)</span>的逆矩阵转换为迭代的和rank-one的example进行运算的方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000053236.png"   style="zoom:50%;" /></p>
+<p>最后，被转化的求<span class="math inline">\(w^*\)</span>的方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000131555.png"   style="zoom:50%;" /></p>
+<h2 id="what-computation-does-an-in-context-learner-perform">4. What computation does an in-context learner perform?</h2>
+<p>这一部分是从实验中评估，Transformer对于上下文的处理和linear model在多大程度上是相近的。</p>
+<h3 id="behavioral-metrics">4.1 Behavioral metrics</h3>
+<p>首先是要定义度量指标，作者定义了两个metric，Squared prediction difference（SPD）和Implicit linear weight difference（ILWD）。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000359930.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000413623.png"   style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000457521.png"   style="zoom:50%;" /></p>
+<p>SPD指标比较两种mapping function在预测输出的差异；ILWD比较两种mapping function的参数的差异。</p>
+<h3 id="experimental-setup">4.2 Experimental Setup</h3>
+<p>作者讨论的Transformer不是特别大：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000636258.png"   style="zoom:50%;" /></p>
+<p>训练数据是生成的，For the main experiments we generate data according to <span class="math inline">\(p(w) = N(0, I)\)</span> and <span class="math inline">\(p(x) = N(0, I)\)</span>.</p>
+<h3 id="results">4.3 Results</h3>
+<p>作者对比了下面几种学习算法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905000930170.png"   style="zoom:50%;" /></p>
+<p>包括使用欧式距离的k-NN算法、一个样本的随机梯度下降、batch随机梯度下降和直接计算最优参数<span class="math inline">\(w^*\)</span>的方法。</p>
+<blockquote>
+<p>ICL matches ordinary least squares predictions on noiseless datasets.</p>
+</blockquote>
+<p>对比结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001044377.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>ICL的行为和k-NN最不相似</li>
+<li>ICL的行为和没有正则项的线性回归最相似</li>
+<li>虽然上下文样例数增多，基于梯度下降的线性回归算法也越来越靠近ICL的行为</li>
+</ul>
+<blockquote>
+<p>ICL matches the minimum Bayes risk predictor on noisy datasets.</p>
+</blockquote>
+<p>在前面的实验结果中，作者发现，Transformer的输出总是和最小二乘算法的输出一致；作者认为原因是在构造训练数据的时候，是以0位平均数的高斯分布进行采样的。Transformer通过ICL学习到了这样的规律，总是试图输出minimum Bayes risk的solution。</p>
+<p>因此，作者构造了另外一个带有噪音的数据：</p>
+<blockquote>
+<p>To more closely examine the behavior of ICL algorithms under uncertainty, we add noise to the training data: now we present the in-context dataset as a sequence: <span class="math inline">\([x_1 , f(x_1) + \epsilon_1 , \dots, x_n , f(x_n ) + \epsilon_n ]\)</span> where each <span class="math inline">\(i ∼ N(0, \sigma^2)\)</span>.</p>
+</blockquote>
+<p>最小Bayes risk的solution应该是：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001639044.png"   style="zoom:50%;" /></p>
+<p>此时的最优参数应该是：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001659159.png"   style="zoom:50%;" /></p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001725225.png"   style="zoom:50%;" /></p>
+<blockquote>
+<p>ICL exhibits algorithmic phase transitions as model depth increases.</p>
+</blockquote>
+<p>作者进一步探究model size是如何影响这种内在的学习机制的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905001907105.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<blockquote>
+<p>When we vary the depth, learners occupy three distinct regimes: very shallow models (1L) are best approximated by a single step of gradient descent (though not wellapproximated in an absolute sense). Slightly deeper models (2L-4L) are best approximated by ridge regression, while the deepest (+8L) models match OLS</p>
+</blockquote>
+<h2 id="does-icl-encode-meaningful-intermediate-quantities">5. Does ICL encode meaningful intermediate quantities?</h2>
+<p>最后，作者探测下Transformer的中间状态到底在编码什么样的信息？asking what information is encoded in these states, and where. 也就是希望能够理解Transformer是如何最终逐步学习到前面讨论的linear model的？</p>
+<p>作者选择了优化linear model中要用的两个中间量作为期望被编码的信息：</p>
+<ul>
+<li>the moment vector <span class="math inline">\(X^T Y\)</span> (gradient descent variant)</li>
+<li>the (min-norm) least-square estimated weight vector <span class="math inline">\(w_{OLS}\)</span> (ridge-regression variant)</li>
+</ul>
+<p>作者认为中间变量会Transformer逐步的进行编码。</p>
+<p>为了验证这一点，训练了一个额外的an auxiliary probing model [<em>Understanding intermediate layers using linear classiﬁer probes. 2016</em>]，：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905002812516.png"  style="zoom:50%;" /></p>
+<p>输入是前面训练的参数固定的Transformer。期望输出的<span class="math inline">\(\hat{v}\)</span>能够逼近中间量： <span class="math display">\[
+L(v, \hat{v} ) = |v - \hat{v} |^2
+\]</span> 实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905002221813.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li><p>For both targets, a 2-layer MLP probe outperforms a linear probe, meaning that these targets are encoded nonlinearly 中间量需要非线性编码</p></li>
+<li><p>Both targets are decoded accurately deep in the network (but inaccurately in the input layer, indicating that probe success is non-trivial.) 只有深度网络才能越来越好的学习中间量</p></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/" title="linear-algorithm-in-ICL">https://liuxiyang641.github.io/llm/linear-algorithm-in-ICL/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/ICL/" rel="tag"><i class="fa fa-tag"></i> ICL</a>
+              <a href="/tags/Theory/" rel="tag"><i class="fa fa-tag"></i> Theory</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/LLM-know-what-they-dont-know/" rel="prev" title="LLM-know-what-they-dont-know">
+                  <i class="fa fa-chevron-left"></i> LLM-know-what-they-dont-know
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/llm/is-gpt3-good-data-annotator/" rel="next" title="is-gpt3-good-data-annotator">
+                  is-gpt3-good-data-annotator <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"49c789480dcca7a92f55dc0875f38f23"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

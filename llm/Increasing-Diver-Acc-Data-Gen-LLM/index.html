@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Increasing Diversity While Maintaining Accuracy: Text Data Generation with Large Language Models and Human Interventions 密歇根大学与Microsoft，ACL 2023  Large language models (LLMs) can be used to generate">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Increasing-Diver-Acc-Data-Gen-LLM">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Increasing Diversity While Maintaining Accuracy: Text Data Generation with Large Language Models and Human Interventions 密歇根大学与Microsoft，ACL 2023  Large language models (LLMs) can be used to generate">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914230956172.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231021977.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231203885.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231253525.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914232216415.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914233552594.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914233641751.png">
+<meta property="article:published_time" content="2023-09-14T14:59:03.000Z">
+<meta property="article:modified_time" content="2023-09-14T15:38:31.804Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Data Augment">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914230956172.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/","path":"llm/Increasing-Diver-Acc-Data-Gen-LLM/","title":"Increasing-Diver-Acc-Data-Gen-LLM"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Increasing-Diver-Acc-Data-Gen-LLM | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#increasing-diversity-while-maintaining-accuracy-text-data-generation-with-large-language-models-and-human-interventions"><span class="nav-number">1.</span> <span class="nav-text">Increasing Diversity While Maintaining Accuracy: Text Data Generation with Large Language Models and Human Interventions</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.1.</span> <span class="nav-text">1. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#diversified-text-data-generation"><span class="nav-number">1.2.</span> <span class="nav-text">2. Diversified Text Data Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#method"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Experiments</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#human-interventions-to-fix-inaccurate-text-generation"><span class="nav-number">1.3.</span> <span class="nav-text">3. Human Interventions to Fix Inaccurate Text Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#method-1"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#experiments-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Experiments</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Increasing-Diver-Acc-Data-Gen-LLM | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Increasing-Diver-Acc-Data-Gen-LLM<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/Increasing-Diver-Acc-Data-Gen-LLM.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-14 22:59:03 / 修改时间：23:38:31" itemprop="dateCreated datePublished" datetime="2023-09-14T22:59:03+08:00">2023-09-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Data-Augment/" itemprop="url" rel="index"><span itemprop="name">Data Augment</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.6k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="increasing-diversity-while-maintaining-accuracy-text-data-generation-with-large-language-models-and-human-interventions">Increasing Diversity While Maintaining Accuracy: Text Data Generation with Large Language Models and Human Interventions</h1>
+<p>密歇根大学与Microsoft，ACL 2023</p>
+<blockquote>
+<p>Large language models (LLMs) can be used to generate text data for training and evaluating other models. However, creating high-quality datasets with LLMs can be challenging. <strong>In this work, we explore human-AI partnerships to facilitate high diversity and accuracy in LLM-based text data generation.</strong> We first examine two approaches to diversify text generation: 1) logit suppression, which minimizes the generation of languages that have already been frequently generated, and 2) temperature sampling, which flattens the token sampling probability. We found that diversification approaches can increase data diversity but often at the cost of data accuracy (i.e., text and labels being appropriate for the target domain). To address this issue, we examined two human interventions, 1) label replacement (LR), correcting misaligned labels, and 2) out-of-scope filtering (OOSF), removing instances that are out of the user’s domain of interest or to which no considered label applies. With oracle studies, we found that LR increases the absolute accuracy of models trained with diversified datasets by 14.4%. Moreover, we found that some models trained with data generated with LR interventions outperformed LLM-based few-shot classification. In contrast, OOSF was not effective in increasing model accuracy, implying the need for future work in human-in-the-loop text data generation.</p>
+</blockquote>
+<p>利用LLM生成训练数据，考虑生成数据的多样性与准确性。</p>
+<span id="more"></span>
+<h2 id="introduction">1. Introduction</h2>
+<p>训练深度模型总是需要训练数据，而训练数据的获得一直是老大难问题。LLM的出现为这一个问题提供了新的解决思路，让LLM根据用户的去求直接生成domain text data。</p>
+<p>虽然LLM通过ICL可以直接执行各类NLP任务，但是我们可能仍然需要小模型的几点理由：</p>
+<ul>
+<li>some might not have enough resources (e.g., GPUs) or budget (e.g., credit for GPT-3) to run expensive models. 资源</li>
+<li>Others might be concerned about privacy or security issues when they use LLMs from external APIs (e.g., OpenAI API). 隐私与安全</li>
+<li>Moreover, if we share generated datasets within the community, we can also benefit those who do not have access to LLMs. 生成的data可以帮助无法直接访问LLM的研究者</li>
+<li>Lastly, we can also use generated datasets to test models. 生成的数据集可以用来测试SLM</li>
+</ul>
+<p>这篇文章就旨在讨论利用人机协作的方法创建高质量数据集，Ideal classification datasets need to have the following characteristics:</p>
+<ol type="1">
+<li><strong>Scoped</strong>: fall in the model builder’s domain of interest while classifiable with labels of interest,</li>
+<li><strong>Label accurate</strong>: accompany accurate labels, and</li>
+</ol>
+<ol start="3" type="1">
+<li><strong>Diverse</strong>: cover cases the model would encounter during test time.</li>
+</ol>
+<h2 id="diversified-text-data-generation">2. Diversified Text Data Generation</h2>
+<h3 id="method">2.1 Method</h3>
+<p>第一大部分，作者主要讨论了2种在解码阶段增加多样性的方法：</p>
+<ul>
+<li><p>Logit Suppression：decreases the probability of high-frequency tokens。之前生成的tokens，根据频率，降低它在下一次采样中的概率。这里叫做logit的原因应该是，作者通过调用OpenAI的logit bias API来实现这一点。</p></li>
+<li><p>High Temperature：增大temperature <span class="math inline">\(T\)</span>，更大的temperature意味着最终的概率分布更加平滑flat：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914230956172.png"   style="zoom:40%;" /></p></li>
+</ul>
+<p>示意图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231021977.png"   style="zoom:50%;" /></p>
+<p>作者调用GPT生成数据的时候，考虑的是短文本分类任务，构造的prompt主要考虑text type和label：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231203885.png"   style="zoom:40%;" /></p>
+<p>下面是各个task用到的text type和label：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914231253525.png"   style="zoom:50%;" /></p>
+<p>text type应该是用来控制输出符合task特点的文本。</p>
+<h3 id="experiments">2.2 Experiments</h3>
+<p>一些实验设置：</p>
+<ul>
+<li>作者一共用了8个短文本分类数据集</li>
+<li>调用<code>text-davinci-002</code>，每次调用生成20个新data</li>
+<li>微调用的model是BERT-base+Linear classifier</li>
+<li>原始的training data用来训练<em>oracle model</em> （很重要，后续在计算指标和提高质量的时候被用到）；生成的新data用来训练各个实验model，保持两者样本数量一样；用原始的test set进行测试</li>
+<li>作者实验了一个额外的example seeding设置，也就是初始第一次迭代，有没有个样例池。样例池中的样例被按照每个label对应1个样例的设置被随机选择，作为prompt上下文。如果一开始没有一个上下文样例池，作者第一次迭代就是使用zero-shot ICL的形式，在第二次迭代才开始从样例池中随机采样</li>
+</ul>
+<p>实验指标：</p>
+<ul>
+<li>Diversity: We also measured the diversity of the dataset using Remote-Clique metric (Rhys Cox et al., 2021), which is the average mean pairwise distances.</li>
+<li>Label Accuracy: We also evaluated label accuracy, which is the accuracy of the alignment between the generated texts and the specified labels. 使用oracle model作为评估工具</li>
+<li>Model Accuracy: 微调的BERT在测试集上的准确率</li>
+<li>Similarity: We also measured the similarity of the generated dataset to the oracle dataset with the average mean pairwise distances between the two.</li>
+</ul>
+<p>8个短文本分类数据集平均结果（原paper附录中有详细的结果）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914232216415.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>一开始使用一个上下文样例池有助于提高生成数据多样性和最终的SLM性能；</li>
+<li>增加多样性，可能会降低accuracy；两种解码策略都会降低accuracy，但是High temperature降低的稍微轻一点；</li>
+<li>一味的增加生成数据的多样性，不一定能够对fine-tuned的SLM性能有提升作用，甚至会降低模型效果；</li>
+<li>To evaluate how diversity, label accuracy, and similarity impact model accuracy, we performed a linear regression analysis. <strong>The analysis showed that label accuracy, diversity, and similarity are positively correlated with model accuracy, with significance</strong> (coef=<span class="math inline">\(.4797\)</span> and <span class="math inline">\(p&lt;0.001\)</span> for label accuracy, coef=<span class="math inline">\(.2260\)</span> and <span class="math inline">\(p&lt;0.001\)</span> for diversity, and coef=<span class="math inline">\(0.1980\)</span> and <span class="math inline">\(p&lt;0.005\)</span> for similarity). 生成数据的三种因素和最终fine-tuned之后的model有很强的相关系数；</li>
+</ul>
+<h2 id="human-interventions-to-fix-inaccurate-text-generation">3. Human Interventions to Fix Inaccurate Text Generation</h2>
+<h3 id="method-1">3.1 Method</h3>
+<p>上面的实验揭露了单纯增加生成数据多样性不行，作者进一步考虑引入人类智能来缓解这一问题。简单的说，就是利用人去标注了小规模的分类器，用这个分类器去重新标注或过滤生成的数据。</p>
+<p>作者考虑两种简单的方法：</p>
+<ol type="1">
+<li>label replacement (LR)：switching the misaligned label to the correct one. 修正label
+<ul>
+<li>作者考虑训练一个proxy model来重新标注生成的text</li>
+<li>作者考虑了两种方法，一种是直接用oracle model来重新标注所有生成的text；一种是少量的采样，用oracle model标注，然后训练支持向量分类器来判断label正确与否</li>
+</ul></li>
+<li>out-of-scope data filtering (OOSF)：removes instances that are outside the domain of interest and do not match any labels. 移除不符合task的生成数据
+<ul>
+<li>人工判断采样一小部分数据，然后判断句子是否outside the task，标注数据。用这个标注数据来训练一个支持向量分类器。最终用这个支持向量分类器去过滤掉不符合要求的句子</li>
+</ul></li>
+</ol>
+<h3 id="experiments-1">3.2 Experiments</h3>
+<p>第一种标签替换LR的策略：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914233552594.png"   style="zoom:30%;" /></p>
+<p>能够极大的提高最终的训练出来model的效果。由于只是修改label，因此不会影响多样性指标。</p>
+<p>第二种OOSF过滤策略：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230914233641751.png"   style="zoom:50%;" /></p>
+<p>作者是在LR方法的基础上，继续加上OOSF（图中的<code>+OOS</code>）。实验发现OOSF不能够总是带来一致的效果提升，并且由于会移除生成数据，还会同时影响多样性指标。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/" title="Increasing-Diver-Acc-Data-Gen-LLM">https://liuxiyang641.github.io/llm/Increasing-Diver-Acc-Data-Gen-LLM/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Data-Augment/" rel="tag"><i class="fa fa-tag"></i> Data Augment</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/nlp/ENTDA/" rel="prev" title="ENTDA">
+                  <i class="fa fa-chevron-left"></i> ENTDA
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/llm/GenRead/" rel="next" title="GenRead">
+                  GenRead <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">513k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">7:46</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"a8fd9c74875bb289a3703237cc704702"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

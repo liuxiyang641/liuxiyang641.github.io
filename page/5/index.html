@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">123</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -217,7 +217,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/GPT-1/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/entropy-softmax/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -235,7 +235,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/llm/GPT-1/" class="post-title-link" itemprop="url">GPT-1</a>
+          <a href="/ml/entropy-softmax/" class="post-title-link" itemprop="url">entropy-softmax</a>
         </h2>
 
         <div class="post-meta-container">
@@ -246,14 +246,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-05-10 15:25:23" itemprop="dateCreated datePublished" datetime="2022-05-10T15:25:23+08:00">2022-05-10</time>
+      <time title="创建时间：2022-09-22 19:04:35" itemprop="dateCreated datePublished" datetime="2022-09-22T19:04:35+08:00">2022-09-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-05-13 10:54:46" itemprop="dateModified" datetime="2022-05-13T10:54:46+08:00">2022-05-13</time>
+      <time title="修改时间：2022-11-22 15:02:18" itemprop="dateModified" datetime="2022-11-22T15:02:18+08:00">2022-11-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -261,11 +261,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/Pretrain/" itemprop="url" rel="index"><span itemprop="name">Pretrain</span></a>
+          <a href="/categories/ML/Theory/" itemprop="url" rel="index"><span itemprop="name">Theory</span></a>
         </span>
     </span>
 
@@ -294,14 +294,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="improving-language-understanding-by-generative-pre-training">Improving Language Understanding by Generative Pre-Training</h1>
-<p>2018-06年，OpenAI，GPT-1</p>
-<blockquote>
-<p>Natural language understanding comprises a wide range of diverse tasks such as textual entailment, question answering, semantic similarity assessment, and document classiﬁcation. Although large unlabeled text corpora are abundant, labeled data for learning these speciﬁc tasks is scarce, making it challenging for discriminatively trained models to perform adequately. <strong>We demonstrate that large gains on these tasks can be realized by generative pre-training of a language model on a diverse corpus of unlabeled text, followed by discriminative ﬁne-tuning on each speciﬁc task.</strong> In contrast to previous approaches, we make use of task-aware input transformations during ﬁne-tuning to achieve effective transfer while requiring minimal changes to the model architecture. We demonstrate the effectiveness of our approach on a wide range of benchmarks for natural language understanding. Our general task-agnostic model outperforms discriminatively trained models that use architectures speciﬁcally crafted for each task, signiﬁcantly improving upon the state of the art in 9 out of the 12 tasks studied. For instance, we achieve absolute improvements of 8.9% on commonsense reasoning (Stories Cloze Test), 5.7% on question answering (RACE), and 1.5% on textual entailment (MultiNLI).</p>
-</blockquote>
+          <h1 id="机器学习中的sigmoidsoftmax与entropy">机器学习中的Sigmoid、Softmax与entropy</h1>
+<p>这篇文章期望总结与讨论机器学习中常见的sigmoid、softmax函数与entropy熵。</p>
+<p>参考资料：</p>
+<ol type="1">
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA)">熵，维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55016125">sigmoid函数推导，知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105722023">一文详解Softmax函数，知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/S%E5%9E%8B%E5%87%BD%E6%95%B0">S型函数，维基百科</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/274997106/answer/1055696026">信息熵越大，信息量到底是越大还是越小？，知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/294679135/answer/885285177">softmax和cross-entropy是什么关系？</a></li>
+</ol>
+<p>总结：</p>
+<ol type="1">
+<li>sigmoid可以看做是神经网络输出<span class="math inline">\([p,0]\)</span>的softmax变形<span class="math inline">\([e^x/(e^x+1), 1/(e^x+e^0)]\)</span>，只不过由于对应标签1的概率<span class="math inline">\(p\)</span>是我们的期望值，另外一个0不做过多讨论。</li>
+<li>softmax+交叉熵基本是绑定的，这是因为会使得loss的计算和求导都更简单。</li>
+<li>我们经常使用交叉熵，是因为它作为KL散度的核心变化部分，能够衡量输出分布和真实分布之间的差异。</li>
+<li>使用softmax而不是hardmax的目的是期望能够让模型从不同类的预测值上获得更多的梯度。</li>
+</ol>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/llm/GPT-1/#more" rel="contents">
+              <a class="btn" href="/ml/entropy-softmax/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -332,7 +345,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/NN-extrapolate/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/IKRL/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -350,7 +363,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/ml/NN-extrapolate/" class="post-title-link" itemprop="url">NN-extrapolate</a>
+          <a href="/mmml/IKRL/" class="post-title-link" itemprop="url">IKRL</a>
         </h2>
 
         <div class="post-meta-container">
@@ -362,7 +375,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-04-11 20:57:43 / 修改时间：21:33:27" itemprop="dateCreated datePublished" datetime="2022-04-11T20:57:43+08:00">2022-04-11</time>
+      <time title="创建时间：2022-09-07 16:21:54 / 修改时间：16:48:48" itemprop="dateCreated datePublished" datetime="2022-09-07T16:21:54+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -374,7 +387,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+          <a href="/categories/Paper/MMKG/" itemprop="url" rel="index"><span itemprop="name">MMKG</span></a>
         </span>
     </span>
 
@@ -385,7 +398,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.4k</span>
+      <span>1.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -403,12 +416,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="how-neural-networks-extrapolate-from-feedforward-to-graph-neural-networks">HOW NEURAL NETWORKS EXTRAPOLATE: FROM FEEDFORWARD TO GRAPH NEURAL NETWORKS</h1>
-<p>ICLR 2021</p>
-<p>这篇文章主要从理论和实验角度研究了MLP和GNN的外推（extrapolate）性能。</p>
+          <h1 id="image-embodied-knowledge-representation-learning">Image-embodied Knowledge Representation Learning</h1>
+<p>清华大学2017年发表在IJCAI上的paper，IKRL，应该是第一个把图像信息注入到KGE中的方法。</p>
+<p>基于TransE的思想，为不同的entity学习一个额外的image embedding，然后image embedding和原来的entity embedding通过<span class="math inline">\(h+r\approx t\)</span>评估三元组是否成立。</p>
+<blockquote>
+<p>Entity images could provide signiﬁcant visual information for knowledge representation learning. Most conventional methods learn knowledge representations merely from structured triples, ignoring rich visual information extracted from entity images. In this paper, we propose a novel Imageembodied Knowledge Representation Learning model (IKRL), where knowledge representations are learned with both triple facts and images. More speciﬁcally, we ﬁrst construct representations for all images of an entity with a neural image encoder. These image representations are then integrated into an aggregated image-based representation via an attention-based method. We evaluate our IKRL models on knowledge graph completion and triple classiﬁcation. Experimental results demonstrate that our models outperform all baselines on both tasks, which indicates the signiﬁcance of visual information for knowledge representations and the capability of our models in learning knowledge representations with images.</p>
+</blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/ml/NN-extrapolate/#more" rel="contents">
+              <a class="btn" href="/mmml/IKRL/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -439,7 +455,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/Fast-weights-RNN/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MMKG-survey-fudan/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -457,7 +473,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/ml/Fast-weights-RNN/" class="post-title-link" itemprop="url">Fast-weights-RNN</a>
+          <a href="/mmml/MMKG-survey-fudan/" class="post-title-link" itemprop="url">MMKG-survey-fudan</a>
         </h2>
 
         <div class="post-meta-container">
@@ -467,9 +483,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-04-01 21:26:33 / 修改时间：21:41:18" itemprop="dateCreated datePublished" datetime="2022-04-01T21:26:33+08:00">2022-04-01</time>
+      <time title="创建时间：2022-09-05 15:24:26" itemprop="dateCreated datePublished" datetime="2022-09-05T15:24:26+08:00">2022-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-07 10:55:20" itemprop="dateModified" datetime="2022-09-07T10:55:20+08:00">2022-09-07</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -481,7 +503,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/Theory/" itemprop="url" rel="index"><span itemprop="name">Theory</span></a>
+          <a href="/categories/Paper/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
         </span>
     </span>
 
@@ -492,7 +514,226 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>16k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>15 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="multi-modal-knowledge-graph-construction-and-application-a-survey">Multi-Modal Knowledge Graph Construction and Application: A Survey</h1>
+<p>复旦大学计算机系在2022年出的关于MMKG的综述，主要针对图片和语言组成的MMKG，从construction和application两个方面进行描述。</p>
+<blockquote>
+<p>Recent years have witnessed the resurgence of knowledge engineering which is featured by the fast growth of knowledge graphs. However, most of existing knowledge graphs are represented with pure symbols, which hurts the machine’s capability to understand the real world. The multi-modalization of knowledge graphs is an inevitable key step towards the realization of human-level machine intelligence. The results of this endeavor are Multi-modal Knowledge Graphs (MMKGs). In this survey on MMKGs constructed by texts and images, we ﬁrst give deﬁnitions of MMKGs, followed with the preliminaries on multi-modal tasks and techniques. We then systematically review the challenges, progresses and opportunities on the construction and application of MMKGs respectively, with detailed analyses of the strength and weakness of different solutions. We finalize this survey with open research problems relevant to MMKGs.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/mmml/MMKG-survey-fudan/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/7-quantification/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tutorial/multimodal-cmu-2022/7-quantification/" class="post-title-link" itemprop="url">7-quantification</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-05 08:44:49 / 修改时间：11:00:28" itemprop="dateCreated datePublished" datetime="2022-09-05T08:44:49+08:00">2022-09-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mmml-tutorial-challenge-6-quantification">MMML Tutorial Challenge 6: Quantification</h1>
+<p>定义：</p>
+<blockquote>
+<p>Empirical and theoretical study to better understand heterogeneity, cross-modal interactions, and the multimodal learning process.</p>
+</blockquote>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220905090715105.png"   style="zoom:33%;" /></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/7-quantification/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/5-generation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tutorial/multimodal-cmu-2022/5-generation/" class="post-title-link" itemprop="url">5-generation</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-04 20:10:43 / 修改时间：22:13:34" itemprop="dateCreated datePublished" datetime="2022-09-04T20:10:43+08:00">2022-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -510,12 +751,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="using-fast-weights-to-attend-to-the-recent-past">Using Fast Weights to Attend to the Recent Past</h1>
-<p>NIPS 2016</p>
-<p>作者将fast weights引入到RNN中实现了更好的效果。本质上是在RNN的t时刻到t+1时刻中间，插入了一段新的RNN结构，每个step计算之前的隐藏状态和当前隐藏状态的关系权重，不断累加，最后达到比较好的效果。</p>
+          <h1 id="mmml-tutorial-challenge-4-generation">MMML Tutorial Challenge 4: Generation</h1>
+<p>generation的定义是生成raw modality，也就是说应该和input modalities是不同的modality：</p>
+<blockquote>
+<p>Learning a generative process to produce raw modalities that reflects cross-modal interactions, structure, and coherence.</p>
+</blockquote>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904212852739.png"   style="zoom:33%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/ml/Fast-weights-RNN/#more" rel="contents">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/5-generation/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -546,7 +790,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/Meta-learning-intro/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/6-transference/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -564,7 +808,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/ml/Meta-learning-intro/" class="post-title-link" itemprop="url">Meta-learning-intro</a>
+          <a href="/tutorial/multimodal-cmu-2022/6-transference/" class="post-title-link" itemprop="url">6-transference</a>
         </h2>
 
         <div class="post-meta-container">
@@ -574,15 +818,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2022-03-30 20:50:32" itemprop="dateCreated datePublished" datetime="2022-03-30T20:50:32+08:00">2022-03-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-04-01 20:11:52" itemprop="dateModified" datetime="2022-04-01T20:11:52+08:00">2022-04-01</time>
+      <time title="创建时间：2022-09-04 18:43:23 / 修改时间：20:07:03" itemprop="dateCreated datePublished" datetime="2022-09-04T18:43:23+08:00">2022-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -590,7 +828,233 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Blog/" itemprop="url" rel="index"><span itemprop="name">Blog</span></a>
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mmml-tutorial-challenge-5-transference">MMML Tutorial Challenge 5: Transference</h1>
+<p>Transference是指对于一个资源可能受限的主modality，使用另外的modality进行辅助。定义：</p>
+<blockquote>
+<p>Transfer knowledge between modalities, usually to help the primary modality which may be noisy or with limited resources</p>
+</blockquote>
+<p>存在两个可能的关键挑战：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904185728838.png"   style="zoom:33%;" /></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/6-transference/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/4-reasoning/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tutorial/multimodal-cmu-2022/4-reasoning/" class="post-title-link" itemprop="url">4-reasoning</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-04 15:19:59 / 修改时间：18:53:25" itemprop="dateCreated datePublished" datetime="2022-09-04T15:19:59+08:00">2022-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="mmml-tutorial-challenge-3-reasoning">MMML Tutorial Challenge 3: Reasoning</h1>
+<p>Reasoning的定义：</p>
+<blockquote>
+<p>Combining knowledge, usually through multiple inferential steps, exploiting multimodal alignment and problem structure.</p>
+</blockquote>
+<p>reasoning的基础是前面的representation和alignment，然后我们才可以考虑如何combine合适的不同模态的信息来得到理想的预测在值。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904153027700.png"   style="zoom:33%;" /></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/4-reasoning/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/3-alignment/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tutorial/multimodal-cmu-2022/3-alignment/" class="post-title-link" itemprop="url">3-alignment</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-09-04 09:39:50 / 修改时间：18:53:18" itemprop="dateCreated datePublished" datetime="2022-09-04T09:39:50+08:00">2022-09-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
         </span>
     </span>
 
@@ -619,13 +1083,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="meta-learning-learning-to-learn-fast">Meta-Learning: Learning to Learn Fast</h1>
-<p>这是一篇博客（<a target="_blank" rel="noopener" href="https://lilianweng.github.io/posts/2018-11-30-meta-learning/">Meta-Learning: Learning to Learn Fast</a>）的笔记，另外参考了对应的<a target="_blank" rel="noopener" href="https://wei-tianhao.github.io/blog/2019/09/17/meta-learning.html">中文博客</a>，简单了解什么是meta-learning。</p>
-<p>元学习尝试解决深度学习经常需要大量实例数据才能收敛的问题。我们期望好的元学习模型拥有好的泛化能力和适应能力，能够根据少量的样本就学习到比较合适的信息。</p>
-<p>元学习可以解决一类定义好的预测任务，这篇文章主要讨论的是监督学习下的元学习问题。例如让一个图片分类器在训练集中没有猫的情况下，在测试集中能够实现只看到几张猫的图片就能够学会识别猫。</p>
+          <h1 id="mmml-tutorial-challenge-2-alignment">MMML Tutorial Challenge 2: Alignment</h1>
+<p>Alignment定义：</p>
+<blockquote>
+<p>Identifying and modeling cross-modal connections between all elements of multiple modalities, building from the data structure.</p>
+</blockquote>
+<p>存在三种可能的connection：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904100856424.png"   style="zoom:33%;" /></p>
+<p>equivalence表示两个不同模态的element之间是完全相等的，correspondences表示两个element信息互相补充比如图像和对图像内容的描述，dependencies表示两个element之间存在关系。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/ml/Meta-learning-intro/#more" rel="contents">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/3-alignment/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -656,7 +1124,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/gnn/GNN-size-generalization/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/2-representation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -674,7 +1142,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/gnn/GNN-size-generalization/" class="post-title-link" itemprop="url">GNN-size-generalization</a>
+          <a href="/tutorial/multimodal-cmu-2022/2-representation/" class="post-title-link" itemprop="url">2-representation</a>
         </h2>
 
         <div class="post-meta-container">
@@ -684,9 +1152,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-03-28 19:53:40 / 修改时间：21:14:58" itemprop="dateCreated datePublished" datetime="2022-03-28T19:53:40+08:00">2022-03-28</time>
+      <time title="创建时间：2022-09-03 18:14:56" itemprop="dateCreated datePublished" datetime="2022-09-03T18:14:56+08:00">2022-09-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2022-09-04 18:52:42" itemprop="dateModified" datetime="2022-09-04T18:52:42+08:00">2022-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -694,11 +1168,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
         </span>
     </span>
 
@@ -709,7 +1183,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3k</span>
+      <span>3.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -727,18 +1201,16 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="from-local-structures-to-size-generalization-in-graph-neural-networks">From Local Structures to Size Generalization in Graph Neural Networks</h1>
-<p>ICML 2021</p>
-<p>作者主要讨论了GNN对于graph size generalization问题的性质探究。具体一点是指GNN在一个small graph上训练，然后在一个更大的large graph上测试的场景。</p>
-<p>主要贡献：</p>
-<ul>
-<li>提出了graph的local structure的一种定义，d-pattern。GNN在对于相同的d-pattern会产生相同的输出。因此使用d-pattern可以作为GNN表达能力的一种抽象。</li>
-<li>理论上和实验上证明了GNN在size不同的graph上，不能保证学习到的模型是有足够size generalization能力的。</li>
-<li>提出了一种基于自监督的方法（Self-Supervised Learning，SSL）来提升size generalization能力，分别有无监督（unsupervised）和半监督（semi-supervised）两种loss设置。训练过程采用了预训练和多任务学习两种不同的学习过程。</li>
-</ul>
+          <h1 id="mmml-tutorial-challenge-1-representation">MMML Tutorial Challenge 1: Representation</h1>
+<p>Challenge 1 Representation：</p>
+<blockquote>
+<p>Learning representations that reflect cross-modal interactions between individual elements, across different modalities.</p>
+</blockquote>
+<p>Representation challenge有三个sub-challenge，Fusion、Coordination和Fission。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904163842455.png"   style="zoom:33%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/gnn/GNN-size-generalization/#more" rel="contents">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/2-representation/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -769,7 +1241,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/cv/ResNet/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/1-intro/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -787,110 +1259,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/cv/ResNet/" class="post-title-link" itemprop="url">ResNet</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2022-03-24 17:41:12 / 修改时间：22:45:00" itemprop="dateCreated datePublished" datetime="2022-03-24T17:41:12+08:00">2022-03-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="deep-residual-learning-for-image-recognition">Deep Residual Learning for Image Recognition</h1>
-<p>深度残差网络，将CNN拓展到152层乃至更深层，同时表现出更好效果的里程碑文章。核心是将residual connection代入到深层CNN中，使得深层的模型效果不比浅层的模型效果差。</p>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220324174625698.png" alt="image-20220324174625698" style="zoom:50%;" /></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/cv/ResNet/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/gnn/GNN-1000-layers/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/gnn/GNN-1000-layers/" class="post-title-link" itemprop="url">GNN-1000-layers</a>
+          <a href="/tutorial/multimodal-cmu-2022/1-intro/" class="post-title-link" itemprop="url">1-intro</a>
         </h2>
 
         <div class="post-meta-container">
@@ -901,14 +1270,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-03-23 19:16:41" itemprop="dateCreated datePublished" datetime="2022-03-23T19:16:41+08:00">2022-03-23</time>
+      <time title="创建时间：2022-09-03 09:35:58" itemprop="dateCreated datePublished" datetime="2022-09-03T09:35:58+08:00">2022-09-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-24 20:11:17" itemprop="dateModified" datetime="2022-03-24T20:11:17+08:00">2022-03-24</time>
+      <time title="修改时间：2022-09-04 18:52:57" itemprop="dateModified" datetime="2022-09-04T18:52:57+08:00">2022-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -916,11 +1285,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/GNN/" itemprop="url" rel="index"><span itemprop="name">GNN</span></a>
+          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
         </span>
     </span>
 
@@ -931,325 +1300,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="training-graph-neural-networks-with-1000-layers">Training Graph Neural Networks with 1000 Layers</h1>
-<p>ICML 2021</p>
-<p>这篇文章通过在GNN中引入grouped reversible connections，实现了将GNN拓展到1000层，可能是当前最深的GNN之一。这篇文章的意义在于，实现了GNN的层数与模型所需的显存无关，使用较少的显存就可以在显存基本不增加的情况下，任意增加GNN深度。</p>
-<p>下图是作者提出的Rev-GNN在ogbn-proteins数据集上的结果，很少的memory，达到了很好的效果。</p>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220323191910030.png" alt="image-20220323191910030" style="zoom:50%;" /></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/gnn/GNN-1000-layers/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/prototypical-network/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/ml/prototypical-network/" class="post-title-link" itemprop="url">prototypical-network</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-10 16:40:44" itemprop="dateCreated datePublished" datetime="2022-03-10T16:40:44+08:00">2022-03-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-24 20:11:17" itemprop="dateModified" datetime="2022-03-24T20:11:17+08:00">2022-03-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>782</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="prototypical-networks-for-few-shot-learning">Prototypical Networks for Few-shot Learning</h1>
-<p>作者为少次学习和零次学习提出了一种新的网络Prototypical network。核心思想是为不同的class定义不同的prototype的表示。这个prototype是有相同class下的所有实例求平均得到的。</p>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220310164356012.png" alt="image-20220310164356012" style="zoom:50%;" /></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/ml/prototypical-network/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/paper-sentences-collection/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/collection/paper-sentences-collection/" class="post-title-link" itemprop="url">good-paper-sentences-collection</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-03-10 15:25:25" itemprop="dateCreated datePublished" datetime="2022-03-10T15:25:25+08:00">2022-03-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-03-20 16:30:02" itemprop="dateModified" datetime="2023-03-20T16:30:02+08:00">2023-03-20</time>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>好的句子收集</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/collection/paper-sentences-collection/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/algorithm-note/5-math/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/algorithm-note/5-math/" class="post-title-link" itemprop="url">5-math</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2021-12-13 10:29:31" itemprop="dateCreated datePublished" datetime="2021-12-13T10:29:31+08:00">2021-12-13</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-03-07 11:04:56" itemprop="dateModified" datetime="2022-03-07T11:04:56+08:00">2022-03-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/algorithm/" itemprop="url" rel="index"><span itemprop="name">algorithm</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.7k</span>
+      <span>3.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1267,11 +1318,17 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="数学问题">数学问题</h1>
-<p>《算法笔记》第五章 数学问题</p>
+          <p><a target="_blank" rel="noopener" href="https://cmu-multicomp-lab.github.io/mmml-tutorial/schedule/">CMU MML Tutorial Louis-Philippe Morency</a></p>
+<h1 id="mmml-tutorial-introduction">MMML Tutorial: Introduction</h1>
+<h2 id="多模态介绍">多模态介绍</h2>
+<p>什么是multimodal？</p>
+<p>在数学上，我们描述多模态是在概率上有不同的分布趋势。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220903093913110.png"   style="zoom:20%;" /></p>
+<p>但是现在，我们大多提到多模态，更多是在指multiple modalities。更准确的说是sensory modalities。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220903094246738.png"   style="zoom:20%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/algorithm-note/5-math/#more" rel="contents">
+              <a class="btn" href="/tutorial/multimodal-cmu-2022/1-intro/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1295,7 +1352,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1318,13 +1375,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">392k</span>
+    <span title="站点总字数">513k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:56</span>
+    <span title="站点阅读时长">7:46</span>
   </span>
 </div>
 <div class="busuanzi-count">

@@ -85,7 +85,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">34</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">40</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">123</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -156,18 +156,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-count">51</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">40</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -217,7 +217,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/HVPNeT/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/LLM-PEFT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -235,7 +235,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/HVPNeT/" class="post-title-link" itemprop="url">HVPNeT</a>
+          <a href="/collection/LLM-PEFT/" class="post-title-link" itemprop="url">LLM-PEFT</a>
         </h2>
 
         <div class="post-meta-container">
@@ -245,9 +245,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-10-20 14:19:29 / 修改时间：15:45:37" itemprop="dateCreated datePublished" datetime="2022-10-20T14:19:29+08:00">2022-10-20</time>
+      <time title="创建时间：2023-05-30 21:23:30" itemprop="dateCreated datePublished" datetime="2023-05-30T21:23:30+08:00">2023-05-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-12 16:42:03" itemprop="dateModified" datetime="2023-09-12T16:42:03+08:00">2023-09-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -259,7 +265,11 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/MMKG/" itemprop="url" rel="index"><span itemprop="name">MMKG</span></a>
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/PEFT/" itemprop="url" rel="index"><span itemprop="name">PEFT</span></a>
         </span>
     </span>
 
@@ -270,7 +280,113 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.6k</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="llm的peft方法">LLM的PEFT方法</h1>
+<p>参数高效微调PEFT(Parameter-Efficient Fine Tuning)方法调研。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/collection/LLM-PEFT/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/LLM-reason-survey-zju/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/llm/LLM-reason-survey-zju/" class="post-title-link" itemprop="url">LLM-reason-survey-zju</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-05-26 15:24:24 / 修改时间：16:56:28" itemprop="dateCreated datePublished" datetime="2023-05-26T15:24:24+08:00">2023-05-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -288,15 +404,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="good-visual-guidance-makes-a-better-extractor-hierarchical-visual-prefix-for-multimodal-entity-and-relation-extraction">Good Visual Guidance Makes A Better Extractor: Hierarchical Visual Prefix for Multimodal Entity and Relation Extraction</h1>
-<p>Findings of NAACL 2022，<a target="_blank" rel="noopener" href="https://github.com/zjunlp/HVPNeT">代码</a>。</p>
-<p>作者认为目前的MNER和MRE方法无法很好的处理图像和文本内容不匹配的问题，因此提出了一种从图像中提取object-level的层级信息，用于补充文本信息的多模态信息抽取方法HVPNeT (Hierarchical Visual Prefix fusion NeTwork)。</p>
+          <h1 id="reasoning-with-language-model-prompting-a-survey">Reasoning with Language Model Prompting: A Survey</h1>
+<p>浙大zjunlp，<a target="_blank" rel="noopener" href="https://github.com/%20zjunlp/Prompt4ReasoningPapers">paper仓库</a>。回顾并总结了使用LLM进行推理的各种现有方法。</p>
 <blockquote>
-<p>Multimodal named entity recognition and relation extraction (MNER and MRE) is a fundamental and crucial branch in information extraction. <strong>However, existing approaches for MNER and MRE usually suffer from error sensitivity when irrelevant object images incorporated in texts.</strong> To deal with these issues, we propose a novel Hierarchical Visual Prefix fusion NeTwork (HVPNeT) for visual-enhanced entity and relation extraction, aiming to achieve more effective and robust performance. Specifically, we regard visual representation as pluggable visual prefix to guide the textual representation for error insensitive forecasting decision. We further propose a dynamic gated aggregation strategy to achieve hierarchical multiscaled visual features as visual prefix for fusion. Extensive experiments on three benchmark datasets demonstrate the effectiveness of our method, and achieve state-of-the-art performance 1 .</p>
+<p>Reasoning, as an essential ability for complex problem-solving, can provide back-end support for various real-world applications, such as medical diagnosis, negotiation, etc. This paper provides a comprehensive survey of cutting-edge research on reasoning with language model prompting. We introduce research works with comparisons and summaries and provide systematic resources to help beginners. We also discuss the potential reasons for emerging such reasoning abilities and highlight future research directions.</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mmml/HVPNeT/#more" rel="contents">
+              <a class="btn" href="/llm/LLM-reason-survey-zju/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -327,7 +442,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MEGA/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/IE-Collection1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -345,7 +460,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/MEGA/" class="post-title-link" itemprop="url">MEGA</a>
+          <a href="/collection/IE-Collection1/" class="post-title-link" itemprop="url">IE-Collection1</a>
         </h2>
 
         <div class="post-meta-container">
@@ -356,14 +471,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-10-19 10:04:36" itemprop="dateCreated datePublished" datetime="2022-10-19T10:04:36+08:00">2022-10-19</time>
+      <time title="创建时间：2023-05-25 22:55:52" itemprop="dateCreated datePublished" datetime="2023-05-25T22:55:52+08:00">2023-05-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-22 14:55:00" itemprop="dateModified" datetime="2022-10-22T14:55:00+08:00">2022-10-22</time>
+      <time title="修改时间：2023-09-17 17:27:24" itemprop="dateModified" datetime="2023-09-17T17:27:24+08:00">2023-09-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -375,7 +490,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/MMKG/" itemprop="url" rel="index"><span itemprop="name">MMKG</span></a>
+          <a href="/categories/Paper/IE/" itemprop="url" rel="index"><span itemprop="name">IE</span></a>
         </span>
     </span>
 
@@ -386,14 +501,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3k</span>
+      <span>24k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>22 分钟</span>
     </span>
 </div>
 
@@ -404,15 +519,10 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="multimodal-relation-extraction-with-efficient-graph-alignment">Multimodal Relation Extraction with Efficient Graph Alignment</h1>
-<p>ACM MM 21，<a target="_blank" rel="noopener" href="https://github.com/thecharm/Mega">代码</a></p>
-<p>作者提出了一种，通过识别图像的scene graph和textual graph，进行图对齐的多模态关系抽取方法MEGA。</p>
-<blockquote>
-<p>Relation extraction (RE) is a fundamental process in constructing knowledge graphs. However, previous methods on relation extraction suffer sharp performance decline in short and noisy social media texts due to a lack of contexts. Fortunately, the related visual contents (objects and their relations) in social media posts can supplement the missing semantics and help to extract relations precisely. We introduce the multimodal relation extraction (MRE), a task that identifies textual relations with visual clues. To tackle this problem, we present a large-scale dataset which contains 15000+ sentences with 23 pre-defined relation categories. Considering that the visual relations among objects are corresponding to textual relations, we develop a dual graph alignment method to capture this correlation for better performance. Experimental results demonstrate that visual contents help to identify relations more precisely against the text-only baselines. Besides, our alignment method can find the correlations between vision and language, resulting in better performance. Our dataset and code are available at https://github.com/thecharm/Mega.</p>
-</blockquote>
+          <p>信息抽取论文调研集合1。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mmml/MEGA/#more" rel="contents">
+              <a class="btn" href="/collection/IE-Collection1/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -443,7 +553,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/FL-MSRE/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/LLM-survey-renmin/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -461,7 +571,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/FL-MSRE/" class="post-title-link" itemprop="url">FL-MSRE</a>
+          <a href="/llm/LLM-survey-renmin/" class="post-title-link" itemprop="url">LLM-survey-renmin</a>
         </h2>
 
         <div class="post-meta-container">
@@ -472,14 +582,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-10-17 21:51:47" itemprop="dateCreated datePublished" datetime="2022-10-17T21:51:47+08:00">2022-10-17</time>
+      <time title="创建时间：2023-05-22 15:07:41" itemprop="dateCreated datePublished" datetime="2023-05-22T15:07:41+08:00">2023-05-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-10-20 00:40:51" itemprop="dateModified" datetime="2022-10-20T00:40:51+08:00">2022-10-20</time>
+      <time title="修改时间：2023-08-22 16:35:06" itemprop="dateModified" datetime="2023-08-22T16:35:06+08:00">2023-08-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -491,124 +601,11 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/MMKG/" itemprop="url" rel="index"><span itemprop="name">MMKG</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.8k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="fl-msre-a-few-shot-learning-based-approach-to-multimodal-social-relation-extraction">FL-MSRE: A Few-Shot Learning based Approach to Multimodal Social Relation Extraction</h1>
-<p>AAAI 2021，<a target="_blank" rel="noopener" href="https://github.com/%20sysulic/FL-MSRE">代码</a>。</p>
-<blockquote>
-<p>Social relation extraction (SRE for short), which aims to infer the social relation between two people in daily life, has been demonstrated to be of great value in reality. <strong>Existing methods for SRE consider extracting social relation only from unimodal information such as text or image, ignoring the high coupling of multimodal information</strong>. Moreover, previous studies overlook the serious unbalance distribution on social relations. To address these issues, this paper proposes FL-MSRE, a few-shot learning based approach to extracting social relations from both texts and face images. Considering the lack of multimodal social relation datasets, this paper also presents three multimodal datasets annotated from four classical masterpieces and corresponding TV series. Inspired by the success of BERT, we propose a strong BERT based baseline to extract social relation from text only. FL-MSRE is empirically shown to outperform the baseline signiﬁcantly. This demonstrates that using face images beneﬁts text-based SRE. Further experiments also show that using two faces from different images achieves similar performance as from the same image. This means that FL-MSRE is suitable for a wide range of SRE applications where the faces of two people can only be collected from different images.</p>
-</blockquote>
-<p>作者在这篇工作中，创建了包括文本和脸部图像的多模态social relation extraction数据集，Dream of the Red Chamber (DRC-TF), Outlaws of the Marsh (OM-TF) and the Four Classic (FC-TF)。红楼梦、水浒传和四大名著数据集，TF指text and face。</p>
-<p>并且由于不同social relation的分布差异很大，作者考虑使用少次学习来解决，提出了方法FL-MSRE。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/mmml/FL-MSRE/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MNRE-dataset/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/MNRE-dataset/" class="post-title-link" itemprop="url">MNRE-dataset</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-10-12 20:11:28" itemprop="dateCreated datePublished" datetime="2022-10-12T20:11:28+08:00">2022-10-12</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-01-07 13:36:48" itemprop="dateModified" datetime="2023-01-07T13:36:48+08:00">2023-01-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/MRE/" itemprop="url" rel="index"><span itemprop="name">MRE</span></a>
+          <a href="/categories/Paper/LLM/Survey/" itemprop="url" rel="index"><span itemprop="name">Survey</span></a>
         </span>
     </span>
 
@@ -619,14 +616,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -637,15 +634,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="mnre-a-challenge-multimodal-dataset-for-neural-relation-extraction-with-visual-evidence-in-social-media-posts">MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts</h2>
-<p>MNRE，ICME 2021。作者创建了首个用于multimodal relation extraction的数据集MNRE，<a target="_blank" rel="noopener" href="https://github.com/thecharm/MNRE">地址</a>。</p>
-<p>数据来源于Twitter posts，关注点是文本中的上下文信息不够充分时，通过post中的image，来补充上下文信息。</p>
+          <h1 id="a-survey-of-large-language-models">A Survey of Large Language Models</h1>
+<p>人大，arXiv 2023.05，<a target="_blank" rel="noopener" href="https://github.com/RUCAIBox/LLMSurvey">代码</a>。</p>
 <blockquote>
-<p>Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then ﬁltered by crowdworkers. All the relations are identiﬁed manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difﬁculties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.</p>
+<p>Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essentially a complex, intricate system of human expressions governed by grammatical rules. It poses a significant challenge to develop capable artificial intelligence (AI) algorithms for comprehending and grasping a language. As a major approach, language modeling has been widely studied for language understanding and generation in the past two decades, evolving from statistical language models to neural language models. Recently, pre-trained language models (PLMs) have been proposed by pretraining Transformer models over large-scale corpora, showing strong capabilities in solving various natural language processing (NLP) tasks. Since the researchers have found that model scaling can lead to an improved model capacity, they further investigate the scaling effect by increasing the parameter scale to an even larger size. Interestingly, when the parameter scale exceeds a certain level, these enlarged language models not only achieve a significant performance improvement, but also exhibit some special abilities (e.g., incontext learning) that are not present in small-scale language models (e.g., BERT). To discriminate the language models in different parameter scales, the research community has coined the term large language models (LLM) for the PLMs of significant size (e.g., containing tens or hundreds of billions of parameters). Recently, the research on LLMs has been largely advanced by both academia and industry, and a remarkable progress is the launch of ChatGPT (a powerful AI chatbot developed based on LLMs), which has attracted widespread attention from society. The technical evolution of LLMs has been making an important impact on the entire AI community, which would revolutionize the way how we develop and use AI algorithms. Considering this rapid technical progress, in this survey, we review the recent advances of LLMs by introducing the background, key findings, and mainstream techniques. In particular, we focus on four major aspects of LLMs, namely pre-training, adaptation tuning, utilization, and capacity evaluation. Furthermore, we also summarize the available resources for developing LLMs and discuss the remaining issues for future directions. This survey provides an up-to-date review of the literature on LLMs, which can be a useful resource for both researchers and engineers.</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mmml/MNRE-dataset/#more" rel="contents">
+              <a class="btn" href="/llm/LLM-survey-renmin/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -676,7 +672,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/ml/entropy-softmax/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/PromptMNER/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -694,135 +690,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/ml/entropy-softmax/" class="post-title-link" itemprop="url">entropy-softmax</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2022-09-22 19:04:35" itemprop="dateCreated datePublished" datetime="2022-09-22T19:04:35+08:00">2022-09-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-11-22 15:02:18" itemprop="dateModified" datetime="2022-11-22T15:02:18+08:00">2022-11-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/ML/Theory/" itemprop="url" rel="index"><span itemprop="name">Theory</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>4.3k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>4 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="机器学习中的sigmoidsoftmax与entropy">机器学习中的Sigmoid、Softmax与entropy</h1>
-<p>这篇文章期望总结与讨论机器学习中常见的sigmoid、softmax函数与entropy熵。</p>
-<p>参考资料：</p>
-<ol type="1">
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%86%B5_(%E4%BF%A1%E6%81%AF%E8%AE%BA)">熵，维基百科</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55016125">sigmoid函数推导，知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105722023">一文详解Softmax函数，知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/S%E5%9E%8B%E5%87%BD%E6%95%B0">S型函数，维基百科</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/274997106/answer/1055696026">信息熵越大，信息量到底是越大还是越小？，知乎</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/294679135/answer/885285177">softmax和cross-entropy是什么关系？</a></li>
-</ol>
-<p>总结：</p>
-<ol type="1">
-<li>sigmoid可以看做是神经网络输出<span class="math inline">\([p,0]\)</span>的softmax变形<span class="math inline">\([e^x/(e^x+1), 1/(e^x+e^0)]\)</span>，只不过由于对应标签1的概率<span class="math inline">\(p\)</span>是我们的期望值，另外一个0不做过多讨论。</li>
-<li>softmax+交叉熵基本是绑定的，这是因为会使得loss的计算和求导都更简单。</li>
-<li>我们经常使用交叉熵，是因为它作为KL散度的核心变化部分，能够衡量输出分布和真实分布之间的差异。</li>
-<li>使用softmax而不是hardmax的目的是期望能够让模型从不同类的预测值上获得更多的梯度。</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/ml/entropy-softmax/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/IKRL/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/lxy-avatar.jpg">
-      <meta itemprop="name" content="Liu Xiyang">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Liu Xiyang">
-      <meta itemprop="description" content="Try your best to be an ordinary man.">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Liu Xiyang">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/IKRL/" class="post-title-link" itemprop="url">IKRL</a>
+          <a href="/mmml/PromptMNER/" class="post-title-link" itemprop="url">PromptMNER</a>
         </h2>
 
         <div class="post-meta-container">
@@ -834,7 +702,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-07 16:21:54 / 修改时间：16:48:48" itemprop="dateCreated datePublished" datetime="2022-09-07T16:21:54+08:00">2022-09-07</time>
+      <time title="创建时间：2023-05-12 15:26:21 / 修改时间：23:58:09" itemprop="dateCreated datePublished" datetime="2023-05-12T15:26:21+08:00">2023-05-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -875,15 +743,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="image-embodied-knowledge-representation-learning">Image-embodied Knowledge Representation Learning</h1>
-<p>清华大学2017年发表在IJCAI上的paper，IKRL，应该是第一个把图像信息注入到KGE中的方法。</p>
-<p>基于TransE的思想，为不同的entity学习一个额外的image embedding，然后image embedding和原来的entity embedding通过<span class="math inline">\(h+r\approx t\)</span>评估三元组是否成立。</p>
+          <h1 id="promptmner-prompt-based-entity-related-visual-clue-extraction-and-integration-for-multimodal-named-entity-recognition">PromptMNER: Prompt-Based Entity-Related Visual Clue Extraction and Integration for Multimodal Named Entity Recognition</h1>
+<p>复旦大学计算机科学学院，上海数据科学重点实验室，DASFAA 2022</p>
+<p>作者提出了一种利用prompt来更好的导出实体相关的视觉特征的方法。</p>
 <blockquote>
-<p>Entity images could provide signiﬁcant visual information for knowledge representation learning. Most conventional methods learn knowledge representations merely from structured triples, ignoring rich visual information extracted from entity images. In this paper, we propose a novel Imageembodied Knowledge Representation Learning model (IKRL), where knowledge representations are learned with both triple facts and images. More speciﬁcally, we ﬁrst construct representations for all images of an entity with a neural image encoder. These image representations are then integrated into an aggregated image-based representation via an attention-based method. We evaluate our IKRL models on knowledge graph completion and triple classiﬁcation. Experimental results demonstrate that our models outperform all baselines on both tasks, which indicates the signiﬁcance of visual information for knowledge representations and the capability of our models in learning knowledge representations with images.</p>
+<p>Multimodal named entity recognition (MNER) is an emerging task that incorporates visual and textual inputs to detect named entities and predicts their corresponding entity types. However, existing MNER methods often fail to capture certain entity-related but textloosely-related visual clues from the image, which may introduce taskirrelevant noises or even errors. To address this problem, we propose to utilize entity-related prompts for extracting proper visual clues with a pre-trained vision-language model. To better integrate diﬀerent modalities and address the popular semantic gap problem, we further propose a modality-aware attention mechanism for better cross-modal fusion. Experimental results on two benchmarks show that our MNER approach outperforms the state-of-the-art MNER approaches with a large margin.</p>
 </blockquote>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mmml/IKRL/#more" rel="contents">
+              <a class="btn" href="/mmml/PromptMNER/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -914,7 +782,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MMKG-survey-fudan/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/PoE-MoE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -932,7 +800,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/mmml/MMKG-survey-fudan/" class="post-title-link" itemprop="url">MMKG-survey-fudan</a>
+          <a href="/collection/PoE-MoE/" class="post-title-link" itemprop="url">PoE-MoE</a>
         </h2>
 
         <div class="post-meta-container">
@@ -943,14 +811,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-09-05 15:24:26" itemprop="dateCreated datePublished" datetime="2022-09-05T15:24:26+08:00">2022-09-05</time>
+      <time title="创建时间：2023-03-21 20:08:42" itemprop="dateCreated datePublished" datetime="2023-03-21T20:08:42+08:00">2023-03-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2022-09-07 10:55:20" itemprop="dateModified" datetime="2022-09-07T10:55:20+08:00">2022-09-07</time>
+      <time title="修改时间：2023-04-23 16:31:02" itemprop="dateModified" datetime="2023-04-23T16:31:02+08:00">2023-04-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -962,7 +830,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Paper/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+          <a href="/categories/Paper/ML/" itemprop="url" rel="index"><span itemprop="name">ML</span></a>
         </span>
     </span>
 
@@ -973,14 +841,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>16k</span>
+      <span>13k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>15 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -991,14 +859,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="multi-modal-knowledge-graph-construction-and-application-a-survey">Multi-Modal Knowledge Graph Construction and Application: A Survey</h1>
-<p>复旦大学计算机系在2022年出的关于MMKG的综述，主要针对图片和语言组成的MMKG，从construction和application两个方面进行描述。</p>
-<blockquote>
-<p>Recent years have witnessed the resurgence of knowledge engineering which is featured by the fast growth of knowledge graphs. However, most of existing knowledge graphs are represented with pure symbols, which hurts the machine’s capability to understand the real world. The multi-modalization of knowledge graphs is an inevitable key step towards the realization of human-level machine intelligence. The results of this endeavor are Multi-modal Knowledge Graphs (MMKGs). In this survey on MMKGs constructed by texts and images, we ﬁrst give deﬁnitions of MMKGs, followed with the preliminaries on multi-modal tasks and techniques. We then systematically review the challenges, progresses and opportunities on the construction and application of MMKGs respectively, with detailed analyses of the strength and weakness of different solutions. We finalize this survey with open research problems relevant to MMKGs.</p>
-</blockquote>
+          <h1 id="product-of-experts-and-mixture-of-experts">Product-of-Experts and Mixture-of-Experts</h1>
+<p>这篇博客主要记录PoE和MoE的一些调研笔记。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/mmml/MMKG-survey-fudan/#more" rel="contents">
+              <a class="btn" href="/collection/PoE-MoE/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1029,7 +894,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/7-quantification/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/GPT-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -1047,7 +912,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/tutorial/multimodal-cmu-2022/7-quantification/" class="post-title-link" itemprop="url">7-quantification</a>
+          <a href="/llm/GPT-4/" class="post-title-link" itemprop="url">GPT-4</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1059,7 +924,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2022-09-05 08:44:49 / 修改时间：11:00:28" itemprop="dateCreated datePublished" datetime="2022-09-05T08:44:49+08:00">2022-09-05</time>
+      <time title="创建时间：2023-03-20 15:46:29 / 修改时间：23:57:40" itemprop="dateCreated datePublished" datetime="2023-03-20T15:46:29+08:00">2023-03-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1067,11 +932,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+          <a href="/categories/Paper/Pretrained/" itemprop="url" rel="index"><span itemprop="name">Pretrained</span></a>
         </span>
     </span>
 
@@ -1082,7 +947,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>2.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -1100,15 +965,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="mmml-tutorial-challenge-6-quantification">MMML Tutorial Challenge 6: Quantification</h1>
-<p>定义：</p>
+          <h1 id="gpt-4-technical-report">GPT-4 Technical Report</h1>
+<p>2023-03-14日OpenAI发布的多模态GPT-4，下面是关于它技术报告的一个总结。大多是简单的high-level的描述和输入输出cases，具体模型细节、部署架构等等都没有说。</p>
 <blockquote>
-<p>Empirical and theoretical study to better understand heterogeneity, cross-modal interactions, and the multimodal learning process.</p>
+<p>We report the development of GPT-4, a large-scale, multimodal model which can accept image and text inputs and produce text outputs. While less capable than humans in many real-world scenarios, GPT-4 exhibits human-level performance on various professional and academic benchmarks, including passing a simulated bar exam with a score around the top 10% of test takers. GPT-4 is a Transformerbased model pre-trained to predict the next token in a document. The post-training alignment process results in improved performance on measures of factuality and adherence to desired behavior. A core component of this project was developing infrastructure and optimization methods that behave predictably across a wide range of scales. This allowed us to accurately predict some aspects of GPT-4’s performance based on models trained with no more than 1/1,000th the compute of GPT-4.</p>
 </blockquote>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220905090715105.png"   style="zoom:33%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/tutorial/multimodal-cmu-2022/7-quantification/#more" rel="contents">
+              <a class="btn" href="/llm/GPT-4/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1139,7 +1003,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/5-generation/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/LM-as-KB-Survey/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -1157,7 +1021,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/tutorial/multimodal-cmu-2022/5-generation/" class="post-title-link" itemprop="url">5-generation</a>
+          <a href="/llm/LM-as-KB-Survey/" class="post-title-link" itemprop="url">LM-as-KB-Survey</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1167,9 +1031,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-09-04 20:10:43 / 修改时间：22:13:34" itemprop="dateCreated datePublished" datetime="2022-09-04T20:10:43+08:00">2022-09-04</time>
+      <time title="创建时间：2023-03-08 19:39:10" itemprop="dateCreated datePublished" datetime="2023-03-08T19:39:10+08:00">2023-03-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-06-26 23:29:15" itemprop="dateModified" datetime="2023-06-26T23:29:15+08:00">2023-06-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1177,11 +1047,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+          <a href="/categories/Paper/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
         </span>
     </span>
 
@@ -1192,14 +1062,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.2k</span>
+      <span>4.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -1210,15 +1080,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="mmml-tutorial-challenge-4-generation">MMML Tutorial Challenge 4: Generation</h1>
-<p>generation的定义是生成raw modality，也就是说应该和input modalities是不同的modality：</p>
+          <h1 id="a-review-on-language-models-as-knowledge-bases">A Review on Language Models as Knowledge Bases</h1>
+<p>arxiv 2022，Meta AI的一篇关于把预训练语言模型看做是知识库KB的综述。</p>
 <blockquote>
-<p>Learning a generative process to produce raw modalities that reflects cross-modal interactions, structure, and coherence.</p>
+<p>Recently, there has been a surge of interest in the NLP community on the use of pretrained Language Models (LMs) as Knowledge Bases (KBs). Researchers have shown that LMs trained on a sufﬁciently large (web) corpus will encode a signiﬁcant amount of knowledge implicitly in its parameters. The resulting LM can be probed for different kinds of knowledge and thus acting as a KB. This has a major advantage over traditional KBs in that this method requires no human supervision. In this paper, we present a set of aspects that we deem an LM should have to fully act as a KB, and review the recent literature with respect to those aspects.1</p>
 </blockquote>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904212852739.png"   style="zoom:33%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/tutorial/multimodal-cmu-2022/5-generation/#more" rel="contents">
+              <a class="btn" href="/llm/LM-as-KB-Survey/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1249,7 +1118,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/tutorial/multimodal-cmu-2022/6-transference/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/mmml/MM-Transformer-Survey/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -1267,7 +1136,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/tutorial/multimodal-cmu-2022/6-transference/" class="post-title-link" itemprop="url">6-transference</a>
+          <a href="/mmml/MM-Transformer-Survey/" class="post-title-link" itemprop="url">MM-Transformer-Survey</a>
         </h2>
 
         <div class="post-meta-container">
@@ -1277,9 +1146,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2022-09-04 18:43:23 / 修改时间：20:07:03" itemprop="dateCreated datePublished" datetime="2022-09-04T18:43:23+08:00">2022-09-04</time>
+      <time title="创建时间：2023-02-23 11:09:00" itemprop="dateCreated datePublished" datetime="2023-02-23T11:09:00+08:00">2023-02-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-03-01 23:07:36" itemprop="dateModified" datetime="2023-03-01T23:07:36+08:00">2023-03-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1287,11 +1162,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/" itemprop="url" rel="index"><span itemprop="name">tutorial</span></a>
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/tutorial/multimodal/" itemprop="url" rel="index"><span itemprop="name">multimodal</span></a>
+          <a href="/categories/Paper/Multimodal/" itemprop="url" rel="index"><span itemprop="name">Multimodal</span></a>
         </span>
     </span>
 
@@ -1302,14 +1177,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>8.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -1320,16 +1195,132 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="mmml-tutorial-challenge-5-transference">MMML Tutorial Challenge 5: Transference</h1>
-<p>Transference是指对于一个资源可能受限的主modality，使用另外的modality进行辅助。定义：</p>
+          <h1 id="multimodal-learning-with-transformers-a-survey">Multimodal Learning with Transformers: A Survey</h1>
+<p>2022-06 arxiv</p>
+<p>牛津大学学者的一篇多模态Transformer综述，系统的描述了目前多模态Transformer可能注意的不同改进点。</p>
 <blockquote>
-<p>Transfer knowledge between modalities, usually to help the primary modality which may be noisy or with limited resources</p>
+<p>Transformer is a promising neural network learner, and has achieved great success in various machine learning tasks. Thanks to the recent prevalence of multimodal applications and big data, Transformer-based multimodal learning has become a hot topic in AI research. This paper presents a comprehensive survey of Transformer techniques oriented at multimodal data. The main contents of this survey include: (1) a background of multimodal learning, Transformer ecosystem, and the multimodal big data era, (2) a theoretical review of Vanilla Transformer, Vision Transformer, and multimodal Transformers, from a geometrically topological perspective, (3) a review of multimodal Transformer applications, via two important paradigms, i.e., for multimodal pretraining and for specific multimodal tasks, (4) a summary of the common challenges and designs shared by the multimodal Transformer models and applications, and (5) a discussion of open problems and potential research directions for the community.</p>
 </blockquote>
-<p>存在两个可能的关键挑战：</p>
-<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20220904185728838.png"   style="zoom:33%;" /></p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/tutorial/multimodal-cmu-2022/6-transference/#more" rel="contents">
+              <a class="btn" href="/mmml/MM-Transformer-Survey/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/Opportunities-and-Risks-of-Foundation-models/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/llm/Opportunities-and-Risks-of-Foundation-models/" class="post-title-link" itemprop="url">Opportunities-and-Risks-of-Foundation-models</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-02-08 11:03:47" itemprop="dateCreated datePublished" datetime="2023-02-08T11:03:47+08:00">2023-02-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-06 16:22:59" itemprop="dateModified" datetime="2023-09-06T16:22:59+08:00">2023-09-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/NLP/" itemprop="url" rel="index"><span itemprop="name">NLP</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="on-the-opportunities-and-risks-of-foundation-models">On the Opportunities and Risks of Foundation Models</h1>
+<p>2021 斯坦福大学 arxiv</p>
+<p>在这篇论文里，斯坦福大学的研究者提出了一个概念“foundation models”用来指代在大规模数据上进行训练，可以用于大范围应用的模型。</p>
+<p>下面仅仅是基础概念和发展的笔记，具体请参考论文。</p>
+<blockquote>
+<p>AI is undergoing a paradigm shift with the rise of models (e.g., BERT, DALL-E, GPT-3) that <strong>are trained on broad data at scale and are adaptable to a wide range of downstream tasks</strong>. We call these models foundation models to underscore their critically central yet incomplete character. This report provides a thorough account of the opportunities and risks of foundation models, ranging from their capabilities (e.g., language, vision, robotics, reasoning, human interaction) and technical principles (e.g., model architectures, training procedures, data, systems, security, evaluation, theory) to their applications (e.g., law, healthcare, education) and societal impact (e.g., inequity, misuse, economic and environmental impact, legal and ethical considerations). Though foundation models are based on standard deep learning and transfer learning, their scale results in new emergent capabilities, and their effectiveness across so many tasks incentivizes homogenization. Homogenization provides powerful leverage but demands caution, as the defects of the foundation model are inherited by all the adapted models downstream. Despite the impending widespread deployment of foundation models, we currently lack a clear understanding of how they work, when they fail, and what they are even capable of due to their emergent properties. To tackle these questions, we believe much of the critical research on foundation models will require deep interdisciplinary collaboration commensurate with their fundamentally sociotechnical nature.</p>
+</blockquote>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/llm/Opportunities-and-Risks-of-Foundation-models/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1353,7 +1344,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 </div>
@@ -1376,13 +1367,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">392k</span>
+    <span title="站点总字数">513k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">5:56</span>
+    <span title="站点阅读时长">7:46</span>
   </span>
 </div>
 <div class="busuanzi-count">
