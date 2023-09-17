@@ -1,19 +1,19 @@
 ---
-title: LLM-IE
+title: LLM-IE1
 published: false
 date: 2023-05-15 23:24:09
 categories:
-- Paper
-- LLM
-- IE
+  - Paper
+  - LLM
+  - IE
 tags:
-- LLM
-- IE
+  - LLM
+  - IE
 ---
 
-# 基于LLM的Information Extraction
+# 基于LLM的Information Extraction1
 
-基于LLM的信息抽取工作总结。
+基于LLM的信息抽取工作总结合集1。
 
 <!--more-->
 
@@ -75,7 +75,7 @@ Evaluating ChatGPT’s Information Extraction Capabilities: An Assessment of Per
 
 为了避免历史回答记录的影响，每次回答都会清空上一次回答的记录，下面是作者进行事件检测任务时输入的样例：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230516000754165.png"   style="zoom:20%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230516000754165.png"   style="zoom:25%;" />
 
 最终实验结果如下：
 
@@ -340,10 +340,10 @@ InstructUIE: Multi-task Instruction Tuning for Unified Information Extraction
 同时，作者把每个IE任务进一步细分成为了不同的小任务：
 
 - NER: span extraction and entity typing
-- RE: entity pair extraction and relation classiﬁcation
+- RE: entity pair extraction and relation classification
 - EE: trigger extraction and argument extraction
 
-作者的实验基于11B FlanT5，作者进行了两种有监督的在IE INSTRUCTIONS上微调LLM和无监督的zero-shot两种实验:
+作者的实验基于11B FlanT5，作者进行了有监督的在IE INSTRUCTIONS上微调LLM和无监督的zero-shot两种实验:
 
 - Supervised Settings: 10,000 examples for each dataset
 - Zero-shot Settings:
@@ -358,7 +358,7 @@ InstructIE: A Chinese Instruction-based Information Extraction Dataset.
 
 浙大NLP，arXiv 2023，[代码](§https://github.com/zjunlp/KnowLM)。
 
-> We introduce a new Information Extraction (IE) task dubbed Instructionbased IE, which aims to ask the system to follow speciﬁc instructions or guidelines to extract information. To facilitate research in this area, **we construct a dataset called InstructIE, consisting of 270,000 weakly supervised data from Chinese Wikipedia and 1,000 high-quality crowdsourced annotated instances.** We further evaluate the performance of various baseline models on the InstructIE dataset. The results reveal that although current models exhibit promising performance, there is still room for improvement. Furthermore, we conduct a comprehensive case study analysis, underlining the challenges inherent in the Instruction-based IE task.
+> We introduce a new Information Extraction (IE) task dubbed Instructionbased IE, which aims to ask the system to follow specific instructions or guidelines to extract information. To facilitate research in this area, **we construct a dataset called InstructIE, consisting of 270,000 weakly supervised data from Chinese Wikipedia and 1,000 high-quality crowdsourced annotated instances.** We further evaluate the performance of various baseline models on the InstructIE dataset. The results reveal that although current models exhibit promising performance, there is still room for improvement. Furthermore, we conduct a comprehensive case study analysis, underlining the challenges inherent in the Instruction-based IE task.
 
 作者构建InstructIE数据集的流程：
 
@@ -447,7 +447,7 @@ arXiv 2023.03，哈工大-深圳。
 
 Revisiting Relation Extraction in the era of Large Language Models
 
-Northeastern University，arXiv 2023.05（作者评论是接收至ACL 2023）。
+Northeastern University，ACL 2023。
 
 > Relation extraction (RE) is the core NLP task of inferring semantic relationships between entities from text. Standard supervised RE techniques entail training modules to tag tokens comprising entity spans and then predict the relationship between them. Recent work has instead treated the problem as a sequence-tosequence task, linearizing relations between entities as target strings to be generated conditioned on the input. Here we push the limits of this approach, using larger language models (GPT-3 and Flan-T5 large) than considered in prior work and evaluating their performance on standard RE tasks under varying levels of supervision. We address issues inherent to evaluating generative approaches to RE by doing human evaluations, in lieu of relying on exact matching. Under this refined evaluation, we find that: (1) Few-shot prompting with GPT-3 achieves near SOTA performance, i.e., roughly equivalent to existing fully supervised models; (2) Flan-T5 is not as capable in the few-shot setting, but supervising and fine-tuning it with Chain-of-Thought (CoT) style explanations (generated via GPT3) yields SOTA results. We release this model as a new baseline for RE tasks.
 
@@ -611,7 +611,7 @@ LLMs for Knowledge Graph Construction and Reasoning: Recent Capabilities and Fut
 
 arXiv 2023.05，浙大ZJUNLP，[代码](https://github .com/zjunlp/AutoKG)。
 
-> This paper presents an exhaustive quantitative and qualitative evaluation of Large Language Models (LLMs) for Knowledge Graph (KG) construction and reasoning. We employ eight distinct datasets that encompass aspects including entity, relation and event extraction, link prediction, and question answering. Empirically, our ﬁndings suggest that GPT-4 outperforms ChatGPT in the majority of tasks and even surpasses ﬁne-tuned models in certain reasoning and question-answering datasets. Moreover, our investigation extends to the potential generalization ability of LLMs for information extraction, which culminates in the presentation of the Virtual Knowledge Extraction task and the development of the VINE dataset. Drawing on these empirical ﬁndings, we further propose AutoKG, a multiagent-based approach employing LLMs for KG construction and reasoning, which aims to chart the future of this ﬁeld and offer exciting opportunities for advancement. We anticipate that our research can provide invaluable 1 insights for future undertakings of KG.
+> This paper presents an exhaustive quantitative and qualitative evaluation of Large Language Models (LLMs) for Knowledge Graph (KG) construction and reasoning. We employ eight distinct datasets that encompass aspects including entity, relation and event extraction, link prediction, and question answering. Empirically, our findings suggest that GPT-4 outperforms ChatGPT in the majority of tasks and even surpasses fine-tuned models in certain reasoning and question-answering datasets. Moreover, our investigation extends to the potential generalization ability of LLMs for information extraction, which culminates in the presentation of the Virtual Knowledge Extraction task and the development of the VINE dataset. Drawing on these empirical findings, we further propose AutoKG, a multiagent-based approach employing LLMs for KG construction and reasoning, which aims to chart the future of this field and offer exciting opportunities for advancement. We anticipate that our research can provide invaluable 1 insights for future undertakings of KG.
 
 调研时看到的首个使用GPT-4进行知识图谱相关任务的paper，可惜受限于GPT-4的访问代价，作者仅仅是对每个任务都进行了20个左右的测试样例的评估。发现GPT-4对于IE任务效果比ChatGPT要好，但是仍然和SOTA有差距，同时GPT-4更加擅长KG reasoning（linking prediction）和QA任务。
 
@@ -647,11 +647,11 @@ GPT-NER: Named Entity Recognition via Large Language Models
 
 北大，arXiv，[代码](https://github.com/ShuheWang1998/GPT-NER)。
 
-> Despite the fact that large-scale Language Models (LLM) have achieved SOTA performances on a variety of NLP tasks, its performance on NER is still signiﬁcantly below supervised baselines. This is due to the gap between the two tasks the NER and LLMs: the former is a sequence labeling task in nature while the latter is a text-generation model.
+> Despite the fact that large-scale Language Models (LLM) have achieved SOTA performances on a variety of NLP tasks, its performance on NER is still significantly below supervised baselines. This is due to the gap between the two tasks the NER and LLMs: the former is a sequence labeling task in nature while the latter is a text-generation model.
 >
-> In this paper, we propose GPT-NER to resolve this issue. GPT-NER bridges the gap by transforming the sequence labeling task to a generation task that can be easily adapted by LLMs e.g., the task of ﬁnding location entities in the input text Columbus is a city is transformed to generate the text sequence @@Columbus## is a city, where special tokens @@## marks the entity to extract. To efﬁciently address the hallucination issue of LLMs, where LLMs have a strong inclination to over-conﬁdently label NULL inputs as entities, we propose a self-veriﬁcation strategy by prompting LLMs to ask itself whether the extracted entities belong to a labeled entity tag.
+> In this paper, we propose GPT-NER to resolve this issue. GPT-NER bridges the gap by transforming the sequence labeling task to a generation task that can be easily adapted by LLMs e.g., the task of finding location entities in the input text Columbus is a city is transformed to generate the text sequence @@Columbus## is a city, where special tokens @@## marks the entity to extract. To efficiently address the hallucination issue of LLMs, where LLMs have a strong inclination to over-confidently label NULL inputs as entities, we propose a self-verification strategy by prompting LLMs to ask itself whether the extracted entities belong to a labeled entity tag.
 >
-> We conduct experiments on ﬁve widely adopted NER datasets, and GPT-NER achieves comparable performances to fully supervised baselines, which is the ﬁrst time as far as we are concerned. More importantly, we ﬁnd that GPT-NER exhibits a greater ability in the low-resource and few-shot setups, when the amount of training data is extremely scarce, GPT-NER performs significantly better than supervised models. This demonstrates the capabilities of GPT-NER in real-world NER applications where the number of labeled examples is limited.
+> We conduct experiments on five widely adopted NER datasets, and GPT-NER achieves comparable performances to fully supervised baselines, which is the first time as far as we are concerned. More importantly, we find that GPT-NER exhibits a greater ability in the low-resource and few-shot setups, when the amount of training data is extremely scarce, GPT-NER performs significantly better than supervised models. This demonstrates the capabilities of GPT-NER in real-world NER applications where the number of labeled examples is limited.
 
 方法图：
 
@@ -698,3 +698,284 @@ $p$代码prompt，$h,t$代表头尾实体对。根据不同prompt生成的新的
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230627155208099.png"   style="zoom:35%;" />
 
 模型越大，抽取出来的信息正确程度越高。
+
+## CoT-MIE
+
+Chain-of-Thought Prompt Distillation for Multimodal Named Entity Recognition and Multimodal Relation Extraction
+
+阿里Ant group，2023-08 arXiv
+
+> Multimodal Named Entity Recognition (MNER) and Multimodal Relation Extraction (MRE) necessitate the fundamental reasoning capacity for intricate linguistic and multimodal comprehension. In this study, we explore distilling the reasoning ability of large language models (LLMs) into a more compact student model by generating a chain of thought (CoT) – a sequence of intermediate reasoning steps. Specifically, we commence by exemplifying the elicitation of such reasoning ability from LLMs through CoT prompts covering multi-grain (noun, sentence, multimodality) and data-augmentation (style, entity, image) dimensions. Subsequently, we present a novel conditional prompt distillation method to assimilate the commonsense reasoning ability from LLMs, thereby enhancing the utility of the student model in addressing text-only inputs without the requisite addition of image and CoT knowledge. Extensive experiments reveal that our approach attains state-of-the-art accuracy and manifests a plethora of advantages concerning interpretability, data efficiency, and cross-domain generalization on MNER and MRE datasets.
+
+作者声称是希望能够将LLM的推理能力交给小模型，但是个人阅读下来感觉小模型也没有学会推理能力。并且这里一直在强调CoT，事实上这篇论文个人更愿意看做是一种数据增强/知识检索的方法，毕竟LLM本身没有针对信息抽取给出中间的推理步骤。
+
+作者的做法出发点是：
+
+- 之前的基于检索的模型，难以保证检索到的结果和查询的句子是匹配的，比如下图：
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231237542.png"   style="zoom:40%;" />
+
+- 大模型的推理成本比较高，但是它的推理能力比较好。希望能够用个小模型学会大模型的推理能力，并且有较低的推理成本。
+
+作者的方法：
+
+![image-20230824231405165](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231405165.png)
+
+首先，作者用BLIP2把多模态信息抽取中的图片转化为文本caption。
+
+然后利用LLM生成下面几种额外的知识：
+
+- Noun：对于句子中的potential entities, slang, and terminology等名词进行查询，对应的prompt是：`Help me explain the meaning of special words for understanding. + x`
+- Sentence：对于整个句子进行理解，It can explain the sentiment, cause, and subject of users. 对应的prompt是`Explain the sentence to me with necessary background. + x`
+- Multimodality：让LLM解释潜在的image和text之间的关系，这一步可以用来去噪、潜在的对齐visual object和textual entity，对应的prompt是：`What is the relation between the text and the attached image? + x + I`
+
+作者还利用LLM进行了数据增强：
+
+- Style：利用LLM转换输入句子的风格，让文本的描述保持一致的风格，对应的prompt是`Transform the sentence in Twitter style without changing the meaning. + x`
+- Entity：用同类型的entity替换候选的entity，然后用LLM判断替换后的伪样本是否成立，判断的prompt是`Whether the sentence is possible in fact, answer yes or no. + x`
+- Image：让LLM猜测能够和文本描述对应的image长什么样子，对应的prompt是`What is a possible image with the text in a tweet? + x`
+
+数据增强后的样本被看做是新的样本。
+
+然后问题的关键是怎么样能够让小模型学会LLM的推理，作者声称提出了Conditional Prompt Distillation的方法。具体做法是首先作者把原始的text $x$、图像的caption $I$以及LLM生成的知识$c$拼接到一起，经过text encoder获得输出分布$H_k$；然后，作者定义了可学习的soft prompt来作为conditional prompt聚合text：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232713196.png"   style="zoom:40%;" />
+
+这里生成的$p$和原始的text $x$拼接在一起，经过text encoder获得输出分布$H_t$；最后，作者期望这两种分布是相近的：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232832068.png"   style="zoom:40%;" />
+
+个人对于这个公式有点疑惑，这里的分布到底是信息抽取的classification distribution还是token distribution？
+
+更疑惑的是，最后预测结果仍然是加入了LLM生成知识$c$的结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233139004.png"   style="zoom:40%;" />
+
+难道是在测试阶段仅仅用小模型，不需要LLM提前处理？
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233204415.png"   style="zoom:30%;" />
+
+和目前的SOTA相比，MNRE数据集上还有10%的差距；而Twitter15和17数据集可以认为是达到了SOTA。
+
+另外从消融的结果来看，对于名词的解释，可能作用相对比较大：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233303269.png"   style="zoom:30%;" />
+
+论文的case study可以看下，感觉这些LLM生成的knowledge还是比较有意义的，问题在于没有CoT..也不确定小模型是否学习到了推理能力：
+
+![image-20230824233447694](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233447694.png)
+
+## PGIM
+
+Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT
+
+天津大学，2023-05，arXiv
+
+> Multimodal Named Entity Recognition (MNER) on social media aims to enhance textual entity prediction by incorporating image-based clues. Existing research in this domain has primarily focused on maximizing the utilization of potentially relevant information in images or incorporating external knowledge from explicit knowledge bases (KBs). However, **these methods either neglect the necessity of providing the model with relevant external knowledge, or the retrieved external knowledge suffers from high redundancy.** To address these problems, **we propose a conceptually simple two-stage framework called Prompt ChatGPT In MNER (PGIM) in this paper.** We leverage ChatGPT as an implicit knowledge engine to acquire auxiliary refined knowledge, thereby bolstering the model’s performance in MNER tasks. Specifically, we first utilize a Multimodal Similar Example Awareness module to select suitable examples from a small number of manually annotated samples. These examples are then integrated into a formatted prompt template tailored to the MNER task, guiding ChatGPT to generate auxiliary refined knowledge. Finally, the acquired knowledge is integrated with the raw text and inputted into the downstream model for further processing. Extensive experiments show that our PGIM significantly outperforms all existing state-of-the-art methods on two classic MNER datasets.
+
+作者是期望利用LLM来解决：
+
+- 一般的text+image的多模态小模型，可能需要外部的知识来进行识别
+
+- 而基于外部knowledge的信息抽取方法检索到的外部知识可能相关性程较低，或者是冗余
+
+作者同样把LLM看做是一个可以提供high-quality auxiliary knowledge的base。
+
+方法：
+
+![image-20230825160004278](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160004278.png)
+
+首先，作者在这里使用LLM导出的外部knowledge包括了LLM抽取出的实体，以及推理的原因。
+
+那么怎么样让LLM能够生成这样的knowledge呢？
+
+作者随机从数据集中选择了一小部分样例，然后人工写了推理原因，这一小部分样例会作为待抽取的句子的上下文来获取LLM的knowledge。
+
+作者使用cosine相似度，从这小部分人工标注的样例中选择合适的样例作为上下文（实现中选择$5$个样例做上下文）：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160618895.png"   style="zoom:40%;" />
+
+公式里的$H$代表着multimodal representations，作者使用UMT方法导出multimodal representations来计算样例相似度。（但不清楚这里的$H$具体是指序列中哪个embedding？）
+
+拿到上下文之后，作者用来查询的prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161714124.png"   style="zoom:40%;" />
+
+注意一下，只是使用了纯文本的ChatGPT，因此作者是使用BLIP2把image转化为text caption去查询的。并且在prompt里，作者提示LLM可以选择是否采用来自image的信息。
+
+在拿到了LLM输出的auxiliary knowledge $z$之后，与原有的text拼接，经过一个Transformer encoder（实验中是XLM-RoBERTa-large），最后过CRF获取实体的BIO预测标注。
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161339967.png"  style="zoom:40%;" />
+
+Twitter2015数据集相比较MoRe方法提升不太明显。（image在这两个Twitter数据集上到底有多大作用，个人现在很怀疑，并且标注也不够好，有很多的噪音…）
+
+case study：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161447842.png"   style="zoom:40%;" />
+
+能够看出来，作者倾向于在LLM的输出推理过程中，直接对span进行解释，因此蓝色的句子里会很明显的线索来知道最后识别实体。
+
+## CollabKG
+
+CollabKG: A Learnable Human-Machine-Cooperative Information Extraction Toolkit for (Event) Knowledge Graph Construction
+
+北交，arXiv 2023-07，ChatIE作者，[仓库](https://github.com/cocacola-lab/CollabKG)。
+
+> In order to construct or extend entity-centric and event-centric knowledge graphs (KG and EKG), the information extraction (IE) annotation toolkit is essential. However, existing IE toolkits have several non-trivial problems, such as not supporting multi-tasks, not supporting automatic updates. In this work, **we present CollabKG, a learnable human-machine-cooperative IE toolkit for KG and EKG construction.** Specifically, for the multitask issue, CollabKG unifies different IE subtasks, including named entity recognition (NER), entity-relation triple extraction (RE), and event extraction (EE), and supports both KG and EKG. Then, combining advanced prompting-based IE technology, the human-machine-cooperation mechanism with LLMs as the assistant machine is presented which can provide a lower cost as well as a higher performance. Lastly, owing to the two-way interaction between the human and machine, CollabKG with learning ability allows self-renewal. Besides, CollabKG has several appealing features (e.g., customization, trainingfree, propagation, etc.) that make the system powerful, easy-to-use, and high-productivity. We holistically compare our toolkit with other existing tools on these features. Human evaluation quantitatively illustrates that CollabKG significantly improves annotation quality, efficiency, and stability simultaneously.
+
+作者在ChatIE的的基础上，构造了一个可以人机协同的IE抽取工具。最大的特点个人认为是，它会不断把人工标注的结果，有选择的存入到一个数据库当中，这个数据库会被用来构造prompt，方便ChatIE进行信息抽取。这样就使得CollabKG一方面可以学习到新的概念/知识，同时还不需要额外的训练。支持中英文，支持实体抽取、三元组抽取、事件触发词检测以及事件论元抽取等。
+
+与现有的其它IE toolkit的对比：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825221723968.png"   style="zoom:25%;" />
+
+作者定义的工作流程：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825221819267.png"   style="zoom:35%;" />
+
+首先，用户可以选择自动基于LLM进行信息抽取，会首先基于待抽取的text去一个知识库中进行检索（具体怎么样进行检索，论文中没有说明），然后选择到找到相似的已有标注样例，构造prompt，调用ChatGPT进行自动抽取（具体构造出来的prompt是什么样子没有在论文中给出）。
+
+然后，自动抽取的结果会返回给用户，用户可以使用工具里定义的各种标注来修改自动抽取的结果，可以选择是否接受accept、删除delete或者待定suggested状态。
+
+最后，人工修订后的结果会返回，CollabKG会将标注进行转化，变为统一的格式，选择最近的/高频的标注放入到知识库当中。
+
+另外，作者定义统一的信息抽取样式/格式：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825222520746.png"   style="zoom:30%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825222733141.png"   style="zoom:25%;" />
+
+具体的标注界面：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825222926358.png"   style="zoom:25%;" />
+
+## UniversalNER
+
+2023-08，arXiv，南加州大学，[项目](universal-ner.github.io)
+
+> Large language models (LLMs) have demonstrated remarkable generalizability, such as understanding arbitrary entities and relations. Instruction tuning has proven effective for distilling LLMs into more cost-efficient models such as Alpaca and Vicuna. Yet such student models still trail the original LLMs by large margins in downstream applications. **In this paper, we explore targeted distillation with mission-focused instruction tuning to train student models that can excel in a broad application class such as open information extraction.** Using named entity recognition (NER) for case study, we show how ChatGPT can be distilled into much smaller UniversalNER models for open NER. For evaluation, we assemble the largest NER benchmark to date, comprising 43 datasets across 9 diverse domains such as biomedicine, programming, social media, law, finance. Without using any direct supervision, UniversalNER attains remarkable NER accuracy across tens of thousands of entity types, outperforming general instruction-tuned models such as Alpaca and Vicuna by over 30 absolute F1 points in average. With a tiny fraction of parameters, UniversalNER not only acquires ChatGPT’s capability in recognizing arbitrary entity types, but also outperforms its NER accuracy by 7-9 absolute F1 points in average. Remarkably, UniversalNER even outperforms by a large margin state-of-the-art multi-task instruction-tuned systems such as InstructUIE, which uses supervised NER examples. We also conduct thorough ablation studies to assess the impact of various components in our distillation approach. We will release the distillation recipe, data, and UniversalNER models to facilitate future research on targeted distillation.
+
+一篇和InstructIE和InstructUIE相似思想的工作，都是训练IE LLM。这篇论文同时结合了现有的NER数据集和利用ChatGPT从raw text中进行open NER标注后的新构造的数据集进行训练。foundation model是LLaMA 7B/13B。
+
+作者在论文强调的观点是，很多现有的instruction-tuning工作是利用了ChatGPT等更大size的LLM来构造指令，这可以看做是一种蒸馏技术。但是很多instruction-tuning工作是关注让student LLM学会在不同任务上遵循指令，这种做法是不可能超越teacher LLM如ChatGPT的。
+
+因此作者觉得应该让LLM更加关注某一类任务，作者选择了NER任务作为探究任务。作者的指令重点不在于为不同的task构造不同的描述，而是想办法能够描述清楚不同数据集、不同领域的NER label的含义。
+
+作者利用ChatGPT从Pile corpus中进行sentence-level open NER标注，不限制entity类型。只要是GPT认为是entity的mention都被导出。下面是进行标注的prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829155757746.png"   style="zoom:30%;" />
+
+经过清洗后，作者获得了240,725实体，13,020实体类型。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829155933160.png"   style="zoom:30%;" />
+
+然后是如何构造instruction，以及如何训练。
+
+- 作者根据ChatGPT的标注，直接询问某一类entity在text中的mention，相当于ChatIE方法的第二步。下面是instruction：
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829160050553.png"   style="zoom:30%;" />
+
+- Negative sampling，作者发现需要让LLM学会回答什么entity type没有在text中出现能够极大的提高模型学习效果（实验中有20%以上的效果提升）。进行依据entity type frequency的采样，构造负样本。
+
+- 除去了利用ChatGPT标注的新数据外，作者也用到了现有的各类NER datasets。为了解决不同数据集之间label definitions的差异问题（如PERSON entity在ACL数据集中包括了she, he这些人称代词，而在multiNERD就没有包括人称代词），因此label需要和dataset相关联，作者额外的在prompt左侧加入dataset的name来进行辨别：
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829160538488.png"   style="zoom:30%;" />
+
+作者收集了现有的43个NER数据集，涉及9个domain，包括general, biomedical, clinical, STEM, programming, social media, law, finance, and transportation domains。
+
+训练遵循和Vicuna一样的训练规划。
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829160752996.png"  style="zoom:25%;" /><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829160826877.png"   style="zoom:25%;" />
+
+下面是对负采样的消融实验，可以看到让LLM学会回答自己不知道什么/什么东西不存在是很关键的：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829161000484.png"   style="zoom:30%;" />
+
+## DeepTagger
+
+DeepTagger: Knowledge Enhanced Named Entity Recognition for Web-Based Ads Queries
+
+arXiv 2023-06
+
+> Named entity recognition (NER) is a crucial task for online advertisement. State-of-the-art solutions leverage pre-trained language models for this task. However, three major challenges remain unresolved: **web queries differ from natural language, on which pre-trained models are trained; web queries are short and lack contextual information; and labeled data for NER is scarce.** We propose DeepTagger, a knowledge-enhanced NER model for web-based ads queries. The proposed knowledge enhancement framework leverages both model-free and model-based approaches. For model-free enhancement, we collect unlabeled web queries to augment domain knowledge; and we collect web search results to enrich the information of ads queries. **We further leverage effective prompting methods to automatically generate labels using large language models such as ChatGPT.** Additionally, we adopt a model-based knowledge enhancement method based on adversarial data augmentation. We employ a three-stage training framework to train DeepTagger models. Empirical results in various NER tasks demonstrate the effectiveness of the proposed framework.
+
+这篇文章集中在对Web queries进行NER场景上。这种任务通常发生在广告领域，对于用户输入的查询，需要识别实体，然后打广告。
+
+Web queries与一般的完整natural language的区别：
+
+- First, there is a domain shift between web queries and natural language. 大部分的web查询文本不是完整的句子，没有动词/形容词；同时会包含产品、品牌等在一般领域内不常见的实体
+- Second, web queries are short and lack information. web查询文本很短，可能只有4-5个单词，没有很多的semantic components
+- The third problem is label scarcity. 没有足够的针对web查询文本的标签数据
+
+作者先是利用web search的结果的title来增加query的语义：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911223831963.png"   style="zoom:30%;" />
+
+然后作者想办法获取不够准确的weakly-labeled data：
+
+- 人类标注的也有可能有很多错误，作者把人类标注的data也作为一类weakly-labeled data
+
+- 利用ChatGPT这类大模型进行初步NER标注，作者使用fixed CoT prompting方法；基于web query的返回结果的title来人工构造CoT：
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224040473.png"   style="zoom:30%;" />
+
+作者的strong-labeled data是指一小部分的人类专家标注的数据；为了增强利用这部分数据，作者使用了对抗数据增强的方法。原理是对某个data的微小的改动，不应该改变它对应的预测结果，也就是说对于数据点的邻居，模型应该给出一样的预测结果。这样增大最靠近决策边界的data point和决策边界的距离，让决策边界更加平滑，提升模型的鲁棒性[*Learning from rules generalizing labeled exemplars. ICLR 2020*]：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224452680.png"   style="zoom:30%;" />
+
+对于每个labeled data，生成它最难以被准确预测的邻居点：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224159401.png"   style="zoom:30%;" />
+
+最后，作者的NER model的训练流程：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911225016455.png"   style="zoom:50%;" />
+
+
+
+## Paraphrase NER
+
+When and how to paraphrase for named entity recognition?
+
+ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
+
+> While paraphrasing is a promising approach for data augmentation in classification tasks, its effect on named entity recognition (NER) is not investigated systematically due to the difficulty of **span-level label preservation**. In this paper, **we utilize simple strategies to annotate entity spans in generations and compare established and novel methods of paraphrasing in NLP such as back translation, specialized encoder-decoder models such as Pegasus, and GPT-3 variants for their effectiveness in improving downstream performance for NER** across different levels of gold annotations and paraphrasing strength on 5 datasets. We thoroughly explore the influence of paraphrasers, dynamics between paraphrasing strength and gold dataset size on the NER performance with visualizations and statistical testing. We find that the choice of the paraphraser greatly impacts NER performance, with one of the **larger GPT-3 variants exceedingly capable of generating high quality paraphrases, yielding statistically significant improvements in NER performance with increasing paraphrasing strength,** while other paraphrasers show more mixed results. Additionally, inline auto annotations generated by larger GPT-3 are strictly better than heuristic based annotations. We also find diminishing benefits of paraphrasing as gold annotations increase for most datasets. Furthermore, while most paraphrasers promote entity memorization in NER, the proposed GPT-3 configuration performs most favorably among the compared paraphrasers when tested on unseen entities, with memorization reducing further with paraphrasing strength. Finally, we explore mention replacement using GPT-3, which provides additional benefits over base paraphrasing for specific datasets.
+
+作者选择了5个不同领域的NER数据集。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171504576.png"   style="zoom:40%;" />
+
+作者先对比两个已有的Paraphrasers工具：
+
+- 基于Back-translation（BT）：For our experiments we use pre-trained English-German and German-English models (∼738M parameters) available from Huggingface model hub via Tiedemann and Thottingal (2020) and the model architecture used is BART (Lewis et al., 2019).
+- 基于PEGASUS：We use an off-the-shelf version of PEGASUS fine-tuned for paraphrasing released on Huggingface model hub. 3
+
+然后，作者利用两个GPT-3模型：`text-ada-001` (∼350M parameters), and `text-davinci-002` (∼175B parameters)。使用的temperature为0.8。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214754741.png"   style="zoom:40%;" />
+
+作者关注数据增强可能带来的一个问题Entity Memorization。即目前基于改写的数据增强方法，没有改变entity mention，生成的data中出现了entity的重复。因此作者想检查模型是不是直接记住了entity和它对应的label，而不是学会从feature推测label。
+
+如果是记忆，那么model意味着模型走了捷径shortcut learning [*Shortcut learning in deep neural networks. Nature 2020*]，那么此时model应该无法准确处理没有见过的entity。
+
+因此，作者又进行了在test set中，不同entity type里，没有在训练集里出现过的entity作为新的测试集unseen entity (UE) test sets。
+
+为了缓解entity memorization问题，作者提出了一种解决方法Mention replacement（MR）。那就是不要重复entity mention，用GPT生成新的entity mention，然后去替换生成句子中的entity mention：
+
+> In particular, for every entity mention in the gold set, we prompt GPT-3 DaVinci model to generate entity mentions that are similar to the gold entity mention, while also providing a phrase level definition of the entity type being replaced.
+
+使用到的prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223735026-20230917171504656.png"  style="zoom:40%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223753805-20230917171504707.png"   style="zoom:40%;" />
+
+作者选择了5个不同领域的NER数据集，微调distilbert-base-cased作为NER model。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171137150-20230917171504792.png"   style="zoom:40%;" />

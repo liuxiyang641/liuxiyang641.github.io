@@ -15,7 +15,7 @@ tags:
 
 人大，arXiv 2023.05，[代码](https://github.com/RUCAIBox/LLMSurvey)。
 
-> Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essentially a complex, intricate system of human expressions governed by grammatical rules. It poses a signiﬁcant challenge to develop capable artiﬁcial intelligence (AI) algorithms for comprehending and grasping a language. As a major approach, language modeling has been widely studied for language understanding and generation in the past two decades, evolving from statistical language models to neural language models. Recently, pre-trained language models (PLMs) have been proposed by pretraining Transformer models over large-scale corpora, showing strong capabilities in solving various natural language processing (NLP) tasks. Since the researchers have found that model scaling can lead to an improved model capacity, they further investigate the scaling effect by increasing the parameter scale to an even larger size. Interestingly, when the parameter scale exceeds a certain level, these enlarged language models not only achieve a signiﬁcant performance improvement, but also exhibit some special abilities (e.g., incontext learning) that are not present in small-scale language models (e.g., BERT). To discriminate the language models in different parameter scales, the research community has coined the term large language models (LLM) for the PLMs of signiﬁcant size (e.g., containing tens or hundreds of billions of parameters). Recently, the research on LLMs has been largely advanced by both academia and industry, and a remarkable progress is the launch of ChatGPT (a powerful AI chatbot developed based on LLMs), which has attracted widespread attention from society. The technical evolution of LLMs has been making an important impact on the entire AI community, which would revolutionize the way how we develop and use AI algorithms. Considering this rapid technical progress, in this survey, we review the recent advances of LLMs by introducing the background, key ﬁndings, and mainstream techniques. In particular, we focus on four major aspects of LLMs, namely pre-training, adaptation tuning, utilization, and capacity evaluation. Besides, we also summarize the available resources for developing LLMs and discuss the remaining issues for future directions. This survey provides an up-to-date review of the literature on LLMs, which can be a useful resource for both researchers and engineers.
+> Ever since the Turing Test was proposed in the 1950s, humans have explored the mastering of language intelligence by machine. Language is essentially a complex, intricate system of human expressions governed by grammatical rules. It poses a significant challenge to develop capable artificial intelligence (AI) algorithms for comprehending and grasping a language. As a major approach, language modeling has been widely studied for language understanding and generation in the past two decades, evolving from statistical language models to neural language models. Recently, pre-trained language models (PLMs) have been proposed by pretraining Transformer models over large-scale corpora, showing strong capabilities in solving various natural language processing (NLP) tasks. Since the researchers have found that model scaling can lead to an improved model capacity, they further investigate the scaling effect by increasing the parameter scale to an even larger size. Interestingly, when the parameter scale exceeds a certain level, these enlarged language models not only achieve a significant performance improvement, but also exhibit some special abilities (e.g., incontext learning) that are not present in small-scale language models (e.g., BERT). To discriminate the language models in different parameter scales, the research community has coined the term large language models (LLM) for the PLMs of significant size (e.g., containing tens or hundreds of billions of parameters). Recently, the research on LLMs has been largely advanced by both academia and industry, and a remarkable progress is the launch of ChatGPT (a powerful AI chatbot developed based on LLMs), which has attracted widespread attention from society. The technical evolution of LLMs has been making an important impact on the entire AI community, which would revolutionize the way how we develop and use AI algorithms. Considering this rapid technical progress, in this survey, we review the recent advances of LLMs by introducing the background, key findings, and mainstream techniques. In particular, we focus on four major aspects of LLMs, namely pre-training, adaptation tuning, utilization, and capacity evaluation. Furthermore, we also summarize the available resources for developing LLMs and discuss the remaining issues for future directions. This survey provides an up-to-date review of the literature on LLMs, which can be a useful resource for both researchers and engineers.
 
 <!--more-->
 
@@ -25,7 +25,7 @@ tags:
 
 语言建模language modeling（LM）是指能够生成词序列概率似然的技术手段，能够实现预测下一个或者确实的token。其对应模型的发展经历了四个阶段：
 
-1. Statistical language models (SLM). 根据固定范围的context来预测下一个词，比如n-gram models。
+1. Statistical language models (SLM). 根据固定范围的context来预测下一个词，比如n-gram models。需要注意下，这里的SLM的缩写，和某些论文中出现的Small Language Model是两个含义。
 2. Neural language models (NLM). 利用神经网络来预测word sequence probabilities。每一个word被建模为distributed representations [*A neural probabilistic language model 2003*]，最出名的有word2vec方法。
 3. Pre-trained language models (PLM). 先在语料上预训练，之后在具体任务上微调。早期的尝试包括ELMo（基于biLSTM），后续出现了BERT，GPT1,2（基于Transformer）等方法。
 4. Large language models (LLM). 简单的讲LLM就是large-scaled PLM，比如GPT-3，PaLM等。
@@ -67,10 +67,84 @@ scaling law是指随着模型大小，数据集大小以及计算次数等的增
 
 作者简要的介绍了GPT家族的发展过程。
 
+![image-20230820154803236](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230820154803236.png)
+
 1. Early Explorations. GPT-1和GPT-2。GPT-1（Generative Pre-Training）2017年提出，follow了Transformer的工作，使用Transformer的decoder部分进行单向的next word预测。GPT-2在2019年提出，参数量达到了1.5B，在更大的数据集上进行训练，通过把各类NLP任务建模为word prediction任务，实现无需训练的通用多任务学习器。
 2. Capacity Leap. GPT-3在2020年提出，是OpenAI的里程碑，参数量达到了175B。GPT-3不仅仅能够适用于很多NLP任务，还能够适用于很多复杂的需要推理的任务上。
-3. Capacity Enhancement. 对GPT-3能力的增强，主要包括代码预训练（Training on code data）和人类对齐（Human alignment）。通过加入代码数据，增强GPT-3的推理能力，代表工作是2021年7月提出的Codex。人类对齐是指从人类偏好中进行学习，代表工作是2022年1月提出的InstructGPT，利用了RLHF人类反馈强化学习（reinforcement learning from human feedback）。RLHF不仅能够提升LLM对于人类指令的理解，更能够用来缓解有害输出的生成（比如询问GPT怎么样制作爆炸物）。这些对于GPT-3的提升产生了GPT-3.5系列模型。
+3. Capacity Enhancement. 对GPT-3能力的增强，主要包括代码预训练（Training on code data）和人类对齐（Human alignment）。通过加入代码数据，增强GPT-3的推理能力，代表工作是2021年7月提出的Codex。人类对齐Human alignment是指从人类偏好中进行学习，代表工作是2022年1月提出的InstructGPT，利用了RLHF人类反馈强化学习（reinforcement learning from human feedback）。RLHF不仅能够提升LLM对于人类指令的理解，更能够用来缓解有害输出的生成（比如询问GPT怎么样制作爆炸物）。这些对于GPT-3的提升产生了GPT-3.5系列模型。
 4. The Milestones of Language Models. ChatGPT在2022年11月推出，ChatGPT和InstructGPT可以看做是双胞胎，只不过ChatGPT的预训练数据集中加入了对话数据，让ChatGPT格外擅长和人类交互。随后在2023年3月推出了多模态GPT-4。
+
+## 3. Resources of LLMs
+
+![image-20230821234601704](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230821234601704.png)
+
+### 3.1 Publicly Available Model Checkpoints or APIs
+
+目前可以获取的开源参数的模型：
+
+- Models with Tens of Billions of Parameters. 这个量级的LLM大致参数是在100B以下。作者推荐了以下几个可以考虑的模型：
+
+  - Flan-T5（11B version），可以用来研究指令微调的效果，它从指令训练task的数量、model size和加入CoT的数据三个方面进行了训练。
+  - CodeGen（11B version）：可以作为探究LLM生成代码的base。它还额外的引入了MTPB这个benchmark，包括了115个专家生成的编程问题。
+  - mT0（13B version）：可以作为多语言任务的base。
+  - PanGu-$\alpha$（largest public version 13B）：可以作为中文zero-shot或者few-shot任务的base。
+  - LLaMA（largest version 65B）：目前被应用研究最多的开源LLM，下面有具体的介绍。
+  - Falcon：通过更加精心准备的预训练数据达到更好效果的最新开源LLM。
+
+- Models with Hundreds of Billions of Parameters. 100B以上的LLM。这一级别的开源模型就比较少了，包括OPT，OPT-IML，BLOOM，BLOOMZ，GLM等。
+
+  - OPT（175B version）有个对应的加入了指令微调的版本OPT-IML。
+  - BLOOM（176B version）和BLOOMZ（176B version）主要可用于跨语言任务。
+  - GLM（130B version）：一个中英双语LLM。额外提供了一个很流行的更小size的中文模型ChatGLM2-6B（是之前ChatGLM-6B的升级版），其加入了量化、32K上下文size和快速推理等特征/技术。
+
+- LLaMA Model Family. 由Meta AI在2023年2月推出的开源LLM，可能是目前被改造应用最多的模型。
+
+  - Alpaca：是首个基于LLaMA-7B进行指令微调的模型。指令微调的数据是使用了52k个利用self-instruct基于`text-davinci-003`生成的指令。该指令微调数据集叫做Alpaca-52K，并且被后续的Alpaca-LoRA，Koala，BELLE等LLM使用。
+
+  - Vicuna：在LLaMA基础上加入了从ShareGPT平台上导出的用户对话数据。Vicuna是目前很多multimodal LLM常用的base language model，比如LLaVA，MiniGPT-4，InstructBLIP和PandaGPT。
+
+    ![image-20230821163623231](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230821163623231.png)
+
+### 3.2 Commonly Used Corpora
+
+常见的预训练LLM的数据来源：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230821172255121.png" style="zoom:45%;" />
+
+- Books：
+  - BookCorpus：小规模的书籍数据集，11000本书，GPT和GPT-2中使用了。
+  - Project Gutenberg：目前最大的公开书籍数据集，70000本书，在MT-NLP和LLaMA预训练中使用了。
+  - Books1和Books2：更大的book数据集，在GPT-3的训练中使用了，但是未开源。
+- CommonCrawl. CommonCrawl.是目前互联网中最大的开源爬取网页的数据集，千万亿字节/千T级别的数据。但是数据质量较低，有以下的数据清洗的版本：
+  - C4：Colossal Clean Crawled Corpus，有5个版本，en (806G), en.noclean (6T), realnewslike (36G), webtextlike (17G), and multilingual (38T)。
+  - CC-Stories (31G)：CommonCrawl.的一个子集，其中的内容是story-like的样式。可以通过CC-Stories-R访问其的复现版本。
+  - REALNEWS (120G)
+  - CC-News (76G)
+- Reddit Links. 从Reddit上爬取的数据
+  - WebText：包括了Reddit上点赞数/赞同数高的post，未开源。有个开源的替代OpenWebText。
+  - PushShift.io：一个不断更新的Reddit的dump数据集，还有提供了一套查询，总结等功能的接口。
+- Wikipedia. 维基百科，很多LLM都会使用的数据源。GPT-3，LaMDA，LLaMA都使用了。
+- Code：包括代码和代码相关的QA平台
+  - BigQuery：Google开源的大规模代码数据
+- Others
+  - Pile（800G）：book，code，website，paper等各类数据混杂的数据集。GPT-J (6B), CodeGen (16B) 和 Megatron-Turing NLG (530B)等LLM使用。
+  - ROOTS（1.61T）：各类小数据集的混合，59种语言，包括自然语言和编程语言。BLOOM预训练使用。
+
+### 3.3 Library Resource
+
+作者总结了几个可以用来训练LLM的库
+
+- Transformers：Hugging Face的开源仓库
+- DeepSpeed：Microsoft开发的优化库，可以用来训练LLM，比如MT-NLG，BLOOM就是基于此库
+- Megatron-LM：英伟达开发的用于训练LLM的库，支持各类并行算法、分布式训练等
+- JAX：Google提供的开发高性能ML算法的库
+- Colossal-AI：HPC-AI Tech提供的开发大规模AI模型的库，ColossalChat就是基于此开发
+- BMTrain：OpenBMB开发的支持分布式训练大规模参数量AI模型的库，目前可以通过它的ModelCenter直接访问Flan-T5、GLM。
+- FastMoE：支持训练MoE模型，基于PyTorch。
+
+## 4. Pre-Training
+
+
 
 ## 5. Adaption Tuning of LLMs
 

@@ -5,7 +5,7 @@
   "enabledCssSnippets": [
     "lxy-custom"
   ],
-  "cssTheme": "",
+  "cssTheme": "Minimal",
   "baseFontSizeAction": false,
   "accentColor": ""
 }

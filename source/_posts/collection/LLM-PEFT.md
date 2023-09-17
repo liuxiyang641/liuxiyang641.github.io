@@ -13,7 +13,7 @@ tags:
 
 # LLM的PEFT方法
 
-多模态参数高效微调PEFT(Parameter-Efficient Fine Tuning)方法调研。
+参数高效微调PEFT(Parameter-Efficient Fine Tuning)方法调研。
 
 <!--more-->
 

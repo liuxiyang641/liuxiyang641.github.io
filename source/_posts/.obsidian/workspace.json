@@ -4,19 +4,15 @@
     "type": "split",
     "children": [
       {
-        "id": "308a122356aaa7f7",
+        "id": "d349316a07a4755f",
         "type": "tabs",
         "children": [
           {
-            "id": "2bc7b4147499c9ce",
+            "id": "364660d1a2b15fd2",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "mmml/MM-Transformer-Survey.md",
-                "mode": "preview",
-                "source": false
-              }
+              "type": "empty",
+              "state": {}
             }
           }
         ],
@@ -57,12 +53,20 @@
                 "sortOrder": "alphabetical"
               }
             }
+          },
+          {
+            "id": "591e119af34a73c9",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {}
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 258.5
+    "width": 397
   },
   "right": {
     "id": "e4930ff9b3d212f0",
@@ -78,7 +82,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "mmml/MM-Transformer-Survey.md",
                 "collapseAll": true,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -94,9 +97,7 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "mmml/MM-Transformer-Survey.md"
-              }
+              "state": {}
             }
           },
           {
@@ -123,11 +124,19 @@
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "2bc7b4147499c9ce",
+  "active": "364660d1a2b15fd2",
   "lastOpenFiles": [
+    "llm/LLM-ICL-survey-pku.md",
+    "llm/Foundation-models.md",
+    "llm/LLM-instruction-tuning.md",
+    "llm/LLM-PEFT.md",
+    "llm/LLM-know-what-they-dont-know.md",
+    "llm/LLM-IE.md",
+    "llm/LLM-ICL.md",
+    "mmml/EEGA.md",
+    "mmml/MM-Transformer-Survey.md",
     "mmml/IKRL.md",
     "mmml/HVPNeT.md",
-    "mmml/MM-Transformer-Survey.md",
     "mmml/MNRE-dataset.md",
     "collection/paper-sentences-collection.md",
     "collection/KGE-Collection.md",

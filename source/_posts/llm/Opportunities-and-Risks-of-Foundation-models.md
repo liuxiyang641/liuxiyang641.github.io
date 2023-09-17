@@ -1,5 +1,5 @@
 ---
-title: Foundation-models
+title: Opportunities-and-Risks-of-Foundation-models
 notshow: false
 date: 2023-02-08 11:03:47
 categories:

@@ -18,7 +18,7 @@
   "mapWidth": "map-default-width",
   "chartWidth": "chart-default-width",
   "colorfulHeadings": true,
-  "colorfulFrame": false,
+  "colorfulFrame": true,
   "colorfulActiveStates": true,
   "trimNames": true,
   "labeledNav": false,
