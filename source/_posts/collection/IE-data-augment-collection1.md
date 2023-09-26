@@ -9,6 +9,7 @@ categories:
 tags:
 - IE
 - Data Augment
+- Collection
 ---
 
 基于数据增强策略的信息抽取论文合集。
@@ -211,6 +212,70 @@ ACL 2023 Findings，清华与阿里达摩，{% post_link nlp/ENTDA  [详细博�
 
 同样提升比较明显。
 
+## ACLM
+
+ACLM: A Selective-Denoising based Generative Data Augmentation Approach for Low-Resource Complex NER
+
+ACL 2023，University of Maryland，[代码](https://github.com/Sreyan88/ACLM)。
+
+> Complex Named Entity Recognition (NER) is the task of detecting linguistically complex named entities in low-context text. In this paper, we present ACLM (Attention-map aware keyword selection for Conditional Language Model fine-tuning), a novel data augmentation approach, based on conditional generation, to address the data scarcity problem in low-resource complex NER. **ACLM alleviates the context-entity mismatch issue, a problem existing NER data augmentation techniques suffer from and often generates incoherent augmentations by placing complex named entities in the wrong context.** ACLM builds on BART and is optimized on a novel text reconstruction or denoising task - we use selective masking (aided by attention maps) to retain the named entities and certain keywords in the input sentence that provide contextually relevant additional knowledge or hints about the named entities. Compared with other data augmentation strategies, ACLM can generate more diverse and coherent augmentations preserving the true word sense of complex entities in the sentence. We demonstrate the effectiveness of ACLM both qualitatively and quantitatively on monolingual, crosslingual, and multilingual complex NER across various low-resource settings. ACLM outperforms all our neural baselines by a significant margin (1%-36%). In addition, we demonstrate the application of ACLM to other domains that suffer from data scarcity (e.g., biomedical). In practice, ACLM generates more effective and factual augmentations for these domains than prior methods.
+
+作者主要希望通过数据增强来解决complex NER任务：
+
+> complex NER benchmarks like MultiCoNER (Malmasi et al., 2022) present several contemporary challenges in NER, including short low-context texts with emerging and semantically ambiguous complex entities (e.g., movie names in online comments) that reduce the performance of SOTA methods previously evaluated only on the existing NER benchmark datasets.
+
+作者认为之前SOTA的数据增强方法效果不好，因为对于complex NER任务来说，特定的entity要依赖于特定的context：
+
+> We first argue that certain types of complex NEs follow specific linguistic patterns and appear only in specific contexts (examples in Appendix 4), and augmentations that do not follow these patterns impede a NER model from learning such patterns effectively.
+
+方法：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230917235747765.png"   style="zoom:50%;" />
+
+作者分为四步来获取corrupted sentence（paper里叫做template）：
+
+1. Keyword Selection：使用attention map寻找对entity最有意义的context tokens，然后将top-$p$%的context tokens用看做是*keywords*。具体来说，使用XLM-RoBERTa-large进行在训练集上进行训练，然后使用它最后4层所有Transformer attention head的注意力权重作为选择依据。
+
+   - 低资源的情况下，attention map可能是比较noisy的，所有head相加比较robust
+
+   - BERT的低层更加关注其它token，而BERT的高层更加专注某个token
+
+   - 作者处理的entity可能有多个span或者1个span。对于1个span，每个token的attention score相加。对于有多个span的entity，每个span分别计算attention score获取重要tokens
+
+2. Selective Masking：对于非entity和非重要keywords的其它tokens，用$[MASK]$ token进行替换。mask后的句子作为template。
+
+3. Labeled Sequence Linearization：模仿MELM在entity token前后插入`<tag>`。
+
+4. Dynamic Masking：动态的选择一部分keywords的token也进行替换，增加多样性
+
+根据上面获取的corrupted sentence，微调mBart-50-large，让其重建原来的句子。
+
+在进行数据生成的时候，对于每个sentence，创建$R$个corrupt text，生成$R$个augmented training samples（实现中$R=5$）。
+
+为了进一步增加多样性，作者在数据生成阶段，提出了一个mixer方法，根据一定的概率选择另外一个语义相似的句子生成的template进行拼接，然后生成新的句子：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230918000541961.png"  style="zoom:40%;" />
+
+实现中基于multi-lingual Sentence-BERT的embedding计算不同句子之间的余弦相似度。
+
+最后对生成的数据进行后处理，对与和原sentence非常相似的生成sentence等数据，进行移除。
+
+作者在MultiCoNER上的实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230918000749168.png"   style="zoom:40%;" />
+
+在其它NER数据集（CoNLL 2003 (Tjong Kim Sang and De Meulder, 2003) (news), BC2GM (Smith et al., 2008) (bio-medical), NCBI Disease (Do˘gan et al., 2014) (bio-medical) and TDMSci (Hou et al., 2021) (science)）上的结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230918000837774.png"  style="zoom:40%;" />
+
+这个实验解释了一个重要的结论，在CoNLL2003这种entity和明确的数据集上，LwTR（替换相同entity type的其它entity）这种rule-based的方法反而取得了最好的结果。
+
+对于生成数据的定量评估：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230918001054785.png"   style="zoom:40%;" />
+
+其中，Diversity-E指生成sentence中新出现的实体，Diversity-N指新出现的非entity的tokens，Diversity-L指新生成的句子长度与原来句子的比值。ACLM更擅长引入更多新的context  tokens。
+
 ## Paraphrase NER
 
 When and how to paraphrase for named entity recognition?
@@ -252,9 +317,82 @@ ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171137150.png"   style="zoom:40%;" />
 
+## Data Generation for clinical NER and RE
 
+Does Synthetic Data Generation of LLMs Help Clinical Text Mining?
 
+arXiv 2023-04
 
+> Recent advancements in large language models (LLMs) have led to the development of highly potent models like OpenAI’s ChatGPT. These models have exhibited exceptional performance in a variety of tasks, such as question answering, essay composition, and code generation. However, their effectiveness in the healthcare sector remains uncertain. **In this study, we seek to investigate the potential of LLMs to aid in clinical text mining by examining their ability to extract structured information from unstructured healthcare texts, with a focus on biological named entity recognition and relation extraction.** However, our preliminary results indicate that employing LLMs directly for these tasks resulted in poor performance and raised privacy concerns associated with uploading patients’ information to the LLM API. To overcome these limitations, we propose a new training paradigm that involves generating a vast quantity of high-quality synthetic data with labels utilizing LLMs and fine-tuning a local model for the downstream task. Our method has resulted in significant improvements in the performance of downstream tasks, improving the F1-score from 23.37% to 63.99% for the named entity recognition task and from 75.86% to 83.59% for the relation extraction task. Furthermore, **generating data using LLMs can significantly reduce the time and effort required for data collection and labeling, as well as mitigate data privacy concerns.** In summary, the proposed framework presents a promising solution to enhance the applicability of LLM models to clinical text mining.
+
+作者先是尝试了ChatGPT在clinical NER和RE任务上，zero-shot ICL设置下和目前SOTA的差距：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170021648-20230925171040987.png"   style="zoom:50%;" />
+
+在clinical NER和RE上，作者发现效果并不好，这当然很正常，ChatGPT并不是专门为clinical domain训练的，而执行这一domain肯定需要大量的domain knowledge；同时直接调用LLM的API存在隐私泄露问题。因此作者尝试利用LLM去生成一系列的训练数据，而不是直接进行任务。用LLM生成数据去训练一个小模型，小模型可以直接本地部署，避免了隐私泄露问题。
+
+作者用prompt engineering创造合适的prompt：
+
+- 询问GPT “Provide five concise prompts or templates that can be used to generate data samples of [Task Descriptions].”
+- 用每个prompt生成10个句子，然后人工检查下句子质量，选择效果最好的prompt
+- 然后让GPT基于前面选择的最好的prompt，继续提供新的prompt。这一过程持续3遍
+
+作者找到的最合适的prompt（没有demonstrations）：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170508864-20230925171041027.png"   style="zoom:50%;" />
+
+NER任务是根据entity直接生成句子；RE任务是输入头尾实体，判断某个relation是否存在
+
+可视化结果显示，不控制的情况下，GPT自己发挥生成的句子和原来的sentence肯定有分布上的差别：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170635577.png"   style="zoom:50%;" />
+
+## $\mbox{S}^2$ynRE
+
+S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
+
+中科大，ACL 2023，[代码](https: //github.com/BenfengXu/S2ynRE)。
+
+> Current relation extraction methods suffer from the inadequacy of large-scale annotated data. While distant supervision alleviates the problem of data quantities, there still exists domain disparity in data qualities due to its reliance on domain-restrained knowledge bases. In this work, **we propose S2ynRE, a framework of two-stage Self-training with Synthetic data for Relation Extraction.** We ﬁrst leverage the capability of large language models to adapt to the target domain and automatically synthesize large quantities of coherent, realistic training data. We then propose an accompanied two-stage self-training algorithm that iteratively and alternately learns from synthetic and golden data together. We conduct comprehensive experiments and detailed ablations on popular relation extraction datasets to demonstrate the effectiveness of the proposed framework. Code is available at https://github.com/BenfengXu/S2ynRE.
+
+对于RE任务来说，高质量有标注的data获取很难，之前一种解决这个问题的思路是远监督distant supervision，尽管远监督获得了效果的提升，但是远监督的数据不能够保证和下游任务的schema、context分布特征等是相符的：
+
+> Although this line of methods have seen certain improvements, they still inevitably raise the concern that the distantly annotated data can vary considerably from downstream tasks both in target schema and in context distributions, thus may not be able to offer optimal transferability.
+
+换句话说，要获得理想的领域特征一致的远监督数据本身也可能是比较难的。
+
+因此，作者顺着最近的一些利用LLM生成text data的工作的思路，考虑使用LM来生成数据。作者的贡献主要有两点：
+
+- 利用GPT-3.5和finetuned GPT-2 Large去适应target domain distribution，然后生成无label的RE data
+- 提出了a two-stage self-training训练策略，更好的利用生成的无标注数据和原有标注数据
+
+作者的RE任务是给定头尾实体，预测relation。
+
+利用GPT-2 Large生成数据，首先按照language modeling的loss在训练集上微调；然后在推理阶段，输入`<bos>`开始进行采样生成new data。
+
+利用GPT-3生成数据，采用5-shot ICL，随机找demonstrations的策略：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926161739020.png"  style="zoom:50%;" />
+
+注意这里prompt对于结果的可控，只是通过一些指令性的表述，如`similar topic, domain and the same sub-obj format`。
+
+然后是如何利用生成的无标注data，一般的策略是self-training，即给无标注data伪标注然后和原有data混合，训练小模型，训练好的小模型再重新标注无标注data。
+
+作者认为这种直接将生成的数据加入到原有的数据方法前提是，要求生成的数据需要和原来的数据有一样的分布。
+
+相反，作者将无标注数据和有标注数据分开，先使用gold data训练多个teacher model，然后标注生成的data，注意是soft label；然后用一个新初始化的student model在带有soft label的生成数据上训练，更新参数；之后继续在gold data上训练，更新后的model重新标注生成的data；这样迭代式的训练：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162246951.png"   style="zoom:50%;" />
+
+对于实验结果具体可以参考原paper，这里提供几个值得记录的结果：
+
+作者使用BERT+Linear作为RE model。
+
+直接用GPT不一定能够超过finetuned LM来生成data，下面的结果没有找到是具体哪个dataset上的测试结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162817492.png"  style="zoom:50%;" />
+
+作者使用type-token ratio ([*Evaluating story generation systems using automated linguistic analyses. 2017*]; *Data augmentation using pre-trained transformer models. 2020*)来评估diversity。
 
 
 

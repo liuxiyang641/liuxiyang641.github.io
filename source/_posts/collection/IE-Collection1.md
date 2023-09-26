@@ -21,7 +21,7 @@ Learning In-context Learning for Named Entity Recognition，{% post_link nlp/Met
 
 ACL 2023，中科院，[代码](https:// github.com/chen700564/metaner-icl)。
 
-> Named entity recognition in real-world applications suffers from the diversity of entity types, the emergence of new entity types, and the lack of high-quality annotations. To address the above problems, this paper proposes an in-context learning-based NER approach, which can effectively inject in-context NER ability into PLMs and recognize entities of novel types on-the-fly using only a few demonstrative instances. Specifically, we model PLMs as a meta-function λ instruction, demonstrations, text .M 1 , and a new entity extractor can be implicitly constructed by applying new instruction and demonstrations to PLMs, i.e., (λ.M)(instruction, demonstrations) → F where F will be a new entity extractor, i.e., F: text → entities. To inject the above in-context NER ability into PLMs, we propose a meta-function pre-training algorithm, which pre-trains PLMs by comparing the (instruction, demonstration)-initialized extractor with a surrogate golden extractor. Experimental results on 4 few-shot NER datasets show that our method can effectively inject in-context NER ability into PLMs and significantly outperforms the PLMs+fine-tuning counterparts.
+> Named entity recognition in real-world applications suffers from the diversity of entity types, the emergence of new entity types, and the lack of high-quality annotations. To address the above problems, this paper proposes an in-context learning-based NER approach, which can effectively inject in-context NER ability into PLMs and recognize entities of novel types on-the-fly using only a few demonstrative instances. Specifically, we model PLMs as a meta-function $λ$ instruction, demonstrations, text .M 1 , and a new entity extractor can be implicitly constructed by applying new instruction and demonstrations to PLMs, i.e., $(λ.M)(instruction, demonstrations) \rightarrow F$ where $F$ will be a new entity extractor, i.e., $F: text \rightarrow entities$. To inject the above in-context NER ability into PLMs, we propose a meta-function pre-training algorithm, which pre-trains PLMs by comparing the (instruction, demonstration)-initialized extractor with a surrogate golden extractor. Experimental results on 4 few-shot NER datasets show that our method can effectively inject in-context NER ability into PLMs and significantly outperforms the PLMs+fine-tuning counterparts.
 
 作者提出了一种让小参数量的预训练语言模型学会针对NER任务的in-context learning的方法。
 
@@ -62,13 +62,13 @@ instruction $I$里包括了新的实体类型信息，text $T$包含了待抽取
 
 作者除了一般的信息抽取任务的形式，还提出了一种Pseudo Extraction Language Modeling Task。因为有实体标注的数据和没有实体标注数据之间的比例差距很大。因此作者想办法从一般的句子中也能够仿照NER任务构造出未标注来。比如：
 
-instruction="Target types:<type2>;<type14>"
+instruction=`Target types:<type2>;<type14>`
 
-demonstrations="Text: [MASK1] is cool and I really [MASK2] it [MASK3]. Entities: [MASK1] is <type2>. [MASK2] is <type14>"（原来的句子I think this movie is cool and I really like it very much）
+demonstrations=`Text: [MASK1] is cool and I really [MASK2] it [MASK3]. Entities: [MASK1] is <type2>. [MASK2] is <type14>`（原来的句子I think this movie is cool and I really like it very much）
 
-text=“Text: I do not like it.”
+text=`Text: I do not like it.`
 
-要预测的输出output是”like is <type14>“
+要预测的输出output是`like is <type14>`
 
 将语言mask建模和span-based NER任务进行了统一。
 
@@ -86,7 +86,7 @@ Good Examples Make A Faster Learner Simple Demonstration-based Learning for Low-
 
 南加州大学，ACL 2022，[代码](https://github.com/INK-USC/fewNER)。
 
-> Recent advances in prompt-based learning have shown strong results on few-shot text classiﬁcation by using cloze-style templates. Similar attempts have been made on named entity recognition (NER) which manually design templates to predict entity types for every text span in a sentence. However, such methods may suffer from error propagation induced by entity span detection, high cost due to enumeration of all possible text spans, and omission of inter-dependencies among token labels in a sentence. Here we present a simple demonstration-based learning method for NER, which lets the input be prefaced by task demonstrations for in-context learning. We perform a systematic study on demonstration strategy regarding what to include (entity examples, with or without surrounding context), how to select the examples, and what templates to use. Results on in-domain learning and domain adaptation show that the model’s performance in low-resource settings can be largely improved with a suitable demonstration strategy (e.g., 4-17% improvement on 25 train instances). We also find that good demonstration can save many labeled examples and consistency in demonstration contributes to better performance.
+> Recent advances in prompt-based learning have shown strong results on few-shot text classiﬁcation by using cloze-style templates. Similar attempts have been made on named entity recognition (NER) which manually design templates to predict entity types for every text span in a sentence. However, such methods may suffer from error propagation induced by entity span detection, high cost due to enumeration of all possible text spans, and omission of inter-dependencies among token labels in a sentence. Here **we present a simple demonstration-based learning method for NER, which lets the input be prefaced by task demonstrations for in-context learning.** We perform a systematic study on demonstration strategy regarding what to include (entity examples, with or without surrounding context), how to select the examples, and what templates to use. Results on in-domain learning and domain adaptation show that the model’s performance in low-resource settings can be largely improved with a suitable demonstration strategy (e.g., 4-17% improvement on 25 train instances). We also find that good demonstration can save many labeled examples and consistency in demonstration contributes to better performance.
 
 作者试了几种为NER任务设计的demonstrations检索和对应的模板构造方法，只不过是在bert-base上进行的实验。
 
@@ -99,7 +99,7 @@ Good Examples Make A Faster Learner Simple Demonstration-based Learning for Low-
 - Entity-oriented：就是以实体为核心进行检索，包括简单的3种方式：
   - random：每一类entity type中，从训练集所有的对应实体进行检索（动态的）
   - popular：每一类entity type中，选择出现次数最多top-k的对应实体（静态的）
-  - search：每一类entity type中，选择出现次数最多top-k的对应实体，grid search可能的实体组合，然后在验证集上找到效果最好哦的那种组合（静态的）
+  - search：每一类entity type中，选择出现次数最多top-k的对应实体，grid search可能的实体组合，然后在验证集上找到效果最好的那种组合（静态的）
 - Instance-oriented：以查询的当前句子为核心，进行检索，计算和其它训练集中句子的相似度，包括2种相似度计算方法：
   - SBERT：计算两个句子编码后CLS token embedding的余弦相似度（动态的）
   - BERTScore：两个句子不同token之间的相似度的和（动态的）
@@ -118,7 +118,7 @@ demonstration模板示例：
 
 ![image-20230613223525296](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230613223525296.png)
 
-效果最好的，就是在验证集上进行评估，选择保留context。只不过作者这里只利用到了相似度计算，没有像现有的上下文学习方法利用kNN去做检索。
+效果最好的，就是在验证集上进行评估，选择保留context。
 
 ## PromptNER
 
@@ -178,7 +178,7 @@ ACL 2023，浙大，[代码](https://github.com/ tricktreat/PromptNER)。
 
 个人认为这篇工作更大的意义在于，可以一次性prompt可以快速抽取entity：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829221510309.png"   style="zoom:30%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829221510309.png"   style="zoom:35%;" />
 
 ## TemplateNER
 
@@ -505,7 +505,7 @@ ACL Findings 2023，中科院与阿里达摩，[代码](https://github.com/Aliba
 
 作者提出的MetaRetriever基于T5-base，方法图：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230909225239718.png"   style="zoom:30%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230909225239718.png"   style="zoom:40%;" />
 
 作者直接使用了UIE中提出的Structured extraction language来建模各类IE任务。
 
@@ -519,13 +519,7 @@ ACL Findings 2023，中科院与阿里达摩，[代码](https://github.com/Aliba
 
 实验结果：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230909225937421.png"   style="zoom:30%;" />
-
-
-
-
-
-
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230909225937421.png"   style="zoom:40%;" />
 
 
 

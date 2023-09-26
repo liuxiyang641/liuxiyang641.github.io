@@ -979,3 +979,80 @@ ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
 作者选择了5个不同领域的NER数据集，微调distilbert-base-cased作为NER model。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171137150-20230917171504792.png"   style="zoom:40%;" />
+
+## Data Generation for clinical NER and RE
+
+Does Synthetic Data Generation of LLMs Help Clinical Text Mining?
+
+arXiv 2023-04
+
+> Recent advancements in large language models (LLMs) have led to the development of highly potent models like OpenAI’s ChatGPT. These models have exhibited exceptional performance in a variety of tasks, such as question answering, essay composition, and code generation. However, their effectiveness in the healthcare sector remains uncertain. **In this study, we seek to investigate the potential of LLMs to aid in clinical text mining by examining their ability to extract structured information from unstructured healthcare texts, with a focus on biological named entity recognition and relation extraction.** However, our preliminary results indicate that employing LLMs directly for these tasks resulted in poor performance and raised privacy concerns associated with uploading patients’ information to the LLM API. To overcome these limitations, we propose a new training paradigm that involves generating a vast quantity of high-quality synthetic data with labels utilizing LLMs and fine-tuning a local model for the downstream task. Our method has resulted in significant improvements in the performance of downstream tasks, improving the F1-score from 23.37% to 63.99% for the named entity recognition task and from 75.86% to 83.59% for the relation extraction task. Furthermore, **generating data using LLMs can significantly reduce the time and effort required for data collection and labeling, as well as mitigate data privacy concerns.** In summary, the proposed framework presents a promising solution to enhance the applicability of LLM models to clinical text mining.
+
+作者先是尝试了ChatGPT在clinical NER和RE任务上，zero-shot ICL设置下和目前SOTA的差距：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170021648.png"   style="zoom:50%;" />
+
+在clinical NER和RE上，作者发现效果并不好，这当然很正常，ChatGPT并不是专门为clinical domain训练的，而执行这一domain肯定需要大量的domain knowledge；同时直接调用LLM的API存在隐私泄露问题。因此作者尝试利用LLM去生成一系列的训练数据，而不是直接进行任务。用LLM生成数据去训练一个小模型，小模型可以直接本地部署，避免了隐私泄露问题。
+
+作者用prompt engineering创造合适的prompt：
+
+- 询问GPT “Provide five concise prompts or templates that can be used to generate data samples of [Task Descriptions].”
+- 用每个prompt生成10个句子，然后人工检查下句子质量，选择效果最好的prompt
+- 然后让GPT基于前面选择的最好的prompt，继续提供新的prompt。这一过程持续3遍
+
+作者找到的最合适的prompt（没有demonstrations）：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170508864.png"   style="zoom:50%;" />
+
+NER任务是根据entity直接生成句子；RE任务是输入头尾实体，判断某个relation是否存在
+
+可视化结果显示，不控制的情况下，GPT自己发挥生成的句子和原来的sentence肯定有分布上的差别：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170635577.png"   style="zoom:50%;" />
+
+## $\mbox{S}^2$ynRE
+
+S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
+
+中科大，ACL 2023，[代码](https: //github.com/BenfengXu/S2ynRE)。
+
+> Current relation extraction methods suffer from the inadequacy of large-scale annotated data. While distant supervision alleviates the problem of data quantities, there still exists domain disparity in data qualities due to its reliance on domain-restrained knowledge bases. In this work, **we propose S2ynRE, a framework of two-stage Self-training with Synthetic data for Relation Extraction.** We ﬁrst leverage the capability of large language models to adapt to the target domain and automatically synthesize large quantities of coherent, realistic training data. We then propose an accompanied two-stage self-training algorithm that iteratively and alternately learns from synthetic and golden data together. We conduct comprehensive experiments and detailed ablations on popular relation extraction datasets to demonstrate the effectiveness of the proposed framework. Code is available at https: //github.com/BenfengXu/S2ynRE.
+
+对于RE任务来说，高质量有标注的data获取很难，之前一种解决这个问题的思路是远监督distant supervision，尽管远监督获得了效果的提升，但是远监督的数据不能够保证和下游任务的schema、context分布特征等是相符的：
+
+> Although this line of methods have seen certain improvements, they still inevitably raise the concern that the distantly annotated data can vary considerably from downstream tasks both in target schema and in context distributions, thus may not be able to offer optimal transferability.
+
+换句话说，要获得理想的领域特征一致的远监督数据本身也可能是比较难的。
+
+因此，作者顺着最近的一些利用LLM生成text data的工作的思路，考虑使用LM来生成数据。作者的贡献主要有两点：
+
+- 利用GPT-3.5和finetuned GPT-2 Large去适应target domain distribution，然后生成无label的RE data
+- 提出了a two-stage self-training训练策略，更好的利用生成的无标注数据和原有标注数据
+
+作者的RE任务是给定头尾实体，预测relation。
+
+利用GPT-2 Large生成数据，首先按照language modeling的loss在训练集上微调；然后在推理阶段，输入`<bos>`开始进行采样生成new data。
+
+利用GPT-3生成数据，采用5-shot ICL，随机找demonstrations的策略：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926161739020-20230926163117308.png"  style="zoom:50%;" />
+
+注意这里prompt对于结果的可控，只是通过一些指令性的表述，如`similar topic, domain and the same sub-obj format`。
+
+然后是如何利用生成的无标注data，一般的策略是self-training，即给无标注data伪标注然后和原有data混合，训练小模型，训练好的小模型再重新标注无标注data。
+
+作者认为这种直接将生成的数据加入到原有的数据方法前提是，要求生成的数据需要和原来的数据有一样的分布。
+
+相反，作者将无标注数据和有标注数据分开，先使用gold data训练多个teacher model，然后标注生成的data，注意是soft label；然后用一个新初始化的student model在带有soft label的生成数据上训练，更新参数；之后继续在gold data上训练，更新后的model重新标注生成的data；这样迭代式的训练：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162246951-20230926163117427.png"   style="zoom:50%;" />
+
+对于实验结果具体可以参考原paper，这里提供几个值得记录的结果：
+
+作者使用BERT+Linear作为RE model。
+
+直接用GPT不一定能够超过finetuned LM来生成data，下面的结果没有找到是具体哪个dataset上的测试结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162817492-20230926163117473.png"  style="zoom:50%;" />
+
+作者使用type-token ratio ([*Evaluating story generation systems using automated linguistic analyses. 2017*]; *Data augmentation using pre-trained transformer models. 2020*)来评估diversity。

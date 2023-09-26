@@ -30,7 +30,7 @@ relation extraction（RE）是预测一个句子中两个命名实体之间的�
 
 比如在下面的图中，如果只有文本，那么可能会判断出来JFK和Obama和Harvard的关系是residence；但是如果能够识别图像中的信息，比如校园、学位帽等，可以判断出来JFK和Obama和Harvard的关系应该是graduated_at。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png"   style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png"   style="zoom:40%;" />
 
 但是目前并没有这样满足文本+图像的数据集存在，因此作者就希望能够解决这一点，主要贡献如下：
 
