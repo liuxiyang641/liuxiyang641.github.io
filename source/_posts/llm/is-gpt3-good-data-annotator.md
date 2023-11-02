@@ -77,7 +77,7 @@ PGDA方法用到的unlabeled data是原始数据集中的样例移除人工标�
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905164325630.png"   style="zoom:40%;" /> <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905164203625.png" style="zoom:40%;" />
 
-PGDG生成方法，第一步让GPT生成特定relation的head/tail entity；第二步让GPT根据head/tail entity去创造包含这两个实体的sentence：
+PGDG生成方法，第一步让GPT生成特定relation的head/tail entity；第二步让GPT根据head/tail entity去创造包含这两个实体的sentence；从论文描述中看，应该是随机找的demonstrations。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230905164544743.png"   style="zoom:30%;" />
 

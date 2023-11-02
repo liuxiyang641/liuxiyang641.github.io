@@ -11,7 +11,7 @@ tags:
   - IE
 ---
 
-# 基于LLM的Information Extraction1
+# 基于LLM的Information Extraction 1
 
 基于LLM的信息抽取工作总结合集1。
 
@@ -121,9 +121,7 @@ Zero-Shot Information Extraction via Chatting with ChatGPT
 
 ## CodeIE
 
-CodeIE: Large Code Generation Models are Better Few-Shot Information Extractors
-
-复旦，arxiv 2023.05，作者评论说接收至ACL 2023，[代码](https://github.com/dasepli/CodeIE)。
+CodeIE: Large Code Generation Models are Better Few-Shot Information Extractors. 复旦，ACL 2023，[代码](https://github.com/dasepli/CodeIE)。
 
 > Large language models (LLMs) pre-trained on massive corpora have demonstrated impressive few-shot learning ability on many NLP tasks. A common practice is to recast the task into a text-to-text format such that generative LLMs of natural language (NL-LLMs) like GPT-3 can be prompted to solve it. However, it is non-trivial to perform information extraction (IE) tasks with NL-LLMs since the output of the IE task is usually structured and therefore is hard to be converted into plain text. In this paper, we propose to recast the structured output in the form of code instead of natural language and utilize generative LLMs of code (Code-LLMs) such as Codex to perform IE tasks, in particular, named entity recognition and relation extraction. In contrast to NL-LLMs, **we show that Code-LLMs can be well-aligned with these IE tasks by designing code-style prompts and formulating these IE tasks as code generation tasks.** Experiment results on seven benchmarks show that our method consistently outperforms fine-tuning moderate-size pre-trained models specially designed for IE tasks (e.g., UIE) and prompting NL-LLMs under few-shot settings. We further conduct a series of in-depth analyses to demonstrate the merits of leveraging Code-LLMs for IE tasks.
 
@@ -137,7 +135,7 @@ motivation：
 
 ![image-20230516223400913](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230516223400913.png)
 
-主要是针对few-shot IE任务，加入了几个demonstration。定义的prompt是python的function格式，让Codex去补全剩下的代码。作者也试验了其它几个比如使用class init函数等，发现这样子效果最好。
+主要是针对few-shot IE任务，加入了几个demonstration。固定的为每个entity/relation类型随机找k个样例作为demonstrations。定义的prompt是python的function格式，让Codex去补全剩下的代码。作者也试验了其它几个比如使用class init函数等，发现这样子效果最好。
 
 作者的实验结果：
 
@@ -153,7 +151,7 @@ Code4Struct: Code Generation for Few-Shot Event Structure Prediction
 
 ACL 2023, [代码](https://github.com/xingyaoww/code4struct)。
 
-> Large Language Model (LLM) trained on a mixture of text and code has demonstrated impressive capability in translating natural language (NL) into structured code. We observe that semantic structures can be conveniently translated into code and propose C ODE 4S TRUCT to leverage such text-tostructure translation capability to tackle structured prediction tasks. As a case study, **we formulate Event Argument Extraction (EAE) as converting text into event-argument structures that can be represented as a class object using code.** This alignment between structures and code enables us to take advantage of Programming Language (PL) features such as inheritance 1 and type annotation 2 to introduce external knowledge or add constraints. We show that, with sufficient in-context examples, formulating EAE as a code generation problem is advantageous over using variants of text-based prompts. Despite only using 20 training event instances for each event type, Code4Struct is comparable to supervised models trained on 4,202 instances and outperforms current state-of-the-art (SOTA) trained on 20-shot data by 29.5% absolute F1. By leveraging the inheritance feature of PL, Code4Struct can use 10-shot training data from a sibling event type to predict arguments for zero-resource event types and outperforms the zero-shot baseline by 12% absolute F1.
+> Large Language Model (LLM) trained on a mixture of text and code has demonstrated impressive capability in translating natural language (NL) into structured code. We observe that semantic structures can be conveniently translated into code and propose CODE4STRUCT to leverage such text-tostructure translation capability to tackle structured prediction tasks. As a case study, **we formulate Event Argument Extraction (EAE) as converting text into event-argument structures that can be represented as a class object using code.** This alignment between structures and code enables us to take advantage of Programming Language (PL) features such as inheritance 1 and type annotation 2 to introduce external knowledge or add constraints. We show that, with sufficient in-context examples, formulating EAE as a code generation problem is advantageous over using variants of text-based prompts. Despite only using 20 training event instances for each event type, Code4Struct is comparable to supervised models trained on 4,202 instances and outperforms current state-of-the-art (SOTA) trained on 20-shot data by 29.5% absolute F1. By leveraging the inheritance feature of PL, Code4Struct can use 10-shot training data from a sibling event type to predict arguments for zero-resource event types and outperforms the zero-shot baseline by 12% absolute F1.
 
 作者提出把EE抽取任务转化为代码的形式，一方面代码语言天然的能够描述复杂的事件本体，一方面在zero-shot设置下，代码生成的结果能够更加严格的遵循prompt的规定。
 
@@ -164,6 +162,8 @@ EAE抽取和python代码对应的表格：
 方法图：
 
 ![image-20230627155624222](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230627155624222.png)
+
+固定的为每个事件类型找出现频率最多的k个event作为demonstrations。
 
 code-prompt也是可以用自然语言的形式进行描述的，只不过更加的繁琐，并且难以在zero-shot设置下保证模型输出是满足要求的：
 
@@ -179,43 +179,7 @@ code-prompt也是可以用自然语言的形式进行描述的，只不过更加
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230627160039905.png"   style="zoom:50%;" />
 
-## SynthIE
 
-Exploiting Asymmetry for Synthetic Training Data Generation: SynthIE and the Case of Information Extraction
-
-arXiv 2023.03，[代码](https://github.com/epfl-dlab/SynthIE)。
-
-使用LLM模型生成更多的IE任务训练数据，从而进一步提升模型性能。
-
-> Large language models (LLMs) show great potential for synthetic data generation. This work shows that useful data can be synthetically generated even for tasks that cannot be solved directly by the LLM: we show that, for problems with structured outputs, it is possible to prompt an LLM to perform the task in the opposite direction, to generate plausible text for the target structure. Leveraging the asymmetry in task difficulty makes it possible to produce large-scale, high-quality data for complex tasks. We demonstrate the effectiveness of this approach on closed information extraction, where collecting groundtruth data is challenging, and no satisfactory dataset exists to date. We synthetically generate a dataset of 1.8M data points, demonstrate its superior quality compared to existing datasets in a human evaluation and use it to finetune small models (220M and 770M parameters). The models we introduce, SynthIE, outperform existing baselines of comparable size with a substantial gap of 57 and 79 absolute points in micro and macro F1, respectively. Code, data, and models are available at https://github.com/epfl-dlab/SynthIE.
-
-motivation:
-
-对于LLM模型来说，存在一些比较hard的task，直接利用LLM模型可能无法很好的直接解决，很多这样的NLP任务是要求输入自然语言的文本，输出格式化结果。作者认为，对于LLM模型来说，输入自然语言，获得结构化输出比较难，但是反过来输入结构化输入，输出对应的自然语言描述相对简单。这就是本文讨论的LLM的不对称性：
-
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230517173725283.png"   style="zoom:30%;" />
-
-作者认为IE任务对于LLM来说就是这样的hard task，IE任务数据构造需要大量的人工，另外构建的质量也不一定很高。比如根据评估，IE任务下最大的数据集REBEL文本中70%的信息没有被抽取到，45%的三元组实际上没有在文本中出现。因此，作者就尝试利用LLM模型生成训练数据，而不是直接执行训练任务，下面是流程图：
-
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230517173826523.png" style="zoom:40%;" />
-
-核心是两步，第一步是采样用来生成文本的三元组集合，在这一步作者核心考虑是怎么样保证三元组是连续的，也就是怎么样让三元组集合是常常在文本中一起出现的。作者通过在Wikidata knowledge graph上进行随机游走采样保证三元组之间存在关联。
-
-其次还要考虑均匀度和覆盖度，让很少出现的实体或关系也能够被采样到。作者在随机游走K轮后，给从未被采样的entity更高的概率，已经被采样过的entity更低的概率。
-
-第二步是根据三元组集合生成对应的文本。下面是一个示例：
-
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518173205557.png"   style="zoom:50%;" />
-
-作者使用的是text-davinci-003和code-davinci-002，生成了两个对应的数据集SynthIE-Text和SynthIE-Code。一个示例如下：
-
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518173251020.png"   style="zoom:20%;" />
-
-为了评估生成数据的结果，作者除了人工评估外，还使用人工生成的训练数据加入到原来的数据集中提升之前方法的效果：
-
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518171257333.png"  style="zoom:30%;" />
-
-不过个人感觉作者的实现提升效果不明显，而且随机偏差太大。
 
 ## ChatGPT for KG
 
@@ -254,30 +218,6 @@ arXiv 2023.05，新加坡国立大学（截止05/18日还只能看到不太完�
 ![image-20230518111407753](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518111407753.png)
 
 从这里可以体会下LLM的优点，作者的两个阶段相当于是输入不同的小任务，对于LLM模型来说没有区别，它可以直接执行这两个任务。相比起来，传统的模型更加specific，很难达到这样的泛化性，通过集成几个不同的小任务提升大任务的效果，而且不需要分别训练模型。（上面的工作思想核心应该说出是boost？）。
-
-## UnleashLLM
-
-How to Unleash the Power of Large Language Models for Few-shot Relation Extraction?
-
-浙大zjunlp，arXiv 2023.05，[代码](https://github.com/zjunlp/ DeepKE/tree/main/example/llm)。
-
-> Scaling language models have revolutionized widespread NLP tasks, yet little comprehensively explored few-shot relation extraction with large language models. In this paper, we investigate principal methodologies, incontext learning and data generation, for fewshot relation extraction via GPT-3.5 through exhaustive experiments. To enhance few-shot performance, we further propose task-related instructions and schema-constrained data generation. We observe that in-context learning can achieve performance on par with previous prompt learning approaches, and data generation with the large language model can boost previous solutions to obtain new state-of-the-art few-shot results on four widely-studied relation extraction datasets. We hope our work can inspire future research for the capabilities of large language models in few-shot relation extraction.
-
-作者探究了如何利用LLM模型去执行few shot RE任务，主要是两个不同的角度：
-
-- 使用in-context learning让LLM直接进行RE
-- 利用LLM生成训练数据，提升之前基于SLM的few-shot方法性能
-
-下面是方法图：
-
-![image-20230518225716044](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518225716044.png)
-
-作者实现是基于text-davinci-003，有以下细节：
-
-- prompt时加入实体类型和任务描述一般会提升LLM的RE效果。受限于输入长度限制，作者主要是进行one-shot的任务。
-- 进行数据生成时，作者是以few-shot的样例作为demos输入来获得更多的数据，然后与原来的训练数据一起训练基于SLM的之前模型。
-
-![image-20230518230345906](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230518230345906.png)
 
 ## CodeKGC
 
@@ -397,11 +337,13 @@ EMNLP 2022，MIT，[代码](https://huggingface.co/datasets/mitclinicalml/clinic
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230520154610827.png"   style="zoom:30%;" />
 
+使用`text-davinci-edit-001`作为实验对象。
+
 ## GPT-3 for Biomedical IE
 
 Thinking about GPT-3 In-Context Learning for Biomedical IE? Think Again
 
-EMNLP 2022 Findings，俄亥俄州立大学，[代码](https://github. com/dki-lab/few-shot-bioIE)。
+EMNLP 2022 Findings，俄亥俄州立大学，[代码](https://github.com/dki-lab/few-shot-bioIE)。
 
 > Large pre-trained language models (PLMs) such as GPT-3 have shown strong in-context learning capabilities, which are highly appealing for domains such as biomedicine that feature high and diverse demands of language technologies but also high data annotation costs. In this paper, **we present the first systematic and comprehensive study to compare the few-shot performance of GPT-3 in-context learning with fine-tuning smaller (i.e., BERT-sized) PLMs on two representative biomedical information extraction (IE) tasks: named entity recognition and relation extraction.** We follow the true few-shot setting (Perez et al., 2021) to avoid overestimating models’ few-shot performance by model selection over a large validation set. We also optimize GPT-3’s performance with known techniques such as contextual calibration and dynamic in-context example retrieval. However, **our results show that GPT-3 still significantly underperforms compared to simply fine-tuning a smaller PLM. In addition, GPT-3 in-context learning also yields smaller gains in accuracy when more training data becomes available.** More in-depth analyses further reveal issues of in-context learning that may be detrimental to IE tasks in general. Given the high cost of experimenting with GPT-3, we hope our study provides helpful guidance for biomedical researchers and practitioners towards more practical solutions such as fine-tuning small PLMs before better in-context learning is available for biomedical IE.
 
@@ -412,6 +354,11 @@ EMNLP 2022 Findings，俄亥俄州立大学，[代码](https://github. com/dki-l
 ![image-20230520164636198](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230520164636198.png)
 
 作者的方法主要是使用ICL技术，为了能够选择和当前样例相近的demos，作者基于RoBERTa-large作为编码器，使用kNN方法从100个固定的训练集样例集合中动态选择。NER最多选择10个样例，RE最多选择5个样例。
+
+额外的两个实现细节：
+
+- Logit Biases：调用OpenAI API的*logit bias*参数，给所有出现在原始句子中的tokens、作者选择的chosen separator和newline token增大概率。选择的logit bias值是$10$。
+- Contextual Calibration：作者在前期实验里发现，选定了一组demonstrations后，不管test query是什么，这组demonstrations都有对于某个特定label的偏好bias。为了解决这一点，作者对于RE任务，采用了Contextual calibrating技术[*Calibrate Before Use: Improving Few-shot Performance of Language Models. ICML 2021*]。也就是用特殊的NULL token `N/A` 替换句子和头尾实体，得到null prompt输入LLM，获得其对于label的原始偏好分布，用其来更新RE抽取的分布。
 
 实验结果：
 
@@ -445,11 +392,9 @@ arXiv 2023.03，哈工大-深圳。
 
 ## Wadhwa et al.
 
-Revisiting Relation Extraction in the era of Large Language Models
+Revisiting Relation Extraction in the era of Large Language Models. Northeastern University，ACL 2023.
 
-Northeastern University，ACL 2023。
-
-> Relation extraction (RE) is the core NLP task of inferring semantic relationships between entities from text. Standard supervised RE techniques entail training modules to tag tokens comprising entity spans and then predict the relationship between them. Recent work has instead treated the problem as a sequence-tosequence task, linearizing relations between entities as target strings to be generated conditioned on the input. Here we push the limits of this approach, using larger language models (GPT-3 and Flan-T5 large) than considered in prior work and evaluating their performance on standard RE tasks under varying levels of supervision. We address issues inherent to evaluating generative approaches to RE by doing human evaluations, in lieu of relying on exact matching. Under this refined evaluation, we find that: (1) Few-shot prompting with GPT-3 achieves near SOTA performance, i.e., roughly equivalent to existing fully supervised models; (2) Flan-T5 is not as capable in the few-shot setting, but supervising and fine-tuning it with Chain-of-Thought (CoT) style explanations (generated via GPT3) yields SOTA results. We release this model as a new baseline for RE tasks.
+> Relation extraction (RE) is the core NLP task of inferring semantic relationships between entities from text. Standard supervised RE techniques entail training modules to tag tokens comprising entity spans and then predict the relationship between them. Recent work has instead treated the problem as a sequence-to-sequence task, linearizing relations between entities as target strings to be generated conditioned on the input. **Here we push the limits of this approach, using larger language models (GPT-3 and Flan-T5 large) than considered in prior work and evaluating their performance on standard RE tasks under varying levels of supervision.** We address issues inherent to evaluating generative approaches to RE by doing human evaluations, in lieu of relying on exact matching. Under this refined evaluation, we find that: (1) Few-shot prompting with GPT-3 achieves near SOTA performance, i.e., roughly equivalent to existing fully supervised models; (2) Flan-T5 is not as capable in the few-shot setting, but supervising and fine-tuning it with Chain-of-Thought (CoT) style explanations (generated via GPT3) yields SOTA results. We release this model as a new baseline for RE tasks.
 
 作者这篇论文主要做了两个工作：
 
@@ -462,7 +407,7 @@ Northeastern University，ACL 2023。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230524194429292.png"   style="zoom:40%;" />
 
-在测试的时候会随机采样12个examples作为demonstrations。然后作者发现GPT-3会产生和输入不一致的输出relation，但是这些relation让人工去评估的话又会感觉在语义上是一致的。因此作者又人工重新评估了所有的输出结果（通过在Amazon Mechanical Turk平台上众包）。数据集的分布如下所示，ADE这个数据集是用10-fold交叉验证来进行评估。除NYT外，其它两个数据集测试量挺小的。
+在测试的时候会随机采样12个examples作为固定的demonstrations。然后作者发现GPT-3会产生和输入不一致的输出relation，但是这些relation让人工去评估的话又会感觉在语义上是一致的。因此作者又人工重新评估了所有的输出结果（通过在Amazon Mechanical Turk平台上众包）。数据集的分布如下所示，ADE这个数据集是用10-fold交叉验证来进行评估。除NYT外，其它两个数据集测试量挺小的。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230524194748501.png"   style="zoom:40%;" />
 
@@ -474,15 +419,15 @@ Northeastern University，ACL 2023。
 
 作者进一步提出，可以使用GPT-3自动生成的解释作为CoT来进一步引导模型微调。作者先让GPT-3生成解释，然后用这些生成的解释输入到Flan-T5-large（760M），随后进行微调进一步可以提升Flan-T5-large的性能。下面是方法图：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230524200126966.png"   style="zoom:30%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230524200126966.png"   style="zoom:40%;" />
 
 作者在论文里把Flan-T5-large也叫做是LLM，个人认为不合适。
 
 ## QA4RE
 
-俄亥俄州立大学，arXiv 2023.05，作者评论是接收至ACL 2023 findings。[代码](https://github.com/OSU-NLP-Group/QA4RE)。
+Aligning Instruction Tasks Unlocks Large Language Models as Zero-Shot Relation Extractors. 俄亥俄州立大学，ACL 2023 Findings。[代码](https://github.com/OSU-NLP-Group/QA4RE)。
 
-> Recent work has shown that fine-tuning large language models (LLMs) on large-scale instruction-following datasets substantially improves their performance on a wide range of NLP tasks, especially in the zero-shot setting. However, even advanced instructiontuned LLMs still fail to outperform small LMs on relation extraction (RE), a fundamental information extraction task. We hypothesize that instruction-tuning has been unable to elicit strong RE capabilities in LLMs due to RE’s low incidence in instruction-tuning datasets, making up less than 1% of all tasks (Wang et al., 2022). To address this limitation, **we propose QA4RE, a framework that aligns RE with question answering (QA), a predominant task in instruction-tuning datasets.** Comprehensive zero-shot RE experiments over four datasets with two series of instruction-tuned LLMs (six LLMs in total) demonstrate that our QA4RE framework consistently improves LLM performance, strongly verifying our hypothesis and enabling LLMs to outperform strong zero-shot baselines by a large margin. Additionally, we provide thorough experiments and discussions to show the robustness, few-shot effectiveness, and strong transferability of our QA4RE framework. This work illustrates a promising way of adapting LLMs to challenging and underrepresented tasks by aligning these tasks with more common instruction-tuning tasks like QA.
+> Recent work has shown that fine-tuning large language models (LLMs) on large-scale instruction-following datasets substantially improves their performance on a wide range of NLP tasks, especially in the zero-shot setting. However, even advanced instruction-tuned LLMs still fail to outperform small LMs on relation extraction (RE), a fundamental information extraction task. We hypothesize that instruction-tuning has been unable to elicit strong RE capabilities in LLMs due to RE’s low incidence in instruction-tuning datasets, making up less than 1% of all tasks (Wang et al., 2022). To address this limitation, **we propose QA4RE, a framework that aligns RE with question answering (QA), a predominant task in instruction-tuning datasets.** Comprehensive zero-shot RE experiments over four datasets with two series of instruction-tuned LLMs (six LLMs in total) demonstrate that our QA4RE framework consistently improves LLM performance, strongly verifying our hypothesis and enabling LLMs to outperform strong zero-shot baselines by a large margin. Additionally, we provide thorough experiments and discussions to show the robustness, few-shot effectiveness, and strong transferability of our QA4RE framework. This work illustrates a promising way of adapting LLMs to challenging and underrepresented tasks by aligning these tasks with more common instruction-tuning tasks like QA.
 
 作者这篇工作的思想很简单，就是把relation选择转化为multi-choice options选择的QA问题。类似的做法在filter-then-rerank里有实现。
 
@@ -498,7 +443,7 @@ Northeastern University，ACL 2023。
 
 - 使用SuRE方法[*Summarization as indirect supervision for relation extraction*]中提出的relation template来构造模板
 
-- 使用text-davinci-003和FLAN-T5-XXLarge作为基座LLM
+- 使用`text-davinci-003`和`FLAN-T5-XXLarge`作为基座LLM
 
 - 对于prompt engineering，作者使用text-davinci-002在TACRED的dev set上选择250个样例进行评估。然后对所有的测试数据集使用相同的prompt格式。以关系$org:top\_members/employees$为例，作者进行了四种模板的尝试（这四种模板也是前人的工作）：
 
@@ -625,13 +570,13 @@ Prompting Language Models for Linguistic Structure
 
 ACL 2023，华盛顿大学
 
-> Although pretrained language models (PLMs) can be prompted to perform a wide range of language tasks, it remains an open question how much this ability comes from generalizable linguistic understanding versus surface-level lexical patterns. To test this, we present a structured prompting approach for linguistic structured prediction tasks, allowing us to perform zero- and few-shot sequence tagging with autoregressive PLMs. We evaluate this approach on part-of-speech tagging, named entity recognition, and sentence chunking, demonstrating strong few-shot performance in all cases. We also find that while PLMs contain significant prior knowledge of task labels due to task leakage into the pre-training corpus, structured prompting can also retrieve linguistic structure with arbitrary labels. These findings indicate that the in-context learning ability and linguistic knowledge of PLMs generalizes beyond memorization of their training data.
+> Although pretrained language models (PLMs) can be prompted to perform a wide range of language tasks, **it remains an open question how much this ability comes from generalizable linguistic understanding versus surface-level lexical patterns.** To test this, we present a structured prompting approach for linguistic structured prediction tasks, allowing us to perform zero- and few-shot sequence tagging with autoregressive PLMs. We evaluate this approach on part-of-speech tagging, named entity recognition, and sentence chunking, demonstrating strong few-shot performance in all cases. We also find that while PLMs contain significant prior knowledge of task labels due to task leakage into the pre-training corpus, structured prompting can also retrieve linguistic structure with arbitrary labels. These findings indicate that the in-context learning ability and linguistic knowledge of PLMs generalizes beyond memorization of their training data.
 
 作者提出了一种简单的序列标注prompt方法，就是在输出的每个word token之后加入要标注的label。作者提到了，在输出的时候不是直接输出所有的tag序列，而是同时要输出原有的word+tag。如果不重复输出word的话，效果甚至会下降70%-80%。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230531113232237.png"   style="zoom:40%;" />
 
-基于GPT-NeoX、GPT-Curie、GPT-Davinci进行了实验。
+基于GPT-NeoX、GPT-Curie、GPT-Davinci进行了实验。使用上下文学习，从数据集中随机找$k$个样例，只要保证这些样例能够覆盖所有的label即可。
 
 有一点实验启发的是，作者发现在NER任务下，LLM也常常会错误的分类`O` label，和其它的研究发现RE任务常常错误分类`None`一样。这说明了这些比较模糊、或者内部语义分布比较多样的label，让LLM直接去做很可能准确度不高：
 
@@ -855,6 +800,8 @@ CollabKG: A Learnable Human-Machine-Cooperative Information Extraction Toolkit f
 
 ## UniversalNER
 
+UniversalNER: Targeted Distillation from Large Language Models for Open Named Entity Recognition
+
 2023-08，arXiv，南加州大学，[项目](universal-ner.github.io)
 
 > Large language models (LLMs) have demonstrated remarkable generalizability, such as understanding arbitrary entities and relations. Instruction tuning has proven effective for distilling LLMs into more cost-efficient models such as Alpaca and Vicuna. Yet such student models still trail the original LLMs by large margins in downstream applications. **In this paper, we explore targeted distillation with mission-focused instruction tuning to train student models that can excel in a broad application class such as open information extraction.** Using named entity recognition (NER) for case study, we show how ChatGPT can be distilled into much smaller UniversalNER models for open NER. For evaluation, we assemble the largest NER benchmark to date, comprising 43 datasets across 9 diverse domains such as biomedicine, programming, social media, law, finance. Without using any direct supervision, UniversalNER attains remarkable NER accuracy across tens of thousands of entity types, outperforming general instruction-tuned models such as Alpaca and Vicuna by over 30 absolute F1 points in average. With a tiny fraction of parameters, UniversalNER not only acquires ChatGPT’s capability in recognizing arbitrary entity types, but also outperforms its NER accuracy by 7-9 absolute F1 points in average. Remarkably, UniversalNER even outperforms by a large margin state-of-the-art multi-task instruction-tuned systems such as InstructUIE, which uses supervised NER examples. We also conduct thorough ablation studies to assess the impact of various components in our distillation approach. We will release the distillation recipe, data, and UniversalNER models to facilitate future research on targeted distillation.
@@ -897,162 +844,203 @@ CollabKG: A Learnable Human-Machine-Cooperative Information Extraction Toolkit f
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230829161000484.png"   style="zoom:30%;" />
 
-## DeepTagger
 
-DeepTagger: Knowledge Enhanced Named Entity Recognition for Web-Based Ads Queries
 
-arXiv 2023-06
+## SUMASK
 
-> Named entity recognition (NER) is a crucial task for online advertisement. State-of-the-art solutions leverage pre-trained language models for this task. However, three major challenges remain unresolved: **web queries differ from natural language, on which pre-trained models are trained; web queries are short and lack contextual information; and labeled data for NER is scarce.** We propose DeepTagger, a knowledge-enhanced NER model for web-based ads queries. The proposed knowledge enhancement framework leverages both model-free and model-based approaches. For model-free enhancement, we collect unlabeled web queries to augment domain knowledge; and we collect web search results to enrich the information of ads queries. **We further leverage effective prompting methods to automatically generate labels using large language models such as ChatGPT.** Additionally, we adopt a model-based knowledge enhancement method based on adversarial data augmentation. We employ a three-stage training framework to train DeepTagger models. Empirical results in various NER tasks demonstrate the effectiveness of the proposed framework.
+Revisiting Large Language Models as Zero-shot Relation Extractors. 东南大学. EMNLP 2023
 
-这篇文章集中在对Web queries进行NER场景上。这种任务通常发生在广告领域，对于用户输入的查询，需要识别实体，然后打广告。
+> Relation extraction (RE) consistently involves a certain degree of labeled or unlabeled data even if under zero-shot setting. Recent studies have shown that large language models (LLMs) transfer well to new tasks out-of-the-box simply given a natural language prompt, which provides the possibility of extracting relations from text without any data and parameter tuning. This work focuses on the study of exploring LLMs, such as ChatGPT, as zero-shot relation extractors. On the one hand, **we analyze the drawbacks of existing RE prompts and attempt to incorporate recent prompt techniques such as chain-of-thought (CoT) to improve zeroshot RE. We propose the summarize-and-ask (SUMASK) prompting, a simple prompt recursively using LLMs to transform RE inputs to the effective question answering (QA) format.** On the other hand, we conduct comprehensive experiments on various benchmarks and settings to investigate the capabilities of LLMs on zero-shot RE. Specifically, we have the following findings: (i) SUMASK consistently and significantly improves LLMs performance on different model sizes, benchmarks and settings; (ii) Zero-shot prompting with ChatGPT achieves competitive or superior results compared with zero-shot and fully supervised methods; (iii) LLMs deliver promising performance in extracting overlapping relations; (iv) The performance varies greatly regarding different relations. Different from small language models, LLMs are effective in handling challenge none-of-the-above (NoTA) relation.
 
-Web queries与一般的完整natural language的区别：
+设计更好的prompt，多轮提问LLM来实现更好的zero-shot relation extraction（给定头尾entity）。在zero-shot场景下，效果是目前的sota；在全监督设置下，使用zero-shot prompting的方式，在TACRED、TACREV和Re-TACRED三个数据集下靠近了sota或者达到了新sota。
 
-- First, there is a domain shift between web queries and natural language. 大部分的web查询文本不是完整的句子，没有动词/形容词；同时会包含产品、品牌等在一般领域内不常见的实体
-- Second, web queries are short and lack information. web查询文本很短，可能只有4-5个单词，没有很多的semantic components
-- The third problem is label scarcity. 没有足够的针对web查询文本的标签数据
+首先，作者发现和以前的结果一致，如果是采用最vanilla的prompt，效果距离以前的sota方法效果很远：
 
-作者先是利用web search的结果的title来增加query的语义：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016145531310.png"  style="zoom:40%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911223831963.png"   style="zoom:30%;" />
+作者推测原因是上面的prompt要求以下步骤在一步内完成：
 
-然后作者想办法获取不够准确的weakly-labeled data：
+- 理解句子中头尾实体的relation semantics；
+- 理解relation label semantic；
+- 然后能够把两种semantic进行匹配；
 
-- 人类标注的也有可能有很多错误，作者把人类标注的data也作为一类weakly-labeled data
+这些步骤在一步完成，让LLM对于RE任务表现不好。因此，作者借助CoT的思想，将RE任务拆分为不同的推理步骤：
 
-- 利用ChatGPT这类大模型进行初步NER标注，作者使用fixed CoT prompting方法；基于web query的返回结果的title来人工构造CoT：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016145721912.png"  style="zoom:50%;" />
 
-  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224040473.png"   style="zoom:30%;" />
+具体步骤：
 
-作者的strong-labeled data是指一小部分的人类专家标注的数据；为了增强利用这部分数据，作者使用了对抗数据增强的方法。原理是对某个data的微小的改动，不应该改变它对应的预测结果，也就是说对于数据点的邻居，模型应该给出一样的预测结果。这样增大最靠近决策边界的data point和决策边界的距离，让决策边界更加平滑，提升模型的鲁棒性[*Learning from rules generalizing labeled exemplars. ICLR 2020*]：
+1. 给定sentence，让LLM推测句子中头尾实体可能的语义联系，作者称为输出summarization，重复$k$次；
+2. 输入候选relation，构造候选三元组，让LLM根据三元组创建出对应的回答yes/no的问题question，重复$k$次；
+3. 对于前面的$k$个summarization和question，让LLM回答是否能够根据summarization回答question，通过投票选择最终LLM认为头尾实体间的候选关系是否成立；
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224452680.png"   style="zoom:30%;" />
+对于每种候选关系$r$，都要进行$k^3$的提问（实验中$k=5$），资源消耗和时间成本非常大。下面是几个例子：
 
-对于每个labeled data，生成它最难以被准确预测的邻居点：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016151659972.png"  style="zoom:50%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911224159401.png"   style="zoom:30%;" />
+经过上面3步，会获得多个最终LLM认为成立的候选relation，因此需要设计某种机制进行选择，最直接的想法是选择3个步骤输出答案概率最大的对应的relation：
 
-最后，作者的NER model的训练流程：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016150313425.png" style="zoom:40%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911225016455.png"   style="zoom:50%;" />
+但是，不是所有LLM都能够输出概率的，因此，使用不确定性进行估计，选择不确定性最小的回答：
 
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016150449686.png"  style="zoom:40%;" />
 
+不确定性估计的方法借鉴了前人的方法[*Active prompting with chain-ofthought for large language models. 2023*]，将$k$个回答输入到Sentence-BERT中，获得编码，然后计算每个回答表征和平均表征的距离作为dispersion degree：
 
-## Paraphrase NER
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016150606944.png"  style="zoom:40%;" />
 
-When and how to paraphrase for named entity recognition?
+最后选择依据：
 
-ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016150705709.png" style="zoom:40%;" />
 
-> While paraphrasing is a promising approach for data augmentation in classification tasks, its effect on named entity recognition (NER) is not investigated systematically due to the difficulty of **span-level label preservation**. In this paper, **we utilize simple strategies to annotate entity spans in generations and compare established and novel methods of paraphrasing in NLP such as back translation, specialized encoder-decoder models such as Pegasus, and GPT-3 variants for their effectiveness in improving downstream performance for NER** across different levels of gold annotations and paraphrasing strength on 5 datasets. We thoroughly explore the influence of paraphrasers, dynamics between paraphrasing strength and gold dataset size on the NER performance with visualizations and statistical testing. We find that the choice of the paraphraser greatly impacts NER performance, with one of the **larger GPT-3 variants exceedingly capable of generating high quality paraphrases, yielding statistically significant improvements in NER performance with increasing paraphrasing strength,** while other paraphrasers show more mixed results. Additionally, inline auto annotations generated by larger GPT-3 are strictly better than heuristic based annotations. We also find diminishing benefits of paraphrasing as gold annotations increase for most datasets. Furthermore, while most paraphrasers promote entity memorization in NER, the proposed GPT-3 configuration performs most favorably among the compared paraphrasers when tested on unseen entities, with memorization reducing further with paraphrasing strength. Finally, we explore mention replacement using GPT-3, which provides additional benefits over base paraphrasing for specific datasets.
+需要注意的是，作者采用了Entity-Relation Mapping机制[*Fastre: Towards fast relation extraction with convolutional encoder and improved cascade binary tagging framework. IJCAI 2022*]，提前排除了很多relation，如果已知了entity type，就提前排除掉一些不可能成立的relation。
 
-作者选择了5个不同领域的NER数据集。
+作者实验采用了GPT-J-6B、BLOOM-7.1B、T0pp-11B和gpt-3.5-turbo-0301，最终是gpt-3.5-turbo-0301效果最好，下面实验里的SUMASK就是对应的采用gpt-3.5的结果。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171504576.png"   style="zoom:40%;" />
+Zero-shot relation classification实验结果：
 
-作者先对比两个已有的Paraphrasers工具：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016151026213.png" style="zoom:30%;" />
 
-- 基于Back-translation（BT）：For our experiments we use pre-trained English-German and German-English models (∼738M parameters) available from Huggingface model hub via Tiedemann and Thottingal (2020) and the model architecture used is BART (Lewis et al., 2019).
-- 基于PEGASUS：We use an off-the-shelf version of PEGASUS fine-tuned for paraphrasing released on Huggingface model hub. 3
+和全监督的RE方法对比：
 
-然后，作者利用两个GPT-3模型：`text-ada-001` (∼350M parameters), and `text-davinci-002` (∼175B parameters)。使用的temperature为0.8。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016151114659.png" style="zoom:30%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214754741.png"   style="zoom:40%;" />
+和全监督的方法相比，zero-shot的LLM有潜力靠近sota，但是个人仍然有以下的疑问：
+1. 资源消耗？
+2. 时间？
+3. 这些数据集表现比较好，是否是因为LLM在预训练阶段已经理解了对应的label，如果是新的dataset，LLM是否仍然能够表现好？
 
-作者关注数据增强可能带来的一个问题Entity Memorization。即目前基于改写的数据增强方法，没有改变entity mention，生成的data中出现了entity的重复。因此作者想检查模型是不是直接记住了entity和它对应的label，而不是学会从feature推测label。
+作者论文中Table4还进行了其它实验，发现不同relation之间的性能差距非常大，最好的有90%以上准确率，最差的10%-20%准确率。
 
-如果是记忆，那么model意味着模型走了捷径shortcut learning [*Shortcut learning in deep neural networks. Nature 2020*]，那么此时model应该无法准确处理没有见过的entity。
+对于Overlapping RE任务的实验结果：
 
-因此，作者又进行了在test set中，不同entity type里，没有在训练集里出现过的entity作为新的测试集unseen entity (UE) test sets。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016151345868.png"  style="zoom:30%;" />
 
-为了缓解entity memorization问题，作者提出了一种解决方法Mention replacement（MR）。那就是不要重复entity mention，用GPT生成新的entity mention，然后去替换生成句子中的entity mention：
+## Guideline Learning
 
-> In particular, for every entity mention in the gold set, we prompt GPT-3 DaVinci model to generate entity mentions that are similar to the gold entity mention, while also providing a phrase level definition of the entity type being replaced.
+Guideline Learning for In-Context Information Extraction. EMNLP 2023. 中科院
 
-使用到的prompt：
+> Large language models (LLMs) can perform a new task by merely conditioning on task instructions and a few input-output examples, without optimizing any parameters. This is called In-Context Learning (ICL). In-context Information Extraction has recently garnered attention in the research community. However, current experiment results are generally suboptimal. **We attribute this primarily to the fact that the complex task settings and a variety of edge cases are hard to be fully expressed in the length-limited context.** In this paper, **we propose a Guideline Learning (GL) framework for In-context IE which learns to generate and follow guidelines.** During the learning phrase, GL automatically synthesizes a set of guidelines from a few annotations, and during inference, helpful guidelines are retrieved for better ICL. Experiments on event extraction and relation extraction show that guideline learning can improve the performance of in-context IE.
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223735026-20230917171504656.png"  style="zoom:40%;" />
+作者认为IE任务是一个复杂的任务，为了准确全面的定义好task的*target concept*需要很多的examples和rules进行定义。例如在ACM关系抽取中的guidelines超过33页内容。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223753805-20230917171504707.png"   style="zoom:40%;" />
+传统的方法需要提前有很多的训练样本+大量的训练参数；而LLM+ICL是一种能够无梯度更新的范式，然而这种范式在以前的论文里效果还不够好。
 
-作者选择了5个不同领域的NER数据集，微调distilbert-base-cased作为NER model。
+作者认为原因是，LLM对于IE任务理解的*comprehended concept*和*target concept*之间存在*conceptual bias*：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171137150-20230917171504792.png"   style="zoom:40%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016191744066.png" style="zoom:35%;" />
 
-## Data Generation for clinical NER and RE
+因此，作者希望能够让LLM自己学习guidelines，这种guidelines，实际上，就是对于label semantic的描述。作者提出方法的图：
 
-Does Synthetic Data Generation of LLMs Help Clinical Text Mining?
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192009243.png" style="zoom:30%;" />
 
-arXiv 2023-04
+核心思想是，从预测错误的样例中学习反馈，思想follow了前人的工作[*Memory-assisted prompt editing to improve GPT-3 after deployment. EMNLP 2022*]。
 
-> Recent advancements in large language models (LLMs) have led to the development of highly potent models like OpenAI’s ChatGPT. These models have exhibited exceptional performance in a variety of tasks, such as question answering, essay composition, and code generation. However, their effectiveness in the healthcare sector remains uncertain. **In this study, we seek to investigate the potential of LLMs to aid in clinical text mining by examining their ability to extract structured information from unstructured healthcare texts, with a focus on biological named entity recognition and relation extraction.** However, our preliminary results indicate that employing LLMs directly for these tasks resulted in poor performance and raised privacy concerns associated with uploading patients’ information to the LLM API. To overcome these limitations, we propose a new training paradigm that involves generating a vast quantity of high-quality synthetic data with labels utilizing LLMs and fine-tuning a local model for the downstream task. Our method has resulted in significant improvements in the performance of downstream tasks, improving the F1-score from 23.37% to 63.99% for the named entity recognition task and from 75.86% to 83.59% for the relation extraction task. Furthermore, **generating data using LLMs can significantly reduce the time and effort required for data collection and labeling, as well as mitigate data privacy concerns.** In summary, the proposed framework presents a promising solution to enhance the applicability of LLM models to clinical text mining.
+伪代码：
 
-作者先是尝试了ChatGPT在clinical NER和RE任务上，zero-shot ICL设置下和目前SOTA的差距：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192126083.png"  style="zoom:35%;" />
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170021648.png"   style="zoom:50%;" />
+首先是伪代码中的`Retrieve`：从已有的guidelines集合里，寻找和当前样例最相近的guidelines。具体做法是利用LLM去抽象出sentence的general form，对于RE任务，作者用了两种方式，一种是简化具体的描述，只保留text中必要的tokens，一种是让LLM猜测实体的type。两种形式的general forms的输出，输入到OpenAI的`text-embedding-ada-002` API，获得embedding，然后基于余弦相似度选择最相似的rules。同时随机从训练集中找样例作为demonstrations，在整个数据集下是固定的。
 
-在clinical NER和RE上，作者发现效果并不好，这当然很正常，ChatGPT并不是专门为clinical domain训练的，而执行这一domain肯定需要大量的domain knowledge；同时直接调用LLM的API存在隐私泄露问题。因此作者尝试利用LLM去生成一系列的训练数据，而不是直接进行任务。用LLM生成数据去训练一个小模型，小模型可以直接本地部署，避免了隐私泄露问题。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192458557.png" style="zoom:50%;" />
 
-作者用prompt engineering创造合适的prompt：
+然后`Reason`：输入task instruction、query instance、few-shot examples和rules，让LLM输出抽取结果和LLM认为有用的rules。
 
-- 询问GPT “Provide five concise prompts or templates that can be used to generate data samples of [Task Descriptions].”
-- 用每个prompt生成10个句子，然后人工检查下句子质量，选择效果最好的prompt
-- 然后让GPT基于前面选择的最好的prompt，继续提供新的prompt。这一过程持续3遍
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016193053838.png"  style="zoom:50%;" />
 
-作者找到的最合适的prompt（没有demonstrations）：
+根据抽取结果，更新rules的scores，来判断某个rule的有用程度(某个rule被使用的次数中，能够帮助预测正确的次数越多越好)：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170508864.png"   style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016193218204.png"  style="zoom:40%;" />
 
-NER任务是根据entity直接生成句子；RE任务是输入头尾实体，判断某个relation是否存在
+如果抽取relation是错误的，那么要进行反馈`Reflect`：使用general form和正式的label，让LLM生成rule（没有在paper中找到对应的具体prompt）。
 
-可视化结果显示，不控制的情况下，GPT自己发挥生成的句子和原来的sentence肯定有分布上的差别：
+作者另外的贡献是，提出了一种Active Instance Selection的策略，选择适合作为上面的guidelines learning的方法。作者选择那些LLM最不confidence的data。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230925170635577.png"   style="zoom:50%;" />
+具体的选择方法是，利用self-consistency CoT，让LLM生成多个推理路径和对应的答案。然后根据答案的分布，统计不同类型relation的分布，然后使用熵的负值作为confidence。最后选择负熵最大的data，也就是LLM预测概率分布最平滑的data。
 
-## $\mbox{S}^2$ynRE
+最后实现使用`gpt-3.5-turbo`，实验了Event Extraction和relation extraction（给定头尾实体）两类任务。事件抽取使用了ChFinAnn数据集，RE任务使用了SemEval 2010 task 8数据集（有9种relation）。
 
-S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
+从RE任务结果来看，和SOTA还有差距：
 
-中科大，ACL 2023，[代码](https: //github.com/BenfengXu/S2ynRE)。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016194434785.png"  style="zoom:40%;" />
 
-> Current relation extraction methods suffer from the inadequacy of large-scale annotated data. While distant supervision alleviates the problem of data quantities, there still exists domain disparity in data qualities due to its reliance on domain-restrained knowledge bases. In this work, **we propose S2ynRE, a framework of two-stage Self-training with Synthetic data for Relation Extraction.** We ﬁrst leverage the capability of large language models to adapt to the target domain and automatically synthesize large quantities of coherent, realistic training data. We then propose an accompanied two-stage self-training algorithm that iteratively and alternately learns from synthetic and golden data together. We conduct comprehensive experiments and detailed ablations on popular relation extraction datasets to demonstrate the effectiveness of the proposed framework. Code is available at https: //github.com/BenfengXu/S2ynRE.
+## RationalCL
 
-对于RE任务来说，高质量有标注的data获取很难，之前一种解决这个问题的思路是远监督distant supervision，尽管远监督获得了效果的提升，但是远监督的数据不能够保证和下游任务的schema、context分布特征等是相符的：
+Rationale-Enhanced Language Models are Better Continual Relation Learners. EMNLP 2023. 北大. [代码](https://github.com/WeiminXiong/RationaleCL)。
 
-> Although this line of methods have seen certain improvements, they still inevitably raise the concern that the distantly annotated data can vary considerably from downstream tasks both in target schema and in context distributions, thus may not be able to offer optimal transferability.
+> Continual relation extraction (CRE) aims to solve the problem of catastrophic forgetting when learning a sequence of newly emerging relations. Recent CRE studies have found that catastrophic forgetting arises from the model’s lack of robustness against future analogous relations. To address the issue, **we introduce rationale, i.e., the explanations of relation classification results generated by large language models (LLM), into CRE task.** Specifically, we design the multi-task rationale tuning strategy to help the model learn current relations robustly. We also conduct contrastive rationale replay to further distinguish analogous relations. Experimental results on two standard benchmarks demonstrate that our method outperforms the state-of-the-art CRE models. Our code is available at https://github.com/WeiminXiong/RationaleCL
 
-换句话说，要获得理想的领域特征一致的远监督数据本身也可能是比较难的。
+作者期望解决的任务是Continual Relation Extraction，下面是任务定义：
 
-因此，作者顺着最近的一些利用LLM生成text data的工作的思路，考虑使用LM来生成数据。作者的贡献主要有两点：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016222421718.png"  style="zoom:30%;" />
 
-- 利用GPT-3.5和finetuned GPT-2 Large去适应target domain distribution，然后生成无label的RE data
-- 提出了a two-stage self-training训练策略，更好的利用生成的无标注数据和原有标注数据
+这一任务之前的方法是专注于利用知识蒸馏等技术缓解灾难性遗忘问题。最近有工作发现，模型在遭遇和已经见过的relation相似的新relation情况下，不能够很好的搞清楚相似relation之间的关系。
 
-作者的RE任务是给定头尾实体，预测relation。
+作者认为，可以通过引入rationales来缓解这一问题。这是因为一方面This is inspired by the intuition that, training models with explicit rationale supervision can provide greater robustness (Chen et al., 2022).。另外，让小模型学会输出rationales，能够让缓解小模型可能的shortcut learning的问题。
 
-利用GPT-2 Large生成数据，首先按照language modeling的loss在训练集上微调；然后在推理阶段，输入`<bos>`开始进行采样生成new data。
+但是目前数据集里并没有rationales。因此作者期望让LLM来输出rationales。虽然GPT对于直接进行RE任务效果还不够好，但是如果给定relation，让GPT给出原因来，效果还是可以的。即
 
-利用GPT-3生成数据，采用5-shot ICL，随机找demonstrations的策略：
+> According to their studies, ChatGPT is limited by the output format requirements in accomplishing fine-grained relation extraction tasks, and it is difficult to directly generate the target relation label within the defined range. However, ChatGPT’s semantic understanding is sufficient, and when we provide chatgpt with correct relation labels, ChatGPT can understand the meaning of the relation according to the context and give reasonable rationales. According to the human-check results (Li et al., 2023), domain experts highly approve of the reasons given by ChatGPT.
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926161739020-20230926163117308.png"  style="zoom:50%;" />
+作者利用`gpt-3.5-turbo`输出的rationales，finetune一个T5-base，使用多任务的架构：
 
-注意这里prompt对于结果的可控，只是通过一些指令性的表述，如`similar topic, domain and the same sub-obj format`。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016221257901.png" style="zoom:50%;" />
 
-然后是如何利用生成的无标注data，一般的策略是self-training，即给无标注data伪标注然后和原有data混合，训练小模型，训练好的小模型再重新标注无标注data。
+第一阶段训练三个任务的loss：
 
-作者认为这种直接将生成的数据加入到原有的数据方法前提是，要求生成的数据需要和原来的数据有一样的分布。
+- 主任务，输入文本$X$，输出relation $Y$
+- 辅助任务1，输入文本$X$，让小模型输出relation $Y$和rationale $R$
+- 辅助任务2，输入文本$X$和rationale $R$，让小模型输出relation $Y$
 
-相反，作者将无标注数据和有标注数据分开，先使用gold data训练多个teacher model，然后标注生成的data，注意是soft label；然后用一个新初始化的student model在带有soft label的生成数据上训练，更新参数；之后继续在gold data上训练，更新后的model重新标注生成的data；这样迭代式的训练：
+第一阶段结束后，为了缓解灾难性遗忘问题，作者follow前人的工作[*Continual relation learning via episodic memory activation and reconsolidation. ACL 2020*]，维护一个episodic memory module，里面保存不同relation下代表性的data（实现中每个relation保留10个data）。这个memory里面的data，会在之后继续被进行学习。
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162246951-20230926163117427.png"   style="zoom:50%;" />
+第二阶段是为了解决新relation和已有的相似relation容易混淆的问题。作者提出了contrastive rationales的概念：
 
-对于实验结果具体可以参考原paper，这里提供几个值得记录的结果：
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016222112205.png"  style="zoom:35%;" />
 
-作者使用BERT+Linear作为RE model。
+通过embedding计算两个relation之间的余弦相似度，找到相似relation；然后让LLM去给出输出一个relation，而不输出另一个relation的rationales。用新的contrastive rationales替换memory module里面的已有rationales，然后训练。
 
-直接用GPT不一定能够超过finetuned LM来生成data，下面的结果没有找到是具体哪个dataset上的测试结果：
+实验结果：
 
-<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926162817492-20230926163117473.png"  style="zoom:50%;" />
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016222501679.png" style="zoom:30%;" />
 
-作者使用type-token ratio ([*Evaluating story generation systems using automated linguistic analyses. 2017*]; *Data augmentation using pre-trained transformer models. 2020*)来评估diversity。
+## Text2KGBench
+
+Text2KGBench: A Benchmark for Ontology-Driven Knowledge Graph Generation from Text. ISWC 2023. IBM. [代码](https://github.com/cenguix/Text2KGBench).
+
+> The recent advances in large language models (LLM) and foundation models with emergent capabilities have been shown to improve the performance of many NLP tasks. LLMs and Knowledge Graphs (KG) can complement each other such that LLMs can be used for KG construction or completion while existing KGs can be used for different tasks such as making LLM outputs explainable or fact-checking in Neuro-Symbolic manner. **In this paper, we present Text2KGBench, a benchmark to evaluate the capabilities of language models to generate KGs from natural language text guided by an ontology.** Given an input ontology and a set of sentences, the task is to extract facts from the text while complying with the given ontology (concepts, relations, domain/range constraints) and being faithful to the input sentences. We provide two datasets (i) Wikidata-TekGen with 10 ontologies and 13,474 sentences and (ii) DBpedia-WebNLG with 19 ontologies and 4,860 sentences. We define seven evaluation metrics to measure fact extraction performance, ontology conformance, and hallucinations by LLMs. Furthermore, **we provide results for two baseline models, Vicuna-13B and Alpaca-LoRA-13B using automatic prompt generation from test cases.** The baseline results show that there is room for improvement using both Semantic Web and Natural Language Processing techniques.
+
+KG的构建可以通过RDB2RDF[*A survey of current approaches for mapping of relational databases to rdf.*]这种方法从relational data中构建；可以用RML这种方法[*Rml: A generic language for integrated rdf mappings of heterogeneous data.*]，从半结构化的数据中构建；还可以考虑用众包的形式构建，例如Wikidata。
+
+但是仍然存在很多非结构化的文本，并且受限于规模和隐私考虑等因素，无法使用众包。也因此，一种构建KG的思路就是利用NLP技术，比如NER、RE、entity linking等方法，从非结构化文本中抽取结构化信息。目前有两个相关的workshop：
+
+> There is a growing interest in the Semantic Web community to explore such approaches as seen from the workshops such as Text2KG [Tiwari et al., 2022, 2023] and NLP4KGC [Vakaj et al., 2023].
+
+作者构建了Text2KGBench来评估使用LLM，在给定ontology的情况下，能够生成KG的能力。作者的benchmark里KG不是用RDF/OWL的形式描述的，而是使用relation三元组的形式。
+
+包括了两个数据集：
+
+- Wikidata-TekGen：包括10种从Wikidata中导出的ontologies，然后使用TekGen语料库找到对应的三元组和句子
+- DBpedia-WebNLG：包括19种本体
+
+下面是Wikidata-TekGen数据集music本体示例：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231017152255979.png" style="zoom:40%;" />
+
+基于作者的Text2KGBench，作者尝试了Vicuna-13B和Alpaca-LoRA-13B在给定本体的情况下，基于kNN ICL进行信息抽取的效果。下面是使用的prompt：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231017152527701.png"  style="zoom:30%;" />
+
+作者提出，要使用三类指标来评估：
+
+- Fact Extraction Accuracy: Precision (P), Recall (R), and F1
+- Ontology Conformance: Ontology Conformance (OC) metric, a triple is considered to be conforming to the ontology if the relation is one of the canonical relations listed in the ontology.
+- Hallucinations: subject hallucination (SH), relation hallucination (RH), and object hallucination (OH). For each triple, SH and OH check if the subject and object are present in either the sentence or the ontology concepts, and RH checks if the relation is present in the ontology relations.
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231017153036430.png"  style="zoom:50%;" />
+
+可以看到，总体效果还有很大的进步空间，同时是存在一定程度的幻觉的。
+

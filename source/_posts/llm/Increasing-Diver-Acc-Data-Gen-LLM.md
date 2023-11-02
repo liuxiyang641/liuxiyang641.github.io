@@ -35,7 +35,7 @@ tags:
 这篇文章就旨在讨论利用人机协作的方法创建高质量数据集，Ideal classification datasets need to have the following characteristics: 
 
 1. **Scoped**: fall in the model builder’s domain of interest while classifiable with labels of interest, 
-2. **Label accurate**: accompany accurate labels, and 
+2. **Label accurate**: accompany accurate labels 
 
 3) **Diverse**: cover cases the model would encounter during test time.
 
@@ -71,7 +71,7 @@ text type应该是用来控制输出符合task特点的文本。
 
 - 作者一共用了8个短文本分类数据集
 - 调用`text-davinci-002`，每次调用生成20个新data
-- 微调用的model是BERT-base+Linear classifier
+- 微调用的model是`BERT-base`+Linear classifier
 - 原始的training data用来训练*oracle model* （很重要，后续在计算指标和提高质量的时候被用到）；生成的新data用来训练各个实验model，保持两者样本数量一样；用原始的test set进行测试
 - 作者实验了一个额外的example seeding设置，也就是初始第一次迭代，有没有个样例池。样例池中的样例被按照每个label对应1个样例的设置被随机选择，作为prompt上下文。如果一开始没有一个上下文样例池，作者第一次迭代就是使用zero-shot ICL的形式，在第二次迭代才开始从样例池中随机采样
 
