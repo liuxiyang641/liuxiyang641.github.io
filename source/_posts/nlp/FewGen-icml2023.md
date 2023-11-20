@@ -15,6 +15,7 @@ tags:
 
 Tuning Language Models as Training Data Generators for Augmentation-Enhanced Few-Shot Learning. University of Illinois Urbana-Champaign. ICML 2023. [Code](https://github.com/yumeng5/FewGen).
 
+
 一篇微调语言模型来生成训练数据的工作。主要关注如何学习label-discriminative (/dɪsˈkrɪmɪnətɪv/) samples。
 
 <!--more-->

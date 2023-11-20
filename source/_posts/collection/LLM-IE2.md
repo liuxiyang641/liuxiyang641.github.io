@@ -300,7 +300,7 @@ ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916223753805-20230917171504707.png"   style="zoom:40%;" />
 
-作者选择了5个不同领域的NER数据集，微调distilbert-base-cased作为NER model。
+作者选择了5个不同领域的NER数据集，微调`distilbert-base-cased`作为NER model。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230916214229221-20230917171137150-20230917171504792.png"   style="zoom:40%;" />
 
@@ -308,7 +308,7 @@ ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
 
 S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
 
-中科大，ACL 2023，[代码](https: //github.com/BenfengXu/S2ynRE)。
+中科大，ACL 2023，[代码](https://github.com/BenfengXu/S2ynRE)。
 
 > Current relation extraction methods suffer from the inadequacy of large-scale annotated data. While distant supervision alleviates the problem of data quantities, there still exists domain disparity in data qualities due to its reliance on domain-restrained knowledge bases. In this work, **we propose S2ynRE, a framework of two-stage Self-training with Synthetic data for Relation Extraction.** We first leverage the capability of large language models to adapt to the target domain and automatically synthesize large quantities of coherent, realistic training data. We then propose an accompanied two-stage self-training algorithm that iteratively and alternately learns from synthetic and golden data together. We conduct comprehensive experiments and detailed ablations on popular relation extraction datasets to demonstrate the effectiveness of the proposed framework. Code is available at https://github.com/BenfengXu/S2ynRE.
 

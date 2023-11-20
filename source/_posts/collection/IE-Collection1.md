@@ -521,7 +521,46 @@ ACL Findings 2023，中科院与阿里达摩，[代码](https://github.com/Aliba
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230909225937421.png"   style="zoom:40%;" />
 
+## KnowPrompt
 
+KnowPrompt: Knowledge-aware Prompt-tuning with Synergistic Optimization for Relation Extraction. 浙大. WWW 2022. [代码](https://github.com/zjunlp/KnowPrompt).
+
+> Recently, prompt-tuning has achieved promising results for specific few-shot classification tasks. The core idea of prompt-tuning is to insert text pieces (i.e., templates) into the input and transform a classification task into a masked language modeling problem. However, for relation extraction, **determining an appropriate prompt template requires domain expertise**, and it is cumbersome and time-consuming to obtain a suitable label word. Furthermore, there exists abundant semantic and prior knowledge among the relation labels that cannot be ignored. To this end, we focus on incorporating knowledge among relation labels into prompt-tuning for relation extraction and propose a Knowledge-aware Prompt-tuning approach with synergistic optimization (KnowPrompt). Specifically, we inject latent knowledge contained in relation labels into prompt construction with learnable virtual type words and answer words. Then, we synergistically optimize their representation with structured constraints. Extensive experimental results on five datasets with standard and low-resource settings demonstrate the effectiveness of our approach. Our code and datasets are available in GitHub 1 for reproducibility.
+
+**Issue**: 基于prompt的方法比基于standard finetuning的方法能够更好的bridge the gap between pre-training and fine-tuning。而对prompt-tuning based RE存在的两个问题：
+
+1. 如何决定合适的prompt，人工的方法需要domain expertise；自动化方法需要额外的计算代价；
+2. 搜索合适的label需要很高的代价，而为RE任务构造合适的label并不是一个很easy的任务；直接使用数据集里原始的label不能够很好的适应RE任务。
+
+**Solution**: 作者的解决思路是，利用knowledge注入到learnable prompts里。
+
+具体来说，作者从数据集里的relation label出发，为entity type和relation分别构造了virtual words。
+
+对于entity，作者没有假设数据集中会提前给定entity type。作者是利用人工的先验知识，判断某个relation对应的头尾实体类型。然后，基于frequency statistics，从整个数据集上计算不同实体类型的频率。根据频率和对应的type相应的embedding加权求和，得到了总体上的头尾实体的type embedding。这个entity type embedding，会作为特殊token $[sub]/[obj]$插入到具体sample的头尾实体前后。
+
+对于relation，作者分解原始的relation，然后使用分解后的不同word，相乘后作为初始化的relation embedding。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231115193524656.png"  style="zoom:50%;" />
+
+初始化后的entity type embedding会加入到prompt里，放在头尾实体左右，作为weakened type marker，然后初始化的relation embedding会作为候选的关系，和[MASK] token embedding相乘，选择最大概率的作为输出relation。下面是方法图：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231115193729623.png"  style="zoom:50%;" />
+
+具体，作者在训练时使用了两步训练策略，有两种loss：
+
+一个是给定了prompt之后，预测[MASK]是正确relation的交叉熵：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231115193908166.png"  style="zoom:40%;" />
+
+一个是期望学习structural knowledge的结构化loss，也就是利用TransE思想构造的判断$<s,r,o>$成立的loss。只不过，这里的$<s><o>$不是具体的entity embedding，而是他们句子中的$[sub]$和$[obj]$ token的用来表示entity type的embedding：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231115194204849.png"  style="zoom:40%;" />
+
+作者在full dataset和low-resource两种RE任务设置下进行了实验。基于`RoBERT_large` model，而在DialogRE数据集上基于`RoBERTa_base` model。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231115194346193.png"  style="zoom:50%;" />
+
+可以看到，这种提前注入knowledge来构造合适的soft prompt的方法在低资源的情况下，效果提升最明显。
 
 
 
