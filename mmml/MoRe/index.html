@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
 
-    <meta name="description" content="Named Entity and Relation Extraction with Multi-Modal Retrieval 作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。  Multi-modal named entity recognition (NER) and relation extraction (RE) aim to leverage">
+    <meta name="description" content="Named Entity and Relation Extraction with Multi-Modal Retrieval 作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。 上海科技与阿里达摩，EMNLP 2022，代码。  Multi-modal named entity recognition (NER) and relation extrac">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="MoRe">
 <meta property="og:url" content="https://liuxiyang641.github.io/mmml/MoRe/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="Named Entity and Relation Extraction with Multi-Modal Retrieval 作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。  Multi-modal named entity recognition (NER) and relation extraction (RE) aim to leverage">
+<meta property="og:description" content="Named Entity and Relation Extraction with Multi-Modal Retrieval 作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。 上海科技与阿里达摩，EMNLP 2022，代码。  Multi-modal named entity recognition (NER) and relation extrac">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151432582.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151548710.png">
@@ -37,11 +37,11 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152631421.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152831756.png">
 <meta property="article:published_time" content="2023-09-01T07:10:27.000Z">
-<meta property="article:modified_time" content="2023-09-01T07:32:06.095Z">
+<meta property="article:modified_time" content="2023-09-26T09:30:37.055Z">
 <meta property="article:author" content="Liu Xiyang">
-<meta property="article:tag" content="Multimodal">
 <meta property="article:tag" content="MNER">
 <meta property="article:tag" content="MRE">
+<meta property="article:tag" content="Multimodal">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151432582.png">
 
@@ -98,7 +98,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">54</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -170,13 +170,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-count">146</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -260,9 +260,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-09-01 15:10:27 / 修改时间：15:32:06" itemprop="dateCreated datePublished" datetime="2023-09-01T15:10:27+08:00">2023-09-01</time>
+      <time title="创建时间：2023-09-01 15:10:27" itemprop="dateCreated datePublished" datetime="2023-09-01T15:10:27+08:00">2023-09-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-26 17:30:37" itemprop="dateModified" datetime="2023-09-26T17:30:37+08:00">2023-09-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -312,6 +318,7 @@
     <div class="post-body" itemprop="articleBody">
         <h1 id="named-entity-and-relation-extraction-with-multi-modal-retrieval">Named Entity and Relation Extraction with Multi-Modal Retrieval</h1>
 <p>作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。</p>
+<p>上海科技与阿里达摩，EMNLP 2022，<a target="_blank" rel="noopener" href="http://github.com/modelscope/adaseq/examples/MoRe">代码</a>。</p>
 <blockquote>
 <p>Multi-modal named entity recognition (NER) and relation extraction (RE) aim to leverage relevant image information to improve the performance of NER and RE. Most existing efforts largely focused on directly extracting potentially useful information from images (such as pixel-level features, identified objects, and associated captions). However, such extraction processes may not be knowledge aware, resulting in information that may not be highly relevant. <strong>In this paper, we propose a novel Multi-modal Retrieval based framework (MoRe). MoRe contains a text retrieval module and an imagebased retrieval module, which retrieve related knowledge of the input text and image in the knowledge corpus respectively. </strong>Next, the retrieval results are sent to the textual and visual models respectively for predictions. Finally, a Mixture of Experts (MoE) module combines the predictions from the two models to make the final decision. Our experiments show that both our textual model and visual model can achieve state-of-the-art performance on four multi-modal NER datasets and one multimodal RE dataset. With MoE, the model performance can be further improved and our analysis demonstrates the benefits of integrating both textual and visual cues for such tasks.</p>
 </blockquote>
@@ -368,9 +375,9 @@
 </div>
 
           <div class="post-tags">
-              <a href="/tags/Multimodal/" rel="tag"><i class="fa fa-tag"></i> Multimodal</a>
               <a href="/tags/MNER/" rel="tag"><i class="fa fa-tag"></i> MNER</a>
               <a href="/tags/MRE/" rel="tag"><i class="fa fa-tag"></i> MRE</a>
+              <a href="/tags/Multimodal/" rel="tag"><i class="fa fa-tag"></i> Multimodal</a>
           </div>
 
         
@@ -406,7 +413,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-flag"></i>
   </span>
@@ -417,13 +424,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">513k</span>
+    <span title="站点总字数">647k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:46</span>
+    <span title="站点阅读时长">9:48</span>
   </span>
 </div>
 <div class="busuanzi-count">

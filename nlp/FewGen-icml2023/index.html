@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="FewGen-ICML2023  Recent studies have revealed the intriguing few-shot learning ability of pretrained language models (PLMs): They can quickly adapt to a new task when fine-tuned on a small amount of l">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="FewGen-icml2023">
+<meta property="og:url" content="https://liuxiyang641.github.io/nlp/FewGen-icml2023/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="FewGen-ICML2023  Recent studies have revealed the intriguing few-shot learning ability of pretrained language models (PLMs): They can quickly adapt to a new task when fine-tuned on a small amount of l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031211555513.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231030233718879.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031100418153.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031104013187.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031104530173.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031112600909.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031145421032.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031150702010.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031150843652.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152339639.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152759758.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152848181.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031153515784.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031205511785.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031210559801.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031211445616.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031213554404.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214540871.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214711151.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214920876.png">
+<meta property="article:published_time" content="2023-10-30T07:07:11.000Z">
+<meta property="article:modified_time" content="2023-11-03T08:04:01.478Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Data Augmentation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031211555513.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/nlp/FewGen-icml2023/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/nlp/FewGen-icml2023/","path":"nlp/FewGen-icml2023/","title":"FewGen-icml2023"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>FewGen-icml2023 | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">54</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#fewgen-icml2023"><span class="nav-number">1.</span> <span class="nav-text">FewGen-ICML2023</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#background"><span class="nav-number">1.1.</span> <span class="nav-text">1. Background</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#few-shot-learning-with-plms"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 Few-Shot Learning with PLMs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#data-augmentation"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 Data Augmentation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#controlled-text-generation"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 Controlled Text Generation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#introduction"><span class="nav-number">1.2.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#method"><span class="nav-number">1.3.</span> <span class="nav-text">3. Method</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#preliminaries"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 Preliminaries</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#label-discriminative-text-generator-tuning"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 Label-Discriminative Text Generator Tuning</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#experiments"><span class="nav-number">1.4.</span> <span class="nav-text">4. Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#experimental-setup"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Experimental Setup</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#results"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Results</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/nlp/FewGen-icml2023/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="FewGen-icml2023 | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FewGen-icml2023<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/nlp/FewGen-icml2023.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-30 15:07:11" itemprop="dateCreated datePublished" datetime="2023-10-30T15:07:11+08:00">2023-10-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-11-03 16:04:01" itemprop="dateModified" datetime="2023-11-03T16:04:01+08:00">2023-11-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/Data-Augmentation/" itemprop="url" rel="index"><span itemprop="name">Data Augmentation</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>9 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="fewgen-icml2023">FewGen-ICML2023</h1>
+<blockquote>
+<p>Recent studies have revealed the intriguing few-shot learning ability of pretrained language models (PLMs): They can quickly adapt to a new task when fine-tuned on a small amount of labeled data formulated as prompts, without requiring abundant task-specific annotations. Despite their promising performance, most existing few-shot approaches that only learn from the small training set still underperform fully supervised training by nontrivial margins. In this work, we study few-shot learning with PLMs from a different perspective: We first tune an autoregressive PLM on the few-shot samples and then use it as a generator to synthesize a large amount of novel training samples which augment the original training set. <strong>To encourage the generator to produce label-discriminative samples, we train it via weighted maximum likelihood where the weight of each token is automatically adjusted based on a discriminative meta-learning objective.</strong> A classification PLM can then be fine-tuned on both the few-shot and the synthetic samples with regularization for better generalization and stability. Our approach FewGen achieves an overall better result across seven classification tasks of the GLUE benchmark than existing few-shot learning methods, improving no-augmentation methods by 5+ average points, and outperforming augmentation methods by 3+ average points.</p>
+</blockquote>
+<p>Tuning Language Models as Training Data Generators for Augmentation-Enhanced Few-Shot Learning. University of Illinois Urbana-Champaign. ICML 2023. <a target="_blank" rel="noopener" href="https://github.com/yumeng5/FewGen">Code</a>.</p>
+<p>一篇微调语言模型来生成训练数据的工作。主要关注如何学习label-discriminative (/dɪsˈkrɪmɪnətɪv/) samples。</p>
+<span id="more"></span>
+<h2 id="background">1. Background</h2>
+<h3 id="few-shot-learning-with-plms">1.1 Few-Shot Learning with PLMs</h3>
+<p>受限于大量有标注数据获取的成本，少次学习一直以来都是深度学习领域关注的核心问题。</p>
+<blockquote>
+<p>Few-shot learning has gained much attention recently due to its minimal resource assumption.</p>
+</blockquote>
+<p>经过预训练阶段的PLM的出现一定程度上缓解了few-shot学习问题。当然，解决少次学习有很多其它思路，比如meta-learning。这里主要讨论的是使用PLM来解决少次学习问题的研究思路。</p>
+<p><em>standard fine-tuning</em>: 我们可以直接加载PLM预训练好的参数，利用预训练过程中被参数化编码的knowledge来更好的执行各类下游任务。但是通常要实现这一目标，我们可能会引入新的额外参数，比如对于分类问题，需要加上新的classification head。为了适应下游任务引入的新参数，一方面对于每个新的任务都需要学习额外的新参数，限制了模型的泛化能力。另一方面，这造成PLM在预训练时的预测模式和微调时的预测模式之间存在差异。</p>
+<p>因此，<em>prompt-based approaches</em>方法出现了。它们通过将下游任务转化为natural language prompt这种统一format的形式，把下游任务的预测目标转化为预训练时的objective比如predicting next token，这样就实现了填补预训练阶段和下游任务阶段之间的gap，能够更好的利用/激发PLM在预训练阶段获得的language modeling ability。</p>
+<p>沿着这个prompt-based approaches来进行downstream tasks思路有很多探究工作，比如：</p>
+<ul>
+<li>利用task prompt/将训练数据作为in-context demonstrations来finetune PLM（自然语言的、discrete/hard prompt）</li>
+<li>之后有工作尝试通过gradient-based searching (Shin et al., 2020)或parameterizing prompts as continuous learnable embeddings (Lester et al., 2021; Zhang et al., 2022; Zhong et al., 2021)实现自动获取prompt（数值的、continuous/soft prompt）</li>
+</ul>
+<p>在PLM参数比较小的情况下，微调PLM是主要的利用PLM的方法。但是随着PLM参数量的不断增加，PLM的能力基本上不断增强，也就是<em>large language model</em>。一方面是微调PLM的成本越来越大、隐私、商业PLM不开源等问题；另一方面是即便不微调，很多任务也可以直接通过巧妙的调用PLM来解决（ICL、CoT等）。目前大多涉及到用大规模参数PLM解决各种下游任务是工作是不微调PLM的。</p>
+<p>这篇工作不讨论这种几十B、上百B参数量的PLM，还是基于在PLM处在一个相对可以接受的参数量的情况下。上面提到的prompt-based approaches方法训练出来的model，和有大量labeled data训练出来的model的性能比起来仍然有很大差距。</p>
+<h3 id="data-augmentation">1.2 Data Augmentation</h3>
+<p>因此，有另外一种思路是不直接fine-tuning PLM on few-shot samples，而是尝试让PLM构造更多的训练数据。这就是<em>data augmentation</em>。</p>
+<blockquote>
+<p>Data augmentation methods aim to create similar samples to the existing ones so that the enlarged training set can benefit model generalization.</p>
+</blockquote>
+<p>data augmentation方法在各个领域都有很多的研究。比如在CV领域，通过旋转、翻折、裁剪等简单的方法可以创建更多的image samples。这里主要关注在NLP领域的数据增强。基本的发展思路有：</p>
+<ul>
+<li>基于规则的方法：利用人工设计的规则如同义词替换、随机插入token等获得新的text samples [<em>EDA: Easy data augmentation techniques for boosting performance on text classification tasks. 2019</em>]。但是这种方法一方面会降低原来text的fluency；一方面可能会破坏text原本的semantic。</li>
+<li>基于PLM生成式的方法：将PLM在下游任务的少量labeled samples上进行训练，以学习label-conditioned generation probability。</li>
+</ul>
+<p>这篇工作沿着基于PLM生成式的方法来进行数据增强。</p>
+<h3 id="controlled-text-generation">1.3 Controlled Text Generation</h3>
+<blockquote>
+<p>The goal of controlled text generation is to generate textual contents of desired semantics, styles or attributes.</p>
+</blockquote>
+<p>可控文本生成是对于PLM输出的控制。要达到这一点有不同的方法：</p>
+<ul>
+<li>During pretraining: control codes (Keskar et al., 2019) can be used as explicit guidance for training the model to generate domain/attributespecific texts; fine-tuning PLMs with attribute-specific data can also grant high-level control (e.g., certain topics or sentiments (Ziegler et al., 2019)), fine-grained control (e.g., specific words or phrases (Chan et al., 2021)) or both (Khalifa et al., 2021);</li>
+<li>at inference time: control over desired attributes can also be enforced without updating the PLM parameters (Dathathri et al., 2020; Krause et al., 2021; Kumar et al., 2021; Liu et al., 2021a; Pascual et al., 2021; Yang &amp; Klein, 2021).</li>
+</ul>
+<p>利用PLM，让PLM能够根据不同label生成期望的data，也是一种可控text生成。</p>
+<h2 id="introduction">2. Introduction</h2>
+<p><strong>Issue</strong>: 之前的微调PLM进行数据生成的方法，没有显式地建模不同label之间的区别，可能导致在生成相似label对应的训练数据时，生成数据的质量难以保证。</p>
+<p><strong>Soluation</strong>: 作者认为在生成的时候，应该考虑token对于label的独特性。</p>
+<h2 id="method">3. Method</h2>
+<p>作者提出的方法的总体结构图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031211555513.png"  style="zoom:50%;" /></p>
+<h3 id="preliminaries">3.1 Preliminaries</h3>
+<p>假定存在<span class="math inline">\(L\)</span>个label，每个类型有<span class="math inline">\(K\)</span>个训练数据，<span class="math inline">\(K\)</span>是一个很小的值，如<span class="math inline">\(K=16\)</span>。组成了训练集<span class="math inline">\(D_{train} = \{(\mathbf{x}, y)_i\}\)</span>。其中，<span class="math inline">\(\mathbf{x} = [x_1,x_2,\dots,x_n]\)</span>表示长度为<span class="math inline">\(n\)</span>个tokens的text。类似的，还有<span class="math inline">\(D_{dev}\)</span>和<span class="math inline">\(D_{test}\)</span>。</p>
+<p>我们要在训练集上训练一个data generator，<span class="math inline">\(G_{\mathbf{\theta}}\)</span>，来构造新的数据，所有新的生成数据构成了新的数据集合<span class="math inline">\(D_{gen}=\{ (\tilde{\mathbf{x}},\tilde{y})_i \}\)</span>。</p>
+<p>我们用<span class="math inline">\(C_\phi\)</span>表示训练出来执行downstream task的分类器模型。</p>
+<p>之前常见的训练数据生成器的方法是利用autoregressive PLM <span class="math inline">\(G_{\mathbf{\theta}}\)</span>在<span class="math inline">\(D_{train}\)</span>上按照maximum likelihood generation loss：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231030233718879.png"  style="zoom:40%;" /></p>
+<p>其中，<span class="math inline">\(\mathbf{h}_j\)</span>表示是对于第<span class="math inline">\(j\)</span>个位置PLM编码输出的embedding，<span class="math inline">\(\mathbf{e}_{j}\)</span>表示正确的原来token <span class="math inline">\(j\)</span>的token embedding，一共有<span class="math inline">\(V\)</span>个候选token。期望正确token的输出概率<span class="math inline">\(p_\theta\)</span>最大。训练结束后，就可以利用<span class="math inline">\(G_\theta\)</span>按照学习到的概率不断采样新的tokens，获得新的生成数据。</p>
+<p>但是如果直接在一个很小的训练集上，更新所有的PLM参数<span class="math inline">\(\mathbf{\theta}\)</span>是不必要的。作者这里是利用prefix-tuning的方法，固定model整体的参数，只更新prefix vectors <span class="math inline">\(\mathbf{\theta}_p\)</span>，即最后学习到的data generator是<span class="math inline">\(G_{\mathbf{\theta}_p}\)</span>。</p>
+<h3 id="label-discriminative-text-generator-tuning">3.2 Label-Discriminative Text Generator Tuning</h3>
+<p>对于带有label的任务来说，能够让生成的数据和label匹配是必要的。不同的label对应的数据可能有自己特有的pattern。而要学习conditional text generation probability <span class="math inline">\(p(\mathbf{x}|y_l)\)</span>。最直接的方法是针对不同的label <span class="math inline">\(l\)</span>有自己的参数<span class="math inline">\(\mathbf{\theta}_{p_l}\)</span>，直接优化generative likelihood：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031100418153.png"  style="zoom:50%;" /></p>
+<p>上面的方法没有考虑到label discriminativeness (/dɪˈskrɪmənətɪv/) <span class="math inline">\(p(y_l|\mathbf{x})\)</span>也就是期望被downstream能够学习到的到的真实/理想分布。最理想的情况下，是期望生成的新数据：</p>
+<ul>
+<li><span class="math inline">\(y_l\)</span>是正确的</li>
+<li>理论上，一个有足够能力的task model，可以根据<span class="math inline">\(\mathbf{x}\)</span>非常confidence/明确的输出<span class="math inline">\(y_l\)</span></li>
+</ul>
+<p>如果生成的数据从理论上/让人类去判断，根据<span class="math inline">\(\mathbf{x}\)</span>既可以被分类为<span class="math inline">\(y_1\)</span>，又可以被分类为<span class="math inline">\(y_2\)</span>，很明显这个不是我们期望的理想数据。</p>
+<p>对于很多challenging NLP tasks，是存在不同label之间有很相似的distributions的，不同label之间的差别很微妙。比如对于一个movie review：<code>a movie where the ending feels like a cop-out</code>，根据最后的<code>cop-out</code>可以判断这个是一个negative review（认为这个电影的结尾是个逃避式的结尾，比如作者选择了一种非常简单没法让人满意的方式结束了剧情，对于很多情节没有交代清楚）；但如果仅仅是调整下最后的表达，换为<code>revelation</code>，就变为了一个positive review（认为电影的结尾有新意，出乎人的意料）。</p>
+<p>为了评估label-discriminativeness，作者定义了一个新的loss，也就是某个text token <span class="math inline">\(j\)</span>，在使用label <span class="math inline">\(l\)</span>时的对应参数 <span class="math inline">\(\mathbf{\theta}_p\)</span>的情况下出现的概率和使用其它labels的对应参数时生成的概率的比值：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031104013187.png"  style="zoom:50%;" /></p>
+<p>作者观察到，如果仅仅是优化前面的生成式的loss <span class="math inline">\(\mathcal{L}_{gen}\)</span>，label-discriminative loss <span class="math inline">\(\mathcal{L}_{disc}\)</span>甚至是在增加的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031104530173.png"  style="zoom:50%;" /></p>
+<p>对于这个现象的解释是，在优化生成式loss的过程中，每个token对于最后的loss有相同的loss weight <span class="math inline">\(1\)</span>。而大多数的token是label-indiscriminate，那么优化<span class="math inline">\(\mathcal{L}_{gen}\)</span>只需要让大多数的token，在无论输入参数<span class="math inline">\(\mathbf{\theta}_{p_l}\)</span>的情况下，都进行输出。就能够让<span class="math inline">\(\mathcal{L}_{gen}\)</span>在全局上越来越小。例如输入<code>a movie</code>，接下来的<code>that</code>在输入任意<span class="math inline">\(\mathbf{\theta}_{p_l}\)</span>的情况下，出现概率都差不多。让更多的token出现概率不会随着输入参数<span class="math inline">\(\mathbf{\theta}_{p_l}\)</span>变化，可能是让<span class="math inline">\(\mathcal{L}_{gen}\)</span>不断减小的较优解。</p>
+<p>那么如何让PLM学会针对不同的label，生成的data有区别呢？</p>
+<p>最直接的做法是同时优化label-discriminative loss <span class="math inline">\(\mathcal{L}_{disc}\)</span>。但这么做可能不会带来理想的结果，可能会让PLM倾向于对每个位置上的tokens都针对不同label用独特的描述。但是想到<code>the</code>这些词实际上是不需要随着label变化的。</p>
+<p>也就是说我们需要让PLM能够学会将不同的token区分出来，关注到其中是label-discriminative的tokens。我们可以给每个token赋予不同的loss weight <span class="math inline">\(w_j\)</span>，如果一个位置上的token是label-discriminative的，那么就增大它的loss weight <span class="math inline">\(w_j\)</span>。这样实现让PLM在优化生成loss的时候，要更多的关注根据当前输入的label参数<span class="math inline">\(\mathbf{\theta}_{p_l}\)</span>和输出的label-discriminative的对应。比如输入的label是negative，输出的关键token是<code>cop-out</code>这样的词；输入的label是positive，输出的关键token是<code>revelation</code>这样的词。再比如如果出现<code>bad</code>/<code>good</code>这样的word，很明显也应该关注。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031112600909.png"  style="zoom:50%;" /></p>
+<p><span class="math inline">\(w_j\)</span>是随着不同的text变化的，要想提前人工设定好是不实际的。那么就需要某种方法来自动学习<span class="math inline">\(w_j\)</span>。</p>
+<p>首先，如果让<span class="math inline">\(w_j\)</span>看做是一个可学习的参数，赋值给输入的<span class="math inline">\(\mathbf{x}\)</span>上的不同tokens，然后通过优化上面的<span class="math inline">\(\mathcal{L}_{w-gen}\)</span>学习不同的token loss weight。但这意味着我们需要给每个训练数据的每一个token都学习一个参数<span class="math inline">\(w_j\)</span>。虽然这种做法可以实现，但很明显这种做法很笨拙，并且仅仅在样本量非常小的情况下可以应用。</p>
+<p>作者的做法是借鉴了meta-learning的思想，将这个优化问题看做是bi-level optimization问题。</p>
+<p>对于generator要优化的参数，还是通过optimize生成loss来获得：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031145421032.png"  style="zoom:50%;" /></p>
+<p>这里每个token的loss weight是通过<span class="math inline">\(w_j(\mathbf{\omega})\)</span>函数计算得到的，它是一个带有softmax的feedforward network，输入是每个token计算得到的discriminative loss <span class="math inline">\(\mathcal{L}_{disc}^j\)</span>: <span class="math display">\[
+g_{\mathbf{\omega}} (\mathcal{L}_{disc}^j) = FFN(\mathcal{L}_{disc}^j) \\
+w_j(\mathbf{\omega}) = \frac{exp(g_{\mathbf{\omega}} (\mathcal{L}_{disc}^j))}{\sum_{j^\prime = 1}^n exp(g_{\mathbf{\omega}} (\mathcal{L}_{disc}^{j^\prime}))}
+\]</span> 这样输入的一个text不同位置的所有token的loss weight和是<span class="math inline">\(1\)</span>。</p>
+<p>对于要优化的weighting parameters <span class="math inline">\(\omega\)</span>是通过优化outer objective <span class="math inline">\(\mathcal{L}_{disc}\)</span>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031150702010.png"  style="zoom:50%;" /></p>
+<p>具体的优化过程是两者迭代的进行优化：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031150843652.png"  style="zoom:40%;" /></p>
+<p>步骤：</p>
+<ul>
+<li>采样一个batch集合<span class="math inline">\(\mathcal{B}\)</span></li>
+<li>根据上一个优化步骤得到的<span class="math inline">\(\omega\)</span>计算不同token的weight，然后优化生成loss，生成一个暂时的更新后的生成器参数<span class="math inline">\(\mathbf{\hat{\theta}}_p^{(t)}\)</span>；</li>
+<li>根据<span class="math inline">\(\mathbf{\hat{\theta}}_p^{(t)}\)</span>，计算不同位置的<span class="math inline">\(\mathcal{L}_{disc}^j\)</span>，优化weighting network parameters <span class="math inline">\(\omega\)</span>，获得<span class="math inline">\(\omega^{(t+1)}\)</span>；</li>
+<li>用新的<span class="math inline">\(\omega^{(t+1)}\)</span>计算不同token的weight，优化生成loss，获得新的生成器参数<span class="math inline">\(\mathbf_p^{(t+1)}\)</span>；</li>
+</ul>
+<p>我们可以计算一下，在优化两个loss的情况下，对应的新的参数更新：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152339639.png"  style="zoom:50%;" /></p>
+<p>上面的优化过程中，<span class="math inline">\(w_j\)</span>越大，对于最后参数更新的影响也越大，新的参数<span class="math inline">\(\theta_p\)</span>更会朝着能够使得<span class="math inline">\(w_j\)</span>比较大的token的生成loss减小的梯度方向进行优化。</p>
+<p>对于<span class="math inline">\(\omega\)</span>的更新：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152759758.png"  style="zoom:50%;" /></p>
+<p>后面这一项继续展开：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031152848181.png"  style="zoom:40%;" /></p>
+<p>也就是说：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031153515784.png"  style="zoom:50%;" /></p>
+<p><span class="math display">\[
+\mathbf{\omega}^{t+1} = \mathbf{\omega}^{t} + \alpha \beta \sum_{j=1}^n d_j  \frac{\partial{w_j(\mathbf{\omega})}}{\partial{\mathbf{\omega}}}
+\]</span></p>
+<p><span class="math inline">\(d_j\)</span>代表着优化第<span class="math inline">\(j\)</span>个token的生成loss和优化discriminative loss对于参数<span class="math inline">\(\theta_p\)</span>梯度的相似程度。越大越相似，也就是说这个位置上的token，优化它的discriminative loss和generative loss都能够一致的减小。举例，对于前面提到的<code>good</code>/<code>bad</code>这些token，重点针对它们优化generative loss，能够使discriminative loss也减小。可以看出，<span class="math inline">\(\omega^{t+1}\)</span>最后优化方向会更多朝着<span class="math inline">\(d_j\)</span>比较大token，增大其<span class="math inline">\(w_j\)</span>的方向进行优化。</p>
+<p>接下来是怎么样训练分类器<span class="math inline">\(C_\phi\)</span>，最大的问题是生成的data里无法避免的会存在错误标注的数据，也就是存在label noise。为了实现这一点，作者使用了一个简单的noise-robust training procedure。首先，先是在<span class="math inline">\(\mathcal{D}_{train}\)</span>上进行训练。然后在生成的数据集<span class="math inline">\(\mathcal{D}_{gen}\)</span>上进行训练。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031205511785.png"  style="zoom:50%;" /></p>
+<p>这里的<span class="math inline">\(q_l = \mathbb{1} (l=\tilde{y}) (1-\epsilon ) + \epsilon/L\)</span>，如果<span class="math inline">\(l=\tilde{y}\)</span>，那么<span class="math inline">\(q_l =1- \epsilon + \epsilon/L = 1-\epsilon (L-1) / L\)</span>。如果<span class="math inline">\(l\neq\tilde{y}\)</span>，那么<span class="math inline">\(q_l = \epsilon / L\)</span>。label smooth之后，所有的标签和相加仍然是1。</p>
+<p>第一项是交叉熵，第二项是针对temporal ensembling的正则项。其中是<span class="math inline">\(\bar{z}\)</span>是ensembled predictions，<span class="math inline">\(\hat{z}\)</span>是accumulated model prediction，<span class="math inline">\(p_\phi\)</span>是current model prediction：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031210559801.png" alt="image-20231031210559801" style="zoom:50%;" /></p>
+<p>第二项的意思是期望降低当前的预测结果current model prediction <span class="math inline">\(p_\phi\)</span>和历史累积预测结果<span class="math inline">\(\bar{z}\)</span>之间的差异。也就是稳定更新参数后的task模型的预测结果与没有更新参数前的预测结果的变化。并且在这个过程中，只有计算出来的累积预测分布大于阈值<span class="math inline">\(\delta=0.8\)</span>的才会被考虑加入到训练过程中。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031211445616.png"  style="zoom:40%;" /></p>
+<h2 id="experiments">4. Experiments</h2>
+<h3 id="experimental-setup">4.1 Experimental Setup</h3>
+<p>作者在GLUE这个benchmark上进行了实验。</p>
+<p>使用CTRL（1.6B）作为data generator，使用RoBERTa-Large（356M）作为downstream task model。</p>
+<h3 id="results">4.2 Results</h3>
+<p>主要实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031213554404.png"  style="zoom:50%;" /></p>
+<p>消融实验：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214540871.png" style="zoom:50%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214711151.png"  style="zoom:40%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231031214920876.png"  style="zoom:40%;" /></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/nlp/FewGen-icml2023/" title="FewGen-icml2023">https://liuxiyang641.github.io/nlp/FewGen-icml2023/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Data-Augmentation/" rel="tag"><i class="fa fa-tag"></i> Data Augmentation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/synthetic-data-llm-sub/" rel="prev" title="synthetic-data-llm-sub">
+                  <i class="fa fa-chevron-left"></i> synthetic-data-llm-sub
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/collection/LLM-data-augment2/" rel="next" title="LLM-data-augment2">
+                  LLM-data-augment2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">647k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:48</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"e7937f6ac63e7b75b62cf9a2d388452f"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

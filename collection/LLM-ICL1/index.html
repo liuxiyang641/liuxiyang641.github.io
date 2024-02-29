@@ -22,12 +22,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
 
-    <meta name="description" content="LLM的in-context learning和prompt相关论文">
+    <meta name="description" content="LLM in-context learning LLM上下文学习，相关论文合集1。">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="LLM-ICL">
-<meta property="og:url" content="https://liuxiyang641.github.io/collection/LLM-ICL/index.html">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/LLM-ICL1/index.html">
 <meta property="og:site_name" content="Liu Xiyang">
-<meta property="og:description" content="LLM的in-context learning和prompt相关论文">
+<meta property="og:description" content="LLM in-context learning LLM上下文学习，相关论文合集1。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230601201707682.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230601202801649.png">
@@ -57,20 +57,50 @@
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203205166.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203224510.png">
 <meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203308965.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919105659374.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919105832312.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919110027138.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165336543.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165630284.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165745295.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165849595.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919210208784.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919210604445.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920161615499.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920161132344.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211244740.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211720814.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211806895.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212034299.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212534148.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212653543.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921172022780.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921172309663.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921221943481.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921222500768.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921222539791.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921223126629.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921235901953.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230922000447451.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230922000836121.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924210415173.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924211332259.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924211421422.png">
 <meta property="article:published_time" content="2023-06-01T12:07:01.000Z">
-<meta property="article:modified_time" content="2023-06-15T12:33:19.117Z">
+<meta property="article:modified_time" content="2023-09-26T09:49:59.253Z">
 <meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="ICL">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230601201707682.png">
 
 
-<link rel="canonical" href="https://liuxiyang641.github.io/collection/LLM-ICL/">
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/LLM-ICL1/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/LLM-ICL/","path":"collection/LLM-ICL/","title":"LLM-ICL"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/LLM-ICL1/","path":"collection/LLM-ICL1/","title":"LLM-ICL"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>LLM-ICL | Liu Xiyang</title>
@@ -118,7 +148,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">51</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">139</span></a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">54</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -175,7 +205,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#llm%E7%9A%84in-context-learning%E5%92%8Cprompt%E7%9B%B8%E5%85%B3%E8%AE%BA%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">LLM的in-context learning和prompt相关论文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ape"><span class="nav-number">1.1.</span> <span class="nav-text">APE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sg-icl"><span class="nav-number">1.2.</span> <span class="nav-text">SG-ICL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-instruct"><span class="nav-number">1.3.</span> <span class="nav-text">Self-Instruct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#discrete-prompt-for-different-slm"><span class="nav-number">1.4.</span> <span class="nav-text">Discrete prompt for different SLM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wang-et-al."><span class="nav-number">1.5.</span> <span class="nav-text">Wang et al.</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#llm-in-context-learning"><span class="nav-number">1.</span> <span class="nav-text">LLM in-context learning</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ape"><span class="nav-number">1.1.</span> <span class="nav-text">APE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sg-icl"><span class="nav-number">1.2.</span> <span class="nav-text">SG-ICL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-instruct"><span class="nav-number">1.3.</span> <span class="nav-text">Self-Instruct</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#discrete-prompt-for-different-slm"><span class="nav-number">1.4.</span> <span class="nav-text">Discrete prompt for different SLM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wang-et-al."><span class="nav-number">1.5.</span> <span class="nav-text">Wang et al.</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kate"><span class="nav-number">1.6.</span> <span class="nav-text">KATE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#effect-of-ordered-examples"><span class="nav-number">1.7.</span> <span class="nav-text">Effect of ordered examples</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rethinking-the-role-of-demonstrations"><span class="nav-number">1.8.</span> <span class="nav-text">Rethinking the role of demonstrations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#self-adaptive-icl"><span class="nav-number">1.9.</span> <span class="nav-text">Self-adaptive ICL</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#udr"><span class="nav-number">1.10.</span> <span class="nav-text">UDR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cover-ls"><span class="nav-number">1.11.</span> <span class="nav-text">Cover-LS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mutual-information"><span class="nav-number">1.12.</span> <span class="nav-text">Mutual information</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -190,13 +220,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">139</span>
+          <span class="site-state-item-count">146</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">51</span>
+        <span class="site-state-item-count">54</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -252,7 +282,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/LLM-ICL/">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/LLM-ICL1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/lxy-avatar.jpg">
@@ -270,7 +300,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          LLM-ICL<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/LLM-ICL.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+          LLM-ICL<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/LLM-ICL1.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
         </h1>
 
         <div class="post-meta-container">
@@ -288,7 +318,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-06-15 20:33:19" itemprop="dateModified" datetime="2023-06-15T20:33:19+08:00">2023-06-15</time>
+      <time title="修改时间：2023-09-26 17:49:59" itemprop="dateModified" datetime="2023-09-26T17:49:59+08:00">2023-09-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -322,14 +352,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>12k</span>
+      <span>26k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>10 分钟</span>
+      <span>24 分钟</span>
     </span>
 </div>
 
@@ -340,7 +370,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="llm的in-context-learning和prompt相关论文">LLM的in-context learning和prompt相关论文</h1>
+        <h1 id="llm-in-context-learning">LLM in-context learning</h1>
+<p>LLM上下文学习，相关论文合集1。</p>
 <span id="more"></span>
 <h2 id="ape">APE</h2>
 <p>Large Language Models are Human-Level Prompt Engineers</p>
@@ -391,7 +422,7 @@
 <p>ACL 2023，华盛顿大学，<a target="_blank" rel="noopener" href="https://github.com/%20yizhongw/self-instruct">代码</a>。</p>
 <a href="/llm/Self-Instruct/" title="[个人详细博客]">[个人详细博客]</a>
 <blockquote>
-<p>Large “instruction-tuned” language models (i.e., finetuned to respond to instructions) have demonstrated a remarkable ability to generalize zero-shot to new tasks. Nevertheless, they depend heavily on human-written instruction data that is often limited in quantity, diversity, and creativity, therefore hindering the generality of the tuned model. We introduce SELF-INSTRUCT, a framework for improving the instruction-following capabilities of pretrained language models by bootstrapping off their own generations. Our pipeline generates instructions, input, and output samples from a language model, then filters invalid or similar ones before using them to finetune the original model. Applying our method to the vanilla GPT3, we demonstrate a 33% absolute improvement over the original model on SUPER-NATURALINSTRUCTIONS, on par with the performance of InstructGPT 001, which was trained with private user data and human annotations. For further evaluation, we curate a set of expert-written instructions for novel tasks, and show through human evaluation that tuning GPT3 with SELF-INSTRUCT outperforms using existing public instruction datasets by a large margin, leaving only a 5% absolute gap behind InstructGPT 001 . SELF-INSTRUCT provides an almost annotation-free method for aligning pretrained language models with instructions, and we release our large synthetic dataset to facilitate future studies on instruction tuning.</p>
+<p>Large “instruction-tuned” language models (i.e., finetuned to respond to instructions) have demonstrated a remarkable ability to generalize zero-shot to new tasks. Nevertheless, they depend heavily on human-written instruction data that is often limited in quantity, diversity, and creativity, therefore hindering the generality of the tuned model. <strong>We introduce SELF-INSTRUCT, a framework for improving the instruction-following capabilities of pretrained language models by bootstrapping off their own generations.</strong> Our pipeline generates instructions, input, and output samples from a language model, then filters invalid or similar ones before using them to finetune the original model. Applying our method to the vanilla GPT3, we demonstrate a 33% absolute improvement over the original model on SUPER-NATURALINSTRUCTIONS, on par with the performance of InstructGPT 001, which was trained with private user data and human annotations. For further evaluation, we curate a set of expert-written instructions for novel tasks, and show through human evaluation that tuning GPT3 with SELF-INSTRUCT outperforms using existing public instruction datasets by a large margin, leaving only a 5% absolute gap behind InstructGPT 001 . SELF-INSTRUCT provides an almost annotation-free method for aligning pretrained language models with instructions, and we release our large synthetic dataset to facilitate future studies on instruction tuning.</p>
 </blockquote>
 <p>人工生成instructions一方面代价很大，另一方面人工生成的instructions难以保证quantity, diversity, and creativity。</p>
 <p>作者提出使用LLM从已有的task instruction出发，自动生成新的task instruction和对应的input-output，然后过滤掉不符合规则的新task instructions，再加入到已有的task instructions集合中。作者在这个自动构造的instruction data上fine-tuning GPT3，发现效果提升了33%，非常接近InstructGPT001的效果。</p>
@@ -493,6 +524,207 @@
 <p>最后，找到的这种最佳的demonstrations，可以用于其它的LM。</p>
 <p>实验结果：</p>
 <p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230615203308965.png"  style="zoom:50%;" /></p>
+<h2 id="kate">KATE</h2>
+<p>What Makes Good In-Context Examples for GPT-3?</p>
+<p>DeeLIO 2022，杜克大学与Microsoft，<a href="https:%20//github.com/jiachangliu/KATEGPT3">代码</a>。</p>
+<blockquote>
+<p>GPT-3 has attracted lots of attention due to its superior performance across a wide range of NLP tasks, especially with its in-context learning abilities. Despite its success, we found that the empirical results of GPT-3 depend heavily on the choice of in-context examples. In this work, we investigate whether there are more effective strategies for judiciously selecting incontext examples (relative to random sampling) that better leverage GPT-3’s in-context learning capabilities. Inspired by the recent success of leveraging a retrieval module to augment neural networks, <strong>we propose to retrieve examples that are semantically-similar to a test query sample to formulate its corresponding prompt.</strong> Intuitively, the examples selected with such a strategy may serve as more informative inputs to unleash GPT-3’s power of text generation. We evaluate the proposed approach on several natural language understanding and generation benchmarks, where the retrieval-based prompt selection approach consistently outperforms the random selection baseline. Moreover, it is observed that the sentence encoders fine-tuned on task-related datasets yield even more helpful retrieval results. Notably, significant gains are observed on tasks such as table-totext generation (44.3% on the ToTTo dataset) and open-domain question answering (45.5% on the NQ dataset).</p>
+</blockquote>
+<p>在GPT-3中的原始ICL是随机找上下文样例，作者发现上下文样例的选择会极大的影响GPT-3的效果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919105659374.png"   style="zoom:35%;" /></p>
+<p>因此，寻找适用于GPT的上下文样例很关键。最粗暴的做法是穷举所有样例的可能排列，但这个是不实际的。作者提出，利用kNN方法，从训练集中寻找sentence-level语义相似的样例来辅助ICL：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919105832312.png"  style="zoom:50%;" /></p>
+<p>利用kNN找相似样例首先是需要将样例转化为embedding，作者提出两个考虑：</p>
+<ul>
+<li>The first category includes generally pre-trained sentence encoders such as the BERT.</li>
+<li>The second category includes sentence encoders fine-tuned on specific tasks or datasets.</li>
+</ul>
+<p>从实验上看，效果提升很明显：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919110027138.png"   style="zoom:35%;" /></p>
+<h2 id="effect-of-ordered-examples">Effect of ordered examples</h2>
+<p>Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity</p>
+<p>伦敦大学，ACL 2022</p>
+<blockquote>
+<p>When primed with only a handful of training samples, very large, pretrained language models such as GPT-3 have shown competitive results when compared to fully-supervised, fine-tuned, large, pretrained language models. <strong>We demonstrate that the order in which the samples are provided can make the difference between near state-of-the-art and random guess performance</strong>: essentially some permutations are “fantastic” and some not. We analyse this phenomenon in detail, establishing that: it is present across model sizes (even for the largest current models), it is not related to a specific subset of samples, and that a given good permutation for one model is not transferable to another. While one could use a development set to determine which permutations are performant, this would deviate from the true fewshot setting as it requires additional annotated data. Instead, <strong>we use the generative nature of language models to construct an artificial development set and based on entropy statistics of the candidate permutations on this set</strong>, we identify performant prompts. Our method yields a 13% relative improvement for GPTfamily models across eleven different established text classification tasks.</p>
+</blockquote>
+<p>之前已经有很多讨论sample structure/formatting的工作，作者声称这篇论文是首个讨论sample顺序对ICL性能影响的paper。</p>
+<p>要注意，作者的ICL是corpus-level的prompt，对于所有query，有相同的demonstrations。直接来看作者实验得到的几个结论：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165336543.png"   style="zoom:35%;" /></p>
+<p>观察：</p>
+<ul>
+<li>ICL中demonstrations的排列顺序很重要，最坏的情况下是50%准确率，也就是随机猜测；最好的排列是性能接近有监督SOTA方法</li>
+<li>LLM对于demonstrations的order很敏感，增大model size虽然似乎会一定程度缓解模型对example order的敏感程度，但是在一些任务下，这种缓解趋势并不存在（如Figure 1下面在Subj数据集的实验结果）</li>
+<li>与之相反的，传统的有不同初始化设置的有监督训练的方法的性能variance，可能就是在1%-2%（反正肯定在个数百分比）的变化。</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165630284.png"   style="zoom:40%;" /></p>
+<p>观察：</p>
+<ul>
+<li>Adding training samples does not significantly reduce variance. 增加上下文样例数量并不会缓解对order的敏感性。</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165745295.png"   style="zoom:40%;" /></p>
+<p>观察：</p>
+<ul>
+<li>Performant prompts are not transferable across models. 不同LLM偏好的order是不通用的（图中的pairwise Spearman’s rank correlation系数很小）</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919165849595.png"   style="zoom:40%;" /></p>
+<p>观察：</p>
+<ul>
+<li>表现不好的order原因之一可能是，不够平衡的label估计，总是对某一类label过于自信。</li>
+</ul>
+<p>从上面可以看出，表现不好的prompt可能会导致有不平衡的label输出估计。因此，作者提出了一种无监督的评估方法，选择ICL样例的合适排序。</p>
+<p>首先，作者根据随机采样得到的样例集合，使用它们的所有可能排列，如有<span class="math inline">\(n\)</span>个example，那么对应<span class="math inline">\(n!\)</span>种排列permutations，每个permutation，让LLM生成对应的新的data和label，要注意此时生成的label不能保证是正确的，因此会丢弃。所有生成的sequences作为<em>probing set</em>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919210208784.png"   style="zoom:40%;" /></p>
+<p>接下来，对于每种可能的排列，作者通过在<em>probing set</em>上计算两种无监督基于熵的指标，来选择合适ordered prompt：</p>
+<ul>
+<li>Global Entropy (GlobalE)：avoid the issue of extremely unbalanced predictions. 用LLM计算在给定某种排列顺序的demonstrations之后，对于整个probing set上所有data预测label的分布，如果让这个总体分布熵越小，表示越倾向输出一致/不平衡的label，更有可能出错。</li>
+<li>Local Entropy (LocalE)：if a model is overly confident for all probing inputs, then it is likely that the model is not behaving as desired. 分别计算probing data预测label分布的熵，然后平均。</li>
+</ul>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230919210604445.png"   style="zoom:50%;" /></p>
+<p>采用GlobalE或LocalE指标能够减小LLM order对于效果的variance。</p>
+<h2 id="rethinking-the-role-of-demonstrations">Rethinking the role of demonstrations</h2>
+<p>华盛顿大学与Meta，EMNLP 2022，<a href="github.com/Alrope123/rethinking-demonstrations">代码</a>。<a href="/llm/rethinking-role-of-demonstrations/" title="[详细博客]">[详细博客]</a></p>
+<blockquote>
+<p>Large language models (LMs) are able to incontext learn—perform a new task via inference alone by conditioning on a few input-label pairs (demonstrations) and making predictions for new inputs. However, there has been little understanding of how the model learns and which aspects of the demonstrations contribute to end task performance. <strong>In this paper, we show that ground truth demonstrations are in fact not required—randomly replacing labels in the demonstrations barely hurts performance on a range of classification and multi-choice tasks</strong>, consistently over 12 different models including GPT-3. Instead, we find that other aspects of the demonstrations are the key drivers of end task performance, including the fact that they provide a few examples of (1) the label space, (2) the distribution of the input text, and (3) the overall format of the sequence. Together, our analysis provides a new way of understanding how and why in-context learning works, while opening up new questions about how much can be learned from large language models through inference alone.</p>
+</blockquote>
+<p>作者对于上下文学习中，什么样的signal是对LLM进行task learning有帮助的进行了实验探究。</p>
+<p>作者主要针对4个ICL中的demonstrations可能提供的learning signal进行了实验：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920161615499.png"   style="zoom:40%;" /></p>
+<p>作者的第一个重要发现是ICL中demonstrations的input-label是否正确匹配，对模型效果的影响不大。作者用随机的label来替换demonstrations的ground truth label，发现效果下降不是很多：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920161132344.png"   style="zoom:50%;" /></p>
+<h2 id="self-adaptive-icl">Self-adaptive ICL</h2>
+<p>Self-Adaptive In-Context Learning: An Information Compression Perspective for In-Context Example Selection and Ordering</p>
+<p>Shanghai AI Laboratory和厦门大学，ACL 2023，<a target="_blank" rel="noopener" href="https://github.com/Shark-NLP/self-adaptive-ICL">代码</a>。</p>
+<blockquote>
+<p>Despite the impressive few-shot performance of in-context learning (ICL), it remains a common practice to randomly select examples to serve as the context. In this paper, we advocate self-adaptive in-context learning, a new principle for ICL, in which <strong>the self-adaption mechanism is introduced to help each input find an in-context example organization</strong> (i.e., selection and permutation) that can derive the correct output, thus maximizing performance. To validate the effectiveness of self-adaptive ICL, we propose a general <strong>select-then-rank</strong> framework and a set of novel selection and ranking algorithms. Upon extensive evaluation on eight different NLP datasets, our self-adaptive ICL method achieves a 40% relative improvement over the common practice setting. Further analysis reveals the great potential of selfadaptive ICL as a promising method to close the gap between ICL and finetuning. Our code will be released to facilitate future research.</p>
+</blockquote>
+<p>作者提出，针对每个test example进行demonstrations selection，然后进行ranking也就是排列。首先，作者建议有以下的寻找demonstrations的策略：</p>
+<ul>
+<li>TopK：KATE方法和<em>Making pre-trained language models better few-shot learners</em> 工作中提出，选择test sample的nearest neighbors作为demonstrations。</li>
+<li>VoteK：在TopK的策略上，通过惩罚和已选择的样例相似的候选样例，考虑多样性[<em>Selective annotation makes language models better few-shot learners</em>]。</li>
+<li>DPP：作者进一步尝试了determinantal point process (DPP)，同样是一种考虑样例多样性的指标[<em>k-dpps: Fixed-size determinantal point processes. ICML 2011</em>]。</li>
+</ul>
+<p>为了找合适的样例排列顺序，作者从Solomonoff’s general theory of inference (Solomonoff, 1964)和Minimum Description Length (MDL) principle (Grünwald, 2007)出发，倾向于选择能够无损压缩test sample的demonstrations：</p>
+<blockquote>
+<p>We assume that a good organization of in-context examples is the organization that is good at losslessly compressing testing samples.</p>
+</blockquote>
+<p>换句话说，无损的压缩test sample，意味着可以从demonstrations中，正确的推导出test sample对应的label：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211244740.png"   style="zoom:50%;" /></p>
+<p>其中<span class="math inline">\(c\)</span>表示某种demonstrations组织。<span class="math inline">\(L_{\theta}(y | c, x)\)</span>是指在给定样例<span class="math inline">\(c\)</span>和test input <span class="math inline">\(x\)</span>，能够真正压缩与还原test label <span class="math inline">\(y\)</span>的codelength。<span class="math inline">\(L(\theta)\)</span>是指描述model本身所需的codelength，对于所有的候选demonstrations是一样的，因此可以忽略。</p>
+<p>上述公式定义最佳的demonstrations应该使无损压缩test sample所需的codelength最短。</p>
+<p>使用Shannon-Huffman code来计算进行data transmission的codelength：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211720814.png"   style="zoom:50%;" /></p>
+<p>但是test label <span class="math inline">\(y\)</span>在实际中是未知的，因此作者使用codelength的期望来代替：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920211806895.png"  style="zoom:50%;" /></p>
+<p>其中<span class="math inline">\(q(y_i | Y)\)</span>是test label <span class="math inline">\(y\)</span>的先验分布，对于每个test sample来说可能是不一样的，因此作者再次使用model进行估计：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212034299.png"   style="zoom:50%;" /></p>
+<p>现在，从理论上，对于每个排列<span class="math inline">\(c\)</span>，我们都可以计算出一个无监督的metric来进行选择；但是由于作者的demonstrations是instance-level的，潜在的排序数量仍然过多，不可能真正的计算一遍所有的候选排序。因此，作者实际上只是在对应的<span class="math inline">\(K=8\)</span>采样集合中，随机采样<span class="math inline">\(10\)</span>种排列，然后进行ranking。</p>
+<p>对于最终的公式5，此时作者是在计算熵，也就是寻找熵最小的情况，寻找让LLM的预测分布非常confident的demonstrations。这和上面<em>Effect of ordered examples</em>工作中提出的GlobalE和LocalE的思想是相反的。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212534148.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>使用TopK选择demonstrations，然后使用MDL进行ranking取得了最好的结果</li>
+<li>TopK的instance-level的ICL策略，已经在大多数据集上优于corpus-level的ICL策略</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230920212653543.png"   style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>不同任务下需要selection偏好不同。在分类任务下，使用TopK策略取得了最好的效果，在QA任务下，使用VoteK等考虑多样性的策略效果更好。</li>
+</ul>
+<h2 id="udr">UDR</h2>
+<p>Unified Demonstration Retriever for In-Context Learning</p>
+<p>复旦，ACL 2023，<a target="_blank" rel="noopener" href="https://github.com/KaiLv69/UDR">代码</a>。</p>
+<blockquote>
+<p>In-context learning is a new learning paradigm where a language model conditions on a few input-output pairs (demonstrations) and a test input, and directly outputs the prediction. It has been shown highly dependent on the provided demonstrations and thus promotes the research of demonstration retrieval: given a test input, relevant examples are retrieved from the training set to serve as informative demonstrations for in-context learning. While previous works focus on training task-specific retrievers for several tasks separately, these methods are often hard to transfer and scale on various tasks, and separately trained retrievers incur a lot of parameter storage and deployment cost. In this paper, <strong>we propose Unified Demonstration Retriever (UDR), a single model to retrieve demonstrations for a wide range of tasks.</strong> To train UDR, we cast various tasks’ training signals into a unified list-wise ranking formulation by language model’s feedback. Then we propose a multi-task list-wise ranking training framework, with an iterative mining strategy to find high-quality candidates, which can help UDR fully incorporate various tasks’ signals. Experiments on 30+ tasks across 13 task families and multiple data domains show that UDR significantly outperforms baselines. Further analyses show the effectiveness of each proposed component and UDR’s strong ability in various scenarios including different LMs (1.3B ∼ 175B), unseen datasets, varying demonstration quantities, etc.</p>
+</blockquote>
+<p>目前对于ICL进行demonstrations选择的方法有两类：</p>
+<ul>
+<li>无监督的：比如使用BM25或者SBERT等embedding进行相似度计算</li>
+<li>有监督的：针对特定task，在某种ranking的监督信号下，训练一个demonstration retriever</li>
+</ul>
+<p>作者期望解决的问题是，能够设计一种适用于不同task的Demonstration Retriever。</p>
+<p>作者提出的方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921172022780.png"  style="zoom:50%;" /></p>
+<p>首先，作者计算query sample和candidate example的方式是基于dense passage retriever (DPR) [<em>Dense passage retrieval for open-domain question answering. EMNLP 20</em>]的思路。也就是使用encoder，将query example <span class="math inline">\(x\)</span>和candidate example <span class="math inline">\(z\)</span>分别进行编码，然后计算相似度：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921172309663.png"   style="zoom:40%;" /></p>
+<p>为了能够辨别来自不同task的example，编码的时候会将task instruction <span class="math inline">\(I\)</span>和example一起进行编码。</p>
+<p>实现中，作者使用BERT-base来编码。</p>
+<p>然后，作者的ranking signal来自LM本身的conditional probability，继承于之前的的工作EPR的思想：</p>
+<blockquote>
+<p>This indicates how helpful this candidate is for decoding the target (independent of all other candidates).</p>
+</blockquote>
+<p>公式：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921221943481.png"   style="zoom:40%;" /></p>
+<p>其中<span class="math inline">\(G\)</span>代表LLM，<span class="math inline">\(z_j\)</span>是某个candidate example，<span class="math inline">\(s_{gen}\)</span>和<span class="math inline">\(s_{cls}\)</span>分别代表生成任务和分类任务下，加入example <span class="math inline">\(z_j\)</span>后LM对query <span class="math inline">\(x\)</span>输出正确<span class="math inline">\(y\)</span>的概率。<span class="math inline">\(r(z_j)\)</span>代表<span class="math inline">\(z_j\)</span>在所有candidate examples中的rank。</p>
+<p>作者期望通过相似度计算的retriever对于candidate examples的排序结果，能够靠近LM基于条件概率的排序结果，作者引入了两种loss：</p>
+<ul>
+<li><p>LambdaRank loss [<em>From RankNet to LambdaRank to LambdaMART: An overview. 2010</em>]：其中<span class="math inline">\(w\)</span>是一个根据不同pair <span class="math inline">\(z_i,z_j\)</span>动态调整的值</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921222500768.png"   style="zoom:40%;" /></p></li>
+<li><p>in-batch negative loss：让rank 1的example <span class="math inline">\(z^{*}\)</span>应该在所有可能的examples中和<span class="math inline">\(x\)</span>是最相似的</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921222539791.png"   style="zoom:40%;" /></p></li>
+</ul>
+<p>最后，为了保证效率，在训练阶段，使用迭代的采样策略；最后在推理时，基于FAISS [<em>Billion-scale similarity search with gpus. 2021</em>]使用基于相似度的计算来寻找demonstrations（考虑到如果在推理阶段，使用LM来ranking的巨大代价）。</p>
+<p>实验结果（基于GPT-Neo-2.7B作为LM）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921223126629.png"   style="zoom:40%;" /></p>
+<h2 id="cover-ls">Cover-LS</h2>
+<p>Diverse Demonstrations Improve In-context Compositional Generalization</p>
+<p>ACL 2023，<a target="_blank" rel="noopener" href="https://github.com/itayle/diverse-demonstrations">代码</a>。</p>
+<blockquote>
+<p>In-context learning has shown great success in i.i.d semantic parsing splits, where the training and test sets are drawn from the same distribution. In this setup, models are typically prompted with demonstrations that are similar to the input utterance. However, in the setup of compositional generalization, where models are tested on outputs with structures that are absent from the training set, selecting similar demonstrations is insufficient, as often no example will be similar enough to the input. In this work, <strong>we propose a method to select diverse demonstrations that aims to collectively cover all of the structures required in the output program, in order to encourage the model to generalize to new structures from these demonstrations.</strong> We empirically show that combining diverse demonstrations with in-context learning substantially improves performance across three compositional generalization semantic parsing datasets in the pure in-context learning setup and when combined with fine-tuning.</p>
+</blockquote>
+<p>作者针对的是Compositional generalization问题。在组合泛化中，仅仅寻找和query example相似的单个example是不够的，需要考虑更加多样diverse的examples set来提供足够的信息。</p>
+<p>Follow前人的工作[<em>Unobserved local structures make compositional generalization hard. 2022</em>]，作者定义的example的多样性体现在example的local structures。local structures是指Compositional generalization问题的答案program对应的抽象语法树的各个子图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230921235901953.png"   style="zoom:40%;" /></p>
+<p>作者期望找到的demonstrations一方面能够尽可能和query example相似；一方面能够有更多样的local structures去覆盖query example的predicted local structures。作者训练T5-large来针对query example输出local structures，而不是whole program。这样能够减低预测的难度。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230922000447451.png"   style="zoom:40%;" /></p>
+<p>在找demonstrations时：</p>
+<ul>
+<li>作者先对T5-large预测的query example的local structures根据长度进行降序排列；这一思想和前人的工作[<em>Generate-and-Retrieve: Use Your Predictions to Improve Retrieval for Semantic Parsing. COLING 2022</em>]一致，先进行preliminary prediction，然后基于preliminary prediction再进行检索；</li>
+<li>然后迭代的选择当前最长的local structure，寻找training set里覆盖了当前local structure中，和query example最相似的example。相似度的计算可以基于BM25或者SBERT；</li>
+<li>最后，移除和已经选择的example的program一样的其它候选examples，继续进行选择；直至达到上限。</li>
+</ul>
+<p>找到的demonstrations不仅可以辅助与LLM的ICL，作者还直接用来fine-tuning一个SLM（同样是基于T5-large）。</p>
+<p>实验结果（LLM基于<code>code-davinci-002</code>）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230922000836121.png"   style="zoom:40%;" /></p>
+<p>（相关工作里有一些寻找多样example的paper，只不过并非是为prompt设计的）</p>
+<h2 id="mutual-information">Mutual information</h2>
+<p>An Information-theoretic Approach to Prompt Engineering Without Ground Truth Labels</p>
+<p>ACL 2022，<a href="github.com/BYU-PCCL/information-theoretic-prompts">代码</a>。</p>
+<blockquote>
+<p>Pre-trained language models derive substantial linguistic and factual knowledge from the massive corpora on which they are trained, and prompt engineering seeks to align these models to specific tasks. Unfortunately, existing prompt engineering methods require significant amounts of labeled data, access to model parameters, or both. We introduce a new method for selecting prompt templates without labeled examples and without direct access to the model. <strong>Specifically, over a set of candidate templates, we choose the template that maximizes the mutual information between the input and the corresponding model output.</strong> Across 8 datasets representing 7 distinct NLP tasks, we show that when a template has high mutual information, it also has high accuracy on the task. On the largest model, selecting prompts with our method gets 90% of the way from the average prompt accuracy to the best prompt accuracy and requires no ground truth labels.</p>
+</blockquote>
+<p>这篇属于评价哪个prompt template/ICL formatting比较好的工作，适用于任何分类的NLP任务，并且只要各个分类的开头token是独一无二的。</p>
+<p>LLM的prompt是指：</p>
+<blockquote>
+<p>“prompt” refers to any language passed to the model via the context window.</p>
+</blockquote>
+<p>prompt的template可以理解为待填充的prompt，用来构建prompt：</p>
+<blockquote>
+<p>a template refers to a natural language scaffolding filled in with raw data, resulting in a prompt.</p>
+</blockquote>
+<p>prompt template的好坏能够极大的影响LLM的task performance，一种最general的找最好的template的思路是通过在validation set上进行评估，但这要求有提前的labeled set。</p>
+<p>作者的方法是可以在不需要ground truth label的情况下，通过计算不同templates和LLM输出结果的mutual information来找合适的template：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924210415173.png"   style="zoom:40%;" /></p>
+<p>步骤：</p>
+<ul>
+<li>人工设计<span class="math inline">\(K\)</span>个prompt template，然后用几个samples测试下template，排除或者修改那些无法将对应label最开头的token输出在前几位的templates；</li>
+<li>针对每个template，采样数据，填充template，创建测试数据；</li>
+<li>对于输出结果，将不同label对应的开头token的权重重新归一化。计算mutual information，选择最大互信息的template；</li>
+</ul>
+<p>什么是互信息：</p>
+<blockquote>
+<p>Mutual information is a measure of the amount of shared information between two random variables (Cover and Thomas, 2006); in other words, it is the reduction in entropy that is observed in one random variable when the other random variable is known.</p>
+</blockquote>
+<p>假定templates <span class="math inline">\(f_{\theta}(X)=\{f_{\theta}(x)\}\)</span>是random variable，<span class="math inline">\(Y\)</span>是labels，计算mutual information <span class="math inline">\(I(f_{\theta(X)};Y)=D_{KL}(P_{(f_{\theta(X)},Y)}||P_{f_{\theta}} \otimes P_Y)\)</span>，进一步化简为：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924211332259.png"   style="zoom:50%;" /></p>
+<p>使用下面的采样期望进行估计：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230924211421422.png"   style="zoom:40%;" /></p>
+<p><span class="math inline">\(H(\cdot)\)</span>代表熵。作者认为更高的mutual information更好，代表采用该template之后，熵减小的更多。</p>
+<p>如何理解一个template有更大的互信息就更好？</p>
+<ol type="1">
+<li><p>根据上面的公式2，最大化互信息，意味着最大化<span class="math inline">\(H(Y)\)</span>和最小化<span class="math inline">\(H(Y|f_{\theta}(X))\)</span>。也就是一个更好的template，对原始的label有更少的bias（更uniform，不潜在的偏好某种label）；同时该template倾向于输出更confident的label probability</p></li>
+<li><p>从data processing inequality [<em>Elements of Information Theory 2nd Edition (Wiley Series in Telecommunications and Signal Processing) 2006</em>]的角度分析，<span class="math inline">\(I(f_{\theta(X)};Y) \leq I(X;Y)\)</span>，也就是说<span class="math inline">\(I(f_{\theta(X)};Y)\)</span>是<span class="math inline">\(I(X;Y)\)</span>的lower bound。更大的<span class="math inline">\(I(f_{\theta(X)};Y)\)</span>意味着更tight的lower bound，因此保留了<span class="math inline">\(X\)</span>和<span class="math inline">\(Y\)</span>之间更多的信息</p></li>
+</ol>
 
     </div>
 
@@ -510,7 +742,7 @@
   </li>
   <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://liuxiyang641.github.io/collection/LLM-ICL/" title="LLM-ICL">https://liuxiyang641.github.io/collection/LLM-ICL/</a>
+      <a href="https://liuxiyang641.github.io/collection/LLM-ICL1/" title="LLM-ICL">https://liuxiyang641.github.io/collection/LLM-ICL1/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -519,6 +751,7 @@
 </div>
 
           <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
               <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
               <a href="/tags/ICL/" rel="tag"><i class="fa fa-tag"></i> ICL</a>
           </div>
@@ -556,7 +789,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-flag"></i>
   </span>
@@ -567,13 +800,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">513k</span>
+    <span title="站点总字数">647k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">7:46</span>
+    <span title="站点阅读时长">9:48</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -630,7 +863,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
 
-<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"53ab17f3028c8d8e6c4c630123692155"}</script>
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"e4e19132b49a6fe985bc998b9b0f8734"}</script>
 <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
 <div class="moon-menu">
   <div class="moon-menu-items">

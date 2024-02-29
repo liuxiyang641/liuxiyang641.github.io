@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Synthetic Data Generation with Large Language Models for Text Classification: Potential and Limitations Purdue University, 作者评论接收至EMNLP 2023。  The collection and curation of high-quality training data">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="synthetic-data-llm-sub">
+<meta property="og:url" content="https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Synthetic Data Generation with Large Language Models for Text Classification: Potential and Limitations Purdue University, 作者评论接收至EMNLP 2023。  The collection and curation of high-quality training data">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021225717858.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021230350077.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021230653949.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231834682.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231603375.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231307005.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232135959.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232350439.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232516131.png">
+<meta property="article:published_time" content="2023-10-21T14:47:40.000Z">
+<meta property="article:modified_time" content="2023-10-29T02:44:38.525Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="Data Augmentation">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021225717858.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/","path":"llm/synthetic-data-llm-sub/","title":"synthetic-data-llm-sub"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>synthetic-data-llm-sub | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">54</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#synthetic-data-generation-with-large-language-models-for-text-classification-potential-and-limitations"><span class="nav-number">1.</span> <span class="nav-text">Synthetic Data Generation with Large Language Models for Text Classification: Potential and Limitations</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#methodolgy"><span class="nav-number">1.1.</span> <span class="nav-text">Methodolgy</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluation-i-comparison-across-different-types-of-tasks"><span class="nav-number">1.2.</span> <span class="nav-text">Evaluation I: Comparison Across Different Types of Tasks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#evaluation-results"><span class="nav-number">1.2.1.</span> <span class="nav-text">Evaluation Results</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#diversity-and-similarity-between-the-synthetic-data-and-the-real-data"><span class="nav-number">1.2.2.</span> <span class="nav-text">Diversity and Similarity between the Synthetic Data and the Real Data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#evaluation-ii-comparison-across-different-task-instances"><span class="nav-number">1.3.</span> <span class="nav-text">Evaluation II: Comparison Across Different Task Instances</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="synthetic-data-llm-sub | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          synthetic-data-llm-sub<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/llm/synthetic-data-llm-sub.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-21 22:47:40" itemprop="dateCreated datePublished" datetime="2023-10-21T22:47:40+08:00">2023-10-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-29 10:44:38" itemprop="dateModified" datetime="2023-10-29T10:44:38+08:00">2023-10-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/" itemprop="url" rel="index"><span itemprop="name">LLM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/LLM/Data-Augmentation/" itemprop="url" rel="index"><span itemprop="name">Data Augmentation</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="synthetic-data-generation-with-large-language-models-for-text-classification-potential-and-limitations">Synthetic Data Generation with Large Language Models for Text Classification: Potential and Limitations</h1>
+<p>Purdue University, 作者评论接收至EMNLP 2023。</p>
+<blockquote>
+<p>The collection and curation of high-quality training data is crucial for developing text classification models with superior performance, but it is often associated with significant costs and time investment. Researchers have recently explored using large language models (LLMs) to generate synthetic datasets as an alternative approach. However, <strong>the effectiveness of the LLM-generated synthetic data in supporting model training is inconsistent across different classification tasks.</strong> To better understand factors that moderate the effectiveness of the LLM-generated synthetic data, in this study, we look into how the performance of models trained on these synthetic data may vary with the subjectivity of classification. Our results indicate that subjectivity, at both the task level and instance level, is negatively associated with the performance of the model trained on synthetic data. We conclude by discussing the implications of our work on the potential and limitations of leveraging LLM for synthetic data generation.</p>
+</blockquote>
+<p><strong>Issue</strong>: 目前在不同的task里，对于使用LLM生成的data是否能够和真实人工标注的data相比，没有定论。</p>
+<p><strong>Solution</strong>: 作者认为出现这种现象的原因之一和具体text classification任务的主观程度subjectivity有关，实验发现主观性越强的分类任务，LLM生成数据的效果也会越差。</p>
+<span id="more"></span>
+<h2 id="methodolgy">Methodolgy</h2>
+<p>作者采用了zero-shot和few-shot ICL两种设置。</p>
+<p>对于zero-shot ICL prompt：</p>
+<ul>
+<li>“context prompt” relevant to the targeted domain of interest is used to set the context. 与具体task context相关的prompt</li>
+<li>the “data generation prompt”, is provided to the LLM, instructing the model to generate texts with a specific style, label (with respect to the classification task of interest), and word limit. 提供具体的label、生成字数限制等要求的prompt</li>
+<li>a “diversity prompt” to the LLM—“Can you provide something more diverse compared to the previously generated data?”—aiming to increase the diversity of the synthetic data generated. 生成具体的几个text data后，提示LLM生成更多不同的text data</li>
+</ul>
+<p>对于few-shot ICL prompt：</p>
+<ul>
+<li>“context prompt”与前面zero-shot ICL一样</li>
+<li>随机采样的几个demonstrations，其中说明了对应的label</li>
+<li>还强制限制了不允许仅仅是修改原来的句子，而是期望生成更多的具体data，比如<code>You should imitate the example I have provided, but you cannot simply modify or rewrite the example I have given</code></li>
+</ul>
+<p>下面是不同task用到的具体prompt：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021225717858.png"  style="zoom:50%;" /></p>
+<p>更多具体task的prompt参考paper附录。</p>
+<h2 id="evaluation-i-comparison-across-different-types-of-tasks">Evaluation I: Comparison Across Different Types of Tasks</h2>
+<p>一些实验设置：</p>
+<ul>
+<li><p>10个不同task，AG’s news (Zhang et al., 2015), IMDB reviews (Maas et al., 2011), SMS spam (Almeida et al., 2011), Financial phrase bank (Malo et al., 2014), Reddit emotion (Demszky et al., 2020), Relation classification (Gao et al., 2019) <strong>FewRel 2.0</strong>, Tweet irony speech (Van Hee et al., 2018), Tweet emotions (Mohammad et al., 2018), Sarcasm news (Misra and Arora, 2023, Misra and Grover, 2021), and Humor speech (Annamoradnejad and Zoghi, 2020).</p></li>
+<li><p>对于关系分类任务，只讨论了FewRel 2.0数据集中‘country’, ‘league’, ‘screenwriter’, and ‘tributary’的4种relation</p></li>
+<li><p>主要基于<code>GPT-3.5-Turbo</code>进行数据生成，但是在附录里提供了关于<code>GPT2-large (774M)</code>和<code>Llama2 (7B)</code>的对比实验</p></li>
+<li><p>对于每个label生成<span class="math inline">\(3000\)</span>条数据用于实验，微调BERT和RoBERTa进行实验</p></li>
+<li><p>具体task的主观程度，是通过众包人工打分得出的，每个worker会被要求判断随机的从两个task里找到的句子，哪个更加客观。具体的众包过程可以参考论文。在众包时，提示worker的对于任务客观性的定义：</p>
+<blockquote>
+<p>the classification of a piece of text is based on clear, identifiable features in the text (e.g., keywords or phrases), and can be done without being affected by any personal interpretation of the text resulted from personal biases, emotions or beliefs.</p>
+</blockquote></li>
+</ul>
+<p>分类结果可以根据text很清楚的判断出来，并且不会受到个人的偏好、情感、信仰等发生变化。</p>
+<h3 id="evaluation-results">Evaluation Results</h3>
+<p>分别独立的在真实数据、生成数据上进行训练的实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021230350077.png"  style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>直接使用真实数据训练的效果最好</li>
+<li>few-shot ICL生成数据效果比zero-shot ICL效果好</li>
+<li>LLM在生成带有更多人类主观性的数据上，效果更差</li>
+</ul>
+<p>为什么任务的主观程度会增大LLM生成数据的效果？作者提供了两个解释：</p>
+<ol type="1">
+<li>highly subjective tasks often require a deep understanding of nuanced human emotions and contextual subtleties, as well as the ability to discern and accurately interpret different perspectives. 越主观，越要求对于人类情感等有非常微妙的理解</li>
+<li>it may be challenging for LLMs to generate synthetic data to recover such potentially biased “majority view,” especially if the LLMs are trained to maintain neutrality. 大多数的任务实例是利用众包标注的，也就是说在数据集里的gold label可能只反映了多个人的主要投票意见。对于LLM来说，要生成反映这种majority view的句子可能比较难。</li>
+</ol>
+<p>使用一小部分真实数据进行训练，然后拿这一小部分真实数据作为demonstrations进行数据增强的实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021230653949.png" style="zoom:50%;" /></p>
+<p>观察：</p>
+<ul>
+<li>在关系抽取任务上，作者的这种比较简单的生成数据的方法，没有明显提升效果</li>
+</ul>
+<p>不同LLM生成数据的对比：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231834682.png"  style="zoom:50%;" /></p>
+<h3 id="diversity-and-similarity-between-the-synthetic-data-and-the-real-data">Diversity and Similarity between the Synthetic Data and the Real Data</h3>
+<p>对于生成的数据，作者从多样性和原有数据的相似性两个角度进行了分析。</p>
+<p>对于多样性，follow前人的工作[<em>Directed diversity: Leveraging language embedding distances for collective creativity in crowd ideation. 2021</em>]，采用<em>Remote Clique Score</em>和<em>Chamfer Distance Score</em>两个metric计算多样性：</p>
+<ul>
+<li>Remote Clique Score (i.e., the average mean distance of a data instance to other instances)</li>
+<li>Chamfer Distance Score (i.e., the average minimum distance of a data instance to other instances)</li>
+</ul>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231603375.png"  style="zoom:50%;" /></p>
+<p>可以看到真实数据多样性更强；而few-shot ICL生成数据的多样性比zero-shot ICL生成数据的多样性更强。</p>
+<p>相似度是衡量生成数据与真实数据的相似程度，具体来说，对于真实的text，利用Sentence Transformer（<em>all MiniLM-L6-v2</em>）转化为embedding，然后计算和各个生成数据embedding的余弦相似度，取前5个最大的相似度的值来计算平均相似性。实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021231307005.png"  style="zoom:40%;" /></p>
+<p>可以看到，用few-shot ICL生成的数据比zero-shot ICL生成的数据，和原有真实数据更加一致。</p>
+<h2 id="evaluation-ii-comparison-across-different-task-instances">Evaluation II: Comparison Across Different Task Instances</h2>
+<p>作者进一步探究了，利用LLM生成的data训练的模型，是否对于同一任务下，不同主观程度的instance也会有不同的表现？</p>
+<p>instance的主观程度同样是利用众包人工标记，多个worker对于某种instance分类结果，判断越不一致，越认为instance的主观性越强。利用多个worker的投票分类结果，可以计算最多的投票分类在所有投票中的占比，作为主观程度的度量：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232135959.png"  style="zoom:50%;" /></p>
+<p>上面的度量论文里称作annotation agreement。下面是不同task的annotation agreement平均值：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232350439.png"  style="zoom:50%;" /></p>
+<p>作者在实验时，设定了阈值<span class="math inline">\(\gamma\)</span>，instance的annotation agreement <span class="math inline">\(\alpha_i\)</span>超过一定阈值后，才会被评估。因此阈值gamma越大，代表着剩下的测试实例主观性越弱。实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021232516131.png"  style="zoom:50%;" /></p>
+<p>可以看到，instance的主观性越弱，训练好的model越有可能分类正确。</p>
+<p>只在real data上训练的model，也会表现出类似的趋势，但是没有单纯在生成数据上训练的model表现出来的趋势强。这证明了，生成数据的加入，可能要考虑给model带来的bias的影响。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/" title="synthetic-data-llm-sub">https://liuxiyang641.github.io/llm/synthetic-data-llm-sub/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/LLM/" rel="tag"><i class="fa fa-tag"></i> LLM</a>
+              <a href="/tags/Data-Augmentation/" rel="tag"><i class="fa fa-tag"></i> Data Augmentation</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/llm/ConvRe-LLM/" rel="prev" title="ConvRe-LLM">
+                  <i class="fa fa-chevron-left"></i> ConvRe-LLM
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/nlp/FewGen-icml2023/" rel="next" title="FewGen-icml2023">
+                  FewGen-icml2023 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">647k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:48</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"6ab8ed5437f467983eed4e2c9217ba07"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>

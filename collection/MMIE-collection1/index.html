@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="MRE and MNER 多模态信息抽取相关论文总结">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="MMIE-collection1">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/MMIE-collection1/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="MRE and MNER 多模态信息抽取相关论文总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/20221017115553.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210820441.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226114745941.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226114829074.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226115025769.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226115624592.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226120103740.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226120448953.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226152018529.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226151035093.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221117204539318.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221107193818618.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221107164257628.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226165113233.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151432582.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151548710.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152335088.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152320697.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152615131.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152631421.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152831756.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512153907747.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512155631323.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512155919285.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512160449263.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512160707006.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173524966.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173555132.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173831838.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173933775.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231237542.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231405165.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232713196.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232832068.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233139004.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233204415.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233303269.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233447694.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160004278.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160618895.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161714124.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161339967.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161447842.png">
+<meta property="article:published_time" content="2023-09-26T09:03:01.000Z">
+<meta property="article:modified_time" content="2023-09-26T09:44:55.067Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Collection">
+<meta property="article:tag" content="MNER">
+<meta property="article:tag" content="MRE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/MMIE-collection1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/MMIE-collection1/","path":"collection/MMIE-collection1/","title":"MMIE-collection1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>MMIE-collection1 | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">40</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">54</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">146</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#mre-and-mner"><span class="nav-number">1.</span> <span class="nav-text">MRE and MNER</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#mnre"><span class="nav-number">1.1.</span> <span class="nav-text">MNRE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hvpnet"><span class="nav-number">1.2.</span> <span class="nav-text">HVPNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mkgformer"><span class="nav-number">1.3.</span> <span class="nav-text">MKGformer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mega"><span class="nav-number">1.4.</span> <span class="nav-text">MEGA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fl-msre"><span class="nav-number">1.5.</span> <span class="nav-text">FL-MSRE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#modality-discriminator"><span class="nav-number">1.6.</span> <span class="nav-text">Modality-discriminator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#eega"><span class="nav-number">1.7.</span> <span class="nav-text">EEGA</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rpbert"><span class="nav-number">1.8.</span> <span class="nav-text">RpBERT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maf"><span class="nav-number">1.9.</span> <span class="nav-text">MAF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mrc-mner"><span class="nav-number">1.10.</span> <span class="nav-text">MRC-MNER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#umt"><span class="nav-number">1.11.</span> <span class="nav-text">UMT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#more"><span class="nav-number">1.12.</span> <span class="nav-text">MoRe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#promptmner"><span class="nav-number">1.13.</span> <span class="nav-text">PromptMNER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#visualpt-moe"><span class="nav-number">1.14.</span> <span class="nav-text">VisualPT-MoE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wukong-cmner"><span class="nav-number">1.15.</span> <span class="nav-text">Wukong-CMNER</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cot-mie"><span class="nav-number">1.16.</span> <span class="nav-text">CoT-MIE</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pgim"><span class="nav-number">1.17.</span> <span class="nav-text">PGIM</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">146</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">40</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/MMIE-collection1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="MMIE-collection1 | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MMIE-collection1<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/MMIE-collection1.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-26 17:03:01 / 修改时间：17:44:55" itemprop="dateCreated datePublished" datetime="2023-09-26T17:03:01+08:00">2023-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/" itemprop="url" rel="index"><span itemprop="name">Paper</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/Multimodal/" itemprop="url" rel="index"><span itemprop="name">Multimodal</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Paper/Multimodal/IE/" itemprop="url" rel="index"><span itemprop="name">IE</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>17k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>16 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="mre-and-mner">MRE and MNER</h1>
+<p>多模态信息抽取相关论文总结</p>
+<span id="more"></span>
+<h2 id="mnre">MNRE</h2>
+<p>MNRE: A Challenge Multimodal Dataset for Neural Relation Extraction with Visual Evidence in Social Media Posts</p>
+<p>ICME 2021，作者创建了首个用于multimodal relation extraction的数据集MNRE，<a target="_blank" rel="noopener" href="https://github.com/thecharm/MNRE">地址</a>，<a href="#">Post not found: mmml/MNRE [详细博客]</a>。</p>
+<p>数据来源于Twitter posts，关注点是文本中的上下文信息不够充分时，通过post中的image，来补充上下文信息。</p>
+<blockquote>
+<p>Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then ﬁltered by crowdworkers. All the relations are identiﬁed manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difﬁculties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.</p>
+</blockquote>
+<p>relation extraction（RE）是预测一个句子中两个命名实体之间的关系relation。</p>
+<p><strong>challenges</strong>:之前大多数的RE模型关注的是文本信息很充分的场景下的关系抽取，比如newswire domain。但是，一旦文本很短，并且缺少必要的上下文信息的时候，RE模型效果会出现严重的下降。即便是使用了pretrained modal来进行关系抽取，效果也很糟糕。</p>
+<p><strong>solution</strong>: 作者认为，对于在推特post这样很可能文本中缺乏足够充分的上下文信息的场景，可以使用image的visual information来补充上下文信息。</p>
+<p>比如在下面的图中，如果只有文本，那么可能会判断出来JFK和Obama和Harvard的关系是residence；但是如果能够识别图像中的信息，比如校园、学位帽等，可以判断出来JFK和Obama和Harvard的关系应该是graduated_at。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012204338075.png"   style="zoom:35%;" /></p>
+<p>但是目前并没有这样满足文本+图像的数据集存在，因此作者就希望能够解决这一点，主要贡献如下：</p>
+<ul>
+<li>创建了在社交媒体posts上的数据集Multimodal dataset for Neural Relation Extraction（MNRE）</li>
+<li>在MNRE数据集基础上，构建了几个不同的baseline方法</li>
+</ul>
+<p>数据来源有三个：</p>
+<ul>
+<li>Twitter 2015：有8357个候选实例（指一个完整的post和对应image、named entities和relations）</li>
+<li>Twitter 2017：有4819个候选实例</li>
+<li>Crawled Twitter data：爬取了Twitter 2019年1月到2月的post和对应图片，不限制具体的领域；如果一个post有多张图片，就随机选择一张。最终获取了20000候选实例</li>
+</ul>
+<p>作者在后续更新了数据集，得到了MNRE-2：</p>
+<blockquote>
+<p>2021.6.22 We provide MNRE-2, a refined version which merges several ambigious categories with much more support samples. The original version has been moved to <a target="_blank" rel="noopener" href="https://github.com/thecharm/MNRE/blob/main/Version-1">Version-1</a></p>
+</blockquote>
+<p>MNRE-2的统计： <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/20221017115553.png" /></p>
+<p>下图是不同关系类型的统计：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221017145814092.png"   style="zoom:30%;" /></p>
+<p>经过检查发现，实际的训练集还包括了关系<code>None</code>。上面的统计图没有展现出None关系的分布。</p>
+<p>作者的MNRE-2数据集从32变为了23种关系，发现大部分的关系还是和人相关的。MNRE-2训练集有12247、验证集1624和测试集1614实例。</p>
+<p>查看下具体的数据集内容，在一个训练实例中，包括</p>
+<ul>
+<li><p><code>token</code>: <code>['The', 'latest', 'Arkham', 'Horror', 'LCG', 'deluxe', 'expansion', 'the', 'Circle', 'Undone', 'has', 'been', 'released', ':']</code></p></li>
+<li><p><code>h</code>: <code>&#123;'name': 'Circle Undone', 'pos': [8, 10]&#125;</code></p></li>
+<li><p><code>t</code>: <code>&#123;'name': 'Arkham Horror LCG', 'pos': [2, 5]&#125;</code>，这个<code>Arkham Horror LCG</code>应该是一种卡牌游戏</p></li>
+<li><p><code>img_id</code>: <code>'twitter_19_31_16_6.jpg'</code>，所有的图片下载完后是1.2GB，下图是对应的图片</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/twitter_19_31_16_6.jpg"   style="zoom:40%;" /></p></li>
+<li><p><code>relation</code>: <code>/misc/misc/part_of</code></p></li>
+</ul>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221012210820441.png" alt="image-20221012210820441" /><figcaption>image-20221012210820441</figcaption>
+</figure>
+<p>上图是数据集中的实例。可以看到，需要同时结合视觉和文本信息，才能够做出准确的关系预测。</p>
+<h2 id="hvpnet">HVPNet</h2>
+<p>Good Visual Guidance Makes A Better Extractor: Hierarchical Visual Prefix for Multimodal Entity and Relation Extraction. NAACL 2022</p>
+<a href="/mmml/HVPNeT/" title="[详细博客]">[详细博客]</a>
+<p>从图像中提取object-level的层级信息，用于补充文本信息。</p>
+<p>利用ResNet作为图像encoder导出层级视觉表征，不同的层级信息，通过计算一个gate weight聚合到不同Bert层。输入到不同层的视觉表征，作为Bert的key和value，加入到文本表征学习过程中。</p>
+<p>最后的relation预测是通过让[CLS] token embedding输入到MLP-softmax中。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226114745941.png" alt="image-20221226114745941" /><figcaption>image-20221226114745941</figcaption>
+</figure>
+<h2 id="mkgformer">MKGformer</h2>
+<p>Hybrid Transformer with Multi-level Fusion for Multimodal Knowledge Graph Completion. SIGIR 2022</p>
+<a href="/mmml/MKGformer/" title="[详细博客]">[详细博客]</a>
+<p>文本侧作为key和value输入到视觉侧；</p>
+<p>视觉侧在FFN层，通过计算一个token-patch的相似度矩阵，让视觉侧信息进入到文本侧。</p>
+<p>论文中声明的是让[CLS] token embedding作为MLP-Softmax输入，但是在代码中却是让[s]和[t] token作为MLP-softmax输入。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226114829074.png" alt="image-20221226114829074" /><figcaption>image-20221226114829074</figcaption>
+</figure>
+<h2 id="mega">MEGA</h2>
+<p>Multimodal Relation Extraction with Efficient Graph Alignment. ACM MM 2021</p>
+<a href="/mmml/MEGA/" title="[详细博客]">[详细博客]</a>
+<p>通过image graph和textual graph上node对齐得到的结构上的attention weight；</p>
+<p>通过image query和textual key计算得到的attention weight；</p>
+<p>两个weight相加，将文本表征，融合到图像表征做query的学习过程中；最后把所有视觉表征相加，得到了总的图像表征。</p>
+<p>图像表征拼接到文本表征上，进行最后的关系分类。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226115025769.png" alt="image-20221226115025769" /><figcaption>image-20221226115025769</figcaption>
+</figure>
+<h2 id="fl-msre">FL-MSRE</h2>
+<p>FL-MSRE: A Few-Shot Learning based Approach to Multimodal Social Relation Extraction. AAAI 2021</p>
+<a href="/mmml/FL-MSRE/" title="[详细博客]">[详细博客]</a>
+<p>这里作者构造的数据集主要是包含了脸部图像，不太适用于MNRE数据集。</p>
+<p>facial image表征和textual表征拼接后就作为了模态融合模块。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226115624592.png" alt="image-20221226115624592" /><figcaption>image-20221226115624592</figcaption>
+</figure>
+<h2 id="modality-discriminator">Modality-discriminator</h2>
+<p>Different Data, Different Modalities! Reinforced Data Splitting for Effective Multimodal Information Extraction from Social Media Posts. COLING 2022</p>
+<a href="/mmml/modality-discriminator/" title="[详细博客]">[详细博客]</a>
+<p>重点不在于模态的融合。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226120103740.png" alt="image-20221226120103740" /><figcaption>image-20221226120103740</figcaption>
+</figure>
+<h2 id="eega">EEGA</h2>
+<p>Joint Multimodal Entity-Relation Extraction Based on Edge-enhanced Graph Alignment Network and Word-pair Relation Tagging. AAAI 2023</p>
+<a href="/mmml/EEGA/" title="[详细博客]">[详细博客]</a>
+<p>比起MEGA，还强调了边的对齐。</p>
+<p>使用RCNN导出视觉特征。在Image2Text模块中，文本表征做query，视觉表征做key和value。然后文本表中输入到add&amp;norm层。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226120448953.png" alt="image-20221226120448953" /><figcaption>image-20221226120448953</figcaption>
+</figure>
+<h2 id="rpbert">RpBERT</h2>
+<p>RpBERT: A Text-image Relation Propagation-based BERT Model for Multimodal NER. AAAI 2021</p>
+<p>这里提到的relation，是指image和text是否相关。</p>
+<p>作者在这里使用的RpBERT是将ResNet的输出和token embedding拼接到一起作为BERT的输入：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226152018529.png"   style="zoom:50%;" /></p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226151035093.png" alt="image-20221226151035093" /><figcaption>image-20221226151035093</figcaption>
+</figure>
+<h2 id="maf">MAF</h2>
+<p>MAF: A General Matching and Alignment Framework for Multimodal Named Entity Recognition. WSDM 2022</p>
+<a href="/mmml/MAF/" title="[详细博客]">[详细博客]</a>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221117204539318.png" alt="image-20221117204539318" /><figcaption>image-20221117204539318</figcaption>
+</figure>
+<p>不是在BERT的每一层分别进行视觉信息的融合，而是在不同的模态独立的encoder的输出上进行对齐和融合。</p>
+<p>对齐是为了让表征更加一致，作者通过替换post对应的image，利用对比学习，计算文本和图像是否匹配。</p>
+<p>最后进行融合的时候，通过给每个token，计算一个gate weight来获得最后的token对应的视觉表征，与文本表征拼接后，输入到CRF层。</p>
+<h2 id="mrc-mner">MRC-MNER</h2>
+<p>Query Prior Matters: A MRC Framework for Multimodal Named Entity Recognition. ACM MM 2022</p>
+<ul>
+<li><p>单位：京东</p></li>
+<li><p>问题：目前的MNER方法，大多是通过基于attention实现image-sentence的隐式语义对齐，这种方法很难解释和评估实体类型与image region之间的显式关联。</p></li>
+<li><p>方法：作者把MNER看做是MRC任务（machine reading comprehension）。把最后要预测关系类型转化为query sentence：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221107193818618.png"   style="zoom:50%;" /></p>
+<p>然后使用预训练好的BERT导出文本表征。对于视觉表征，作者首先需要导出一张图片上的regions，作者通过预训练好一个visual grounding模型，然后为了让这个visual grounding模型也能够适用于MNER领域，作者构造了一个语料库，用于微调训练好的visual grounding模型。使用ResNet导出图像表征。</p></li>
+<li><p>对于多任务学习：作者除了entity span prediction，还引入了另外两个task辅助NER。region weights estimation和existence detection。region weights estimation是用于评估各个region embedding的重要性；Existence Detection用于预测句子中是否存在某个特定entity type的entity。</p></li>
+</ul>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221107164257628.png" alt="image-20221107164257628" /><figcaption>image-20221107164257628</figcaption>
+</figure>
+<h2 id="umt">UMT</h2>
+<p>Improving Multimodal Named Entity Recognition via Entity Span Detection with Unified Multimodal Transformer. ACL 20</p>
+<p>作者提出除了要学习word-aware的visual representation外，也要学习image-aware word representation，提出了UMT。为了避免过于强调视觉信息，可能导致会过于强调图像表示的实体，而忽略对其它实体的预测。作者额外训练了一个基于纯文本的模块，让这个模块进行textual entity span detection任务。这个任务实际上和MNER任务是一致的，因此通过设计一个conversion matrix，在优化MNER任务的同时，也优化textual entity span detection任务。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20221226165113233.png" alt="image-20221226165113233" /><figcaption>image-20221226165113233</figcaption>
+</figure>
+<p>MMI模块是模态交互的核心，首先获得image-aware word representation（左侧）和word-aware image representation（右侧）。</p>
+<p>将左侧的image-aware word representation再融合到原来的word representation中；然后与word-aware image representation一起经过visual gate，过滤掉不需要视觉信息的token对应的视觉表征（比如the/of/well这些word就不需要视觉信息）。</p>
+<p>最后两侧的表征拼接，得到最后的多模态表征。</p>
+<h2 id="more">MoRe</h2>
+<p>Named Entity and Relation Extraction with Multi-Modal Retrieval</p>
+<p>作者通过text和image检索在Wikipedia上相关的text信息来辅助多模态信息抽取。</p>
+<p>上海科技与阿里达摩，EMNLP 2022，<a target="_blank" rel="noopener" href="http://github.com/modelscope/adaseq/examples/MoRe">代码</a>，<a href="/mmml/MoRe/" title="[详细博客]">[详细博客]</a>。</p>
+<blockquote>
+<p>Multi-modal named entity recognition (NER) and relation extraction (RE) aim to leverage relevant image information to improve the performance of NER and RE. Most existing efforts largely focused on directly extracting potentially useful information from images (such as pixel-level features, identified objects, and associated captions). However, such extraction processes may not be knowledge aware, resulting in information that may not be highly relevant. <strong>In this paper, we propose a novel Multi-modal Retrieval based framework (MoRe). MoRe contains a text retrieval module and an imagebased retrieval module, which retrieve related knowledge of the input text and image in the knowledge corpus respectively. </strong>Next, the retrieval results are sent to the textual and visual models respectively for predictions. Finally, a Mixture of Experts (MoE) module combines the predictions from the two models to make the final decision. Our experiments show that both our textual model and visual model can achieve state-of-the-art performance on four multi-modal NER datasets and one multimodal RE dataset. With MoE, the model performance can be further improved and our analysis demonstrates the benefits of integrating both textual and visual cues for such tasks.</p>
+</blockquote>
+<p>作者的方法图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151432582.png"   style="zoom:50%;" /></p>
+<p>作者从English Wikipedia dump中分别以text和image作为关键进行检索：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901151548710.png"   style="zoom:40%;" /></p>
+<p>具体来说：</p>
+<ul>
+<li>Textual Retrieval System：待抽取text作为query，使用ElasticSearch，基于BM25算法检索Wikipedia中语义相似的句子（key），然后把包含句子的paragraph返回（value）作为检索结果。</li>
+<li>Image-base Retrieval System：使用ViTB/32 in CLIP将待抽取image和Wikipedia article中的images都编码为vector，然后基于k-NN算法，使用Faiss进行高效搜索。把检索到的article的introduction section返回未做检索结果。</li>
+</ul>
+<p>分别检索到top-K（实验中<span class="math inline">\(K=10\)</span>）的结果之后，检索到的结果与原有的待抽取text拼接，分别经过独立的task model输出对于实体或者关系的预测结果。NER任务使用CRF decoder，RE任务使用简单的线性softmax。task model在实验中是XLM-RoBERTa large。</p>
+<p>对于两个prediction distributions，作者使用MoE进行混合：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152335088.png"   style="zoom:40%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152320697.png"   style="zoom:40%;" /></p>
+<p>这里的MoE是计算两个prediction distributions的对应权重，然后进行混合。对于NER任务，由于CRF将NER看做是序列标注预测，对应可能的序列集合范围很大。因此作者使用了自己之前在CLNER工作中的方法，将序列标注预测转变为认为不同位置的NER label是互相独立的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152615131.png"   style="zoom:40%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152631421.png"   style="zoom:40%;" /></p>
+<p>这样最后预测就是让每一个位置上的token的NER label概率最大，而不是让所有token的NER label组合序列的概率最大。</p>
+<p>主要实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230901152831756.png"   style="zoom:40%;" /></p>
+<p>可以看到，如果仅仅是只使用text或image检索，大概带来了1%的提升。通过使用MoE将效果提升到了2%。但是总的效果来看还比不上目前直接使用multimodal representation进行prediction的方法，特别是在MNRE数据集上。</p>
+<p>作者MNER任务除了使用最常用的Twitter2015和Twitter2017数据集外，还将WikiDiverse这个multimodal entity linking数据集中对于实体的标注导出来进行预测，这样除了可以对social media domain进行评估外，还可以对News domain进行评估。</p>
+<blockquote>
+<p>The WikiDiverse dataset is a very recent multi-modal entity linking dataset constructed by Wang et al. (2022d) based on Wikinews. The dataset has annotations of entity spans and entity labels. We convert the multi-modal entity linking dataset into a multi-modal NER dataset to further show the effectiveness of MoRe on the news domain.</p>
+</blockquote>
+<h2 id="promptmner">PromptMNER</h2>
+<p>PromptMNER: Prompt-Based Entity-Related Visual Clue Extraction and Integration for Multimodal Named Entity Recognition</p>
+<p>复旦大学计算机科学学院，上海数据科学重点实验室，DASFAA 2022</p>
+<p>作者提出了一种利用prompt来更好的导出实体相关的视觉特征的方法。</p>
+<blockquote>
+<p>Multimodal named entity recognition (MNER) is an emerging task that incorporates visual and textual inputs to detect named entities and predicts their corresponding entity types. However, existing MNER methods often fail to capture certain entity-related but textloosely-related visual clues from the image, which may introduce taskirrelevant noises or even errors. To address this problem, we propose to utilize entity-related prompts for extracting proper visual clues with a pre-trained vision-language model. To better integrate diﬀerent modalities and address the popular semantic gap problem, we further propose a modality-aware attention mechanism for better cross-modal fusion. Experimental results on two benchmarks show that our MNER approach outperforms the state-of-the-art MNER approaches with a large margin.</p>
+</blockquote>
+<p>作者主要是提出了在图像中，对于MNER任务来说，更加重要的是entity-related的视觉特征，而单纯的text-related的视觉特征是和entity以外的文本关联，可能包括了更多的噪音。</p>
+<p>为了解决这一问题，作者设计了entity-related prompts，通过利用pretrained vision-language model来判断不同prompt和图像之间的匹配程度，进而选择合适的prompt来作为entity-related的视觉特征。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512153907747.png" alt="image-20230512153907747" /><figcaption>image-20230512153907747</figcaption>
+</figure>
+<p>作者定义的prompt形式是<span class="math inline">\(P_i = \mbox{an image of }[w_i]\)</span>，<span class="math inline">\(w_i\)</span>可以是discrete的word/phrase，也可以是continuous的embedding。</p>
+<p>discrete的<span class="math inline">\(w_i\)</span>来源如下：</p>
+<ul>
+<li>NER的所有实体标签，如person, location, organization</li>
+<li>从<a target="_blank" rel="noopener" href="http://relatedwords.org">Related Words</a>中和实体标签相关的词，如person的关联词有people, someone, individual, worker, child</li>
+<li>专家定义的实体标签，如person的人工定义的词有player, pants, hat, suit, group of people, team</li>
+</ul>
+<p>因为想要找到所有合适的word描述图像内容是不实际的，因此作者也是用了continuous prompts作为补充，也就是定义没有现实意义的embedding直接作为<span class="math inline">\(w_i\)</span>。作者发现定义100个continuous prompt达到了最好的效果。</p>
+<p>为了确定哪个prompt是最好的描述了图像信息，作者使用CLIP对图像和prompt分别进行编码，然后计算匹配度：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512155631323.png"   style="zoom:50%;" /></p>
+<p><span class="math inline">\(&lt;s_i,v&gt;\)</span>是表示余弦相似度。<span class="math inline">\(s_i\)</span>是<span class="math inline">\(i\)</span>-th prompt的embedding，<span class="math inline">\(v\)</span>是图像信息。计算出来的匹配程度与prompt embedding相乘作为找到的视觉特征：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512155919285.png"   style="zoom:50%;" /></p>
+<p>聚合的时候使用了跨模态注意力，这里看图即可，不再赘述。</p>
+<p>最后使用基于span的NER分类器：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512160449263.png"   style="zoom:50%;" /></p>
+<p><span class="math inline">\(i,j\)</span>表示的token <span class="math inline">\(i\)</span>到token <span class="math inline">\(j\)</span>的序列，把序列的头尾token embedding拿出来进行分类，<span class="math inline">\(\{\mbox{person, location, organization, misc, not entity}\}\)</span>。</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230512160707006.png" alt="image-20230512160707006" /><figcaption>image-20230512160707006</figcaption>
+</figure>
+<p>效果上来看还是可以的。</p>
+<h2 id="visualpt-moe">VisualPT-MoE</h2>
+<p>A Uniﬁed Visual Prompt Tuning Framework with Mixture-of-Experts for Multimodal Information Extraction.</p>
+<p>东华大学，DASFAA 2023，<a target="_blank" rel="noopener" href="https://github.com/xubodhu/VisualPTMoE">代码</a>。</p>
+<blockquote>
+<p>Recently, multimodal information extraction has gained increasing attention in social media understanding, as it helps to accomplish the task of information extraction by adding images as auxiliary information to solve the ambiguity problem caused by insuﬃcient semantic information in short texts. Despite their success, current methods do not take full advantage of the information provided by the diverse representations of images. To address this problem, we propose a novel uniﬁed visual prompt tuning framework with Mixture-of-Experts to fuse diﬀerent types of image representations for multimodal information extraction. Extensive experiments conducted on two diﬀerent multimodal information extraction tasks demonstrate the eﬀectiveness of our method. The source code can be found at https://github.com/xubodhu/VisualPTMoE.</p>
+</blockquote>
+<p>作者的方法图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173524966.png"  style="zoom:50%;" /></p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173555132.png"  style="zoom:50%;" /></p>
+<h2 id="wukong-cmner">Wukong-CMNER</h2>
+<p>Wukong-CMNER: A Large-Scale Chinese Multimodal NER Dataset with Images Modality</p>
+<p>人大，DASFAA 2023</p>
+<blockquote>
+<p>So far, Multimodal Named Entity Recognition (MNER) has been performed almost exclusively on English corpora. Chinese phrases are not naturally segmented, making Chinese NER more challenging; nonetheless, Chinese MNER needs to be paid more attention. Thus, we ﬁrst construct Wukong-CMNER, a multimodal NER dataset for the Chinese corpus that includes images and text. There are 55,423 annotated image-text pairs in our corpus. Based on this dataset, we propose a lexicon-based prompting visual clue extraction (LPE) module to capture certain entity-related visual clues from the image. We further introduce a novel cross-modal alignment (CA) module to make the representations of the two modalities more consistent through contrastive learning. Through extensive experiments, we observe that: (1) Discernible performance boosts as we move from unimodal to multimodal, verifying the necessity of integrating visual clues into Chinese NER. (2) Cross-modal alignment module further improves the performance of the model. (3) Our two modules decouple from the subsequent predicting process, which enables a plug-and-play framework to enhance Chinese NER models for Chinese MNER task. LPE and CA achieve state-of-the-art (SOTA) results on Wukong-CMNER when combined with W2NER [11], demonstrating its effectiveness.</p>
+</blockquote>
+<p>作者创建了首个中文MNER数据集：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173831838.png"   style="zoom:40%;" /></p>
+<p>作者也提出了一个方法：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230926173933775.png"  style="zoom:50%;" /></p>
+<h2 id="cot-mie">CoT-MIE</h2>
+<p>Chain-of-Thought Prompt Distillation for Multimodal Named Entity Recognition and Multimodal Relation Extraction</p>
+<p>阿里Ant group，2023-08 arXiv</p>
+<blockquote>
+<p>Multimodal Named Entity Recognition (MNER) and Multimodal Relation Extraction (MRE) necessitate the fundamental reasoning capacity for intricate linguistic and multimodal comprehension. In this study, we explore distilling the reasoning ability of large language models (LLMs) into a more compact student model by generating a chain of thought (CoT) – a sequence of intermediate reasoning steps. Specifically, we commence by exemplifying the elicitation of such reasoning ability from LLMs through CoT prompts covering multi-grain (noun, sentence, multimodality) and data-augmentation (style, entity, image) dimensions. Subsequently, we present a novel conditional prompt distillation method to assimilate the commonsense reasoning ability from LLMs, thereby enhancing the utility of the student model in addressing text-only inputs without the requisite addition of image and CoT knowledge. Extensive experiments reveal that our approach attains state-of-the-art accuracy and manifests a plethora of advantages concerning interpretability, data efficiency, and cross-domain generalization on MNER and MRE datasets.</p>
+</blockquote>
+<p>作者声称是希望能够将LLM的推理能力交给小模型，但是个人阅读下来感觉小模型也没有学会推理能力。并且这里一直在强调CoT，事实上这篇论文个人更愿意看做是一种数据增强/知识检索的方法，毕竟LLM本身没有针对信息抽取给出中间的推理步骤。</p>
+<p>作者的做法出发点是：</p>
+<ul>
+<li><p>之前的基于检索的模型，难以保证检索到的结果和查询的句子是匹配的，比如下图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231237542.png"   style="zoom:40%;" /></p></li>
+<li><p>大模型的推理成本比较高，但是它的推理能力比较好。希望能够用个小模型学会大模型的推理能力，并且有较低的推理成本。</p></li>
+</ul>
+<p>作者的方法：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824231405165.png" alt="image-20230824231405165" /><figcaption>image-20230824231405165</figcaption>
+</figure>
+<p>首先，作者用BLIP2把多模态信息抽取中的图片转化为文本caption。</p>
+<p>然后利用LLM生成下面几种额外的知识：</p>
+<ul>
+<li>Noun：对于句子中的potential entities, slang, and terminology等名词进行查询，对应的prompt是：<code>Help me explain the meaning of special words for understanding. + x</code></li>
+<li>Sentence：对于整个句子进行理解，It can explain the sentiment, cause, and subject of users. 对应的prompt是<code>Explain the sentence to me with necessary background. + x</code></li>
+<li>Multimodality：让LLM解释潜在的image和text之间的关系，这一步可以用来去噪、潜在的对齐visual object和textual entity，对应的prompt是：<code>What is the relation between the text and the attached image? + x + I</code></li>
+</ul>
+<p>作者还利用LLM进行了数据增强：</p>
+<ul>
+<li>Style：利用LLM转换输入句子的风格，让文本的描述保持一致的风格，对应的prompt是<code>Transform the sentence in Twitter style without changing the meaning. + x</code></li>
+<li>Entity：用同类型的entity替换候选的entity，然后用LLM判断替换后的伪样本是否成立，判断的prompt是<code>Whether the sentence is possible in fact, answer yes or no. + x</code></li>
+<li>Image：让LLM猜测能够和文本描述对应的image长什么样子，对应的prompt是<code>What is a possible image with the text in a tweet? + x</code></li>
+</ul>
+<p>数据增强后的样本被看做是新的样本。</p>
+<p>然后问题的关键是怎么样能够让小模型学会LLM的推理，作者声称提出了Conditional Prompt Distillation的方法。具体做法是首先作者把原始的text <span class="math inline">\(x\)</span>、图像的caption <span class="math inline">\(I\)</span>以及LLM生成的知识<span class="math inline">\(c\)</span>拼接到一起，经过text encoder获得输出分布<span class="math inline">\(H_k\)</span>；然后，作者定义了可学习的soft prompt来作为conditional prompt聚合text：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232713196.png"   style="zoom:40%;" /></p>
+<p>这里生成的<span class="math inline">\(p\)</span>和原始的text <span class="math inline">\(x\)</span>拼接在一起，经过text encoder获得输出分布<span class="math inline">\(H_t\)</span>；最后，作者期望这两种分布是相近的：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824232832068.png"   style="zoom:40%;" /></p>
+<p>个人对于这个公式有点疑惑，这里的分布到底是信息抽取的classification distribution还是token distribution？</p>
+<p>更疑惑的是，最后预测结果仍然是加入了LLM生成知识<span class="math inline">\(c\)</span>的结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233139004.png"   style="zoom:40%;" /></p>
+<p>难道是在测试阶段仅仅用小模型，不需要LLM提前处理？</p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233204415.png"   style="zoom:30%;" /></p>
+<p>和目前的SOTA相比，MNRE数据集上还有10%的差距；而Twitter15和17数据集可以认为是达到了SOTA。</p>
+<p>另外从消融的结果来看，对于名词的解释，可能作用相对比较大：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233303269.png"   style="zoom:30%;" /></p>
+<p>论文的case study可以看下，感觉这些LLM生成的knowledge还是比较有意义的，问题在于没有CoT..也不确定小模型是否学习到了推理能力：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230824233447694.png" alt="image-20230824233447694" /><figcaption>image-20230824233447694</figcaption>
+</figure>
+<h2 id="pgim">PGIM</h2>
+<p>Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT</p>
+<p>天津大学，2023-05，arXiv</p>
+<blockquote>
+<p>Multimodal Named Entity Recognition (MNER) on social media aims to enhance textual entity prediction by incorporating image-based clues. Existing research in this domain has primarily focused on maximizing the utilization of potentially relevant information in images or incorporating external knowledge from explicit knowledge bases (KBs). However, <strong>these methods either neglect the necessity of providing the model with relevant external knowledge, or the retrieved external knowledge suffers from high redundancy.</strong> To address these problems, <strong>we propose a conceptually simple two-stage framework called Prompt ChatGPT In MNER (PGIM) in this paper.</strong> We leverage ChatGPT as an implicit knowledge engine to acquire auxiliary refined knowledge, thereby bolstering the model’s performance in MNER tasks. Specifically, we first utilize a Multimodal Similar Example Awareness module to select suitable examples from a small number of manually annotated samples. These examples are then integrated into a formatted prompt template tailored to the MNER task, guiding ChatGPT to generate auxiliary refined knowledge. Finally, the acquired knowledge is integrated with the raw text and inputted into the downstream model for further processing. Extensive experiments show that our PGIM significantly outperforms all existing state-of-the-art methods on two classic MNER datasets.</p>
+</blockquote>
+<p>作者是期望利用LLM来解决：</p>
+<ul>
+<li><p>一般的text+image的多模态小模型，可能需要外部的知识来进行识别</p></li>
+<li><p>而基于外部knowledge的信息抽取方法检索到的外部知识可能相关性程较低，或者是冗余</p></li>
+</ul>
+<p>作者同样把LLM看做是一个可以提供high-quality auxiliary knowledge的base。</p>
+<p>方法：</p>
+<figure>
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160004278.png" alt="image-20230825160004278" /><figcaption>image-20230825160004278</figcaption>
+</figure>
+<p>首先，作者在这里使用LLM导出的外部knowledge包括了LLM抽取出的实体，以及推理的原因。</p>
+<p>那么怎么样让LLM能够生成这样的knowledge呢？</p>
+<p>作者随机从数据集中选择了一小部分样例，然后人工写了推理原因，这一小部分样例会作为待抽取的句子的上下文来获取LLM的knowledge。</p>
+<p>作者使用cosine相似度，从这小部分人工标注的样例中选择合适的样例作为上下文（实现中选择<span class="math inline">\(5\)</span>个样例做上下文）：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825160618895.png"   style="zoom:40%;" /></p>
+<p>公式里的<span class="math inline">\(H\)</span>代表着multimodal representations，作者使用UMT方法导出multimodal representations来计算样例相似度。（但不清楚这里的<span class="math inline">\(H\)</span>具体是指序列中哪个embedding？）</p>
+<p>拿到上下文之后，作者用来查询的prompt：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161714124.png"   style="zoom:40%;" /></p>
+<p>注意一下，只是使用了纯文本的ChatGPT，因此作者是使用BLIP2把image转化为text caption去查询的。并且在prompt里，作者提示LLM可以选择是否采用来自image的信息。</p>
+<p>在拿到了LLM输出的auxiliary knowledge <span class="math inline">\(z\)</span>之后，与原有的text拼接，经过一个Transformer encoder（实验中是XLM-RoBERTa-large），最后过CRF获取实体的BIO预测标注。</p>
+<p>实验结果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161339967.png"  style="zoom:40%;" /></p>
+<p>Twitter2015数据集相比较MoRe方法提升不太明显。（image在这两个Twitter数据集上到底有多大作用，个人现在很怀疑，并且标注也不够好，有很多的噪音…）</p>
+<p>case study：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161447842.png"   style="zoom:40%;" /></p>
+<p>能够看出来，作者倾向于在LLM的输出推理过程中，直接对span进行解释，因此蓝色的句子里会很明显的线索来知道最后识别实体。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/MMIE-collection1/" title="MMIE-collection1">https://liuxiyang641.github.io/collection/MMIE-collection1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Collection/" rel="tag"><i class="fa fa-tag"></i> Collection</a>
+              <a href="/tags/MNER/" rel="tag"><i class="fa fa-tag"></i> MNER</a>
+              <a href="/tags/MRE/" rel="tag"><i class="fa fa-tag"></i> MRE</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/collection/LLM-data-augment1/" rel="prev" title="LLM-data-augment1">
+                  <i class="fa fa-chevron-left"></i> LLM-data-augment1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/llm/ConvRe-LLM/" rel="next" title="ConvRe-LLM">
+                  ConvRe-LLM <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">647k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">9:48</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"1b503b5e438d4ab49269da50d112df3a"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>
