@@ -150,3 +150,52 @@ data synthesis方法最大的问题在于生成的data和real data之间存在la
 作者的实验使用了`GPT3.5`，temperature of 0.9；task model是`DistilBERT-base-uncased`。在text classification、Natural Language Inference (NLI)和QA三类task上进行了测试：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231106160746609.png"  style="zoom:30%;" />
+
+## DOCTOR-emnlp23
+
+Dialogue Chain-of-Thought Distillation for Commonsense-aware Conversational Agents. EMNLP 2023. Yonsei University. [代码](https://github.com/kyle8581/DialogueCoT)。
+
+> Human-like chatbots necessitate the use of commonsense reasoning in order to effectively comprehend and respond to implicit information present within conversations. Achieving such coherence and informativeness in responses, however, is a non-trivial task. Even for large language models (LLMs), the task of identifying and aggregating key evidence within a single hop presents a substantial challenge. **This complexity arises because such evidence is scattered across multiple turns in a conversation, thus necessitating integration over multiple hops.** Hence, our focus is to facilitate such multi-hop reasoning over a dialogue context, namely dialogue chain-of-thought (CoT) reasoning. To this end, we propose a knowledge distillation framework that leverages LLMs as unreliable teachers and selectively distills consistent and helpful rationales via alignment filters. We further present DOCTOR, a DialOgue Chain-of-ThOught Reasoner that provides reliable CoT rationales for response generation 1 . We conduct extensive experiments to show that enhancing dialogue agents with high-quality rationales from DOCTOR significantly improves the quality of their responses.
+
+**Issue**：在Commonsense reasoning任务中，之前的方法大多是集中在对最后一轮对话中的context进行推理，而忽略了在之前多轮对话中会出现的evidence。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122161043130.png"  style="zoom:30%;" />
+
+**Solution**: 作者将multi-hop commonsense reasoning看做是Chain-ofThought (CoT) reasoning (Wei et al., 2022) for dialogue response generation, namely Dialogue CoT。作者认为CoT生成的rationales能够帮助response generation。
+
+但是LLM生成的rationales存在问题：
+
+1. LLMs tend to rely much on explicit cues, necessitating taskspecific constraints to seek implicit knowledge.
+2. LLMs exhibit poor alignment between rationales and dialogues, resulting in inconsistent and unhelpful rationales.
+
+因此，作者将已有的LLM看做是unreliable reasoner，将其生成的rationales过滤后，作为好的rationales。尝试蒸馏一个新的LM让其能够直接输出过滤后的好的reliable rationales。
+
+作者的方法图：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122154349946.png"  style="zoom:50%;" />
+
+首先，是QA-driven Rationalization。作者给定LLM之前轮的context $U_{<t}$和下一步的real response $u_{t}$，然后用不同的prompt提问，找到对应的rationales。每一轮对有对应的rationales集合，这样就实现了对于多轮问答中线索的搜寻。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122155011482.png"  style="zoom:40%;" />
+
+提问的prompt是作者从ATOMIC中选择的11种commonsense relations，然后构造问题，如：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122154603791.png"  style="zoom:30%;" />
+
+然后，为了保证生成的rationales的质量，作者利用了两个alignment filters：
+
+- Rationale-to-context alignment：为了判断rationales是否和给定的context是否一致，作者基于`RoBERTa-large`训练了一个二元分类器。训练集的构造是一致的context和rationales、不一致的context和rationales。作者从SODA数据集中随机选择了6K个dialogues，输入给LLM完整的多跳问答的context，然后人工选择出和context一致的rationales。不一致的rationales是作者破坏完整的多轮问答，只给定最后一步的utterance，让LLM生成counterfactual rationales。作者训练出来的不一致分类器能够达到93%的测试准确度。
+
+- Rationale-to-response alignment：为了判断rationales是否和后续的response一致，作者考虑在给定rationales的情况下，能够正确的输入后续的response。基于`Cosmo-3B`，计算helpfulness ratio。具体是给定了rationales情况下，real utterance出现的perplexity和不给定rationales的perplexity比值：
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122160013373.png" style="zoom:50%;" />
+
+  只有helpfulness ratio大于$\tau=0.95$的rationales会被选择。
+
+为了蒸馏新的LM reasoner，作者构建了新的数据集DONUT。在其构造过程中，两个filters能够过滤掉近1/4的rationales。
+
+在DONUT数据上，蒸馏出来的新的LM基于`OPT-1.3B`。
+
+实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231122161008216.png"  style="zoom:50%;" />

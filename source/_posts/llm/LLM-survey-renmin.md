@@ -144,7 +144,33 @@ scaling law是指随着模型大小，数据集大小以及计算次数等的增
 
 ## 4. Pre-Training
 
+### 4.3 Data Collection and Preparation
 
+略，参见论文
+
+### 4.2 Architecture
+
+现有的主流LLM架构：
+
+![image-20240229110120857](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240229110120857.png)
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240229111009405.png"  style="zoom:50%;" />
+
+首先是基于Transformer的3种架构：
+
+- Encoder-Decoder：原始的Transformer架构，双向mask的encoder+单向mask的decoder，在当前的LLM中用的比较少，比如Flan-T5
+- Causal Decoder：单向mask的decoder，也是当前使用最多的架构，只能够看到前面的token，不断的预测下一个token
+- Prefix Decoder：在给定的prefix tokens之间使用双向attention，对于要生成的tokens使用单向mask。常用的实践策略是在casual decoder基础上继续训练以加速收敛，得到prefix decoder，例如U-PaLM就是在PaLM基础上发展来的。
+
+至于上面这3中架构到底各有什么优劣，现在没有定论，只不过大家现在主要都是follow OpenAI的casual decoder。不过现在有少数的研究发现，casual decoder似乎表现出了更好的zero-shot和few-shot能力。
+
+然后是其它新兴的架构，主要目的是缓解Transformer的二次方计算效率问题：
+
+- parameterized state space models：比如S4、GSS、H3
+- long convolutions：比如Hyena
+- Transformer-like architectures that incorporate recursive update mechanisms：比如RWKV，RetNet。一方面继续保持了Transformer便于并行训练的优点，一方面还不需要关注全部的序列，可以像RNN一样只关注前一个输入。
+
+另外，LLM还常常结合Mixture-of-Experts，通过部分激活策略实现在保持计算效率的情况下增大模型参数。训练MoE常见的问题是不稳定。
 
 ## 5. Adaption Tuning of LLMs
 

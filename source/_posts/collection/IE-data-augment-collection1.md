@@ -393,6 +393,10 @@ ACL 2023 Findings，清华与浙大，[代码](https://github.com/THU-BPM/GDA)�
 
 可以看到，利用作者的数据增强方法生成的数据来训练，能够有效提升Base model的效果。
 
+不断增加数据增强数量：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231128160709908.png" style="zoom:30%;" />
+
 ## $\mbox{S}^2$ynRE
 
 S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
