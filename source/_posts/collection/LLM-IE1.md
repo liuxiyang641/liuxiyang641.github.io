@@ -9,6 +9,7 @@ categories:
 tags:
   - LLM
   - IE
+  - Collection
 ---
 
 # 基于LLM的Information Extraction 1
@@ -19,13 +20,11 @@ tags:
 
 ## filter-then-rerank
 
-Large Language Model Is Not a Good Few-shot Information Extractor, but a Good Reranker for Hard Samples!
-
-arXiv 2023.03，南洋理工
+Large Language Model Is Not a Good Few-shot Information Extractor, but a Good Reranker for Hard Samples!. EMNLP 2023 Findings. 南洋理工. [代码](https://github.com/mayubo2333/LLM-IE). 
 
 > Large Language Models (LLMs) have made remarkable strides in various tasks. However, whether they are competitive few-shot solvers for information extraction (IE) tasks and surpass fine-tuned small Pre-trained Language Models (SLMs) remains an open problem. This paper aims to provide a thorough answer to this problem, and moreover, to explore an approach towards effective and economical IE systems that combine the strengths of LLMs and SLMs. Through extensive experiments on eight datasets across three IE tasks, **we show that LLMs are not effective few-shot information extractors in general, given their unsatisfactory performance in most settings and the high latency and budget requirements.** However, we demonstrate that LLMs can well complement SLMs and effectively solve hard samples that SLMs struggle with. Building on these findings, **we propose an adaptive filter-then-rerank paradigm, in which SLMs act as filters and LLMs act as rerankers.** By utilizing LLMs to rerank a small portion of difficult samples identified by SLMs, our preliminary system consistently achieves promising improvements (2.1% F1-gain on average) on various IE tasks, with acceptable cost of time and money.
 
-作者评估了以Codex（code-davinci-002，2023/03/03之前）为基准的LLM+in-context learning方法在信息抽取任务上的性能，对比了基于RoBERTa和T5小型语言模型的现有IE SOTA方法。下面是一个例子：
+作者评估了以Codex（`code-davinci-002`，2023/03/03之前）为基准的LLM+in-context learning方法在信息抽取任务上的性能，对比了基于RoBERTa和T5小型语言模型的现有IE SOTA方法。下面是一个例子：
 
 ![image-20230515233558514](https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230515233558514.png)
 
@@ -137,6 +136,11 @@ motivation：
 
 主要是针对few-shot IE任务，加入了几个demonstration。固定的为每个entity/relation类型随机找k个样例作为demonstrations。定义的prompt是python的function格式，让Codex去补全剩下的代码。作者也试验了其它几个比如使用class init函数等，发现这样子效果最好。
 
+- 使用python function表示IE任务
+- 使用function docstring说明任务目标
+- 待抽取的文本用string类型的变量表示
+- 抽取出来的entity/relation使用不断append到list类型的变量表示
+
 作者的实验结果：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230516223639496.png"   style="zoom:30%;" />
@@ -221,9 +225,7 @@ arXiv 2023.05，新加坡国立大学（截止05/18日还只能看到不太完�
 
 ## CodeKGC
 
-CodeKGC: Code Language Model for Generative Knowledge Graph Construction
-
-浙大zjunlp，arXiv 2023.04，[代码](https://github.com/zjunlp/DeepKE/tree/main/example/llm)。
+CodeKGC: Code Language Model for Generative Knowledge Graph Construction. 浙大zjunlp，ACM Transactions on Asian and Low-Resource Language Information Processing 2024，[代码](https://github.com/zjunlp/DeepKE/tree/main/example/llm)。
 
 > Current generative knowledge graph construction approaches usually fail to capture structural knowledge by simply flattening natural language into serialized texts or a specification language. However, large generative language model trained on structured data such as code has demonstrated impressive capability in understanding natural language for structural prediction and reasoning tasks. Intuitively, we address the task of generative knowledge graph construction with code language model: given a code-format natural language input, the target is to generate triples which can be represented as code completion tasks. Specifically, **we develop schema-aware prompts that effectively utilize the semantic structure within the knowledge graph.** As code inherently possesses structure, such as class and function definitions, it serves as a useful model for prior semantic structural knowledge. Furthermore, we employ a rationale-enhanced generation method to boost the performance. Rationales provide intermediate steps, thereby improving knowledge extraction abilities. Experimental results indicate that the proposed approach can obtain better performance on benchmark datasets compared with baselines.
 
@@ -245,7 +247,7 @@ schema的定义是通过python的`class`，作者定义了基础的类`Entity`�
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230519155533998.png"   style="zoom:40%;" />
 
-在实验部分作者实际也使用了code-davinci-002，但是作者提到由于Codex使用范围有限（OpenAI在3月23日停止了对Codex API的持续支持），因此作者仅仅在消融实验部分使用了Codex。
+在实验部分作者实际也使用了`code-davinci-002`，但是作者提到由于Codex使用范围有限（OpenAI在3月23日停止了对Codex API的持续支持），因此作者仅仅在消融实验部分使用了Codex。
 
 ## InstructUIE
 
@@ -491,13 +493,11 @@ Aligning Instruction Tasks Unlocks Large Language Models as Zero-Shot Relation E
 
 ## GPT-RE
 
-GPT-RE: In-context Learning for Relation Extraction using Large Language Models
-
-京都大学，arXiv 2023.05。
+GPT-RE: In-context Learning for Relation Extraction using Large Language Models. 京都大学. EMLNLP 2023. [代码](https://github.com/YukinoWan/GPT-RE).
 
 > In spite of the potential for ground-breaking achievements offered by large language models (LLMs) (e.g., GPT-3), they still lag significantly behind fully-supervised baselines (e.g., fine-tuned BERT) in relation extraction (RE). This is due to the two major shortcomings of LLMs in RE: (1) **low relevance regarding entity and relation in retrieved demonstrations for in-context learning;** and (2) **the strong inclination to wrongly classify NULL examples into other pre-defined labels**.
 >
-> In this paper, we propose GPT-RE to bridge the gap between LLMs and fully-supervised baselines. GPT-RE successfully addresses the aforementioned issues by (1) incorporating task-specific entity representations in demonstration retrieval; and (2) enriching the demonstrations with gold label-induced reasoning logic. We evaluate GPT-RE on four widelyused RE datasets, and observe that GPT-RE achieves improvements over not only existing GPT-3 baselines, but also fully-supervised baselines. Specifically, GPT-RE achieves SOTA performances on the Semeval and SciERC datasets, and competitive performances on the TACRED and ACE05 datasets.
+> In this paper, we propose GPT-RE to bridge the gap between LLMs and fully-supervised baselines. GPT-RE successfully addresses the aforementioned issues by (1) incorporating task-specific entity representations in demonstration retrieval; and (2) enriching the demonstrations with gold label-induced reasoning logic. We evaluate GPT-RE on four widely-used RE datasets, and observe that GPT-RE achieves improvements over not only existing GPT-3 baselines, but also fully-supervised baselines. Specifically, GPT-RE achieves SOTA performances on the Semeval and SciERC datasets, and competitive performances on the TACRED and ACE05 datasets.
 
 作者这篇工作是对于[*Thinking about GPT-3 In-Context Learning for Biomedical IE? Think Again*]工作的改进，主要是针对其两个问题进行改进：
 
@@ -802,7 +802,7 @@ CollabKG: A Learnable Human-Machine-Cooperative Information Extraction Toolkit f
 
 UniversalNER: Targeted Distillation from Large Language Models for Open Named Entity Recognition
 
-2023-08，arXiv，南加州大学，[项目](universal-ner.github.io)
+2023-08，ICLR 2024，南加州大学，[项目](universal-ner.github.io)
 
 > Large language models (LLMs) have demonstrated remarkable generalizability, such as understanding arbitrary entities and relations. Instruction tuning has proven effective for distilling LLMs into more cost-efficient models such as Alpaca and Vicuna. Yet such student models still trail the original LLMs by large margins in downstream applications. **In this paper, we explore targeted distillation with mission-focused instruction tuning to train student models that can excel in a broad application class such as open information extraction.** Using named entity recognition (NER) for case study, we show how ChatGPT can be distilled into much smaller UniversalNER models for open NER. For evaluation, we assemble the largest NER benchmark to date, comprising 43 datasets across 9 diverse domains such as biomedicine, programming, social media, law, finance. Without using any direct supervision, UniversalNER attains remarkable NER accuracy across tens of thousands of entity types, outperforming general instruction-tuned models such as Alpaca and Vicuna by over 30 absolute F1 points in average. With a tiny fraction of parameters, UniversalNER not only acquires ChatGPT’s capability in recognizing arbitrary entity types, but also outperforms its NER accuracy by 7-9 absolute F1 points in average. Remarkably, UniversalNER even outperforms by a large margin state-of-the-art multi-task instruction-tuned systems such as InstructUIE, which uses supervised NER examples. We also conduct thorough ablation studies to assess the impact of various components in our distillation approach. We will release the distillation recipe, data, and UniversalNER models to facilitate future research on targeted distillation.
 
@@ -896,7 +896,7 @@ Revisiting Large Language Models as Zero-shot Relation Extractors. 东南大学.
 
 需要注意的是，作者采用了Entity-Relation Mapping机制[*Fastre: Towards fast relation extraction with convolutional encoder and improved cascade binary tagging framework. IJCAI 2022*]，提前排除了很多relation，如果已知了entity type，就提前排除掉一些不可能成立的relation。
 
-作者实验采用了GPT-J-6B、BLOOM-7.1B、T0pp-11B和gpt-3.5-turbo-0301，最终是gpt-3.5-turbo-0301效果最好，下面实验里的SUMASK就是对应的采用gpt-3.5的结果。
+作者实验采用了`GPT-J-6B`、`BLOOM-7.1B`、`T0pp-11B`和`gpt-3.5-turbo-0301`，最终是gpt-3.5-turbo-0301效果最好，下面实验里的SUMASK就是对应的采用gpt-3.5的结果。
 
 Zero-shot relation classification实验结果：
 
@@ -923,7 +923,7 @@ Guideline Learning for In-Context Information Extraction. EMNLP 2023. 中科院
 
 > Large language models (LLMs) can perform a new task by merely conditioning on task instructions and a few input-output examples, without optimizing any parameters. This is called In-Context Learning (ICL). In-context Information Extraction has recently garnered attention in the research community. However, current experiment results are generally suboptimal. **We attribute this primarily to the fact that the complex task settings and a variety of edge cases are hard to be fully expressed in the length-limited context.** In this paper, **we propose a Guideline Learning (GL) framework for In-context IE which learns to generate and follow guidelines.** During the learning phrase, GL automatically synthesizes a set of guidelines from a few annotations, and during inference, helpful guidelines are retrieved for better ICL. Experiments on event extraction and relation extraction show that guideline learning can improve the performance of in-context IE.
 
-作者认为IE任务是一个复杂的任务，为了准确全面的定义好task的*target concept*需要很多的examples和rules进行定义。例如在ACM关系抽取中的guidelines超过33页内容。
+**Issue**：作者认为IE任务是一个复杂的任务，为了准确全面的定义好task的*target concept*需要很多的examples和rules进行定义。例如在ACM关系抽取中的guidelines超过33页内容。
 
 传统的方法需要提前有很多的训练样本+大量的训练参数；而LLM+ICL是一种能够无梯度更新的范式，然而这种范式在以前的论文里效果还不够好。
 
@@ -931,7 +931,7 @@ Guideline Learning for In-Context Information Extraction. EMNLP 2023. 中科院
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016191744066.png" style="zoom:35%;" />
 
-因此，作者希望能够让LLM自己学习guidelines，这种guidelines，实际上，就是对于label semantic的描述。作者提出方法的图：
+**Solution**: 因此，作者希望能够让LLM自己学习guidelines，这种guidelines，实际上，就是对于label semantic的描述。作者提出方法的图：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192009243.png" style="zoom:30%;" />
 
@@ -941,7 +941,11 @@ Guideline Learning for In-Context Information Extraction. EMNLP 2023. 中科院
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192126083.png"  style="zoom:35%;" />
 
-首先是伪代码中的`Retrieve`：从已有的guidelines集合里，寻找和当前样例最相近的guidelines。具体做法是利用LLM去抽象出sentence的general form，对于RE任务，作者用了两种方式，一种是简化具体的描述，只保留text中必要的tokens，一种是让LLM猜测实体的type。两种形式的general forms的输出，输入到OpenAI的`text-embedding-ada-002` API，获得embedding，然后基于余弦相似度选择最相似的rules。同时随机从训练集中找样例作为demonstrations，在整个数据集下是固定的。
+作者定义的guidelines就是一系列的自然语言描述的rules集合：
+
+> Suppose we have collected the Guidelines $\mathcal{G} = \{ r_i \}|_{i=1}^{|\mathcal{G}|}$ which is a set of rules that supports read, write, and retrieve operations. Each rule, expressed as a natural language sentence, defines an aspect of the task. The guidelines illustrate how to perform the task.
+
+首先是伪代码中的`Retrieve`：从已有的guidelines集合里，寻找和当前样例最相近的guidelines。具体做法是利用LLM去抽象出sentence $x$的general form $\tilde{x}$，对于RE任务，作者用了两种方式，一种是简化具体的描述，只保留text中必要的tokens，一种是让LLM猜测实体的type。两种形式的general forms拼接在一起作为RE任务对于sentence semantic的抽象$\tilde{x}$，输入到OpenAI的`text-embedding-ada-002` API，获得embedding，然后基于余弦相似度选择最相似的rules。同时随机从训练集中找样例作为demonstrations，在整个数据集下是固定的。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016192458557.png" style="zoom:50%;" />
 
@@ -953,17 +957,30 @@ Guideline Learning for In-Context Information Extraction. EMNLP 2023. 中科院
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016193218204.png"  style="zoom:40%;" />
 
-如果抽取relation是错误的，那么要进行反馈`Reflect`：使用general form和正式的label，让LLM生成rule（没有在paper中找到对应的具体prompt）。
+如果抽取relation是错误的，那么要进行反馈`Reflect`：使用general form和true label直接拼接作为新的rule。从作者的说明来看：
 
-作者另外的贡献是，提出了一种Active Instance Selection的策略，选择适合作为上面的guidelines learning的方法。作者选择那些LLM最不confidence的data。
+> In this paper, we simply concatenate the general form $\tilde{x}$ of the instance $i$ and the golden label to generate a rule. Figure 3 presents an example of this process in EE.
 
-具体的选择方法是，利用self-consistency CoT，让LLM生成多个推理路径和对应的答案。然后根据答案的分布，统计不同类型relation的分布，然后使用熵的负值作为confidence。最后选择负熵最大的data，也就是LLM预测概率分布最平滑的data。
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240408155256384.png"  style="zoom:50%;" />
 
-最后实现使用`gpt-3.5-turbo`，实验了Event Extraction和relation extraction（给定头尾实体）两类任务。事件抽取使用了ChFinAnn数据集，RE任务使用了SemEval 2010 task 8数据集（有9种relation）。
+作者另外的贡献是，提出了一种Active Instance Selection的策略，选择适合作为上面的guidelines learning的方法。如果是随机选择下一次适合标注的样本的话，效率可能比较低，因为可能会选出LLM已经能够正确预测的样本。因此作者选择那些LLM最不confidence的data。
 
-从RE任务结果来看，和SOTA还有差距：
+具体的选择方法是，利用self-consistency CoT，让LLM生成多个推理路径和对应的答案。然后根据答案的分布，统计不同类型relation的分布，然后使用熵的负值作为confidence。最后选择负熵最小的data，也就是LLM预测概率分布最平滑的data。
+
+最后实现使用`gpt-3.5-turbo`，实验了Event Extraction和relation extraction（给定头尾实体）两类任务。事件抽取使用了ChFinAnn数据集；RE任务使用了SemEval 2010 task 8数据集（有9种relation），测试集随机采样1000个。从RE任务结果来看，和SOTA还有差距：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231016194434785.png"  style="zoom:40%;" />
+
+上面作者的baseline：
+
+- RE-ICL：直接让LLM基于ICL输出relation label
+- RE-GL-b：作者的方法，without guidelines
+- RE-GL-r：从训练集中，随机选择500个instances作为guidelines learning（平均每个relation 50个instances）
+- RE-GL-a：从训练集中，主动学习策略，从随机的1000个instances中，选出500个instances进行guidelines learning
+
+case study：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240408155338816.png"  style="zoom:40%;" />
 
 ## RationalCL
 

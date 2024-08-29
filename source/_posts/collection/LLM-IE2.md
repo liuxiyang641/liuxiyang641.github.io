@@ -3,7 +3,13 @@ title: LLM-IE2
 published: false
 date: 2023-10-23 16:48:52
 categories:
+  - Paper
+  - LLM
+  - IE
 tags:
+  - LLM
+  - IE
+  - Collection
 ---
 
 # 基于LLM的Information Extraction 2
@@ -162,9 +168,7 @@ NER任务是根据entity直接生成句子；RE任务是输入头尾实体，判
 
 ## SynthIE
 
-Exploiting Asymmetry for Synthetic Training Data Generation: SynthIE and the Case of Information Extraction
-
-arXiv 2023.03，[代码](https://github.com/epfl-dlab/SynthIE)。
+Exploiting Asymmetry for Synthetic Training Data Generation: SynthIE and the Case of Information Extraction. EMNLP 2023，[代码](https://github.com/epfl-dlab/SynthIE)。
 
 使用LLM模型生成更多的IE任务训练数据，从而进一步提升模型性能。
 
@@ -306,9 +310,7 @@ ACL 2023，{% post_link nlp/when-how-paraphrase-NER  [详细博客] %}。
 
 ## $\mbox{S}^2$ynRE
 
-S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction
-
-中科大，ACL 2023，[代码](https://github.com/BenfengXu/S2ynRE)。
+S2ynRE: Two-stage Self-training with Synthetic data for Low-resource Relation Extraction. 中科大，ACL 2023，[代码](https://github.com/BenfengXu/S2ynRE)。
 
 > Current relation extraction methods suffer from the inadequacy of large-scale annotated data. While distant supervision alleviates the problem of data quantities, there still exists domain disparity in data qualities due to its reliance on domain-restrained knowledge bases. In this work, **we propose S2ynRE, a framework of two-stage Self-training with Synthetic data for Relation Extraction.** We first leverage the capability of large language models to adapt to the target domain and automatically synthesize large quantities of coherent, realistic training data. We then propose an accompanied two-stage self-training algorithm that iteratively and alternately learns from synthetic and golden data together. We conduct comprehensive experiments and detailed ablations on popular relation extraction datasets to demonstrate the effectiveness of the proposed framework. Code is available at https://github.com/BenfengXu/S2ynRE.
 
@@ -381,7 +383,7 @@ Purdue University, 作者评论接收至EMNLP 2023。{% post_link llm/synthetic-
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021233456402-20231023165740875.png"  style="zoom:50%;" />
 
-分别独立的在真实数据、生成数据上进行训练的实验结果（对于关系分类任务，只讨论了FewRel 2.0数据集中‘country’, ‘league’, ‘screenwriter’, and ‘tributary’的4种relation。每种relation生成3000条数据）：
+分别独立的在真实数据、生成数据上进行训练的实验结果（对于关系分类任务，只讨论了FewRel 2.0数据集中`country`, `league`,`screenwriter`, and `tributary`的$4$种relation。每种relation生成$3000$条数据）：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231021230350077-20231021233707905-20231023165740953.png"  style="zoom:50%;" />
 
@@ -507,3 +509,262 @@ Self-refinement by Self-reflection：improves the initial generation results thr
 在RE任务TACRED数据集上的表现：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231023164319493.png" style="zoom:40%;" />
+
+## GoLLMIE
+
+GoLLIE: Annotation Guidelines improve Zero-Shot Information-Extraction. ICLR 2024. University of the Basque Country. [代码](https://github.com/hitz-zentroa/GoLLIE).
+
+> Large Language Models (LLMs) combined with instruction tuning have made significant progress when generalizing to unseen tasks. However, they have been less successful in Information Extraction (IE), lagging behind task-specific models. Typically, IE tasks are characterized by complex annotation guidelines that describe the task and give examples to humans. **Previous attempts to leverage such information have failed, even with the largest models, as they are not able to follow the guidelines out of the box.** In this paper, we propose GoLLIE (Guideline following Large Language Model for IE), a model able to improve zero-shot results on unseen IE tasks by virtue of being fine-tuned to comply with annotation guidelines. Comprehensive evaluation empirically demonstrates that GoLLIE is able to generalize to and follow unseen guidelines, outperforming previous attempts at zero-shot information extraction. The ablation study shows that detailed guidelines are key for good results. Code, data, and models are publicly available: https://github.com/hitz-zentroa/GoLLIE.
+
+**Issue**: IE任务的困难之一是存在detailed  guidelines：
+
+> This challenge is evident in the detailed guidelines, which feature granular definitions and numerous exceptions, that human annotators must follow to perform the task.
+
+LLM能够执行instruction，但是不一定能够很好执行annotation guidelines，而简单的使用label name是不能够充分的描述这样的guidelines的，举例在NER任务中，person label和person label是不一样的，如在ACE05数据集中person包括了代词，而CoNLL03中person不包括代词。
+
+**Solution**: 作者期望训练处能够学会follow guidelines的LLM。
+
+作者提出的GoLLIE方法采用了code-style的input和output：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308201714331.png"  style="zoom:50%;" />
+
+原因是：
+
+- This approach not only offers a clear and human-readable structure
+- The inputs can be automatically standardized using Python code formatters such as Black. The output is well structured and parsing it is trivial.
+
+特点：
+
+1. label使用python class表示
+2. label对应的arguments使用class内的属性表示
+3. 待抽取的文本使用python string类型局部变量表示
+4. 抽取结果使用python list类型局部变量表示
+5. （创新点）guidelines利用python的class docstring和comment注释表示，在构造comment的时候，可能举几个具体的例子，如下图：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308202448829.png"  style="zoom:50%;" />
+
+最后训练的时候，为了让LLM学会跟随输入的guidelines，而不是学到某种特定的模式，因此作者使用了多种加入噪音的策略，例如Class order shuffling（打乱输入LLM的label python class的顺序）、Class dropout（随机移除一些class）、Guideline paraphrasing（改写guidelines）等。
+
+在实现的时候，作者使用的训练数据集主要是目前已有的在News and Biomedical领域的IE数据集，而评估时还使用了更多的其它领域的数据集：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308202856265.png" style="zoom:50%;" />
+
+guidelines来源于数据集中本来就有的，或者是作者自行编写的。
+
+训练细节：
+
+- foundation LLM：使用了`Code-LLaMA 7/13/34B`。作者的前期实验发现Code-LLaMA比LLaMA2这些text LLM效果好
+
+- 微调策略：使用QLoRA算法
+
+- 资源：训练7B使用了80G的单个A100
+
+  <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308203238187.png"  style="zoom:50%;" />
+
+作者的实验结果，在对应相关训练集上监督训练过的评估结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308203414223.png"  style="zoom:50%;" />
+
+表格中的baseline是指没有加入guidelines的作者方法的对应版本。可以看出，在有对应训练样本的情况下，加入guidelines并不会造成性能的下降。
+
+在没有对应领域训练样本的情况下的实验结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308203348446.png"  style="zoom:50%;" />
+
+能够看出作者的方法很明显的提高了zero-shot的效果。
+
+guideline举例：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240308203814357.png"  style="zoom:40%;" />
+
+对于TACRED数据集，作者将其原本的RE任务，转化为了slot filling任务：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240408170404224.png"  style="zoom:50%;" />
+
+## Code4UIE
+
+Retrieval-Augmented Code Generation for Universal Information Extraction. arXiv 2023.11. 中科院
+
+> Information Extraction (IE) aims to extract structural knowledge (e.g., entities, relations, events) from natural language texts, which brings challenges to existing methods due to task-specific schemas and complex text expressions. Code, as a typical kind of formalized language, is capable of describing structural knowledge under various schemas in a universal way. On the other hand, Large Language Models (LLMs) trained on both codes and texts have demonstrated powerful capabilities of transforming texts into codes, which provides a feasible solution to IE tasks. Therefore, in this paper, we propose a universal retrieval-augmented code generation framework based on LLMs, called Code4UIE, for IE tasks. Specifically, **Code4UIE adopts Python classes to define task-specific schemas of various structural knowledge in a universal way.** By so doing, extracting knowledge under these schemas can be transformed into generating codes that instantiate the predefined Python classes with the information in texts. To generate these codes more precisely, Code4UIE adopts the in-context learning mechanism to instruct LLMs with examples. In order to obtain appropriate examples for different tasks, Code4UIE explores several example retrieval strategies, which can retrieve examples semantically similar to the given texts. Extensive experiments on five representative IE tasks across nine datasets demonstrate the effectiveness of the Code4UIE framework.
+
+类似于CodeIE，作者利用python code来统一表示各类IE任务。entity的python class表示：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309111451115.png"  style="zoom:40%;" />
+
+relation的表示：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309111600522.png"  style="zoom:40%;" />
+
+event的表示：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309111629835.png"  style="zoom:40%;" />
+
+在定义好了这些python class之后，作者提出了两种prompt进行IE任务，一种是one step就抽取出目标信息：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309111805781.png"  style="zoom:40%;" />
+
+另一种是two step抽取信息，stage 1只是判断是否存在某种entity type，stage 2只输入stage 1判断的entity type的定义，找出对应的entity，和ChatIE类似：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309111854499.png"  style="zoom:50%;" />
+
+在找上下文demonstrations的时候，作者除了直接使用`MPNet`方法学习sentence embedding，然后计算相似度外，还提出了一种Anonymous Sentence Embedding检索的策略，简单说就是用entity type替换了sentence中的entity mention，再计算相似度。目的在于让模型更加关注句子上下文和label之间的对应关系，而不是整个句子的text相似度。
+
+实验使用了`text-davinci-002`, `text-davinci-003`和`gpt-3.5-turbo-16k`。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240309112219979.png"  style="zoom:40%;" />
+
+作者没有复现CodeIE方法（基于Codex），没有使用一样的LLM，对比感觉不公平。
+
+## c-ICL
+
+c-ICL: Contrastive In-context Learning for Information Extraction. 北航. arXiv 2024
+
+> Recently, there has been increasing interest in exploring the capabilities of advanced large language models (LLMs) in the field of information extraction (IE), specifically focusing on tasks related to named entity recognition (NER) and relation extraction (RE). Although researchers are exploring the use of few-shot information extraction through in-context learning with LLMs, **they tend to focus only on using correct or positive examples for demonstration, neglecting the potential value of incorporating incorrect or negative examples into the learning process.** In this paper, we present C -ICL, a novel few-shot technique that leverages both correct and incorrect sample constructions to create in-context learning demonstrations. This approach enhances the ability of LLMs to extract entities and relations by utilizing prompts that incorporate not only the positive samples but also the reasoning behind them. This method allows for the identification and correction of potential interface errors. Specifically, our proposed method taps into the inherent contextual information and **valuable information in hard negative samples and the nearest positive neighbors** to the test and then applies the in-context learning demonstrations based on LLMs. Our experiments on various datasets indicate that C -ICL outperforms previous few-shot in-context learning methods, delivering substantial enhancements in performance across a broad spectrum of related tasks. These improvements are noteworthy, showcasing the versatility of our approach in miscellaneous scenarios.
+
+**Issue**：作者认为之前LLM的IE方法忽略了对于负样例/错误样例的利用，从负样例中可以学习到为什么会出现这样的错误的相关信息。
+
+**Solution**：作者认为应该同时利用positive和hard negative samples作为demonstrations。在论文中，作者主要使用了code-style的prompt，但是没有特别解释到底为什么要使用这样形式的prompt，仅仅是简单提到了考虑到IE任务的结构？
+
+对于label的定义，使用python comment中列举所有的label：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215315475.png"  style="zoom:40%;" />
+
+对于正负样例，最后加入一行特殊的comment，表示其正负：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215412477.png"  style="zoom:40%;" />
+
+正样例的检索，是通过计算sentence embedding的相似度，然后选择最相似的前k个示例。
+
+对于负样例，特别的操作是同时会提供对应的正确结果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215505286.png"  style="zoom:40%;" />
+
+负样例的检索是通过一方面，作者利用self-consistency的策略，让LLM标注训练样本，然后计算预测结果的F1值选择hard negative samples（作者论文中没有提到是选择是设置一个阈值，大于这个阈值的认为是hard sample？还是小于的作为hard sample？）。
+
+最后模型的输出是通过生成对应的IE任务函数，每个label对应的是python dictionary中的某个元素（list类型），可以添加对应的entity或者triple：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215716340.png"  style="zoom:40%;" />
+
+实验结果，作者基于`CodeLLaMA 7/13/34B`。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215809608.png"  style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310215828704.png"  style="zoom:50%;" />
+
+加入负样例的结果，效果提升：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240310220206852.png"  style="zoom:50%;" />
+
+需要注意的是，加入负样例的数量不能太多（作者默认是2？还是3？论文里有些地方说法有冲突），否则会造成效果下降，具体参考论文。
+
+作者具体还基于`CodeLLaMA`重新实现了CodeIE的效果：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240408150620391.png"  style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240408150642317.png" style="zoom:50%;" />
+
+## EventRL
+
+EventRL: Enhancing Event Extraction with Outcome Supervision for Large Language Models. arXiv 2024. 清华
+
+> In this study, we present EventRL, a reinforcement learning approach developed to enhance event extraction for large language models (LLMs). **EventRL utilizes outcome supervision with specific reward functions to tackle prevalent challenges in LLMs, such as instruction following and hallucination, manifested as the mismatch of event structure and the generation of undefined event types.** We evaluate EventRL against existing methods like FewShot Prompting (FSP) (based on GPT4) and Supervised Fine-Tuning (SFT) across various LLMs, including GPT-4, LLaMa, and CodeLLaMa models. Our findings show that EventRL significantly outperforms these conventional approaches by improving the performance in identifying and structuring events, particularly in handling novel event types. The study emphasizes the critical role of reward function selection and demonstrates the benefits of  incorporating code data for better event extraction. While increasing model size leads to higher accuracy, maintaining the ability to generalize is essential to avoid overfitting.
+
+**Issue**: 利用LLM来直接解决事件抽取会遇到mismatches in event structure and the generation of undefined event types (Gao et al., 2023a)，最近有研究期望利用监督微调SFT的方法来解决这个问题，但是效果仍然不好。作者认为这是因为如果SFT仅仅是采用LLM的language modeling loss，不能够精细的、较好的强调分类事件相关信息错误/出现未定义事件类型的后果。原因是不同样例预测答案的错误和正确可能仅仅只有一两个word不一样，而language modeling loss是反映总体loss的，会忽略这种错误的重要影响。
+
+**Solution**：作者提出了采用强化学习的方法，使用性能的F1指标作为奖励，让模型能够更加关注对于事件抽取预测错误的情况。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312172557884.png"  style="zoom:50%;" />
+
+作者对于输入是采用了类似markdown的形式：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312172641825.png"  style="zoom:40%;" />
+
+使用python `@dataclass`来定义label，与GoLLIE一样。
+
+作者的奖励函数通过计算F1值来定义：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312172750286.png"  style="zoom:40%;" />
+
+然后，作者计算了一个advantage value，用来identifying actions that yield above-average benefits：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312172914086.png"  style="zoom:50%;" />
+
+其中，$Y$是指LLM通过nucleus sampling得到的预测输出，$\hat{Y}$是指greedy decoding得到的输出。最后梯度下降的定义：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312173041374.png"  style="zoom:50%;" />
+
+为了让模型训练稳定，作者采用了两种策略：
+
+- Teacher-Force Threshold (Bengio et al., 2015) ：如果某个样例计算出来的F1 performance小于了阈值，就直接使用teacher的输出，也就是真实的输出
+- Advantage Clipping (Schulman et al., 2017)：设置一个advantage value下界，任何比这个下界小的样例，都会直接使用这个下界作为advantage value
+
+作者基于`LLaMA2 7B/13B`和`CodeLLaMA 7B/13B`，用两个A100 GPU，基于ColossalAI框架进行训练。在ACE 05数据集上的训练结果，作者选择了7个事件类型用于训练和验证，以及作为Held-in test测试集；另外19个事件类型作为unseen的Held-out测试集：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240312173221567.png"  style="zoom:50%;" />
+
+观察：
+
+- LLaMA 7B到13B效果提升很明显，相对的，codeLLaMA 7B到13B提升没有那么明显（尽管同样有提升）
+- 相对来说，在codeLLaMA上用作者定义的代码形式的prompt微调效果提升更加一致
+- 选择合适的奖励函数很重要，但是到底哪种会好，看起来似乎没有统一定论
+
+## CoT-ER
+
+Chain of Thought with Explicit Evidence Reasoning for Few-shot Relation Extraction. EMNLP 2023 Findings. 哈工大深圳
+
+> Few-shot relation extraction involves identifying the type of relationship between two specific entities within a text, using a limited number of annotated samples. A variety of solutions to this problem have emerged by applying meta-learning and neural graph techniques which typically necessitate a training process for adaptation. Recently, the strategy of incontext learning has been demonstrating notable results without training. Few studies have already utilized in-context learning for zeroshot information extraction. **Unfortunately, the evidence for inference is either not considered or implicitly modeled during the construction of chain-of-thought prompts.** In this paper, we propose a novel approach for few-shot relation extraction using large language models, named CoT-ER, chain-of-thought with explicit evidence reasoning. In particular, CoT-ER first induces large language models to generate evidence using task-specific and concept-level knowledge. Then this evidence is explicitly incorporated into chain-of-thought prompting for relation extraction. Experimental results demonstrate that our CoT-ER approach (with 0% training data) achieves competitive performance compared to the fully-supervised (with 100% training data) state-of-the-art approach on the FewRel1.0 and FewRel2.0 datasets.
+
+**Issue**: 在RE任务上对于如何使用LLM的CoT推理能力，还没有过多的探究。最近的GPT-RE方法是通过给定样例及其label，让LLM归纳推理过程。但是这种方法存在问题：
+
+- 其无法强调entity types，Previous studies and our experiments indicate that the one-step auto-generated reasoning process by LLM does not emphasize the higher-level abstraction of entity types, specifically the concept-level entities, which has been proven to be beneficial for FSRE task
+2. ICL对于标签很敏感，单纯的label word可能无法准确的描述label semantic。The quality of semantic representation of the relation label is not crucial in the fully-supervised setting, but in-context learning is sensitive to the relation label.
+
+**Solution**：作者为RE任务下的CoT推理进行了定制，三步推理过程，先推理head/tail entity type相关信息，寻找context text中的evidence；然后推理relation，寻找evidence。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318171155266.png" style="zoom:50%;" />
+
+首先，作者针对的是true few-shot设置下的RE任务。
+
+> Perez et al. (2021) argues that prior research has achieved promising results by choosing prompts or tuning other hyperparameters using a large development set, such as selecting few-shot demonstrations from a large training set, which does not truly demonstrate the few-shot learning capability of LLMs.
+
+对于每一类label，作者人工给1个sample构造推理过程；然后以这个seed example，让LLM为其它的训练样本生成对应的推理过程。
+
+检索样例基于`text-embedding-ada-002`计算欧式距离，每个demonstration格式为：`Context: [text] Given the context, what is the relation between “[head entity]” and “[tail entity]”?`，强调头尾实体的存在。
+
+最后推理用的template示例：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318170815510.png"  style="zoom:40%;" />
+
+实验过程中，LLM使用`text-davinci-003`，数据集FewRel 1.0和2.0。2.0版本在1.0的验证集和测试集中加入了medical domain的新label。作者每个label都是只使用了label word，没有使用FewRel 1.0中包括的对于label的语义描述句子。
+
+特别注意的是，由于LLM不擅长输出`NULL`关系，作者直接排除了数据集中的`None-of-the-Above`关系（个人认为不合理）。
+
+由于FewRel不提供公开的test set label，因此作者从validation set中每个label采样100个样本作为测试集，即query set。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318171434959.png"  style="zoom:50%;" />
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318171501184.png"  style="zoom:50%;" />
+
+表格中的Auto-CoT（每个demonstration有对应的CoT）+reasoning表示，是否要求LLM对于query也要生成对应的CoT。
+
+观察：
+
+- 加入推理是否能够带来效果的提升不确定，在FewRel 1.0中有提升，但是在FewRel 2.0中就没有效果了
+- 需要为RE任务定制CoT prompting方法
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318171556087.png"  style="zoom:50%;" />
+
+观察：
+
+- auto-CoT缺少对于entity的reason，导致推理错误
+
+- “crosses” and “located in or next to body of water”两个label有点相似，存在ambiguity。把entity和relation label都描述在一个完整的表达中，能够强调完整的语义，让最终推理过程输出正确
+
+错例分析
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240318201038086.png"  style="zoom:40%;" />
+
+观察：
+
+- 第二个错误原因：CoT的推理过程虽然符合第一二步的推理过程，但是忽略了context信息
+- 第三个错误原因：被相似relation label干扰

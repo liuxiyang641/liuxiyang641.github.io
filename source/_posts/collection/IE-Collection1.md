@@ -564,8 +564,6 @@ KnowPrompt: Knowledge-aware Prompt-tuning with Synergistic Optimization for Rela
 
 
 
-
-
 # Cross-domain IE
 
 ## CP-NER
