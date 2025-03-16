@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/lxy-apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/lxy-favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/lxy-favicon-16x16.png">
+  <link rel="mask-icon" href="/images/lxy-favicon.ico" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"liuxiyang641.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.12.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"width":300},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":5,"unescape":true,"preload":false}}</script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/config.min.js"></script>
+
+    <meta name="description" content="Grounding LMM 面向grounding的多模态大模型large multimodal models。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="LMM-Grounding-Collection1">
+<meta property="og:url" content="https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/index.html">
+<meta property="og:site_name" content="Liu Xiyang">
+<meta property="og:description" content="Grounding LMM 面向grounding的多模态大模型large multimodal models。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022162928072.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220233866.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220640041.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220613313.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221123566.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221337051.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221404908.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022170410648.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022164634946.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165454894.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165516832.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165625815.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022201819738.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022201957185.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022202114355.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203706002.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203315901.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203513268.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203530625.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022204101959.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022204706185.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022205336116.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022210628921.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023221856446.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023221957929.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023222942028.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023223026683.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241024154023445.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241024154930681.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028153016597.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025221725716.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025224538374.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025225324165.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025230100287.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211163720777.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164335894.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164557971.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164731071.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164830024.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170305697.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170453005.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170725305.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212000858248.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001007919.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001328806.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001639579.png">
+<meta property="og:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212002253027.png">
+<meta property="article:published_time" content="2024-10-22T07:54:52.000Z">
+<meta property="article:modified_time" content="2025-03-11T14:18:48.633Z">
+<meta property="article:author" content="Liu Xiyang">
+<meta property="article:tag" content="Multimodal">
+<meta property="article:tag" content="LMM">
+<meta property="article:tag" content="Grounding">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022162928072.png">
+
+
+<link rel="canonical" href="https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/","path":"collection/LMM-Grounding-Collection1/","title":"LMM-Grounding-Collection1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LMM-Grounding-Collection1 | Liu Xiyang</title>
+  
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/injector/main.css" /><link rel="preload" as="style" href="/css/injector/light.css" /><link rel="preload" as="style" href="/css/injector/dark.css" />
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Liu Xiyang</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">50</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">72</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">157</span></a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#grounding-lmm"><span class="nav-number">1.</span> <span class="nav-text">Grounding LMM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#fromage"><span class="nav-number">1.1.</span> <span class="nav-text">FROMAGe</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shikra"><span class="nav-number">1.2.</span> <span class="nav-text">Shikra</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#minigpt-v2"><span class="nav-number">1.3.</span> <span class="nav-text">MiniGPT-v2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kosmos-2"><span class="nav-number">1.4.</span> <span class="nav-text">Kosmos-2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llava-g"><span class="nav-number">1.5.</span> <span class="nav-text">LLaVA-G</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#groma"><span class="nav-number">1.6.</span> <span class="nav-text">Groma</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#groundinggpt"><span class="nav-number">1.7.</span> <span class="nav-text">GroundingGPT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#p2g"><span class="nav-number">1.8.</span> <span class="nav-text">\(P^2\)G</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ferret-v2"><span class="nav-number">1.9.</span> <span class="nav-text">Ferret-v2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vl-sam"><span class="nav-number">1.10.</span> <span class="nav-text">VL-SAM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#llava-logit-lens"><span class="nav-number">1.11.</span> <span class="nav-text">llava-logit lens</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Liu Xiyang"
+      src="/images/lxy-avatar.jpg">
+  <p class="site-author-name" itemprop="name">Liu Xiyang</p>
+  <div class="site-description" itemprop="description">Try your best to be an ordinary man.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">157</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">72</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/liuxiyang641" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;liuxiyang641" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:liuxiyang@buaa.edu.cn" title="E-Mail → mailto:liuxiyang@buaa.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdn.jsdelivr.net/npm/@creativecommons/vocabulary@2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/lxy-avatar.jpg">
+      <meta itemprop="name" content="Liu Xiyang">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Liu Xiyang">
+      <meta itemprop="description" content="Try your best to be an ordinary man.">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LMM-Grounding-Collection1 | Liu Xiyang">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LMM-Grounding-Collection1<a href="https://github.com/liuxiyang641/liuxiyang641.github.io/edit/hexo/source/_posts/collection/LMM-Grounding-Collection1.md" class="post-edit-link" title="编辑" rel="noopener" target="_blank"><i class="fa fa-pen-nib"></i></a>
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-10-22 15:54:52" itemprop="dateCreated datePublished" datetime="2024-10-22T15:54:52+08:00">2024-10-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-03-11 22:18:48" itemprop="dateModified" datetime="2025-03-11T22:18:48+08:00">2025-03-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LMM/" itemprop="url" rel="index"><span itemprop="name">LMM</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/LMM/Grounding/" itemprop="url" rel="index"><span itemprop="name">Grounding</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>24k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>22 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="grounding-lmm">Grounding LMM</h1>
+<p>面向grounding的多模态大模型large multimodal models。</p>
+<span id="more"></span>
+<h2 id="fromage">FROMAGe</h2>
+<p>Grounding Language Models to Images for Multimodal Inputs and Outputs. CMU. ICML 2023</p>
+<blockquote>
+<p>We propose an efficient method to ground pretrained text-only language models to the visual domain, enabling them to process arbitrarily interleaved image-and-text data, and generate text interleaved with retrieved images. Our method leverages the abilities of language models learnt from large scale text-only pretraining, such as in-context learning and free-form text generation. <strong>We keep the language model frozen, and finetune input and output linear layers to enable crossmodality interactions.</strong> This allows our model to process arbitrarily interleaved image-and-text inputs, and generate free-form text interleaved with retrieved images. We achieve strong zero-shot performance on grounded tasks such as contextual image retrieval and multimodal dialogue, and showcase compelling interactive abilities. Our approach works with any off-the-shelf language model and paves the way towards an effective, general solution for leveraging pretrained language models in visually grounded settings.</p>
+</blockquote>
+<p><strong>Issue</strong>：纯文本LLM不具备处理multimodal输入和输出的能力。</p>
+<p><strong>Solution</strong>: 作者基于纯文本LLM，加入额外输入投影层和输出投影层进行微调，在image caption和image-text retrieval两个任务上进行训练。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022162928072.png"  style="zoom:50%;" /></p>
+<ul>
+<li>训练数据来源于Conceptual Captions (CC3M) dataset (Sharma et al., 2018)，3.3 million图文对。</li>
+<li>OPT 6.7B作为LLM</li>
+<li>CLIP ViT-L/14作为visual encoder</li>
+<li>对于图文检索，在输入text最后插入了一个特殊token <code>[RET]</code>，使用其输出embedding来检索图片，检索的图片数据来源是Visual Storytelling (VIST) dataset (Huang et al., 2016). 作者的方法并不具备生成图片能力，只有检索现有图片能力</li>
+</ul>
+<p>这篇论文训练得到的LMM只有image-level的grounding能力，只能够把整个text匹配到对应的image上。</p>
+<h2 id="shikra">Shikra</h2>
+<p>Shikra: Unleashing Multimodal LLM’s Referential Dialogue Magic. arXiv 2023. 北航-上交. <a target="_blank" rel="noopener" href="https://github.com/shikras/shikra">代码</a>.</p>
+<blockquote>
+<p>In human conversations, individuals can indicate relevant regions within a scene while addressing others. In turn, the other person can then respond by referring to specific regions if necessary. <strong>This natural referential ability in dialogue remains absent in current Multimodal Large Language Models (MLLMs).</strong> To fill this gap, this paper proposes an MLLM called Shikra, which can handle spatial coordinate inputs and outputs in natural language. Its architecture consists of a vision encoder, an alignment layer, and a LLM. It is designed to be straightforward and simple, without the need for extra vocabularies, position encoder, pre-/post-detection modules, or external plugin models. All inputs and outputs are in natural language form. Referential dialogue is a superset of various vision-language (VL) tasks. Shikra can naturally handle location-related tasks like REC and PointQA, as well as conventional VL tasks such as Image Captioning and VQA. Experimental results showcase Shikra’s promising performance. Furthermore, it enables numerous exciting applications, like providing mentioned objects’ coordinates in chains of thoughts and comparing user-pointed regions similarities. Our code and model are accessed at https://github.com/shikras/ shikra.</p>
+</blockquote>
+<p><strong>Issue</strong>：作者认为之前的LMM忽略了多模态指向式的对话：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220233866.png"  style="zoom:30%;" /></p>
+<p>作者使用<code>LLaVA-13B</code>，尝试让其回答下面的问题来探究其是否具有空间位置理解的能力：</p>
+<blockquote>
+<p><image> Which part is <expr> in if the picture is divided equally into four 2 by 2 parts? Choose from: (A) Top-left (B) Top-right (C) Bottom-left (D) Bottom-right.</p>
+</blockquote>
+<p>使用LVIS数据集中的测试数据，结果发现，llava的回答正确率只有25.96%，近乎随机猜测。</p>
+<p><strong>Solution</strong>: 作者基于<code>Vicuna-7/13B</code>，利用<code>CLIP ViT-L/14</code>作为视觉编码器，让LLM直接学会输出bounding box的坐标。bounding box的坐标被缩放到<span class="math inline">\(0-1\)</span>。属于比较早的grounding LMM工作。</p>
+<p>作者的task instruction通过在不同task中加入grounding坐标来强化模型能力。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220640041.png"  style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028220613313.png"  style="zoom:33%;" /></p>
+<h2 id="minigpt-v2">MiniGPT-v2</h2>
+<p>MiniGPT-v2: Large Language Model As a Unified Interface for Vision-Language Multi-task Learning. arXiv 2023. KAUST-Meta. <a target="_blank" rel="noopener" href="https://minigpt-v2.github.io/">代码</a>.</p>
+<blockquote>
+<p>Large language models have shown their remarkable capabilities as a general interface for various language-related applications. Motivated by this, we target to build a unified interface for completing many vision-language tasks including image description, visual question answering, and visual grounding, among others. The challenge is to use a single model for performing diverse vision-language tasks effectively with simple multi-modal instructions. Towards this objective, we introduce MiniGPT-v2, a model that can be treated as a unified interface for better handling various vision-language tasks. We propose using unique identifiers for different tasks when training the model. These identifiers enable our model to better distinguish each task instruction effortlessly and also improve the model learning efficiency for each task. After the three-stage training, the experimental results show that MiniGPT-v2 achieves strong performance on many visual questionanswering and visual grounding benchmarks compared to other vision-language generalist models. Our model and codes are available at https://minigpt-v2.github.io/.</p>
+</blockquote>
+<p><strong>Issue</strong>：作者认为不同task之间的差距导致训练适应各种task的LMM变得困难。</p>
+<p><strong>Solution</strong>: 作者设计了task-oriented instruction training scheme来减小指令的ambiguity。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221123566.png" style="zoom:33%;" /></p>
+<p>LLM采用<code>LLaMA2-chat (7B)</code>，visual encoder采用<code>EVA</code>模型。有个小trick是由于作者把image的分辨率提升到448x448，为了减小visual tokens数量，作者拼接4个邻接tokens，再利用linear projection投影到1个embedding。坐标缩放到<span class="math inline">\(0-100\)</span>。</p>
+<p>作者的task模板：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221337051.png"  style="zoom:33%;" /></p>
+<p>不同的task identifier：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028221404908.png" style="zoom:33%;" /></p>
+<h2 id="kosmos-2">Kosmos-2</h2>
+<p>Grounding Multimodal Large Language Models to the World. 中科大-微软. ICLR 2024. <a target="_blank" rel="noopener" href="https://aka.ms/kosmos-2">代码</a>.</p>
+<blockquote>
+<p>We introduce Kosmos-2, a Multimodal Large Language Model (MLLM), enabling new capabilities of perceiving object descriptions (e.g., bounding boxes) and grounding text to the visual world. Specifically, we represent text spans (i.e., referring expressions and noun phrases) as links in Markdown, i.e., “[text span] (bounding boxes)”, where object descriptions are sequences of location tokens. <strong>To train the model, we construct a large-scale dataset about grounded image-text pairs (GrIT) together with multimodal corpora.</strong> Kosmos-2 integrates the grounding capability to downstream applications, while maintaining the conventional capabilities of MLLMs (e.g., perceiving general modalities, following instructions, and performing in-context learning). Kosmos-2 is evaluated on a wide range of tasks, including (i) multimodal grounding, such as referring expression comprehension and phrase grounding, (ii) multimodal referring, such as referring expression generation, (iii) perception-language tasks, and (iv) language understanding and generation. This study sheds a light on the big convergence of language, multimodal perception, and world modeling, which is a key step toward artificial general intelligence. Code can be found in https://aka.ms/kosmos-2.</p>
+</blockquote>
+<p>作者在Kosmos-1的基础上训练Kosmos-2，增强了其grounding和referring的能力，即在输入和输出都可以进行带有bounding box：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022170410648.png" style="zoom:33%;" /></p>
+<p>为了训练，首先作者基于LAION-2B (Schuhmann et al., 2022) and COYO-700M (Byeon et al., 2022)数据集中的图文对构造了a web-scale dataset of grounded image-text pairs (GrIT)。这个数据集中的数据标记text spans和对应的bounding box类似于markdown标记超链接的格式。包括91M images, 115M text spans, and 137M associated bounding boxes。</p>
+<p>下面是创建数据集的pipeline：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022164634946.png"  style="zoom:50%;" /></p>
+<p>利用了GLIP识别对应短语的bounding box，具体构造细节参考论文。</p>
+<p>为了处理bounding box，作者首先把连续数值形式的bounding box转化为离散形式。</p>
+<p>一个image划分为<span class="math inline">\(P\times P\)</span>个bin，每个bin有对应的location token；从location token返回坐标表示时，使用每个bin的中心pixel的坐标。bin和ViT里的patch概念的区别不大，个人认为仅仅是在论文里区分这是两种不同size划分。</p>
+<p>每个bin有对应的位置编号，这样一个bounding box原始使用top-left point (<span class="math inline">\(x_{tl}\)</span>, <span class="math inline">\(y_{tl}\)</span>) 和bottom-right point <span class="math inline">\(x_{br}\)</span>, <span class="math inline">\(y_{br}\)</span>)表示，现在直接使用两个角落在哪个bin就可以表示了：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165454894.png"  style="zoom:33%;" /></p>
+<p><code>&lt;box&gt;</code>是特殊标记。如果一个text span对应多个bounding box，就使用特殊标记<code>&lt;delim&gt;</code>进行分隔即可：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165516832.png"  style="zoom:33%;" /></p>
+<p>下面是一个具体的输入表示序列：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022165625815.png"  style="zoom:33%;" /></p>
+<p>其中的<code>&lt;grounding&gt;</code>特殊token表示后面的序列包括了text spans以及对应的bounding box。</p>
+<p>模型训练过程：</p>
+<ul>
+<li>在构造的GrIT数据集上训练，256 V100 GPUs for 24 hours。当需要执行grounding输出时，就加上<code>&lt;grounding&gt;</code> token。基于Magneto Transformers 1.6B，设定的bin是<span class="math inline">\(32\times 32\)</span>。</li>
+<li>进行指令微调，We combine vision-language instruction dataset (i.e., LLaVA-Instruct (Liu et al., 2023a)) and language-only instruction datasets (i.e., Unnatural Instructions (Honovich et al., 2022) and FLANv2 (Longpre et al., 2023)) with the training data to tune the model. 同时也进一步利用GrIT数据集构造指令数据</li>
+</ul>
+<h2 id="llava-g">LLaVA-G</h2>
+<p>LLaVA-Grounding: Grounded Visual Chat with Large Multimodal Models. ECCV 2024. 港科大.</p>
+<blockquote>
+<p>With the recent significant advancements in large multimodal models (LMMs), the importance of their grounding capability in visual chat is increasingly recognized. Despite recent efforts to enable LMMs to support grounding, <strong>their capabilities for grounding and chat are usually separate, and their chat performance drops dramatically when asked to ground. The problem is the lack of a dataset for grounded visual chat (GVC).</strong> Existing grounding datasets only contain short captions. To address this issue, we have created GVC data that allows for the combination of grounding and chat capabilities. To better evaluate the GVC capabilities, we have introduced a benchmark called Grounding-Bench. Additionally, we have proposed a model design that can support GVC and various types of visual prompts by connecting segmentation models with language models. Experimental results demonstrate that our model outperforms other LMMs on Grounding-Bench. Furthermore, our model achieves competitive performance on classic grounding benchmarks like RefCOCO/+/g and Flickr30K Entities.</p>
+</blockquote>
+<p><strong>Issue</strong>：之前的LMM的grounding能力和chat能力是分离的，当要求进行grounding任务的时候，chat的性能会下降。例如MiniGPT-V2这些模型，当进行grounded caption generation时候只能生成short caption</p>
+<p><strong>Solution</strong>: 作者首先利用COCO数据集，调用GPT-4，构建了专门用于grounding微调的数据集。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022201819738.png"  style="zoom:30%;" /></p>
+<p>数据集中的数据插入特殊符号<code>&lt;seg&gt;</code>用于获取输出特征，用于grounding：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022201957185.png"  style="zoom:50%;" /></p>
+<p>作者的方法结构在LLaVA基础上加入了两个特殊结构，visual prompt encoder和grounding model。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022202114355.png" style="zoom:33%;" /></p>
+<ul>
+<li>visual prompt encoder用于处理用户输入的visual prompt，采用pre-trained <code>Semantic-SAM</code>模型。其接收visaul prompt和image输入，输出加入了额外的投影层用于和language model对齐</li>
+<li>grounding model使用pretrained <code>OpenSeeD</code>模型，接收<code>&lt;seg&gt;</code> token输出embedding，输出对应的bounding box和masks</li>
+<li>LLM部分采用<code>Vicuna-7b</code>，vision encoder采用<code>CLIP</code>。</li>
+</ul>
+<p>由于加入了额外的模型，训练过程更加复杂，分为3个阶段和可选的第4阶段：</p>
+<ol type="1">
+<li><p><strong>Pretraining for Alignment</strong>：第一阶段是训练和alignment有关的参数，vision和language之间alignment的投影层；输出<code>&lt;seg&gt;</code> embedding和grounding model之间的投影层，以及grounding model本身的参数。涉及的参数为<span class="math inline">\(\{ W,W_g,\phi_g \}\)</span>。</p></li>
+<li><p><strong>Instruction Tuning for Grounded Visual Chat</strong>：在作者构建的Grounded Visual Chat (GVC)数据上，训练除了vision encoder之外的参数，包括<span class="math inline">\(\{ W, W_g, \phi, \phi_g \}\)</span>。</p></li>
+<li><p><strong>Extension to Visual Prompt</strong>：第三阶段引入visual prompt encoder，训练参数包括<span class="math inline">\(\{ \phi_p, W_p \}\)</span>。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203706002.png"  style="zoom:33%;" /></p></li>
+<li><p><strong>Set-of-Mark (SoM) Prompts (Optional)</strong>: 针对使用marks作为visual prompt进行训练，通过在image上加入包括标号的标记，让LLM可以根据标记进行回答：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203315901.png"  style="zoom:33%;" /></p></li>
+</ol>
+<p>为了进行评估，作者在LLaVA Bench (COCO)的基础上，构建了同时评估grounding和chatting的benchmark，<code>Grounding-Bench</code>。具体构建过程参考论文。</p>
+<p>下面是一些使用visual prompt进行输入的例子：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203513268.png"  style="zoom:33%;" /></p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022203530625.png"  style="zoom:33%;" /></p>
+<h2 id="groma">Groma</h2>
+<p>Groma: Localized Visual Tokenization for Grounding Multimodal Large Language Models. 香港大学-字节. ECCV 2024. <a target="_blank" rel="noopener" href="https://groma-mllm.github.io/">代码</a>.</p>
+<blockquote>
+<p>We introduce Groma, a Multimodal Large Language Model (MLLM) with grounded and ﬁne-grained visual perception ability. Beyond holistic image understanding, <strong>Groma is adept at region-level tasks such as region captioning and visual grounding.</strong> Such capabilities are built upon a localized visual tokenization mechanism, where an image input is decomposed into regions of interest and subsequently encoded into region tokens. By integrating region tokens into user instructions and model responses, we seamlessly enable Groma to understand userspeciﬁed region inputs and ground its textual output to images. Besides, to enhance the grounded chat ability of Groma, we curate a visually grounded instruction dataset by leveraging the powerful GPT-4V and visual prompting techniques. Compared with MLLMs that rely on the language model or external module for localization, Groma consistently demonstrates superior performances in standard referring and grounding benchmarks, highlighting the advantages of embedding localization into image tokenization. Project page: https://groma-mllm.github.io/.</p>
+</blockquote>
+<p><strong>Issue</strong>：之前进行grounding LMM的思路有两种：</p>
+<ul>
+<li><p>一种思路是让LLM直接输出坐标，这种做法在处理高分辨率图片的时候计算量很大，并且LLM的解码策略实际不适合需要dense prediction的task，比如segmentation。这类思路代表如Kosmos-2, Shikra</p></li>
+<li><p>另一种思路是用外部定位工具，会增加额外的模型复杂度。这类思路代表如LLaVA-G</p></li>
+</ul>
+<p><strong>Solultion</strong>：作者的思路是将grounding分为两个子任务，localization和recognization</p>
+<blockquote>
+<p>Drawing inspiration from open-vocabulary object detection [64], we decompose the grounding task into two sub-problems: discovering the object (localization) and relating the object to texts (recognition).</p>
+</blockquote>
+<p>localization更多需要的感知能力，而不是理解，因此可以从任务中解耦。作者的定位不是通过引入外部grounding model，而是在输入部分就把图片划分为不同的ROIs，然后直接选择对应的bounding box：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022204101959.png" style="zoom:50%;" /></p>
+<p>作者的方法图：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022204706185.png"  style="zoom:33%;" /></p>
+<p>分别包括：</p>
+<ul>
+<li>Image Encoder：采用<code>DINOv2</code>模型，和常用的CLIP相比，DINOv2更加擅长处理高分辨率image</li>
+<li>Region Proposer：采用<code>Deformable DETR (DDETR) transformer</code>，image encoder的最后四层特征导出作为DDETR输入，输出300个region proposal，再根据NMS和objectness scores进行过滤</li>
+<li>Region Encoder：采用<code>ROIAlign</code>模型，使用image encoder最后3层的特征，输入RIOAlign中进行融合得到region encoder</li>
+<li>LLM：<code>Vicuna 7b</code>。</li>
+</ul>
+<p>接下是如何描述输入和输出。由于region encoder得到的region embedding是连续的embedding，不能够放入到LM的codebook，在输出部分作为reference。因此作者引入一些列的proxy token指代不同bounding box：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022205336116.png"  style="zoom:33%;" /></p>
+<p>上面的<span class="math inline">\(&lt;r_1&gt;\)</span>就是proxy token。<span class="math inline">\(&lt;image&gt;\)</span>和<span class="math inline">\(&lt;region&gt;\)</span>是对应的image encoder和region encoder输出embedding。<span class="math inline">\(&lt;p&gt;\)</span>框定grounding phrase范围，<span class="math inline">\(&lt;roi&gt;\)</span>框定proxy token。</p>
+<p>对于用户框定的region，同样可以把其作为一个bounding box。</p>
+<p>模型训练有3阶段：</p>
+<ol type="1">
+<li>Detection Pretraining：只涉及image encoder和region proposer，不涉及其它模块，冻结image encoder，训练region proposer</li>
+<li>Alignment Pretraining：对齐vision and language feature space，更新对齐投影层</li>
+<li>Instruction Finetuning：更新LLM参数，利用LLaVA Instruct、ShareGPT-4V数据集，以及作者构造的Groma Instruct指令数据。</li>
+</ol>
+<p>由于以前的grounding数据局限在粗粒度的图像描述，导致训练出来的LMM不删除生成长文本grounded responses，因此作者利用GPT-4V，在Visual Genome数据集基础上，构建Groma Instruct指令数据。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241022210628921.png"  style="zoom:33%;" /></p>
+<h2 id="groundinggpt">GroundingGPT</h2>
+<p>GroundingGPT: Language Enhanced Multi-modal Grounding Model. 字节-复旦. ACL 2024. <a target="_blank" rel="noopener" href="https://github.com/lzw-lzw/GroundingGPT">代码</a>.</p>
+<blockquote>
+<p>Multi-modal large language models (MLLMs) have demonstrated remarkable performance across various tasks. However, these models often prioritize capturing global information and overlook the importance of perceiving local information. This limitation hinders their ability to effectively understand fine-grained details and handle grounding tasks that necessitate nuanced comprehension. Although some recent works have made strides in this, they have primarily focused on single-modality inputs. Therefore, we propose GroundingGPT, an end-to-end language enhanced multimodal grounding model. <strong>It is designed to perform fine-grained grounding tasks for three modalities: image, video and audio.</strong> To enhance the model’s performance, we adopt a coarse-to-fine training strategy, utilizing a threestage training approach to progressively enhance the model’s semantic awareness and finegrained understanding capabilities. Additionally, we employ a diversified stage-specific dataset construction pipeline, developing a multi-modal, multi-granularity dataset tailored for training the model in different stages. Extensive experiments conducted on multiple multimodal benchmarks demonstrate that our model achieves impressive fine-grained understanding of multi-modal inputs on grounding tasks while maintaining or improving its global comprehension capabilities. Our code, model, and dataset are available at https://github.com/lzw-lzw/GroundingGPT.</p>
+</blockquote>
+<p><strong>Issue</strong>：以前的关注grounding的LMM主要都是单个模态的grounding</p>
+<p><strong>Solution</strong>: 这篇论文是首个针对多模态grounding的工作。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023221856446.png"  style="zoom:33%;" /></p>
+<p>作者方法很简单，每个模态有自己的encoder，然后通过adapter和LLM的特征空间对齐。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023221957929.png"  style="zoom:33%;" /></p>
+<p>具体实现：</p>
+<ul>
+<li>LLM是<code>Vicuna-v1.5</code></li>
+<li>Image encoder采用<code>CLIP visual encoder ViT-L/14</code>，然后利用MLP和LLM的维度对齐；对于image上的bounding box，直接使用坐标轴拼接到对应的文本描述之后；</li>
+<li>Video encoder是对于每一帧的图片，使用image encoder分别编码，然后借助BLIP-2中的Q-Former获得固定数量的video embeddings；使用起始时间放到对应的文本描述之后；</li>
+<li>Audio encoder类似，采用ImageBind处理以2秒为间隔的采样，然后使用Q-Former进行聚合，获得固定数量的audio embeddings；</li>
+</ul>
+<p>模型训练有3阶段：</p>
+<ol type="1">
+<li>Multi-modal Pre-training：只利用现有数据集，训练各个模态的adapter</li>
+<li>Fine-grained Alignment Tuning：利用GPT-3.5转换现有数据集，加入坐标或时间戳，构造单轮问答的格式；训练LLM以及adapter</li>
+<li>Multi-granularity Instruction Tuning：利用已有的各个模态指令数据，以及自己构造的以现有数据为示例的新多轮对话数据集；训练LLM以及adapter；</li>
+</ol>
+<p>作者实际还额外考虑了灾难性遗忘的问题，会采样前面步骤的数据进行训练：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023222942028.png"  style="zoom:30%;" /></p>
+<p>不同LMM在visual grounding任务上的效果：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241023223026683.png" alt="image-20241023223026683" style="zoom:30%;" /></p>
+<h2 id="p2g"><span class="math inline">\(P^2\)</span>G</h2>
+<p>Plug-and-Play Grounding of Reasoning in Multimodal Large Language Models. 北大. arXiv 2024.06</p>
+<blockquote>
+<p>The rise of Multimodal Large Language Models (MLLMs), renowned for their advanced instruction-following and reasoning capabilities, has significantly propelled the field of visual reasoning. However, due to limitations in their image tokenization processes, <strong>most MLLMs struggle to capture fine details of text and objects in images, especially in high-resolution samples. </strong>To overcome this limitation, we introduce <span class="math inline">\(P^2\)</span>G, a novel framework for plug-and-play grounding in MLLMs. <span class="math inline">\(P^2\)</span>G utilizes the tool-usage potential of MLLMs to employ expert agents for on-the-fly grounding of reasoning into critical visual and textual elements in images, thereby enabling deliberate reasoning through multimodal prompting. Additionally, we develop <span class="math inline">\(P^2\)</span>GB, a benchmark designed to evaluate MLLMs’ proficiency in understanding inter-object relationships and textual content in challenging high-resolution images. Extensive experiments on visual reasoning tasks demonstrate the superiority of <span class="math inline">\(P^2\)</span>G, achieving performance comparable to GPT-4V on <span class="math inline">\(P^2\)</span>GB with a 7B backbone. Our work underscores the potential of grounding reasoning with external agents in MLLMs, presenting a promising alternative to mere model scaling.</p>
+</blockquote>
+<p>把image转化为token存在信息丢失，特别是在处理高精度image或者text-rich image的时候。作者的思路相当于是如果评估发现缺失了信息，就重新回到input寻找缺失信息。作者训练的LMM能够学会判断当前问题是否是简单问题，如果是，就直接输出答案；如果不是，就学会调用external agent来获取缺失信息，再进行推理。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241024154023445.png"  style="zoom:30%;" /></p>
+<ul>
+<li>作者的LLM模型主要基于<code>Vicuna-7B-V1.3</code></li>
+<li>vision encoder是<code>CLIP ViT-L/14</code>。获取的vision embedding会进行对齐，采用两种投影方式：一种是MLP，只改变维度，不改变token数量；另一种是resampler，其相当于单层跨模态注意力，改变token数量，维持context size。</li>
+<li>如果只需要处理整个global image图片，只使用MLP处理vision embedding进行维度对齐；如果需要处理额外的1-4个vision objects，使用MLP处理objects，使用resampler负采样global image；如果需要处理超过4个objects，就直接使用resampler处理所有。</li>
+<li>Grounding Agent：Grounding DINO (Liu et al., 2023c)</li>
+<li>OCR Agent：PaddleOCR</li>
+</ul>
+<p>作者这种方法的好处是方便集成不同的SOTA模型。</p>
+<p>为了让LMM学会判断是否要调用外部工具，以及需要补充什么缺失信息，作者构造了专门的数据和训练阶段。</p>
+<p>此外，作者构造了<span class="math inline">\(P^2\)</span>GB benchmark用于评估处理高精度图片或text-rich图片的能力：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241024154930681.png"  style="zoom:33%;" /></p>
+<h2 id="ferret-v2">Ferret-v2</h2>
+<p>Ferret-v2: An Improved Baseline for Referring and Grounding with Large Language Models. Apple-CMU. COLM 2024.</p>
+<blockquote>
+<p>While Ferret seamlessly integrates regional understanding into the Large Language Model (LLM) to facilitate its referring and grounding capability, it poses certain limitations: <strong>constrained by the pre-trained fixed visual encoder and failed to perform well on broader tasks.</strong> In this work, we unveil Ferret-v2, a significant upgrade to Ferret, with three key designs. (1) Any resolution grounding and referring: A flexible approach that effortlessly handles higher image resolution, improving the model’s ability to process and understand images in greater detail. (2) Multi-granularity visual encoding: By integrating the additional DINOv2 encoder, the model learns better and diverse underlying contexts for global and fine-grained visual information. (3) A three-stage training paradigm: Besides image-caption alignment, an additional stage is proposed for high-resolution dense alignment before the final instruction tuning. Experiments show that Ferret-v2 provides substantial improvements over Ferret and other state-of-the-art methods, thanks to its high-resolution scaling and fine-grained visual processing.</p>
+</blockquote>
+<p><strong>Issue</strong>: 之前的LMM常常使用CLIP作为vision encoder，通常只能处理低分辨率的image，比如224x224。虽然也有部分工作尝试处理高分辨率image，但是只局限在特定领域，反而在传统的multimodal task表现下降。</p>
+<p><strong>Solution</strong>: 作者期望能够在保持原有multimodal task性能的同时，让LMM学会处理高分辨率和低分辨率image的grounding与referring任务。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241028153016597.png"  style="zoom:33%;" /></p>
+<p>首先，作者对于如何处理high-resolution image的当前两种策略进行了实验分析，以Ferret为基础：</p>
+<ul>
+<li>direct upsampling: In the case of “direct upsampling”, positional embedding interpolation is applied, and the CLIP backbone is adjusted to this new resolution during the fine-tuning phase. 直接把CLIP对应的预处理清晰度增大，即增大要处理的image token数量</li>
+<li>any resolution：For “any resolution”, we predefined a set of resolutions to support up to six grids. Given a image, we first select the optimal resolution by prioritizing fitting the original image’s aspect ratio and size as closely as possible while minimizing wasted resolution, and we resize the input image to the optimal resolution and split the image into these grids. All image patches are encoded by the CLIP encoder separately。提前定义将不同的最优分辨率放到不同的栅格grid比例中，每个grid会被CLIP单独编码。对于输入的image，先缩放到最优的分辨率，然后用CLIP处理grids。</li>
+</ul>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025221725716.png" style="zoom:33%;" /></p>
+<p>作者实验发现使用any resolution的策略更好，作者推测直接把vision encoder处理不同分辨率的image，导致其处理的token长度偏离了预训练阶段的token长度；此时微调vision encoder，由于微调data数量通常远远少于预训练data数量，反而破坏了预训练过程获得的knowledge。 而any resolution只需要vision encoder单独处理裁剪出来的local patch，更加贴近预训练过程，效果更好。</p>
+<p>对于自己的模型设计，作者考虑到在低分辨率全局图像和高分辨率局部图像之间存在粒度的差距，有不同的特征。因此作者采用了两种编码策略。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025224538374.png"  style="zoom:33%;" /></p>
+<p>模型设计要点：</p>
+<ul>
+<li>Multi-Granularity Visual Encoding：Ferret-v2对编码region features进行了改进。使用<code>CLIP</code>编码全局图像；使用<code>DINOv2</code>编码grid中分割的local patches；每个encoder有独立的MLP对齐层。</li>
+<li>Any resolution Referring：在Ferret-v1中，每个image region的表征是混合拼接的，来源包括离散的坐标token、连续的region features以及可能的region name。Ferret-v2同样采用这种混合拼接。DINOv2学习的各个区域的特征拼接到一起，而CLIP学习的全局特征feature map通过上采样扩大到和local patch feature maps一样的size，两者相加。随后利用a spatial-aware visual sampler (You et al., 2023)来学习到对应的continuous region features。</li>
+<li>Any resolution Grounding：直接输出数值型的坐标</li>
+</ul>
+<p>模型训练有三阶段，沿着从粗到细的思路：</p>
+<ol type="1">
+<li>Image-Caption Alignment：image-level的图文特征对齐，利用Sharegpt4v的指令格式</li>
+<li>High-resolution Dense Alignment：在image-level的对齐，和最后的instruction tuning之间还存在gap，部分task instruction需要更加precise的对齐。这一阶段，作者进行两种输入和输出：
+<ul>
+<li>Dense Referring: given the image, the input question refers to regions of all objects one by one, and asks about their categories, the model is required to output the predicted classes accordingly. An example is “<em>Question: Please classify the objects in the following locations. 1: ⟨region 1⟩, 2: ⟨region 2⟩, .... Answer: Here are the categories: 1: cat, 2: dog, ...</em>”. 给定图像上的各个regions，让LMM输出各个region的分类。</li>
+<li>Dense Detection: Given the image, the input question asks to localize all the objects. An example is “<em>Question: Please localize visible objects in the image in a raster scan order. Answer: The objects are: 1: cat ⟨coordinate 1⟩, 2: dog ⟨coordinate 2⟩, ...</em>”. 让LLM按照特定顺序，grounding图像上的各个objects。</li>
+</ul></li>
+<li>Intent-Enhanced Instruction Tuning: 利用各种现有指令数据进行微调</li>
+</ol>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025225324165.png"  style="zoom:33%;" /></p>
+<p>思考：一般训练阶段的思路都是从粗到细，从通用到特定，先强调对齐再强调指令跟随。需要满足的前提，或基础能力在前一步骤进行训练。</p>
+<p>作者模型在grounding任务上的实验：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241025230100287.png"  style="zoom:33%;" /></p>
+<h2 id="vl-sam">VL-SAM</h2>
+<p>Training-Free Open-Ended Object Detection and Segmentation via Attention as Prompts. 北大. NeurIPS 2024.</p>
+<blockquote>
+<p>Existing perception models achieve great success by learning from large amounts of labeled data, but they still struggle with open-world scenarios. To alleviate this issue, researchers introduce open-set perception tasks to detect or segment unseen objects in the training set. However, these models require predefined object categories as inputs during inference, which are not available in real-world scenarios. Recently, researchers pose a new and more practical problem, i.e., open-ended object detection, which discovers unseen objects without any object categories as inputs. In this paper, <strong>we present VL-SAM, a training-free framework that combines the generalized object recognition model (i.e., Vision-Language Model) with the generalized object localization model (i.e., Segment-Anything Model), to address the open-ended object detection and segmentation task</strong>. Without additional training, we connect these two generalized models with attention maps as the prompts. Specifically, we design an attention map generation module by employing head aggregation and a regularized attention flow to aggregate and propagate attention maps across all heads and layers in VLM, yielding high-quality attention maps. Then, we iteratively sample positive and negative points from the attention maps with a prompt generation module and send the sampled points to SAM to segment corresponding objects. Experimental results on the long-tail instance segmentation dataset (LVIS) show that our method surpasses the previous open-ended method on the object detection task and can provide additional instance segmentation masks. Besides, VL-SAM achieves favorable performance on the corner case object detection dataset (CODA), demonstrating the effectiveness of VL-SAM in real-world applications. Moreover, VL-SAM exhibits good model generalization that can incorporate various VLMs and SAMs.</p>
+</blockquote>
+<p><strong>Issue</strong>: 开放域的物体识别很难，因为无法提前定义一个囊括所有类型的分类标签。比如在自动驾驶中，可能出现珍惜的东西、一个人穿着动物衣服等。</p>
+<p>对于开放域的物体识别，VLM能够识别很稀有的objects，但是它localization的精度弱于传统的方法。另一方面，分割模型SAM（segment-anything model）能够找到不同领域的图像区域分割，但是它无法识别对应的objects。</p>
+<p><strong>Solution</strong>: 作者的方案就是联合VLM和SAM的通用能力，无需训练的找到objects并且定位。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211163720777.png"  style="zoom:33%;" /></p>
+<p>作者的方法是利用现有的MLLM <code>CogVLM-17B</code>，输入prompt让其列出所有的image上的objects。prompts实际上不是一种，作者生成多种不同的prompts，然后把每个prompt对应的风格结果组合。</p>
+<p>对于输入图像，为了获得更多细节的objects，作者把原始image分割为4个区域，然后让VLM分别处理。将4个sub-image和整个image的分割结果组合。</p>
+<p>生成的结果，作者使用Tag2Text方法解析句子中的objects。然后对于每个object，导出MLLM中的所有层所有注意力头<span class="math inline">\(S\)</span>：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164335894.png" style="zoom:33%;" /></p>
+<p>其中，<span class="math inline">\(N\)</span>是输入的序列长度，<span class="math inline">\(H\)</span>是注意力头数量，<span class="math inline">\(L\)</span>是层数。</p>
+<p>之后，作者尝试计算各个层中，不同注意力头的权重，采用mean-max操作。先找到一个head中，一个query的最大weight，然后平均，得到这个head的权重。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164557971.png" style="zoom:33%;" /></p>
+<p><span class="math inline">\(W\in 1\times 1\times H\times L\)</span>。把head权重和原来的注意力map <span class="math inline">\(S\)</span>相乘：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164731071.png"  style="zoom:33%;" /></p>
+<p>随后，从底向上，相乘attention map，这也是attention rollout method [1]的思路：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211164830024.png" style="zoom:33%;" /></p>
+<p>在attention rollout过程中，由于decoder的注意力图是causal mask的，因此，出现在前面的embedding会逐渐的累积权重，而导致最后计算出来的注意力图会倾向于选择左上角的图像区域。下面是作者在openreview上的解释：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170305697.png"  style="zoom:33%;" /></p>
+<p>为了解决这一点，作者采用了一个简单的正则，假设某一列的非mask的长度是<span class="math inline">\(L_0\)</span>，则这一列的所有权重和正则项<span class="math inline">\(1 − (L_0−1)/L\)</span>相乘。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170453005.png" style="zoom:33%;" /></p>
+<p>在获得了attention map，作者使用一个阈值来过滤掉weak activated areas，寻找到the maximum connectivity area as the positive area [5]。把剩下的区域作为negative data。从positive area和negative中分别采用一个点来作为输入给SAM的prompt。</p>
+<p>之后，作者采用了迭代优化的策略来不断调整SAM的分割结果。具体参考论文。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170725305.png"  style="zoom:33%;" /></p>
+<h2 id="llava-logit-lens">llava-logit lens</h2>
+<p>Towards Interpreting Visual Information Processing in Vision-Language Models. arXiv 2024. 南洋理工. <a target="_blank" rel="noopener" href="https://github.com/clemneo/llava-interp">代码</a>.</p>
+<blockquote>
+<p>Vision-Language Models (VLMs) are powerful tools for processing and understanding text and images. We study the processing of visual tokens in the language model component of LLaVA, a prominent VLM. <strong>Our approach focuses on analyzing the localization of object information, the evolution of visual token representations across layers, and the mechanism of integrating visual information for predictions.</strong> Through ablation studies, we demonstrated that object identification accuracy drops by over 70% when object-specific tokens are removed. We observed that <strong>visual token representations become increasingly interpretable in the vocabulary space across layers, suggesting an alignment with textual tokens corresponding to image content.</strong> Finally, we found that the model extracts object information from these refined representations at the last token position for prediction, mirroring the process in text-only language models for factual association tasks. These findings provide crucial insights into how VLMs process and integrate visual information, bridging the gap between our understanding of language and vision models, and paving the way for more interpretable and controllable multimodal systems.</p>
+</blockquote>
+<p><strong>Issue</strong>: 纯语言模型的理解已经取得很大进展，但是对于VLM的理解还有很大GAP。</p>
+<ul>
+<li>how visual information is encoded in these representations</li>
+<li>whether and how much object-specific details are localized or dispersed across the entire representation</li>
+</ul>
+<p>作者以LLaVA 1.5 7B为基础，进行研究。</p>
+<p><strong>Solution</strong>：作者先研究哪些图像区域是重要的，通过object detection进行预测</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212000858248.png"  style="zoom:33%;" /></p>
+<p>通过消融下面四种图像patch（经过image encoder adapter之后），被选中的patch使用在ImageNet validation set的50,000 images所有visual tokens的平均值替换。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001007919.png"  style="zoom:33%;" /></p>
+<p>结果发现，object对应区域的visual tokens包含了最多的信息，引起了最多的性能下降。换句话说，object的信息并没有在经过image encoder之后，被扩散到整个image上。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001328806.png"  style="zoom:33%;" /></p>
+<p>之后，为了分析visual tokens是如何在经过不同LLM层之后被学习的，作者使用了logit lens方法，也就是让每一层visual tokens与unembedding matrix计算相似度，得到最大的logit选择为对应的词。</p>
+<p>作者结果发现，LLM在中高层的时候，LLM逐渐能够将visual tokens对齐到和所在的object相关的词上：</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212001639579.png"  style="zoom:33%;" /></p>
+<p>不过也存在特殊的情况是某些背景所在的tokens，可能会反而捕获global image相关的信息。比如说上面的(d)图中，背景patch对应到了一些苹果的数量。</p>
+<p>最后，作者尝试分析了attention flow探究LLM是直接从相关的visual tokens中找到对应的信息，还是会在生成最终输出token之前，先聚合visual tokens。</p>
+<p>利用attention knockout方法，在不同层之间mask从特定token到目标token对应的attention。</p>
+<p><img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241212002253027.png" style="zoom:33%;" /></p>
+<p>结果发现，mask掉object相关的visual tokens到最终final token引起了最多的性能下降，这表明了LLM可能是直接在高层中直接获取的object信息。相反，如果是mask visual tokens到最后一层token的attention，性能几乎没有下降。这表明，至少对于作者探究的object detection任务，LLM没有尝试在最后一层visual tokens中进行信息总结。</p>
+<p>（This contrasts with findings by Basu et al. (2024), who suggested that the model might summarize image information in the last row of visual tokens before using it.）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>Liu Xiyang
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/" title="LMM-Grounding-Collection1">https://liuxiyang641.github.io/collection/LMM-Grounding-Collection1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Multimodal/" rel="tag"><i class="fa fa-tag"></i> Multimodal</a>
+              <a href="/tags/LMM/" rel="tag"><i class="fa fa-tag"></i> LMM</a>
+              <a href="/tags/Grounding/" rel="tag"><i class="fa fa-tag"></i> Grounding</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/collection/MCR-Collection1/" rel="prev" title="MCR-Collection1">
+                  <i class="fa fa-chevron-left"></i> MCR-Collection1
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/collection/MIE-Collection2/" rel="next" title="MIE-Collection2">
+                  MIE-Collection2 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments gitalk-container"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-flag"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Liu Xiyang</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">900k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">13:38</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="//cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/comments.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/motion.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/next-boot.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/pjax.min.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/search/local-search.min.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdn.jsdelivr.net/npm/pdfobject@2.2.8/pdfobject.min.js","integrity":"sha256-tu9j5pBilBQrWSDePOOajCUdz6hWsid/lBNzK4KgEPM="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/tags/pdf.min.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/fancybox.min.js"></script>
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"ams","js":{"url":"//cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.js"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/math/mathjax.min.js"></script>
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css" integrity="sha256-AJnUHL7dBv6PGaeyPQJcgQPDjt/Hn/PvYZde1iqfp8U=" crossorigin="anonymous">
+
+<script class="next-config" data-name="gitalk" type="application/json">{"enable":true,"github_id":"liuxiyang641","repo":"liuxiyang_blog_comment","client_id":"b800b344e096846a4608","client_secret":"45ac194feea7e642c29f8e13180184cc98afb3e6","admin_user":"liuxiyang641","distraction_free_mode":true,"proxy":"https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token","language":"zh-CN","js":{"url":"https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js","integrity":"sha256-Pmj85ojLaPOWwRtlMJwmezB/Qg8BzvJp5eTzvXaYAfA="},"path_md5":"6f561912a7cb73a16943cbe71429b90a"}</script>
+<script src="https://cdn.jsdelivr.net/npm/hexo-theme-next@8.12.2/source/js/third-party/comments/gitalk.min.js"></script>
+<div class="moon-menu">
+  <div class="moon-menu-items">
+    
+    <div id="moon-menu-item-back2bottom" class="moon-menu-item">
+      <i class='fas fa-chevron-down'></i>    </div>
+    
+    <div id="moon-menu-item-back2top" class="moon-menu-item">
+      <i class='fas fa-chevron-up'></i>    </div>
+    
+  </div>
+  <div class="moon-menu-button">
+    <svg class="moon-menu-bg">
+      <circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle>
+      <circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle>
+    </svg>
+    <div class="moon-menu-content">
+      <div class="moon-menu-icon"><i class='fas fa-ellipsis-v'></i></div>
+      <div class="moon-menu-text"></div>
+    </div>
+  </div>
+</div><script src="/js/injector.js"></script>
+</body>
+</html>
