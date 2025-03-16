@@ -20,6 +20,8 @@ TokenButler: Token Importance is Predictable. arXiv 2025. [代码](https://githu
 
 > Large Language Models (LLMs) rely on the KeyValue (KV) Cache to store token history, enabling efficient decoding of tokens. As the KV-Cache grows, it becomes a major memory and computation bottleneck, however, there is an opportunity to alleviate this bottleneck, especially because prior research has shown that **only a small subset of tokens contribute meaningfully to each decoding step. ** A key challenge in finding these critical tokens is that they are dynamic, and heavily input query-dependent. Existing methods either risk quality by evicting tokens permanently, or retain the full KV-Cache but rely on retrieving chunks (pages) of tokens at generation, failing at dense, context-rich tasks. Additionally, many existing KV-Cache sparsity methods rely on inaccurate proxies for token importance. To address these limitations, we introduce TokenButler, a highgranularity, query-aware predictor that learns to identify these critical tokens. By training a lightweight predictor with less than 1.2% parameter overhead, TokenButler prioritizes tokens based on their contextual, predicted importance. This improves perplexity & downstream accuracy by over 8% relative to SoTA methods for estimating token importance. We evaluate TokenButler on a novel synthetic small-context co-referential retrieval task, demonstrating near-oracle accuracy. Code, models and benchmarks: [Code]
 
+<!--more-->
+
 **Issue**：随着LLM能够接收越来越长的context，需要保留的KV cache越来越多。会增加对内存和带宽的压力。而之前的研究表明，只有少部分token对于decoding是重要的。也就是可以不保留所有的K和V。这就是token pruning。
 
 现有的token pruning策略大致有：
