@@ -298,7 +298,7 @@ InstructUIE: Multi-task Instruction Tuning for Unified Information Extraction
 
 InstructIE: A Chinese Instruction-based Information Extraction Dataset. 
 
-浙大NLP，arXiv 2023，[代码](§https://github.com/zjunlp/KnowLM)。
+浙大NLP，arXiv 2023，[代码](https://github.com/zjunlp/KnowLM)。
 
 > We introduce a new Information Extraction (IE) task dubbed Instructionbased IE, which aims to ask the system to follow specific instructions or guidelines to extract information. To facilitate research in this area, **we construct a dataset called InstructIE, consisting of 270,000 weakly supervised data from Chinese Wikipedia and 1,000 high-quality crowdsourced annotated instances.** We further evaluate the performance of various baseline models on the InstructIE dataset. The results reveal that although current models exhibit promising performance, there is still room for improvement. Furthermore, we conduct a comprehensive case study analysis, underlining the challenges inherent in the Instruction-based IE task.
 
@@ -714,9 +714,7 @@ Chain-of-Thought Prompt Distillation for Multimodal Named Entity Recognition and
 
 ## PGIM
 
-Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT
-
-天津大学，2023-05，arXiv
+Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT. 天津大学，2023-05，EMNLP 2023 Findings.
 
 > Multimodal Named Entity Recognition (MNER) on social media aims to enhance textual entity prediction by incorporating image-based clues. Existing research in this domain has primarily focused on maximizing the utilization of potentially relevant information in images or incorporating external knowledge from explicit knowledge bases (KBs). However, **these methods either neglect the necessity of providing the model with relevant external knowledge, or the retrieved external knowledge suffers from high redundancy.** To address these problems, **we propose a conceptually simple two-stage framework called Prompt ChatGPT In MNER (PGIM) in this paper.** We leverage ChatGPT as an implicit knowledge engine to acquire auxiliary refined knowledge, thereby bolstering the model’s performance in MNER tasks. Specifically, we first utilize a Multimodal Similar Example Awareness module to select suitable examples from a small number of manually annotated samples. These examples are then integrated into a formatted prompt template tailored to the MNER task, guiding ChatGPT to generate auxiliary refined knowledge. Finally, the acquired knowledge is integrated with the raw text and inputted into the downstream model for further processing. Extensive experiments show that our PGIM significantly outperforms all existing state-of-the-art methods on two classic MNER datasets.
 

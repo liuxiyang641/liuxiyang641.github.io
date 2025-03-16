@@ -143,3 +143,55 @@ LLMaAA: Making Large Language Models as Active Annotators. 北大. EMNLP 2023 Fi
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240331225213836.png"  style="zoom:50%;" />
 
 最后，作者还简单讨论了一下，为什么理论上，利用teacher model可以训练出来更强的student model。
+
+## EMBER
+
+Embedded Named Entity Recognition using Probing Classifiers. EMNLP 2024. [代码](https://github.com/nicpopovic/EMBER).
+
+> Streaming text generation has become a common way of increasing the responsiveness of language model powered applications, such as chat assistants. At the same time, **extracting semantic information from generated text is a useful tool for applications such as automated fact checking or retrieval augmented generation.** Currently, this requires either separate models during inference, which increases computational cost, or destructive fine-tuning of the language model. Instead, we propose an approach called EMBER which enables streaming named entity recognition in decoder-only language models without fine-tuning them and while incurring minimal additional computational cost at inference time. Specifically, our experiments show that EMBER maintains high token generation rates, with only a negligible decrease in speed of around 1% compared to a 43.64% slowdown measured for a baseline. We make our code and data available online 1 , including a toolkit 2 for training, testing, and deploying efficient token classification models optimized for streaming text generation.
+
+**Issue**：对LM生成的text，在推理时进行IE主要有两种策略：
+
+- 把IE的结果作为text generation的一部分，这要求微调LM，可能会破坏其原本的一些能力
+- 将text作为另外一个IE model的输入，这种IE model往往需要更多的额外计算开销，并且无法在text生成的时候就获得抽取结果，必须等待text全部生成结果
+
+**Solution**：作者直接基于LM的probing方法，设计了非常轻量，只使用两层MLP（4060 size，ReLU作为激活层）的probing classifier就实现流式的IE。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213003310668.png" style="zoom:33%;" />
+
+作者设计了两个probing classifiers，一个输入embedding，用来判断token的NER的type；一个输入token间的attention weight，用来检测当前token是否是连续的span。
+
+和单独的经过微调的baseline比较有10个点的差距，但是和zero-shot相比效果很好，并且效率很高。
+
+一个classifier直接判断每个token的entity type，使用某一层的embedding输出：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213003553344.png" style="zoom:33%;" />
+
+另一个classifier用来判断token是否属于同一个span，有三种不同策略：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213003758100.png" style="zoom:33%;" />
+
+由于attention weight决定了之前的token如何对之后的token起作用，因此使用attention weight作为输入。使用所有层的attention weight作为输入。
+
+第1种是直接判断当前token和前一个token是否属于同一个span
+
+第2种是判断从token $i$，到当前token $k$是否属于同一个span
+
+第3种是判断从token $i$，到当前token $k-1$是否属于同一个span
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213004553205.png" style="zoom:30%;" />
+
+实验发现第3种效果比较好。
+
+对两个classifier的结果进行结合。只使用预测的span中最后一个token预测得到的entity type，因为其访问了最多的context，并且有研究证明最后一个token往往会总结信息。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213004256551.png" style="zoom:33%;" />
+
+作者主要实验使用的LM是GPT-2，GPT-J和Pythia系列。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213004342009.png"  style="zoom:33%;" />
+
+附录里尝试了Llama3
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241213004425238.png"  style="zoom:33%;" />
+

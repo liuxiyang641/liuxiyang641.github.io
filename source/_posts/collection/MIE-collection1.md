@@ -1,5 +1,5 @@
 ---
-title: MMIE-collection1
+title: MIE-collection1
 published: true
 date: 2023-09-26 17:03:01
 categories:
@@ -12,9 +12,9 @@ tags:
 - MRE
 ---
 
-# MRE and MNER
+# MRE and MNER1
 
-多模态信息抽取相关论文总结
+多模态信息抽取相关论文总结集合1。
 
 <!--more-->
 
@@ -26,7 +26,7 @@ ICME 2021，作者创建了首个用于multimodal relation extraction的数据�
 
 数据来源于Twitter posts，关注点是文本中的上下文信息不够充分时，通过post中的image，来补充上下文信息。
 
-> Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then ﬁltered by crowdworkers. All the relations are identiﬁed manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difﬁculties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.
+> Extracting relations in social media posts is challenging when sentences lack of contexts. However, images related to these sentences can supplement such missing contexts and help to identify relations precisely. To this end, we present a multimodal neural relation extraction dataset (MNRE), consisting of 10000+ sentences on 31 relations derived from Twitter and annotated by crowdworkers. The subject and object entities are recognized by a pretrained NER tool and then filtered by crowdworkers. All the relations are identified manually. One sentence is tagged with one related image. We develop a multimodal relation extraction baseline model and the experimental results show that introducing multimodal information improves relation extraction performance in social media texts. Still, our detailed analysis points out the difficulties of aligning relations in texts and images, which can be addressed for future research. All details and resources about the dataset and baselines are released on https://github.com/thecharm/MNRE.
 
 relation extraction（RE）是预测一个句子中两个命名实体之间的关系relation。
 
@@ -320,7 +320,7 @@ A Uniﬁed Visual Prompt Tuning Framework with Mixture-of-Experts for Multimodal
 
 东华大学，DASFAA 2023，[代码](https://github.com/xubodhu/VisualPTMoE)。
 
-> Recently, multimodal information extraction has gained increasing attention in social media understanding, as it helps to accomplish the task of information extraction by adding images as auxiliary information to solve the ambiguity problem caused by insuﬃcient semantic information in short texts. Despite their success, current methods do not take full advantage of the information provided by the diverse representations of images. To address this problem, we propose a novel uniﬁed visual prompt tuning framework with Mixture-of-Experts to fuse diﬀerent types of image representations for multimodal information extraction. Extensive experiments conducted on two diﬀerent multimodal information extraction tasks demonstrate the eﬀectiveness of our method. The source code can be found at https://github.com/xubodhu/VisualPTMoE.
+> Recently, multimodal information extraction has gained increasing attention in social media understanding, as it helps to accomplish the task of information extraction by adding images as auxiliary information to solve the ambiguity problem caused by insufficient semantic information in short texts. Despite their success, current methods do not take full advantage of the information provided by the diverse representations of images. To address this problem, we propose a novel uniﬁed visual prompt tuning framework with Mixture-of-Experts to fuse different types of image representations for multimodal information extraction. Extensive experiments conducted on two different multimodal information extraction tasks demonstrate the effectiveness of our method. The source code can be found at https://github.com/xubodhu/VisualPTMoE.
 
 作者的方法图：
 
@@ -416,9 +416,7 @@ Chain-of-Thought Prompt Distillation for Multimodal Named Entity Recognition and
 
 ## PGIM
 
-Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT
-
-天津大学，2023-05，arXiv
+Prompt ChatGPT In MNER: Improved multimodal named entity recognition method based on auxiliary refining knowledge from ChatGPT. 天津大学，EMNLP 2023 Findings.
 
 > Multimodal Named Entity Recognition (MNER) on social media aims to enhance textual entity prediction by incorporating image-based clues. Existing research in this domain has primarily focused on maximizing the utilization of potentially relevant information in images or incorporating external knowledge from explicit knowledge bases (KBs). However, **these methods either neglect the necessity of providing the model with relevant external knowledge, or the retrieved external knowledge suffers from high redundancy.** To address these problems, **we propose a conceptually simple two-stage framework called Prompt ChatGPT In MNER (PGIM) in this paper.** We leverage ChatGPT as an implicit knowledge engine to acquire auxiliary refined knowledge, thereby bolstering the model’s performance in MNER tasks. Specifically, we first utilize a Multimodal Similar Example Awareness module to select suitable examples from a small number of manually annotated samples. These examples are then integrated into a formatted prompt template tailored to the MNER task, guiding ChatGPT to generate auxiliary refined knowledge. Finally, the acquired knowledge is integrated with the raw text and inputted into the downstream model for further processing. Extensive experiments show that our PGIM significantly outperforms all existing state-of-the-art methods on two classic MNER datasets.
 
@@ -465,3 +463,42 @@ case study：
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230825161447842.png"   style="zoom:40%;" />
 
 能够看出来，作者倾向于在LLM的输出推理过程中，直接对span进行解释，因此蓝色的句子里会很明显的线索来知道最后识别实体。
+
+## GMDA
+
+Generative Multimodal Data Augmentation for Low-Resource Multimodal Named Entity Recognition.  ACM MM 2024
+
+> As an important task in multimodal information extraction, Multimodal Named Entity Recognition (MNER) has recently attracted considerable attention. **One key challenge of MNER lies in the lack of sufficient fine-grained annotated data, especially in low-resource scenarios.** Although data augmentation is a widely used technique to tackle the above issue, it is challenging to simultaneously generate synthetic text-image pairs and their corresponding high-quality entity annotations. In this work, we propose a novel Generative Multimodal Data Augmentation (GMDA) framework for MNER, which contains two stages: Multimodal Text Generation and Multimodal Image Generation. Specifically, we first transform each annotated sentence into a linearized labeled sequence, and then train a Label-aware Multimodal Large Language Model (LMLLM) to generate the labeled sequence based on a label-aware prompt and its associated image. After using the trained LMLLM to generate synthetic labeled sentences, we further employ a Stable Diffusion model to generate the synthetic images that are semantically related to these sentences. Experimental results on three benchmark datasets demonstrate the effectiveness of the proposed GMDA framework, which consistently boosts the performance of several competitive methods for two subtasks of MNER in both full-supervision and low-resource settings.
+
+**Issue**：MNER任务和GMNER任务都需要人工标注，特别是GMNER还需要标注visual objects的bounding box。获取人工标注在实际中成本大。DA可以缓解这一问题，但是之前的DA方法主要是考虑纯text的NER任务，没有考虑多模态场景下的DA挑战：
+
+- First, it is necessary to generate both text and images, and each text-image pair should be semantically related. 
+- Second, each generated text-image pair is required to have the textual and visual entity annotations.
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240916223212794.png"  style="zoom:33%;" />
+
+**Solution**：作者先是微调了一个MLLM（`InstructBlip`）来实现给定图像和entity list，生成带有实体标注的text；然后基于扩散模型（`stable diffusion 1.5`），生成符合text的image。
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240916222913993.png" style="zoom:33%;" />
+
+从现有的sample出发，利用其中的entity list构造instruction。作者使用LoRA微调了InstructBlip的image encoder（`ViT-g/14`）、LLM encoder（`Flant-t5-XL` 3B）。训练目标就是带有label的text。
+
+训练完毕之后，为了获取更多样的text。作者同样是给定image和entity list，先进行top-k采样，再进行top-p采样，获取到多个的输出token序列集合。调用扩散模型生成image：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240916223442392.png" style="zoom:33%;" />
+
+需要特别注意的一点是，扩散模型生成的是没有bounding box的。作者的做法很简单，作者发现通常生成的image和原始的image是非常相似的，因此作者直接使用原来image的bounding box作为生成image的bounding box。
+
+生成的数据同样需要过滤。作者采用了很简单的方法，过滤掉特别端的text（words少于5个）、在真实数据集上训练对应的MNER model，然后预测生成的数据标注是否一致（这种做法不会损坏泛化性吗？如果可以正确预测，是否有很大的必要加入到训练集）、过滤掉重复的text。
+
+作者的实验在3090上微调。对于GMNER任务，由于要进行visual object prediction，统计maximum IoU score是否超过0.5，如果超过了就预测正确。特别注意不是所有的entity都会有对应的bounding box。
+
+在低资源情况下的对比：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240916223912912.png"  style="zoom:33%;" />
+
+主要适合MM DA baseline mixGen进行了比较。
+
+生成的case：
+
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240916223959881.png" style="zoom:33%;" />

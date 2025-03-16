@@ -208,7 +208,7 @@ $$
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20240402192645260.png" style="zoom:50%;" />
 
-从一个子集出发，作者的规则挖掘算法是多轮迭代的。首先利用NER model [*Research on Chinese naming recognition model based on BERT embeddin. 2019*]去标注头尾实体type；然后替换掉原来的entity mentions，通过frequent sequence mining algorithms 频繁子序列挖掘算法 Prefixspan来获得rule body。
+从一个子集出发，作者的规则挖掘算法是多轮迭代的。首先利用NER model [*Research on Chinese naming recognition model based on BERT embeddin. 2019*]去标注头尾实体type；然后替换掉原来的entity mentions，通过frequent sequence mining algorithms 频繁子序列挖掘算法 Prefix span来获得rule body。
 
 然后是如何确定rule importance weight。作者从3个维度统计：
 
