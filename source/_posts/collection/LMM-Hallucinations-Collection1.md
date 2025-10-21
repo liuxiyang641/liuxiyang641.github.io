@@ -175,6 +175,8 @@ base rank可以用来反映image加入对于回复的影响程度，越大，证
 
 下面是作者对于非幻觉/幻觉短语中首个token分布logit的统计，$k$是把logit按照从大到小的顺序排列，然后寻找到的拐点（elbow）。
 
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20250507221136162.png"  style="zoom:33%;" />
+
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20250313125908170.png"  style="zoom:33%;" />
 
 出现幻觉的token对应的logit分布，有更多confident相近的候选，$k$更大。

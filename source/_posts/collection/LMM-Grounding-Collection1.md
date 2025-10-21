@@ -367,6 +367,8 @@ $W\in 1\times 1\times H\times L$。把head权重和原来的注意力map $S$相�
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170305697.png"  style="zoom:33%;" />
 
+<img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20250420225047337.png" style="zoom:33%;" />
+
 为了解决这一点，作者采用了一个简单的正则，假设某一列的非mask的长度是$L_0$，则这一列的所有权重和正则项$1 − (L_0−1)/L$相乘。
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20241211170453005.png" style="zoom:33%;" />

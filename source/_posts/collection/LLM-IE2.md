@@ -242,7 +242,7 @@ Web queries与一般的完整natural language的区别：
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20230911225016455.png"   style="zoom:50%;" />
 
-UnleashLLM
+## UnleashLLMRE
 
 How to Unleash the Power of Large Language Models for Few-shot Relation Extraction?
 
@@ -510,7 +510,7 @@ Self-refinement by Self-reflection：improves the initial generation results thr
 
 <img src="https://lxy-blog-pics.oss-cn-beijing.aliyuncs.com/asssets/image-20231023164319493.png" style="zoom:40%;" />
 
-## GoLLMIE
+## GoLLIE
 
 GoLLIE: Annotation Guidelines improve Zero-Shot Information-Extraction. ICLR 2024. University of the Basque Country. [代码](https://github.com/hitz-zentroa/GoLLIE).
 
